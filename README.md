@@ -32,6 +32,4 @@ class AppModule extends AbstractModule
     $_ENV['PDO_USER'] = '';
     $_ENV['PDO_PASSWORD'] = '';
 
-    // @see http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html
-
  
