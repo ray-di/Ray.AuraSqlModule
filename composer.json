@@ -1,0 +1,26 @@
+{
+    "name": "bear/aura-sql-module",
+    "keywords": [
+        "BEAR.Sunday module",
+        "Aura Sql",
+        "PDO"
+    ],
+    "description": "aura/sql module for BEAR.Sunday",
+    "license": "BSD-3-Clause",
+    "require": {
+        "ray/di": "~2.0@dev",
+        "aura/sql": "~2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "BEAR\\AuraSqlModule\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "branch-alias": {
+            "dev-develop": "1.0.x-dev"
+        }
+    }
+}
