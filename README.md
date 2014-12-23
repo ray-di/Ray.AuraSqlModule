@@ -18,7 +18,7 @@ class AppModule extends AbstractModule
 {
     protected function configure()
     {
-        $this->install(new AuraSqlModule($dsn, $id, $password);
+        $this->install(new AuraSqlModule('mysql:host=localhost;dbname=test', 'username', 'password');
     }
 }
 
