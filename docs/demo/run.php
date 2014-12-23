@@ -3,8 +3,8 @@
 require dirname(dirname(__DIR__)) . '/vendor/autoload.php';
 
 use Aura\Sql\ExtendedPdo;
-use BEAR\AuraSqlModule\AuraSqlInject;
-use BEAR\AuraSqlModule\AuraSqlModule;
+use Ray\AuraSqlModule\AuraSqlInject;
+use Ray\AuraSqlModule\AuraSqlModule;
 use Ray\Di\Injector;
 
 class Fake

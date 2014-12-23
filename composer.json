@@ -1,11 +1,11 @@
 {
-    "name": "bear/aura-sql-module",
+    "name": "ray/aura-sql-module",
     "keywords": [
-        "BEAR.Sunday module",
+        "Ray module",
         "Aura Sql",
         "PDO"
     ],
-    "description": "aura/sql module for BEAR.Sunday",
+    "description": "aura/sql module for Ray.Di",
     "license": "BSD-3-Clause",
     "require": {
         "ray/di": "~2.0@dev",
@@ -13,7 +13,7 @@
     },
     "autoload": {
         "psr-4": {
-            "BEAR\\AuraSqlModule\\": "src/"
+            "Ray\\AuraSqlModule\\": "src/"
         }
     },
     "minimum-stability": "dev",

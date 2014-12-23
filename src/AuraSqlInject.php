@@ -1,23 +1,22 @@
 <?php
 /**
- * This file is part of the BEAR.AuraSqlModule package
+ * This file is part of the Ray.AuraSqlModule package
  *
  * @license http://opensource.org/licenses/bsd-license.php BSD
  */
-namespace BEAR\AuraSqlModule;
+namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdoInterface;
-use Doctrine\DBAL\Driver\Connection;
 
 trait AuraSqlInject
 {
     /**
-     * @var Connection
+     * @var ExtendedPdoInterface
      */
-    private $db;
+    protected $db;
 
     /**
-     * @param Connection $db
+     * @param ExtendedPdoInterface $db
      *
      * @\Ray\Di\Di\Inject
      */

@@ -1,10 +1,10 @@
 <?php
 /**
- * This file is part of the BEAR.AuraSqlModule package
+ * This file is part of the Ray.AuraSqlModule package
  *
  * @license http://opensource.org/licenses/bsd-license.php BSD
  */
-namespace BEAR\AuraSqlModule;
+namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdoInterface;
 use Ray\Di\AbstractModule;

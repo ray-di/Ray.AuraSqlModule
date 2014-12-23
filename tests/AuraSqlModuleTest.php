@@ -1,6 +1,6 @@
 <?php
 
-namespace BEAR\AuraSqlModule;
+namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdo;
 use Aura\Sql\ExtendedPdoInterface;
