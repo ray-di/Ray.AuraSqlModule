@@ -31,3 +31,9 @@ class AppModule extends AbstractModule
 
     $ php docs/demo/run.php
     // It works!
+
+### Requiuments
+
+ * PHP 5.4+
+ * hhvm
+ 
