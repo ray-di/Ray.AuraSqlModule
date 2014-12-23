@@ -1,17 +1,17 @@
-# bear/aura-sql-module
+# ray/aura-sql-module
 
-[Aura.Sql](https://github.com/auraphp/Aura.Sql) Module for BEAR.Sunday
+[Aura.Sql](https://github.com/auraphp/Aura.Sql) Module for Ray.Di
 
 ## Installation
 
 ### Composer install
 
-    $ composer require bear/aura-sql-module
+    $ composer require ray/aura-sql-module
  
 ### Module install
 
 ```php
-use BEAR\AuraSqlModule\AuraSqlModule;
+use Ray\AuraSqlModule\AuraSqlModule;
 
 class AppModule extends AbstractModule
 {
@@ -24,7 +24,7 @@ class AppModule extends AbstractModule
 ```
 ### DI trait
 
- * [AuraSqlInject](https://github.com/BEARSunday/BEAR.AuraSqlModule/blob/master/src/AuraSqlInject.php) for `Aura\Sql\ExtendedPdoInterface` interface
+ * [AuraSqlInject](https://github.com/Ray-DI/Ray.AuraSqlModule/blob/master/src/AuraSqlInject.php) for `Aura\Sql\ExtendedPdoInterface` interface
  
 ### Env
 
