@@ -1,6 +1,6 @@
 # ray/aura-sql-module
 
-[Aura.Sql](https://github.com/auraphp/Aura.Sql) Module for Ray.Di
+[Aura.Sql](https://github.com/auraphp/Aura.Sql) Module for [Ray.Di](https://github.com/koriym/Ray.Di)
 
 ## Installation
 
@@ -27,5 +27,7 @@ class AppModule extends AbstractModule
 
  * [AuraSqlInject](https://github.com/Ray-DI/Ray.AuraSqlModule/blob/master/src/AuraSqlInject.php) for `Aura\Sql\ExtendedPdoInterface` interface
  
+### Demo
 
- 
+    $ php docs/demo/run.php
+    // It works!
