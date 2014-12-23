@@ -7,20 +7,44 @@
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdo;
+use Ray\Di\Di\Named;
 use Ray\Di\ProviderInterface;
 
 class AuraSqlProvider implements ProviderInterface
 {
     /**
+     * @var string
+     */
+    private $dsn;
+
+    /**
+     * @var string
+     */
+    private $user;
+
+    /**
+     * @var string
+     */
+    private $password;
+
+    /**
+     * @param array $config
+     *
+     * @Named("aura_sql_config")
+     */
+    public function __construct(array $config)
+    {
+        list($this->dsn, $this->user, $this->password) = $config;
+    }
+    /**
      * {@inheritdoc}
-     * @SuppressWarnings(PHPMD)
      */
     public function get()
     {
         $pdo = new ExtendedPdo(
-            $_ENV['PDO_DSN'],
-            $_ENV['PDO_USER'],
-            $_ENV['PDO_PASSWORD']
+            $this->dsn,
+            $this->user,
+            $this->password
         );
 
         return $pdo;

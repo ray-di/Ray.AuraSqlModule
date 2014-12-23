@@ -11,13 +11,14 @@
 ### Module install
 
 ```php
+use Ray\Di\AbstractModule;
 use Ray\AuraSqlModule\AuraSqlModule;
 
 class AppModule extends AbstractModule
 {
     protected function configure()
     {
-        $this->install(new AuraSqlModule);
+        $this->install(new AuraSqlModule($dsn, $id, $password);
     }
 }
 
@@ -26,10 +27,5 @@ class AppModule extends AbstractModule
 
  * [AuraSqlInject](https://github.com/Ray-DI/Ray.AuraSqlModule/blob/master/src/AuraSqlInject.php) for `Aura\Sql\ExtendedPdoInterface` interface
  
-### Env
-
-    $_ENV['PDO_DSN'] = 'sqlite::memory:';
-    $_ENV['PDO_USER'] = '';
-    $_ENV['PDO_PASSWORD'] = '';
 
  

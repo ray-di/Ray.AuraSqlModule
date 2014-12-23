@@ -13,6 +13,16 @@ use Ray\Di\Scope;
 class AuraSqlModule extends AbstractModule
 {
     /**
+     * @param string $dsn
+     * @param string $user
+     * @param string $password
+     */
+    public function __construct($dsn, $user = '', $password = '')
+    {
+        $this->bind()->annotatedWith('aura_sql_config')->toInstance([$dsn, $user, $password]);
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function configure()
