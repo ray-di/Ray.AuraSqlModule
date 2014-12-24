@@ -1,4 +1,5 @@
 # ray/aura-sql-module
+[![Build Status](https://travis-ci.org/Ray-Di/Ray.AuraSqlModule.svg?branch=master)](https://travis-ci.org/Ray-Di/Ray.AuraSqlModule)
 
 [Aura.Sql](https://github.com/auraphp/Aura.Sql) Module for [Ray.Di](https://github.com/koriym/Ray.Di)
 
