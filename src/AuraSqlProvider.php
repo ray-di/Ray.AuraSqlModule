@@ -36,6 +36,7 @@ class AuraSqlProvider implements ProviderInterface
     {
         list($this->dsn, $this->user, $this->password) = $config;
     }
+
     /**
      * {@inheritdoc}
      */
