@@ -11,6 +11,6 @@ class AuraSqlModuleTest extends \PHPUnit_Framework_TestCase
     public function testModule()
     {
         $instance = (new Injector(new AuraSqlModule('sqlite::memory:'), $_ENV['TMP_DIR']))->getInstance(ExtendedPdoInterface::class);
-        $this->assertInstanceOf(ExtendedPdo::class, $instance);
+        $this->assertInstanceOf('Aura\Sql\ExtendedPdo', $instance);
     }
 }
