@@ -20,8 +20,8 @@ trait AuraSqlInject
      *
      * @\Ray\Di\Di\Inject
      */
-    public function setAuraSql(ExtendedPdoInterface $db = null)
+    public function setAuraSql(ExtendedPdoInterface $pdo = null)
     {
-        $this->db = $db;
+        $this->pdo = $pdo;
     }
 }

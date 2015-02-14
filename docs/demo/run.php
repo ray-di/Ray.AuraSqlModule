@@ -13,7 +13,7 @@ class Fake
 
     public function foo()
     {
-        return $this->db;
+        return $this->pdo;
     }
 }
 
