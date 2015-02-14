@@ -8,8 +8,9 @@
     "description": "aura/sql module for Ray.Di",
     "license": "BSD-3-Clause",
     "require": {
-        "ray/di": "~2.0@dev",
-        "aura/sql": "~2.0"
+        "ray/di": "~2.0",
+        "aura/sql": "~2.0",
+        "aura/sqlquery": "dev-master"
     },
     "autoload": {
         "psr-4": {
@@ -17,7 +18,6 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
     "extra": {
         "branch-alias": {
             "dev-develop": "1.0.x-dev"
