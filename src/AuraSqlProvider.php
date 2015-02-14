@@ -7,7 +7,6 @@
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdo;
-use Ray\Di\Di\Named;
 use Ray\Di\ProviderInterface;
 
 class AuraSqlProvider implements ProviderInterface
@@ -30,7 +29,7 @@ class AuraSqlProvider implements ProviderInterface
     /**
      * @param array $config
      *
-     * @Named("aura_sql_config")
+     * @AuraSqlConfig
      */
     public function __construct(array $config)
     {
