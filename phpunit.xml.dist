@@ -12,8 +12,13 @@
     </logging>
 
     <filter>
+
         <whitelist>
             <directory suffix=".php">src</directory>
+            <exclude>
+                <file>src/DoctrineAnnotations.php</file>
+                <file>src/AuraSqlInject.php</file>
+            </exclude>
         </whitelist>
     </filter>
 </phpunit>

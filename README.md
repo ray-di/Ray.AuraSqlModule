@@ -1,4 +1,6 @@
 # ray/aura-sql-module
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/?branch=develop)
+[![Code Coverage](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/?branch=develop)
 [![Build Status](https://travis-ci.org/Ray-Di/Ray.AuraSqlModule.svg?branch=master)](https://travis-ci.org/Ray-Di/Ray.AuraSqlModule)
 
 [Aura.Sql](https://github.com/auraphp/Aura.Sql) Module for [Ray.Di](https://github.com/koriym/Ray.Di)
