@@ -1,3 +1,3 @@
 <?php
 
-require_once __DIR__ . '/AuraSqlConfig.php';
+require_once __DIR__ . '/Annotation/AuraSqlConfig.php';
