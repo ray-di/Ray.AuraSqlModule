@@ -8,6 +8,7 @@ namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdoInterface;
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use Ray\AuraSqlModule\Annotation\AuraSqlConfig;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 
@@ -21,7 +22,9 @@ class AuraSqlModule extends AbstractModule
     public function __construct($dsn, $user = '', $password = '')
     {
         AnnotationRegistry::registerFile(__DIR__ . '/DoctrineAnnotations.php');
-        $this->bind()->annotatedWith(AuraSqlConfig::class)->toInstance([$dsn, $user, $password]);
+        if ($dsn) {
+            $this->bind()->annotatedWith(AuraSqlConfig::class)->toInstance([$dsn ,$user ,$password]);
+        }
     }
 
     /**
