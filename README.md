@@ -38,7 +38,8 @@ class AppModule extends AbstractModule
 
 #### Master / Slave database
 
-Frequently, high-traffic PHP applications use multiple database servers, generally one for writes, and one or more for reads. `AuraSqlLocatorModule` can locate proper database by registered method name.
+Frequently, high-traffic PHP applications use multiple database servers, generally one for writes, and one or more for reads.
+A `AuraSqlLocatorModule` can be configured to locate proper database by method basis.
 
 ```php
 use Ray\Di\AbstractModule;
@@ -57,8 +58,38 @@ class AppModule extends AbstractModule
         $this->install(new new AuraSqlLocatorModule($locator, ['read'], ['create', 'update', 'delete']);
     }
 }
+
 ```
-In `@AuraSql` annotated class, The `pdo` object is injected to the `$pdo` property. Master / slave database is automatically switched in every method call by registered method name.
+
+When `@ReadOnlyConnection` annotated method is called, Read-only `$pdo`(slave database) is injected to the `$pdo` property. Or `@WriteConnection` for master database connection.
+
+```php
+
+use Ray\AuraSqlModule\Annotation\AuraSql; // <-important
+
+class User
+{
+    public $pdo;
+
+    /**
+     * @ReadOnlyConnection
+     */
+    public function read()
+    {
+         $this->$pdo: // slave db
+    }
+
+    /**
+     * @WriteConnection
+     */
+    public function write()
+    {
+         $this->$pdo: // master db
+    }
+}
+```
+
+In `@AuraSql` annotated class, Master / slave database is automatically switched in every method call by registered method name.
 
 ```php
 
