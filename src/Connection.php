@@ -31,6 +31,11 @@ class Connection
     private $password;
 
     /**
+     * @var ExtendedPdo
+     */
+    private $pdo;
+
+    /**
      * @param string $dsn
      * @param string $id
      * @param string $password
@@ -44,6 +49,10 @@ class Connection
 
     public function __invoke()
     {
-        return new ExtendedPdo($this->dsn, $this->id, $this->password);
+        if (!$this->pdo) {
+            $this->pdo = new ExtendedPdo($this->dsn, $this->id, $this->password);
+        }
+
+        return $this->pdo;
     }
 }
