@@ -65,7 +65,8 @@ When `@ReadOnlyConnection` annotated method is called, Read-only `$pdo`(slave da
 
 ```php
 
-use Ray\AuraSqlModule\Annotation\AuraSql; // <-important
+use Ray\AuraSqlModule\Annotation\ReadOnlyConnection;  // <-important
+use Ray\AuraSqlModule\Annotation\WriteConnection;     // <-important
 
 class User
 {
