@@ -8,23 +8,57 @@ use Ray\Di\Injector;
 
 class AuraSqlLocatorModuleTest extends \PHPUnit_Framework_TestCase
 {
-    public function testModule()
+    /**
+     * @var ExtendedPdo
+     */
+    private $slavePdo;
+
+    /**
+     * @var ExtendedPdo
+     */
+    private $masterPdo;
+
+    /**
+     * @var ConnectionLocator
+     */
+    private $locator;
+
+    /**
+     * @var FakeModel
+     */
+    private $model;
+
+    protected function setUp()
     {
         $locator = new ConnectionLocator;
         $slave = new Connection('sqlite::memory:');
-        $slavePdo = $slave();
+        $this->slavePdo = $slave();
         $locator->setRead('slave', $slave);
         $master = new Connection('sqlite::memory:');
-        $masterPdo = $master();
+        $this->masterPdo = $master();
         $locator->setWrite('master', $master);
+        $this->locator = $locator;
+        $this->model = (new Injector(new AuraSqlLocatorModule($this->locator, ['read'], ['write']), $_ENV['TMP_DIR']))->getInstance(FakeModel::class);
+    }
 
-        /** @var  $model FakeModel */
-        $model = (new Injector(new AuraSqlLocatorModule($locator, ['read'], ['write']), $_ENV['TMP_DIR']))->getInstance(FakeModel::class);
-        $this->assertNull($model->pdo);
-        $model->read();
-        $this->assertInstanceOf(ExtendedPdo::class, $model->pdo);
-        $this->assertSame($slavePdo, $model->pdo);
-        $model->write();
-        $this->assertSame($masterPdo, $model->pdo);
+    public function testLocator()
+    {
+        $this->assertNull($this->model->pdo);
+        $this->model->read();
+        $this->assertInstanceOf(ExtendedPdo::class, $this->model->pdo);
+        $this->assertSame($this->slavePdo, $this->model->pdo);
+        $this->model->write();
+        $this->assertSame($this->masterPdo, $this->model->pdo);
+    }
+
+    public function testAnnotation()
+    {
+        $this->assertNull($this->model->pdo);
+        $this->model->slave();
+        $this->assertInstanceOf(ExtendedPdo::class, $this->model->pdo);
+        $this->assertSame($this->slavePdo, $this->model->pdo);
+        $this->model->master();
+        $this->assertSame($this->masterPdo, $this->model->pdo);
+
     }
 }

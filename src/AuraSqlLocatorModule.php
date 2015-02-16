@@ -10,7 +10,9 @@ use Aura\Sql\ConnectionLocatorInterface;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Ray\AuraSqlModule\Annotation\AuraSql;
 use Ray\AuraSqlModule\Annotation\Read;
+use Ray\AuraSqlModule\Annotation\ReadOnlyConnection;
 use Ray\AuraSqlModule\Annotation\Write;
+use Ray\AuraSqlModule\Annotation\WriteConnection;
 use Ray\Di\AbstractModule;
 
 class AuraSqlLocatorModule extends AbstractModule
@@ -55,10 +57,33 @@ class AuraSqlLocatorModule extends AbstractModule
             $this->bind(ConnectionLocatorInterface::class)->toInstance($this->connectionLocator);
         }
         $methods = array_merge($this->readMethods, $this->writeMethods);
+
+        // locator db
         $this->bindInterceptor(
-            $this->matcher->annotatedWith(AuraSql::class),
-            new IsInMethodMatcher($methods),
+            $this->matcher->annotatedWith(AuraSql::class), // @AuraSql in class
+            $this->matcher->logicalAnd(                    // ! @Slave and ! @Master in method
+                new IsInMethodMatcher($methods),
+                $this->matcher->logicalNot(
+                    $this->matcher->annotatedWith(ReadOnlyConnection::class)
+                ),
+                $this->matcher->logicalNot(
+                    $this->matcher->annotatedWith(Connection::class)
+                )
+            ),
             [AuraSqlConnectionInterceptor::class]
+        );
+
+        // @Slave
+        $this->bindInterceptor(
+            $this->matcher->any(),
+            $this->matcher->annotatedWith(ReadOnlyConnection::class),
+            [AuraSqlSlaveDbInterceptor::class]
+        );
+        // @Master
+        $this->bindInterceptor(
+            $this->matcher->any(),
+            $this->matcher->annotatedWith(WriteConnection::class),
+            [AuraSqlMasterDbInterceptor::class]
         );
     }
 }
