@@ -13,6 +13,7 @@
  
 ### Module install
 
+Single DB
 ```php
 use Ray\Di\AbstractModule;
 use Ray\AuraSqlModule\AuraSqlModule;
@@ -29,12 +30,59 @@ class AppModule extends AbstractModule
         // $this->bind()->annotatedWith(AuraSqlConfig::class)->toInstance([$dsn ,$user ,$password]);
     }
 }
-
 ```
 ### DI trait
 
  * [AuraSqlInject](https://github.com/Ray-DI/Ray.AuraSqlModule/blob/master/src/AuraSqlInject.php) for `Aura\Sql\ExtendedPdoInterface` interface
  
+
+#### Master / Slave database
+
+Frequently, high-traffic PHP applications use multiple database servers, generally one for writes, and one or more for reads. `AuraSqlLocatorModule` can locate proper database by registered method name.
+
+```php
+use Ray\Di\AbstractModule;
+use Ray\AuraSqlModule\AuraSqlModule;
+use Ray\AuraSqlModule\Annotation\AuraSqlConfig;
+use Aura\Sql\ConnectionLocator;
+
+class AppModule extends AbstractModule
+{
+    protected function configure()
+    {
+        $locator = new ConnectionLocator;
+        $locator->setWrite('master', new Connection('mysql:host=localhost;dbname=master', 'username', 'password'));
+        $locator->setRead('slave1', new Connection('mysql:host=localhost;dbname=slave1', 'username', 'password'));
+        $locator->setRead('slave2', new Connection('mysql:host=localhost;dbname=slave2', 'username', 'password'));
+        $this->install(new new AuraSqlLocatorModule($locator, ['read'], ['create', 'update', 'delete']);
+    }
+}
+```
+In `@AuraSql` annotated class, The `pdo` object is injected to the `$pdo` property. Master / slave database is automatically switched in every method call by registered method name.
+
+```php
+
+use Ray\AuraSqlModule\Annotation\AuraSql; // <-important
+
+/**
+ * @AuraSql
+ */
+class User
+{
+    public $pdo;
+
+    public function read()
+    {
+         $this->$pdo: // slave db
+    }
+
+    public function write()
+    {
+         $this->$pdo: // master db
+    }
+}
+```
+
 ### Demo
 
     $ php docs/demo/run.php
