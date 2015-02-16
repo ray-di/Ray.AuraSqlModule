@@ -4,7 +4,7 @@
  *
  * @license http://opensource.org/licenses/bsd-license.php BSD
  */
-namespace Ray\AuraSqlModule;
+namespace Ray\AuraSqlModule\Annotation;
 
 use Ray\Di\Di\Qualifier;
 
@@ -13,7 +13,7 @@ use Ray\Di\Di\Qualifier;
  * @Target("METHOD")
  * @Qualifier
  */
-final class AuraSqlConfig
+final class Read
 {
     public $value;
 }

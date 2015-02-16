@@ -16,12 +16,17 @@
 ```php
 use Ray\Di\AbstractModule;
 use Ray\AuraSqlModule\AuraSqlModule;
+use Ray\AuraSqlModule\Annotation\AuraSqlConfig;
 
 class AppModule extends AbstractModule
 {
     protected function configure()
     {
         $this->install(new AuraSqlModule('mysql:host=localhost;dbname=test', 'username', 'password');
+        
+        // or
+        // $this->install(new AuraSqlModule);
+        // $this->bind()->annotatedWith(AuraSqlConfig::class)->toInstance([$dsn ,$user ,$password]);
     }
 }
 
@@ -35,7 +40,7 @@ class AppModule extends AbstractModule
     $ php docs/demo/run.php
     // It works!
 
-### Requiuments
+### Requirements
 
  * PHP 5.4+
  * hhvm
