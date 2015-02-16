@@ -2,6 +2,11 @@
 
 namespace Ray\AuraSqlModule;
 
+use Ray\AuraSqlModule\Annotation\AuraSql;
+
+/**
+ * @AuraSql
+ */
 class FakeModel
 {
     public $pdo;

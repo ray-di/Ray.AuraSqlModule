@@ -7,6 +7,7 @@
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdo;
+use Ray\AuraSqlModule\Annotation\AuraSqlConfig;
 use Ray\Di\ProviderInterface;
 
 class AuraSqlProvider implements ProviderInterface

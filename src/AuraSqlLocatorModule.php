@@ -31,14 +31,16 @@ class AuraSqlLocatorModule extends AbstractModule
      */
     private $writeMethods;
 
-    public function __construct(ConnectionLocatorInterface $connectionLocator = null, array $readMethods = [], array $writeMethods = [])
-    {
+    public function __construct(
+        ConnectionLocatorInterface $connectionLocator = null,
+        array $readMethods = [],
+        array $writeMethods = []
+    ) {
         AnnotationRegistry::registerFile(__DIR__ . '/DoctrineAnnotations.php');
         $this->connectionLocator = $connectionLocator;
         $this->readMethods = $readMethods;
         $this->writeMethods = $writeMethods;
     }
-
 
     /**
      * {@inheritdoc}
@@ -52,9 +54,10 @@ class AuraSqlLocatorModule extends AbstractModule
         if ($this->connectionLocator) {
             $this->bind(ConnectionLocatorInterface::class)->toInstance($this->connectionLocator);
         }
+        $methods = array_merge($this->readMethods, $this->writeMethods);
         $this->bindInterceptor(
             $this->matcher->annotatedWith(AuraSql::class),
-            $this->matcher->startsWith('on'),
+            new IsInMethodMatcher($methods),
             [AuraSqlConnectionInterceptor::class]
         );
     }

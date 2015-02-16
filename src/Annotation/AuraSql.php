@@ -6,8 +6,6 @@
  */
 namespace Ray\AuraSqlModule\Annotation;
 
-use Ray\Di\Di\Qualifier;
-
 /**
  * @Annotation
  * @Target("CLASS")

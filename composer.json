@@ -17,6 +17,11 @@
             "Ray\\AuraSqlModule\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Ray\\AuraSqlModule\\": "tests/Fake/"
+        }
+    },
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
