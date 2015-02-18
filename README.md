@@ -77,7 +77,7 @@ class User
      */
     public function read()
     {
-         $this->$pdo: // slave db
+         $this->pdo: // slave db
     }
 
     /**
@@ -85,7 +85,7 @@ class User
      */
     public function write()
     {
-         $this->$pdo: // master db
+         $this->pdo: // master db
     }
 }
 ```
@@ -105,12 +105,12 @@ class User
 
     public function read()
     {
-         $this->$pdo: // slave db
+         $this->pdo: // slave db
     }
 
     public function write()
     {
-         $this->$pdo: // master db
+         $this->pdo: // master db
     }
 }
 ```
