@@ -73,17 +73,19 @@ class AuraSqlLocatorModule extends AbstractModule
             [AuraSqlConnectionInterceptor::class]
         );
 
-        // @Slave
+        // @ReadOnlyConnection
         $this->bindInterceptor(
             $this->matcher->any(),
             $this->matcher->annotatedWith(ReadOnlyConnection::class),
             [AuraSqlSlaveDbInterceptor::class]
         );
-        // @Master
+        // @WriteConnection
         $this->bindInterceptor(
             $this->matcher->any(),
             $this->matcher->annotatedWith(WriteConnection::class),
             [AuraSqlMasterDbInterceptor::class]
         );
+        // @Transactional
+        $this->install(new TransactionalModule);
     }
 }

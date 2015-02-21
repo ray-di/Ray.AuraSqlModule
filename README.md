@@ -65,8 +65,8 @@ When `@ReadOnlyConnection` annotated method is called, Read-only `$pdo`(slave da
 
 ```php
 
-use Ray\AuraSqlModule\Annotation\ReadOnlyConnection;  // <-important
-use Ray\AuraSqlModule\Annotation\WriteConnection;     // <-important
+use Ray\AuraSqlModule\Annotation\ReadOnlyConnection; // important
+use Ray\AuraSqlModule\Annotation\WriteConnection;    // important
 
 class User
 {
@@ -94,7 +94,7 @@ In `@AuraSql` annotated class, Master / slave database is automatically switched
 
 ```php
 
-use Ray\AuraSqlModule\Annotation\AuraSql; // <-important
+use Ray\AuraSqlModule\Annotation\AuraSql; // important
 
 /**
  * @AuraSql
@@ -115,6 +115,27 @@ class User
 }
 ```
 
+Rollback a `@Transactional` annotated method.
+
+```php
+
+use Ray\AuraSqlModule\Annotation\WriteConnection; // important
+use Ray\AuraSqlModule\Annotation\Transactional;   // important
+
+class User
+{
+    public $pdo;
+
+    /**
+     * @WriteConnection
+     * @Transactional
+     */
+    public function write()
+    {
+         // $this->pdo->rollback(); when exception thrown.
+    }
+}
+```
 ### Demo
 
     $ php docs/demo/run.php

@@ -9,6 +9,7 @@ namespace Ray\AuraSqlModule;
 use Aura\Sql\ExtendedPdoInterface;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Ray\AuraSqlModule\Annotation\AuraSqlConfig;
+use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 
@@ -33,5 +34,13 @@ class AuraSqlModule extends AbstractModule
     protected function configure()
     {
         $this->bind(ExtendedPdoInterface::class)->toProvider(AuraSqlProvider::class)->in(Scope::SINGLETON);
+
+        // @Transactional
+        $this->bindInterceptor(
+            $this->matcher->any(),
+            $this->matcher->annotatedWith(Transactional::class),
+            [TransactionalInterceptor::class]
+        );
+        $this->install(new TransactionalModule);
     }
 }
