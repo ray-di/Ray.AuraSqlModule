@@ -14,6 +14,7 @@ use Ray\AuraSqlModule\Annotation\Write;
 
 class AuraSqlConnectionInterceptor implements MethodInterceptor
 {
+    const PROP = 'pdo';
 
     /**
      * @var ConnectionLocatorInterface
@@ -51,7 +52,10 @@ class AuraSqlConnectionInterceptor implements MethodInterceptor
     public function invoke(MethodInvocation $invocation)
     {
         $connection =  $this->getConnection($invocation);
-        $invocation->getThis()->pdo = $connection;
+        $object = $invocation->getThis();
+        $ref = new \ReflectionProperty($object, self::PROP);
+        $ref->setAccessible(true);
+        $ref->setValue($object, $connection);
     }
 
     /**

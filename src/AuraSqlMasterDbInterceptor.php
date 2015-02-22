@@ -12,6 +12,8 @@ use Ray\Aop\MethodInvocation;
 
 class AuraSqlMasterDbInterceptor implements MethodInterceptor
 {
+    const PROP = 'pdo';
+
     /**
      * @var ConnectionLocatorInterface
      */
@@ -30,7 +32,12 @@ class AuraSqlMasterDbInterceptor implements MethodInterceptor
      */
     public function invoke(MethodInvocation $invocation)
     {
+        $object = $invocation->getThis();
+        $ref = new \ReflectionProperty($object, self::PROP);
+        $ref->setAccessible(true);
         $connection = $this->connectionLocator->getWrite();
-        $invocation->getThis()->pdo = $connection;
+        $ref->setValue($object, $connection);
+
+        return $invocation->proceed();
     }
 }
