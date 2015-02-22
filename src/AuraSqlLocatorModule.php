@@ -61,7 +61,7 @@ class AuraSqlLocatorModule extends AbstractModule
         // locator db
         $this->bindInterceptor(
             $this->matcher->annotatedWith(AuraSql::class), // @AuraSql in class
-            $this->matcher->logicalAnd(                    // ! @Slave and ! @Master in method
+            $this->matcher->logicalAnd(                    // ! @ReadOnlyConnection and ! @Master in method
                 new IsInMethodMatcher($methods),
                 $this->matcher->logicalNot(
                     $this->matcher->annotatedWith(ReadOnlyConnection::class)
