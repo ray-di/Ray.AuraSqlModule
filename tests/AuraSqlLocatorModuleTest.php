@@ -4,6 +4,7 @@ namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocator;
 use Aura\Sql\ExtendedPdo;
+use Ray\AuraSqlModule\Exception\RollbackException;
 use Ray\Di\Injector;
 
 class AuraSqlLocatorModuleTest extends \PHPUnit_Framework_TestCase
@@ -43,22 +44,27 @@ class AuraSqlLocatorModuleTest extends \PHPUnit_Framework_TestCase
 
     public function testLocator()
     {
-        $this->assertNull($this->model->pdo);
+        $this->assertNull($this->model->getPdo());
         $this->model->read();
-        $this->assertInstanceOf(ExtendedPdo::class, $this->model->pdo);
-        $this->assertSame($this->slavePdo, $this->model->pdo);
+        $this->assertInstanceOf(ExtendedPdo::class, $this->model->getPdo());
+        $this->assertSame($this->slavePdo, $this->model->getPdo());
         $this->model->write();
-        $this->assertSame($this->masterPdo, $this->model->pdo);
+        $this->assertSame($this->masterPdo, $this->model->getPdo());
     }
 
     public function testAnnotation()
     {
-        $this->assertNull($this->model->pdo);
+        $this->assertNull($this->model->getPdo());
         $this->model->slave();
-        $this->assertInstanceOf(ExtendedPdo::class, $this->model->pdo);
-        $this->assertSame($this->slavePdo, $this->model->pdo);
+        $this->assertInstanceOf(ExtendedPdo::class, $this->model->getPdo());
+        $this->assertSame($this->slavePdo, $this->model->getPdo());
         $this->model->master();
-        $this->assertSame($this->masterPdo, $this->model->pdo);
+        $this->assertSame($this->masterPdo, $this->model->getPdo());
+    }
 
+    public function testTransactional()
+    {
+        $this->setExpectedException(RollbackException::class);
+        $this->model->dbError();
     }
 }

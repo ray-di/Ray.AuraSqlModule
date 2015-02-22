@@ -2,8 +2,10 @@
 
 namespace Ray\AuraSqlModule;
 
+use Aura\Sql\ExtendedPdo;
 use Ray\AuraSqlModule\Annotation\AuraSql;
 use Ray\AuraSqlModule\Annotation\ReadOnlyConnection;
+use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\AuraSqlModule\Annotation\WriteConnection;
 
 /**
@@ -11,7 +13,16 @@ use Ray\AuraSqlModule\Annotation\WriteConnection;
  */
 class FakeModel
 {
-    public $pdo;
+
+    /**
+     * @var ExtendedPdo
+     */
+    protected $pdo;
+
+    public function getPdo()
+    {
+        return $this->pdo;
+    }
 
     public function read()
     {
@@ -30,8 +41,27 @@ class FakeModel
 
     /**
      * @WriteConnection
+     * @Transactional
      */
     public function master()
     {
     }
+
+    /**
+     * @WriteConnection
+     * @Transactional
+     */
+    public function dbError()
+    {
+        $this->pdo->exec('xxx');
+    }
+
+    /**
+     * @Transactional
+     */
+    public function noDb()
+    {
+        $this->pdo->exec('xxx');
+    }
+
 }

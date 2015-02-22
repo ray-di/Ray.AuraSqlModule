@@ -8,6 +8,7 @@ namespace Ray\AuraSqlModule;
 
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
+use Ray\AuraSqlModule\Exception\RollbackException;
 
 class TransactionalInterceptor implements MethodInterceptor
 {
@@ -28,7 +29,7 @@ class TransactionalInterceptor implements MethodInterceptor
             $db->commit();
         } catch (\Exception $e) {
             $db->rollback();
-            throw $e;
+            throw new RollbackException($e, 0, $e);
         }
     }
 }
