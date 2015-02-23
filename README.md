@@ -115,7 +115,7 @@ class User
 }
 ```
 
-Rollback a `@Transactional` annotated method.
+Any method marked with `@Transactional` will have a transaction started before, and ended after it is called.
 
 ```php
 
