@@ -24,12 +24,12 @@ class AuraSqlLocatorModule extends AbstractModule
     private $connectionLocator;
 
     /**
-     * @var array
+     * @var string[]
      */
     private $readMethods;
 
     /**
-     * @var array
+     * @var string[]
      */
     private $writeMethods;
 
@@ -49,7 +49,7 @@ class AuraSqlLocatorModule extends AbstractModule
      */
     protected function configure()
     {
-        if ($this->readMethods && $this->writeMethods) {
+        if ((bool)$this->readMethods && (bool)$this->writeMethods) {
             $this->bind()->annotatedWith(Read::class)->toInstance($this->readMethods);
             $this->bind()->annotatedWith(Write::class)->toInstance($this->writeMethods);
         }
@@ -57,8 +57,20 @@ class AuraSqlLocatorModule extends AbstractModule
             $this->bind(ConnectionLocatorInterface::class)->toInstance($this->connectionLocator);
         }
         $methods = array_merge($this->readMethods, $this->writeMethods);
+        // @AuraSql
+        $this->installLocatorDb($methods);
+        // @ReadOnlyConnection @WriteConnection
+        $this->installReadWriteConnection();
+        // @Transactional
+        $this->install(new TransactionalModule);
+    }
 
-        // locator db
+    /**
+     * @param string[] $methods
+     */
+    private function installLocatorDb(array $methods)
+    {
+    // locator db
         $this->bindInterceptor(
             $this->matcher->annotatedWith(AuraSql::class), // @AuraSql in class
             $this->matcher->logicalAnd(                    // ! @ReadOnlyConnection and ! @Master in method
@@ -72,8 +84,11 @@ class AuraSqlLocatorModule extends AbstractModule
             ),
             [AuraSqlConnectionInterceptor::class]
         );
+    }
 
-        // @ReadOnlyConnection
+    protected function installReadWriteConnection()
+    {
+// @ReadOnlyConnection
         $this->bindInterceptor(
             $this->matcher->any(),
             $this->matcher->annotatedWith(ReadOnlyConnection::class),
@@ -85,7 +100,5 @@ class AuraSqlLocatorModule extends AbstractModule
             $this->matcher->annotatedWith(WriteConnection::class),
             [AuraSqlMasterDbInterceptor::class]
         );
-        // @Transactional
-        $this->install(new TransactionalModule);
     }
 }
