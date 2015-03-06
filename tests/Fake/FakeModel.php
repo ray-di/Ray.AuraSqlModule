@@ -26,10 +26,12 @@ class FakeModel
 
     public function read()
     {
+        return true;
     }
 
     public function write()
     {
+        return true;
     }
 
     /**
@@ -37,6 +39,7 @@ class FakeModel
      */
     public function slave()
     {
+        return true;
     }
 
     /**
@@ -45,6 +48,7 @@ class FakeModel
      */
     public function master()
     {
+        return true;
     }
 
     /**

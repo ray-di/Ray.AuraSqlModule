@@ -48,17 +48,20 @@ class AuraSqlLocatorModuleTest extends \PHPUnit_Framework_TestCase
         $this->model->read();
         $this->assertInstanceOf(ExtendedPdo::class, $this->model->getPdo());
         $this->assertSame($this->slavePdo, $this->model->getPdo());
-        $this->model->write();
+        $hasReturn = $this->model->write();
         $this->assertSame($this->masterPdo, $this->model->getPdo());
+        $this->assertTrue($hasReturn);
     }
 
     public function testAnnotation()
     {
         $this->assertNull($this->model->getPdo());
-        $this->model->slave();
+        $hasReturn = $this->model->slave();
         $this->assertInstanceOf(ExtendedPdo::class, $this->model->getPdo());
+        $this->assertTrue($hasReturn);
         $this->assertSame($this->slavePdo, $this->model->getPdo());
-        $this->model->master();
+        $hasReturn = $this->model->master();
+        $this->assertTrue($hasReturn);
         $this->assertSame($this->masterPdo, $this->model->getPdo());
     }
 
