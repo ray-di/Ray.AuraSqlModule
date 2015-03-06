@@ -70,7 +70,7 @@ class AuraSqlLocatorModule extends AbstractModule
      */
     private function installLocatorDb(array $methods)
     {
-    // locator db
+        // locator db
         $this->bindInterceptor(
             $this->matcher->annotatedWith(AuraSql::class), // @AuraSql in class
             $this->matcher->logicalAnd(                    // ! @ReadOnlyConnection and ! @Master in method
@@ -88,7 +88,7 @@ class AuraSqlLocatorModule extends AbstractModule
 
     protected function installReadWriteConnection()
     {
-// @ReadOnlyConnection
+        // @ReadOnlyConnection
         $this->bindInterceptor(
             $this->matcher->any(),
             $this->matcher->annotatedWith(ReadOnlyConnection::class),

@@ -67,5 +67,4 @@ class FakeModel
     {
         $this->pdo->exec('xxx');
     }
-
 }
