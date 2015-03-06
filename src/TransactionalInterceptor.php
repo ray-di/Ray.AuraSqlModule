@@ -25,11 +25,13 @@ class TransactionalInterceptor implements MethodInterceptor
         $db = $ref->getValue($object);
         $db->beginTransaction();
         try {
-            $invocation->proceed();
+            $result = $invocation->proceed();
             $db->commit();
         } catch (\Exception $e) {
             $db->rollback();
             throw new RollbackException($e, 0, $e);
         }
+
+        return $result;
     }
 }
