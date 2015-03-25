@@ -40,7 +40,7 @@ class AppModule extends AbstractModule
 #### Master / Slave database
 
 Frequently, high-traffic PHP applications use multiple database servers, generally one for writes, and one or more for reads.
-With `AuraSqlReplicationModule`, master / slave database is automatically chosen by `$_SERVER['REQUEST_METHOD']` value. (slave is chosen only when request is GET)
+With `AuraSqlReplicationModule`, master / slave database is automatically chosen by `$_SERVER['REQUEST_METHOD']` value. (slave is chosen only when request is `GET`)
  
 ```php
 use Ray\Di\AbstractModule;
