@@ -40,8 +40,8 @@ class AppModule extends AbstractModule
 #### Master / Slave database
 
 Frequently, high-traffic PHP applications use multiple database servers, generally one for writes, and one or more for reads.
-A `AuraSqlLocatorModule` can be configured to locate proper database by method basis.
-
+With `AuraSqlReplicationModule`, master / slave database is automatically chosen by `$_SERVER['REQUEST_METHOD']` value. (slave is chosen only when request is GET)
+ 
 ```php
 use Ray\Di\AbstractModule;
 use Ray\AuraSqlModule\AuraSqlModule;
@@ -56,13 +56,13 @@ class AppModule extends AbstractModule
         $locator->setWrite('master', new Connection('mysql:host=localhost;dbname=master', 'username', 'password'));
         $locator->setRead('slave1', new Connection('mysql:host=localhost;dbname=slave1', 'username', 'password'));
         $locator->setRead('slave2', new Connection('mysql:host=localhost;dbname=slave2', 'username', 'password'));
-        $this->install(new new AuraSqlLocatorModule($locator, ['read'], ['create', 'update', 'delete']);
+        $this->install(new new AuraSqlReplicationModule($locator);
     }
 }
 
 ```
 
-When `@ReadOnlyConnection` annotated method is called, Read-only `$pdo`(slave database) is injected to the `$pdo` property. Or `@WriteConnection` for master database connection.
+Or when `@ReadOnlyConnection` annotated method is called, Read-only `$pdo`(slave database) is injected to the `$pdo` property. Or `@WriteConnection` for master database connection.
 
 ```php
 
@@ -91,7 +91,7 @@ class User
 }
 ```
 
-In `@AuraSql` annotated class, Master / slave database is automatically switched in every method call by registered method name.
+Master / slave database is automatically switched to inject 
 
 ```php
 
