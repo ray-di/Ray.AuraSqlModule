@@ -10,7 +10,7 @@
     "require": {
         "ray/di": "~2.0",
         "aura/sql": "~2.0",
-        "aura/sqlquery": "dev-master"
+        "aura/sqlquery": "~2.4"
     },
     "autoload": {
         "psr-4": {
@@ -20,12 +20,6 @@
     "autoload-dev": {
         "psr-4": {
             "Ray\\AuraSqlModule\\": "tests/Fake/"
-        }
-    },
-    "minimum-stability": "dev",
-    "extra": {
-        "branch-alias": {
-            "dev-develop": "1.0.x-dev"
         }
     }
 }
