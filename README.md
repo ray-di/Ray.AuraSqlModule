@@ -56,7 +56,7 @@ class AppModule extends AbstractModule
         $locator->setWrite('master', new Connection('mysql:host=localhost;dbname=master', 'username', 'password'));
         $locator->setRead('slave1', new Connection('mysql:host=localhost;dbname=slave1', 'username', 'password'));
         $locator->setRead('slave2', new Connection('mysql:host=localhost;dbname=slave2', 'username', 'password'));
-        $this->install(new new AuraSqlReplicationModule($locator);
+        $this->install(new AuraSqlReplicationModule($locator));
     }
 }
 
