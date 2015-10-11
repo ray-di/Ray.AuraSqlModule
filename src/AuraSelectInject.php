@@ -1,0 +1,27 @@
+<?php
+/**
+ * This file is part of the Ray.AuraSqlModule package
+ *
+ * @license http://opensource.org/licenses/bsd-license.php BSD
+ */
+namespace Ray\AuraSqlModule;
+
+use Aura\SqlQuery\Common\SelectInterface;
+
+trait AuraSelectInject
+{
+    /**
+     * @var SelectInterface
+     */
+    protected $select;
+
+    /**
+     * @param SelectInterface $select
+     *
+     * @\Ray\Di\Di\Inject
+     */
+    public function setAuraSqlQuerySelect(SelectInterface $select)
+    {
+        $this->select = $select;
+    }
+}
