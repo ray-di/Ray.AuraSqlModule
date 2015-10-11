@@ -1,7 +1,7 @@
 # Ray.AuraSqlModule
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/?branch=develop)
-[![Code Coverage](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/?branch=develop)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ray-di/Ray.AuraSqlModule/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/ray-di/Ray.AuraSqlModule/?branch=develop)
+[![Code Coverage](https://scrutinizer-ci.com/g/ray-di/Ray.AuraSqlModule/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/ray-di/Ray.AuraSqlModule/?branch=develop)
 [![Build Status](https://travis-ci.org/ray-di/Ray.AuraSqlModule.svg?branch=develop)](https://travis-ci.org/ray-di/Ray.AuraSqlModule)
 
 [Aura.Sql](https://github.com/auraphp/Aura.Sql) Module for [Ray.Di](https://github.com/koriym/Ray.Di)
@@ -14,29 +14,24 @@
  
 ### Module install
 
-Single DB
 ```php
 use Ray\Di\AbstractModule;
 use Ray\AuraSqlModule\AuraSqlModule;
-use Ray\AuraSqlModule\Annotation\AuraSqlConfig;
+use Ray\AuraSqlModule\AuraSqlQueryModule;
 
 class AppModule extends AbstractModule
 {
     protected function configure()
     {
         $this->install(new AuraSqlModule('mysql:host=localhost;dbname=test', 'username', 'password');
-        
-        // or
-        // $this->install(new AuraSqlModule);
-        // $this->bind()->annotatedWith(AuraSqlConfig::class)->toInstance([$dsn ,$user ,$password]);
+        $this->install(new AuraSqlQueryModule('mysql'); // optional query builder
     }
 }
 ```
 ### DI trait
 
- * [AuraSqlInject](https://github.com/Ray-DI/Ray.AuraSqlModule/blob/master/src/AuraSqlInject.php) for `Aura\Sql\ExtendedPdoInterface` interface
+ * [AuraSqlInject](https://github.com/ray-di/Ray.AuraSqlModule/blob/master/src/AuraSqlInject.php) for `Aura\Sql\ExtendedPdoInterface` interface
  
-
 #### Master / Slave database
 
 Frequently, high-traffic PHP applications use multiple database servers, generally one for writes, and one or more for reads.
@@ -137,6 +132,45 @@ class User
     }
 }
 ```
+## Query Builder
+
+[Aura.SqlQuery](https://github.com/auraphp/Aura.SqlQuery) provides query builders for MySQL, Postgres, SQLite, and Microsoft SQL Server. 
+
+```php
+use Aura\SqlQuery\Common\SelectInterface;
+use Aura\SqlQuery\Common\InsertInterface;
+use Aura\SqlQuery\Common\UpdateInterface
+use Aura\SqlQuery\Common\DeleteInterface;
+
+class Foo
+{
+    private $pdo;
+    private $select;
+
+    public function __construct(ExtendedPdoInterface $pdo, SelectInterface $select)
+    {
+        $this->pdo = $pdo;
+        $this->select = $select;
+    }
+
+    public function selectDb()
+    {
+        $this->select
+            ->distinct()                    // SELECT DISTINCT
+            ->cols(array(                   // select these columns
+                'id',                       // column name
+                'name AS namecol',          // one way of aliasing
+                'col_name' => 'col_alias',  // another way of aliasing
+                'COUNT(foo) AS foo_count'   // embed calculations directly
+            ))
+            ->from('foo AS f');              // FROM these tables
+        $sth = $this->pdo->prepare($this->select->getStatement());
+        // bind the values and execute
+        $sth->execute($this->select->getBindValues());
+        // get the results back as an associative array
+        $result = $sth->fetch(PDO::FETCH_ASSOC);
+```
+
 ### Demo
 
     $ php docs/demo/run.php
