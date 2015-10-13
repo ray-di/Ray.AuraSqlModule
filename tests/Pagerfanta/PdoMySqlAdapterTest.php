@@ -26,19 +26,13 @@ class PdoMySqlAdapterTest extends AbstractPdoTestCase
         $expected = [
           [
             'id' => '3',
-            0 => '3',
             'username' => 'BEAR',
-            1 => 'BEAR',
             'post_content' => 'entry #3',
-            2 => 'entry #3',
           ],
           [
               'id' => '4',
-              0 => '4',
               'username' => 'BEAR',
-              1 => 'BEAR',
               'post_content' => 'entry #4',
-              2 => 'entry #4',
           ],
         ];
         $this->assertSame($expected, $this->adapter->getSlice(2, 2));
