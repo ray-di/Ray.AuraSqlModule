@@ -24,7 +24,7 @@ class AuraSqlModule extends AbstractModule
     public function __construct($dsn, $user = '', $password = '')
     {
         if ($dsn) {
-            $this->bind()->annotatedWith(AuraSqlConfig::class)->toInstance([$dsn ,$user ,$password]);
+            $this->bind()->annotatedWith(AuraSqlConfig::class)->toInstance([$dsn, $user, $password]);
         }
     }
 

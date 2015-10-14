@@ -106,6 +106,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
             $this->routeGenerator,
             $this->viewOptions
         );
+
         return $html;
     }
 }

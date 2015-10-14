@@ -18,7 +18,7 @@ class Fake
 }
 
 $fake = (new Injector(new AuraSqlModule('sqlite::memory:')))->getInstance(Fake::class);
-/** @var $fake Fake */
+/* @var $fake Fake */
 $works = ($fake->foo() instanceof ExtendedPdo);
 
-echo ($works ? 'It works!' : 'It DOES NOT work!') . PHP_EOL;
+echo($works ? 'It works!' : 'It DOES NOT work!') . PHP_EOL;

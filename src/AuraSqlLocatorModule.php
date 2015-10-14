@@ -17,7 +17,6 @@ use Ray\Di\AbstractModule;
 
 class AuraSqlLocatorModule extends AbstractModule
 {
-
     /**
      * @var ConnectionLocatorInterface
      */
@@ -48,7 +47,7 @@ class AuraSqlLocatorModule extends AbstractModule
      */
     protected function configure()
     {
-        if ((bool)$this->readMethods && (bool)$this->writeMethods) {
+        if ((bool) $this->readMethods && (bool) $this->writeMethods) {
             $this->bind()->annotatedWith(Read::class)->toInstance($this->readMethods);
             $this->bind()->annotatedWith(Write::class)->toInstance($this->writeMethods);
         }
@@ -72,7 +71,7 @@ class AuraSqlLocatorModule extends AbstractModule
         // locator db
         $this->bindInterceptor(
             $this->matcher->annotatedWith(AuraSql::class), // @AuraSql in class
-            $this->matcher->logicalAnd(                    // ! @ReadOnlyConnection and ! @Master in method
+            $this->matcher->logicalAnd(// ! @ReadOnlyConnection and ! @Master in method
                 new IsInMethodMatcher($methods),
                 $this->matcher->logicalNot(
                     $this->matcher->annotatedWith(ReadOnlyConnection::class)

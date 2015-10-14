@@ -68,10 +68,10 @@ class AuraSqlConnectionInterceptor implements MethodInterceptor
     private function getConnection(MethodInvocation $invocation)
     {
         $methodName = $invocation->getMethod()->name;
-        if (in_array($methodName ,$this->readsMethods)) {
+        if (in_array($methodName, $this->readsMethods)) {
             return $this->connectionLocator->getRead();
         }
-        if (in_array($methodName ,$this->writeMethods)) {
+        if (in_array($methodName, $this->writeMethods)) {
             return $this->connectionLocator->getWrite();
         }
 

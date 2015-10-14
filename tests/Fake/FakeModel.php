@@ -13,7 +13,6 @@ use Ray\AuraSqlModule\Annotation\WriteConnection;
  */
 class FakeModel
 {
-
     /**
      * @var ExtendedPdo
      */

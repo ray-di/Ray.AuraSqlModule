@@ -8,7 +8,7 @@ class AuraSqlQueryPagerModuleTest extends AuraSqlQueryTestCase
     public function testNewInstance()
     {
         $factory = (new Injector(new AuraSqlPagerModule()))->getInstance(AuraSqlQueryPagerFactoryInterface::class);
-        /** @var $factory AuraSqlQueryPagerFactoryInterface */
+        /* @var $factory AuraSqlQueryPagerFactoryInterface */
         $this->assertInstanceOf(AuraSqlQueryPagerFactory::class, $factory);
         $pager = $factory->newInstance($this->pdo, $this->select, 1, '/?page={page}&category=sports');
         $this->assertInstanceOf(AuraSqlQueryPager::class, $pager);

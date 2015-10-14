@@ -28,7 +28,7 @@ class AppModule extends AbstractModule
 }
 
 $fake = (new Injector(new AppModule))->getInstance(Fake::class);
-/** @var $fake Fake */
+/* @var $fake Fake */
 $works = ($fake->foo() instanceof ExtendedPdo);
 
-echo ($works ? 'It works!' : 'It DOES NOT work!') . PHP_EOL;
+echo($works ? 'It works!' : 'It DOES NOT work!') . PHP_EOL;

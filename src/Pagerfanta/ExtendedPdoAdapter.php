@@ -82,6 +82,7 @@ class ExtendedPdoAdapter implements AdapterInterface
             if ($offset) {
                 $clause .= " OFFSET {$offset}";
             }
+
             return $clause;
         } elseif ($has_limit && $length) {
             return PHP_EOL . "LIMIT {$length}";
@@ -89,7 +90,6 @@ class ExtendedPdoAdapter implements AdapterInterface
 
         return '';
     }
-
 
     /**
      * Return count query
@@ -99,8 +99,8 @@ class ExtendedPdoAdapter implements AdapterInterface
      * @return string
      *
      * Taken from pear/pager and modified.
-     * @see https://github.com/pear/Pager/blob/master/examples/Pager_Wrapper.php
      *
+     * @see https://github.com/pear/Pager/blob/master/examples/Pager_Wrapper.php
      */
     public function rewriteCountQuery($query)
     {
@@ -120,8 +120,8 @@ class ExtendedPdoAdapter implements AdapterInterface
             return false;
         }
         $queryCount = preg_replace('/(?:.*)\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $query, 1);
-        list($queryCount,) = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
-        list($queryCount,) = preg_split('/\bLIMIT\b/is', $queryCount);
+        list($queryCount, ) = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
+        list($queryCount, ) = preg_split('/\bLIMIT\b/is', $queryCount);
 
         return trim($queryCount);
     }

@@ -8,7 +8,7 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Pagerfanta\Pagerfanta;
 
-final class Pager
+final class PagerConfig
 {
     /**
      * @var int

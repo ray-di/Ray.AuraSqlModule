@@ -104,18 +104,18 @@ class AuraSqlQueryAdapterTest extends AuraSqlQueryTestCase
         $this->assertSame(50, $nbResults);
 
         $currentPageResults = $pagerfanta->getCurrentPageResults();
-        $expected = array (
-                array (
+        $expected = [
+                [
                     'id' => '3',
                     'username' => 'Jon Doe',
                     'post_content' => 'Post #3',
-                ),
-                array (
+                ],
+                [
                     'id' => '4',
                     'username' => 'Jon Doe',
                     'post_content' => 'Post #4',
-                ),
-        );
+                ],
+        ];
         $this->assertSame($expected, $currentPageResults);
     }
 }

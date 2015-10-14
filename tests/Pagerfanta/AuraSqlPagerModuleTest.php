@@ -8,7 +8,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
     public function testNewInstance()
     {
         $factory = (new Injector(new AuraSqlPagerModule()))->getInstance(AuraSqlPagerFactoryInterface::class);
-        /** @var $factory AuraSqlPagerFactoryInterface */
+        /* @var $factory AuraSqlPagerFactoryInterface */
         $this->assertInstanceOf(AuraSqlPagerFactory::class, $factory);
         $sql = 'SELECT * FROM posts';
         $pager = $factory->newInstance($this->pdo, $sql, 1, '/?page={page}&category=sports');
