@@ -6,13 +6,13 @@
         "PDO"
     ],
     "description": "aura/sql module for Ray.Di",
-    "license": "BSD-3-Clause",
+    "license": "MIT",
     "require": {
         "ray/di": "~2.0",
         "aura/sql": "~2.0",
         "aura/sqlquery": "~2.4",
         "pagerfanta/pagerfanta": "~1.0",
-        "rize/uri-template": "^0.3.0"
+        "rize/uri-template": "~0.3.0"
     },
     "autoload": {
         "psr-4": {
