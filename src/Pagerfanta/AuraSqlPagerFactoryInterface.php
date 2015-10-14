@@ -11,12 +11,12 @@ use Aura\Sql\ExtendedPdoInterface;
 interface AuraSqlPagerFactoryInterface
 {
     /**
-     * @param ExtendedPdoInterface $pdo
-     * @param string               $sql
-     * @param string               $page
-     * @param int                  $paging
+     * @param ExtendedPdoInterface    $pdo
+     * @param string                  $sql
+     * @param int                     $page
+     * @param string                  $uriTemplate
      *
-     * @return AuraSqlPager
+     * @return AuraSqlPagerInterface
      */
-    public function newInstance(ExtendedPdoInterface $pdo, $sql, $page, $paging);
+    public function newInstance(ExtendedPdoInterface $pdo, $sql, $paging, $uriTemplate);
 }

@@ -9,6 +9,7 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 use Aura\Sql\ExtendedPdoInterface;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\ViewInterface;
+use Ray\AuraSqlModule\Exception\NotInitialized;
 use Ray\Di\Di\Named;
 
 class AuraSqlPager implements AuraSqlPagerInterface
@@ -41,11 +42,6 @@ class AuraSqlPager implements AuraSqlPagerInterface
     /**
      * @var int
      */
-    private $page;
-
-    /**
-     * @var int
-     */
     private $paging;
 
     /**
@@ -55,34 +51,38 @@ class AuraSqlPager implements AuraSqlPagerInterface
      *
      * @Named("viewOptions=view_options")
      */
-    public function __construct(ViewInterface $view, RouteGeneratorInterface $routeGenerator, array $viewOptions)
+    public function __construct(ViewInterface $view, array $viewOptions)
     {
         $this->view = $view;
-        $this->routeGenerator = $routeGenerator;
         $this->viewOptions = $viewOptions;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function init(ExtendedPdoInterface $pdo, $sql, $page, $paging)
+    public function init(ExtendedPdoInterface $pdo, $sql, $paging, RouteGeneratorInterface $routeGenerator)
     {
         $this->pdo = $pdo;
         $this->sql = $sql;
-        $this->page = $page;
         $this->paging = $paging;
+        $this->routeGenerator = $routeGenerator;
     }
 
     /**
      * @param array $params
+     * @param int   $page
      *
      * @return Pager
      */
-    public function execute(array $params)
+    public function execute(array $params, $page)
     {
+        if (! $this->routeGenerator instanceof RouteGeneratorInterface) {
+            throw new NotInitialized();
+        }
         $pagerfanta = new Pagerfanta(new ExtendedPdoAdapter($this->pdo, $this->sql, $params));
-        $pagerfanta->setCurrentPage($this->page);
+        $pagerfanta->setCurrentPage($page);
         $pagerfanta->setMaxPerPage($this->paging);
+
         $pager = new Pager($pagerfanta);
         $pager->maxPerPage = $pagerfanta->getMaxPerPage();
         $pager->current = $pagerfanta->getCurrentPage();
