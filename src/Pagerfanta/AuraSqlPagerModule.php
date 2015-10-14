@@ -24,6 +24,8 @@ class AuraSqlPagerModule extends AbstractModule
         $this->bind(TemplateInterface::class)->to(DefaultTemplate::class);
         $this->bind(AuraSqlPagerInterface::class)->to(AuraSqlPager::class);
         $this->bind(AuraSqlPagerFactoryInterface::class)->to(AuraSqlPagerFactory::class);
+        $this->bind(AuraSqlQueryPagerFactoryInterface::class)->to(AuraSqlQueryPagerFactory::class);
+        $this->bind(AuraSqlQueryPagerInterface::class)->to(AuraSqlQueryPager::class);
         $this->bind(RouteGeneratorInterface::class)->to(DefaultRouteGenerator::class);
         $this->bind('')->annotatedWith(PagerViewOption::class)->toInstance([]);
     }
