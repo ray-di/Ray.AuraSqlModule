@@ -44,7 +44,6 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface
 
     /**
      * @param ViewInterface           $view
-     * @param RouteGeneratorInterface $routeGenerator
      * @param array                   $viewOptions
      *
      * @PagerViewOption("viewOptions")
@@ -67,12 +66,11 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface
     }
 
     /**
-     * @param array $params
      * @param int   $page
      *
      * @return Pager
      */
-    public function execute(array $params, $page)
+    public function execute($page)
     {
         if (! $this->routeGenerator instanceof RouteGeneratorInterface) {
             throw new NotInitialized();

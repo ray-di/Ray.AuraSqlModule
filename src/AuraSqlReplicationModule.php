@@ -43,6 +43,9 @@ class AuraSqlReplicationModule extends AbstractModule
         $this->install(new TransactionalModule);
     }
 
+    /**
+     * @return void
+     */
     protected function installReadWriteConnection()
     {
         // @ReadOnlyConnection

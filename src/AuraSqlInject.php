@@ -16,7 +16,7 @@ trait AuraSqlInject
     protected $pdo;
 
     /**
-     * @param ExtendedPdoInterface $db
+     * @param ExtendedPdoInterface $pdo
      *
      * @\Ray\Di\Di\Inject
      */

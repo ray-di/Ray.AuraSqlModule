@@ -22,10 +22,9 @@ interface AuraSqlQueryPagerInterface
     public function init(ExtendedPdoInterface $pdo, SelectInterface $select, $paging, RouteGeneratorInterface $routeGenerator);
 
     /**
-     * @param array $params
-     * @param int   $page
+     * @param string $page
      *
      * @return Pager
      */
-    public function execute(array $params, $page);
+    public function execute($page);
 }

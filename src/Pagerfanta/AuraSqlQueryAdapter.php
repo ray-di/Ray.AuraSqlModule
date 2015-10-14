@@ -32,7 +32,13 @@ class AuraSqlQueryAdapter implements AdapterInterface
      * @param Select   $select
      * @param callable $countQueryBuilderModifier A callable to modifier the query builder to count.
      */
-    public function __construct(ExtendedPdo $pdo, SelectInterface $select, $countQueryBuilderModifier)
+
+    /**
+     * @param ExtendedPdo     $pdo
+     * @param SelectInterface $select
+     * @param callable        $countQueryBuilderModifier
+     */
+    public function __construct(ExtendedPdo $pdo, SelectInterface $select, callable $countQueryBuilderModifier)
     {
         $this->pdo = $pdo;
         if (!is_callable($countQueryBuilderModifier)) {

@@ -13,10 +13,10 @@ interface AuraSqlPagerFactoryInterface
     /**
      * @param ExtendedPdoInterface $pdo
      * @param string               $sql
-     * @param int                  $page
+     * @param int                  $paging
      * @param string               $uriTemplate
      *
-     * @return AuraSqlPagerInterface
+     * @return mixed
      */
     public function newInstance(ExtendedPdoInterface $pdo, $sql, $paging, $uriTemplate);
 }

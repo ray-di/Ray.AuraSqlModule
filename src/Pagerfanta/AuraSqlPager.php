@@ -45,9 +45,8 @@ class AuraSqlPager implements AuraSqlPagerInterface
     private $paging;
 
     /**
-     * @param ViewInterface           $view
-     * @param RouteGeneratorInterface $routeGenerator
-     * @param array                   $viewOptions
+     * @param ViewInterface $view
+     * @param array         $viewOptions
      *
      * @PagerViewOption("viewOptions")
      */

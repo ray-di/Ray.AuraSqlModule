@@ -13,7 +13,6 @@ interface AuraSqlPagerInterface
     /**
      * @param ExtendedPdoInterface    $pdo
      * @param string                  $sql
-     * @param int                     $page
      * @param int                     $paging
      * @param RouteGeneratorInterface $routeGenerator
      */

@@ -7,7 +7,6 @@
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocatorInterface;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use Ray\AuraSqlModule\Annotation\AuraSql;
 use Ray\AuraSqlModule\Annotation\Read;
 use Ray\AuraSqlModule\Annotation\ReadOnlyConnection;
@@ -71,7 +70,7 @@ class AuraSqlLocatorModule extends AbstractModule
         // locator db
         $this->bindInterceptor(
             $this->matcher->annotatedWith(AuraSql::class), // @AuraSql in class
-            $this->matcher->logicalAnd(// ! @ReadOnlyConnection and ! @Master in method
+            $this->matcher->logicalAnd(
                 new IsInMethodMatcher($methods),
                 $this->matcher->logicalNot(
                     $this->matcher->annotatedWith(ReadOnlyConnection::class)
@@ -84,6 +83,9 @@ class AuraSqlLocatorModule extends AbstractModule
         );
     }
 
+    /**
+     * @return void
+     */
     protected function installReadWriteConnection()
     {
         // @ReadOnlyConnection
