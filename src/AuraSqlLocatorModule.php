@@ -38,7 +38,6 @@ class AuraSqlLocatorModule extends AbstractModule
         array $readMethods = [],
         array $writeMethods = []
     ) {
-        AnnotationRegistry::registerFile(__DIR__ . '/DoctrineAnnotations.php');
         $this->connectionLocator = $connectionLocator;
         $this->readMethods = $readMethods;
         $this->writeMethods = $writeMethods;

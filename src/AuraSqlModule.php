@@ -23,7 +23,6 @@ class AuraSqlModule extends AbstractModule
      */
     public function __construct($dsn, $user = '', $password = '')
     {
-        AnnotationRegistry::registerFile(__DIR__ . '/DoctrineAnnotations.php');
         if ($dsn) {
             $this->bind()->annotatedWith(AuraSqlConfig::class)->toInstance([$dsn ,$user ,$password]);
         }

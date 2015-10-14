@@ -24,7 +24,6 @@ class AuraSqlReplicationModule extends AbstractModule
     public function __construct(
         ConnectionLocatorInterface $connectionLocator = null
     ) {
-        AnnotationRegistry::registerFile(__DIR__ . '/DoctrineAnnotations.php');
         $this->connectionLocator = $connectionLocator;
     }
 
