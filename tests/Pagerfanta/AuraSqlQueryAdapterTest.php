@@ -67,16 +67,6 @@ class AuraSqlQueryAdapterTest extends AuraSqlQueryTestCase
         $this->assertSame($expectedResults, $results);
     }
 
-    /**
-     * @expectedException \Pagerfanta\Exception\InvalidArgumentException
-     */
-    public function testItShouldThrowAnInvalidArgumentExceptionIfTheCountQueryBuilderModifierIsNotACallable()
-    {
-        $countQueryBuilderModifier = 'ups';
-
-        new AuraSqlQueryAdapter($this->pdo, $this->select, $countQueryBuilderModifier);
-    }
-
     private function createAdapterToTestGetNbResults()
     {
         $countQueryBuilderModifier = function (Select $select) {
