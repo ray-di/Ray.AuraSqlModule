@@ -11,12 +11,16 @@
         "ray/di": "~2.0",
         "aura/sql": "~2.0",
         "aura/sqlquery": "~2.4",
-        "pagerfanta/pagerfanta": "~1.0"
+        "pagerfanta/pagerfanta": "~1.0",
+        "rize/uri-template": "^0.3.0"
     },
     "autoload": {
         "psr-4": {
             "Ray\\AuraSqlModule\\": "src/"
-        }
+        },
+        "files": [
+            "src-files/uri_template.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
