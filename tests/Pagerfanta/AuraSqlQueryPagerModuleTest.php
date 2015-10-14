@@ -21,7 +21,7 @@ class AuraSqlQueryPagerModuleTest extends AuraSqlQueryTestCase
      */
     public function testExecute(AuraSqlQueryPager $pager)
     {
-        $user = $pager->execute([], 2);
+        $user = $pager->execute(2);
         $this->assertTrue($user->hasNext);
         $this->assertTrue($user->hasPrevious);
         $expected = [
