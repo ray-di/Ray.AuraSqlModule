@@ -2,7 +2,7 @@
 /**
  * This file is part of the Ray.AuraSqlModule package
  *
- * @license http://opensource.org/licenses/bsd-license.php BSD
+ * @license http://opensource.org/licenses/MIT MIT
  */
 namespace Ray\AuraSqlModule;
 
@@ -23,9 +23,8 @@ class AuraSqlModule extends AbstractModule
      */
     public function __construct($dsn, $user = '', $password = '')
     {
-        AnnotationRegistry::registerFile(__DIR__ . '/DoctrineAnnotations.php');
         if ($dsn) {
-            $this->bind()->annotatedWith(AuraSqlConfig::class)->toInstance([$dsn ,$user ,$password]);
+            $this->bind()->annotatedWith(AuraSqlConfig::class)->toInstance([$dsn, $user, $password]);
         }
     }
 

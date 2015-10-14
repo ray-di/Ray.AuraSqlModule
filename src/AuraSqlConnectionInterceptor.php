@@ -2,7 +2,7 @@
 /**
  * This file is part of the Ray.AuraSqlModule package
  *
- * @license http://opensource.org/licenses/bsd-license.php BSD
+ * @license http://opensource.org/licenses/MIT MIT
  */
 namespace Ray\AuraSqlModule;
 
@@ -68,10 +68,10 @@ class AuraSqlConnectionInterceptor implements MethodInterceptor
     private function getConnection(MethodInvocation $invocation)
     {
         $methodName = $invocation->getMethod()->name;
-        if (in_array($methodName ,$this->readsMethods)) {
+        if (in_array($methodName, $this->readsMethods)) {
             return $this->connectionLocator->getRead();
         }
-        if (in_array($methodName ,$this->writeMethods)) {
+        if (in_array($methodName, $this->writeMethods)) {
             return $this->connectionLocator->getWrite();
         }
 

@@ -2,12 +2,11 @@
 /**
  * This file is part of the Ray.AuraSqlModule package
  *
- * @license http://opensource.org/licenses/bsd-license.php BSD
+ * @license http://opensource.org/licenses/MIT MIT
  */
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocatorInterface;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use Ray\AuraSqlModule\Annotation\AuraSql;
 use Ray\AuraSqlModule\Annotation\Read;
 use Ray\AuraSqlModule\Annotation\ReadOnlyConnection;
@@ -17,7 +16,6 @@ use Ray\Di\AbstractModule;
 
 class AuraSqlLocatorModule extends AbstractModule
 {
-
     /**
      * @var ConnectionLocatorInterface
      */
@@ -38,7 +36,6 @@ class AuraSqlLocatorModule extends AbstractModule
         array $readMethods = [],
         array $writeMethods = []
     ) {
-        AnnotationRegistry::registerFile(__DIR__ . '/DoctrineAnnotations.php');
         $this->connectionLocator = $connectionLocator;
         $this->readMethods = $readMethods;
         $this->writeMethods = $writeMethods;
@@ -49,7 +46,7 @@ class AuraSqlLocatorModule extends AbstractModule
      */
     protected function configure()
     {
-        if ((bool)$this->readMethods && (bool)$this->writeMethods) {
+        if ((bool) $this->readMethods && (bool) $this->writeMethods) {
             $this->bind()->annotatedWith(Read::class)->toInstance($this->readMethods);
             $this->bind()->annotatedWith(Write::class)->toInstance($this->writeMethods);
         }
@@ -73,7 +70,7 @@ class AuraSqlLocatorModule extends AbstractModule
         // locator db
         $this->bindInterceptor(
             $this->matcher->annotatedWith(AuraSql::class), // @AuraSql in class
-            $this->matcher->logicalAnd(                    // ! @ReadOnlyConnection and ! @Master in method
+            $this->matcher->logicalAnd(
                 new IsInMethodMatcher($methods),
                 $this->matcher->logicalNot(
                     $this->matcher->annotatedWith(ReadOnlyConnection::class)
@@ -86,6 +83,9 @@ class AuraSqlLocatorModule extends AbstractModule
         );
     }
 
+    /**
+     * @return void
+     */
     protected function installReadWriteConnection()
     {
         // @ReadOnlyConnection

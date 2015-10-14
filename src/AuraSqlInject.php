@@ -2,7 +2,7 @@
 /**
  * This file is part of the Ray.AuraSqlModule package
  *
- * @license http://opensource.org/licenses/bsd-license.php BSD
+ * @license http://opensource.org/licenses/MIT MIT
  */
 namespace Ray\AuraSqlModule;
 
@@ -16,7 +16,7 @@ trait AuraSqlInject
     protected $pdo;
 
     /**
-     * @param ExtendedPdoInterface $db
+     * @param ExtendedPdoInterface $pdo
      *
      * @\Ray\Di\Di\Inject
      */
