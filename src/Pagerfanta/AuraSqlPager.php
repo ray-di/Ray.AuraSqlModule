@@ -9,8 +9,8 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 use Aura\Sql\ExtendedPdoInterface;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\ViewInterface;
+use Ray\AuraSqlModule\Annotation\PagerViewOption;
 use Ray\AuraSqlModule\Exception\NotInitialized;
-use Ray\Di\Di\Named;
 
 class AuraSqlPager implements AuraSqlPagerInterface
 {
@@ -49,7 +49,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
      * @param RouteGeneratorInterface $routeGenerator
      * @param array                   $viewOptions
      *
-     * @Named("viewOptions=view_options")
+     * @PagerViewOption("viewOptions")
      */
     public function __construct(ViewInterface $view, array $viewOptions)
     {

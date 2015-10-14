@@ -10,6 +10,7 @@ use Pagerfanta\View\DefaultView;
 use Pagerfanta\View\Template\DefaultTemplate;
 use Pagerfanta\View\Template\TemplateInterface;
 use Pagerfanta\View\ViewInterface;
+use Ray\AuraSqlModule\Annotation\PagerViewOption;
 use Ray\Di\AbstractModule;
 
 class AuraSqlPagerModule extends AbstractModule
@@ -24,6 +25,6 @@ class AuraSqlPagerModule extends AbstractModule
         $this->bind(AuraSqlPagerInterface::class)->to(AuraSqlPager::class);
         $this->bind(AuraSqlPagerFactoryInterface::class)->to(AuraSqlPagerFactory::class);
         $this->bind(RouteGeneratorInterface::class)->to(DefaultRouteGenerator::class);
-        $this->bind('')->annotatedWith('view_options')->toInstance([]);
+        $this->bind('')->annotatedWith(PagerViewOption::class)->toInstance([]);
     }
 }
