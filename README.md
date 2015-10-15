@@ -182,30 +182,31 @@ Pagination service is provided for both `ExtendedPdo` raw sql and `Select` query
 ```php
 // for ExtendedPdo
 /* @var $factory \Ray\AuraSqlModule\Pagerfanta\AuraSqlPagerFactoryInterface */
-$pager = $factory->newInstance($pdo, $sql, 10, '/?page={page}&category=sports'); // 10 items per page
-$user = $pager->execute($params, 2); // page 2
+$pager = $factory->newInstance($pdo, $sql, $params, 10, '/?page={page}&category=sports'); // 10 items per page
+$page = $pager[2]; // page 2
 
 // for Select
 /* @var $factory \Ray\AuraSqlModule\Pagerfanta\AuraSqlQueryPagerFactoryInterface */
 $pager = $factory->newInstance($pdo, $select, 10, '/?page={page}&category=sports');
-$user = $pager->execute(2); // page 2
+$page = $pager[2]; // page 2
 ```
+An array access with page number returns `Page` value object.
+```php
+/* @var Pager \Ray\AuraSqlModule\Pagerfanta\Page */
 
-Each `execute()` returns `Pager` value object.
-
+// $page->data // sliced data
+// $page->current;
+// $page->total
+// $page->hasNext
+// $page->hasPrevious
+// $page->maxPerPage;
+// (string) $page // pager html
 ```
-/* @var Pager \Ray\AuraSqlModule\Pagerfanta\Pager */
-
-// $pager->data // sliced data
-// $pager->current;
-// $pager->total
-// $pager->hasNext
-// $pager->hasPrevious
-// $pager->maxPerPage;
-// $pager->html
+It is iteratable.
+```php
+foreach ($page as $item) {
+ // ...
 ```
-
-
 ### Demo
 
     $ php docs/demo/run.php
