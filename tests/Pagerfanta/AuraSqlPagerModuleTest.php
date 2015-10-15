@@ -11,18 +11,18 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
         /* @var $factory AuraSqlPagerFactoryInterface */
         $this->assertInstanceOf(AuraSqlPagerFactory::class, $factory);
         $sql = 'SELECT * FROM posts';
-        $pager = $factory->newInstance($this->pdo, $sql, 1, '/?page={page}&category=sports');
+        $pager = $factory->newInstance($this->pdo, $sql, [], 1, '/?page={page}&category=sports');
         $this->assertInstanceOf(AuraSqlPager::class, $pager);
 
-        return $pager;
+        return $factory;
     }
 
     /**
      * @depends testNewInstance
      */
-    public function testExecute(AuraSqlPager $pager)
+    public function testExecute(AuraSqlPagerFactoryInterface $factory)
     {
-        $user = $pager->execute([], 2);
+        $user = $factory[2];
         $this->assertTrue($user->hasNext);
         $this->assertTrue($user->hasPrevious);
         $expected = [
@@ -34,6 +34,6 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
         ];
         $this->assertSame($expected, $user->data);
         $expected = '<nav><a href="/?page=1&category=sports">Previous</a><a href="/?page=1&category=sports">1</a><span class="current">2</span><a href="/?page=3&category=sports">3</a><a href="/?page=4&category=sports">4</a><a href="/?page=5&category=sports">5</a><span class="dots">...</span><a href="/?page=50&category=sports">50</a><a href="/?page=3&category=sports">Next</a></nav>';
-        $this->assertSame($expected, $user->html);
+        $this->assertSame($expected, (string) $user);
     }
 }

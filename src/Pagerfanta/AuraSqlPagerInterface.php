@@ -13,16 +13,16 @@ interface AuraSqlPagerInterface
     /**
      * @param ExtendedPdoInterface    $pdo
      * @param string                  $sql
+     * @param array                   $params
      * @param int                     $paging
      * @param RouteGeneratorInterface $routeGenerator
      */
-    public function init(ExtendedPdoInterface $pdo, $sql, $paging, RouteGeneratorInterface $routeGenerator);
+    public function init(ExtendedPdoInterface $pdo, $sql, array $params, $paging, RouteGeneratorInterface $routeGenerator);
 
     /**
-     * @param array $params
      * @param int   $page
      *
-     * @return Pager
+     * @return Page
      */
-    public function execute(array $params, $page);
+    public function execute($page);
 }

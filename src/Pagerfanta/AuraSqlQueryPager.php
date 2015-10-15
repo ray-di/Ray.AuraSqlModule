@@ -68,7 +68,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface
     /**
      * @param int   $page
      *
-     * @return Pager
+     * @return Page
      */
     public function execute($page)
     {
@@ -83,30 +83,13 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface
         $pagerfanta->setCurrentPage($page);
         $pagerfanta->setMaxPerPage($this->paging);
 
-        $pager = new Pager($pagerfanta);
+        $pager = new Page($pagerfanta, $this->routeGenerator, $this->view, $this->viewOptions);
         $pager->maxPerPage = $pagerfanta->getMaxPerPage();
         $pager->current = $pagerfanta->getCurrentPage();
         $pager->hasNext = $pagerfanta->hasNextPage();
         $pager->hasPrevious = $pagerfanta->hasPreviousPage();
         $pager->data = $pagerfanta->getCurrentPageResults();
-        $pager->html = $this->getHtml($pagerfanta);
 
         return $pager;
-    }
-
-    /**
-     * Return html
-     *
-     * @return string
-     */
-    private function getHtml(Pagerfanta $pagerfanta)
-    {
-        $html = $this->view->render(
-            $pagerfanta,
-            $this->routeGenerator,
-            $this->viewOptions
-        );
-
-        return $html;
     }
 }
