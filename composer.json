@@ -8,6 +8,7 @@
     "description": "aura/sql module for Ray.Di",
     "license": "MIT",
     "require": {
+        "php": ">=5.5.0",
         "ray/di": "~2.0",
         "aura/sql": "~2.0",
         "aura/sqlquery": "~2.4",
