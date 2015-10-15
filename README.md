@@ -207,12 +207,23 @@ It is iteratable.
 foreach ($page as $item) {
  // ...
 ```
-### Demo
+### View
+
+The view template can be changed with binding. See more at [Pagerfanta](https://github.com/whiteoctober/Pagerfanta#views).
+
+```php
+use Pagerfanta\View\Template\TemplateInterface;
+use Pagerfanta\View\Template\TwitterBootstrap3Template;
+
+$this->bind(TemplateInterface::class)->to(TwitterBootstrap3Template::class);
+```
+
+## Demo
 
     $ php docs/demo/run.php
     // It works!
 
-### Requirements
+## Requirements
 
  * PHP 5.4+
  * hhvm
