@@ -181,11 +181,12 @@ Pagination service is provided for both `ExtendedPdo` raw sql and `Select` query
 
 ```php
 // for ExtendedPdo
-$sql = 'SELECT * FROM posts';
+/* @var $factory \Ray\AuraSqlModule\Pagerfanta\AuraSqlPagerFactoryInterface */
 $pager = $factory->newInstance($pdo, $sql, 10, '/?page={page}&category=sports'); // 10 items per page
 $user = $pager->execute($params, 2); // page 2
 
 // for Select
+/* @var $factory \Ray\AuraSqlModule\Pagerfanta\AuraSqlQueryPagerFactoryInterface */
 $pager = $factory->newInstance($pdo, $select, 10, '/?page={page}&category=sports');
 $user = $pager->execute(2); // page 2
 ```
