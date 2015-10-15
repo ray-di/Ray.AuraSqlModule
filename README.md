@@ -134,28 +134,31 @@ class User
 ```
 ## Query Builder
 
-[Aura.SqlQuery](https://github.com/auraphp/Aura.SqlQuery) provides query builders for MySQL, Postgres, SQLite, and Microsoft SQL Server. 
+[Aura.SqlQuery](https://github.com/auraphp/Aura.SqlQuery) provides query builders for MySQL, Postgres, SQLite, and Microsoft SQL Server. Following four interfaces are bound and setter trait for them are available.
+
+QueryBuilder interface
+ * `Aura\SqlQuery\Common\SelectInterface`
+ * `Aura\SqlQuery\Common\InsertInterface`
+ * `Aura\SqlQuery\Common\UpdateInterface`
+ * `Aura\SqlQuery\Common\DeleteInterface`
+
+QueryBuilder setter trait
+ * `Ray\AuraSqlModule\AuraSqlSelectInject`
+ * `Ray\AuraSqlModule\AuraSqlInsertInject`
+ * `Ray\AuraSqlModule\AuraSqlUpdateInject`
+ * `Ray\AuraSqlModule\AuraSqlDeleteInject`
 
 ```php
-use Aura\SqlQuery\Common\SelectInterface;
-use Aura\SqlQuery\Common\InsertInterface;
-use Aura\SqlQuery\Common\UpdateInterface
-use Aura\SqlQuery\Common\DeleteInterface;
-
-class Foo
+use Ray\AuraSqlModule\AuraSqlSelectInject;
+clas Foo
 {
-    private $pdo;
-    private $select;
-
-    public function __construct(ExtendedPdoInterface $pdo, SelectInterface $select)
+    use AuraSqlSelectInject;
+    
+    public function bar()
     {
-        $this->pdo = $pdo;
-        $this->select = $select;
-    }
-
-    public function selectDb()
-    {
-        $this->select
+        ```php
+        /* @var $select \Aura\SqlQuery\Common\SelectInterface */
+        $this->select // 
             ->distinct()                    // SELECT DISTINCT
             ->cols(array(                   // select these columns
                 'id',                       // column name
@@ -169,7 +172,38 @@ class Foo
         $sth->execute($this->select->getBindValues());
         // get the results back as an associative array
         $result = $sth->fetch(PDO::FETCH_ASSOC);
+         = $sth->fetch(PDO::FETCH_ASSOC);
 ```
+
+## Pagination
+
+Pagination service is provided for both `ExtendedPdo` raw sql and `Select` query builder. 
+
+```php
+// for ExtendedPdo
+$sql = 'SELECT * FROM posts';
+$pager = $factory->newInstance($pdo, $sql, 10, '/?page={page}&category=sports'); // 10 items per page
+$user = $pager->execute($params, 2); // page 2
+
+// for Select
+$pager = $factory->newInstance($pdo, $select, 10, '/?page={page}&category=sports');
+$user = $pager->execute(2); // page 2
+```
+
+Each `execute()` returns `Pager` value object.
+
+```
+/* @var Pager \Ray\AuraSqlModule\Pagerfanta\Pager */
+
+// $pager->data // sliced data
+// $pager->current;
+// $pager->total
+// $pager->hasNext
+// $pager->hasPrevious
+// $pager->maxPerPage;
+// $pager->html
+```
+
 
 ### Demo
 
