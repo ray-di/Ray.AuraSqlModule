@@ -156,7 +156,6 @@ clas Foo
     
     public function bar()
     {
-        ```php
         /* @var $select \Aura\SqlQuery\Common\SelectInterface */
         $this->select // 
             ->distinct()                    // SELECT DISTINCT
