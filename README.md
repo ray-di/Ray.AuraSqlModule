@@ -213,8 +213,11 @@ The view template can be changed with binding. See more at [Pagerfanta](https://
 ```php
 use Pagerfanta\View\Template\TemplateInterface;
 use Pagerfanta\View\Template\TwitterBootstrap3Template;
+use Ray\AuraSqlModule\Annotation\PagerViewOption;
 
 $this->bind(TemplateInterface::class)->to(TwitterBootstrap3Template::class);
+$this->bind()->annotatedWith(PagerViewOption::class)->toInstance($pagerViewOption);
+
 ```
 
 ## Demo
