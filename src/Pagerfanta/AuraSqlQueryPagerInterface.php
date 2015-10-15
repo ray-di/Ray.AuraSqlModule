@@ -24,7 +24,7 @@ interface AuraSqlQueryPagerInterface
     /**
      * @param string $page
      *
-     * @return Pager
+     * @return Page
      */
     public function execute($page);
 }
