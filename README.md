@@ -30,7 +30,7 @@ class AppModule extends AbstractModule
 ```
 ### DI trait
 
- * [AuraSqlInject](https://github.com/ray-di/Ray.AuraSqlModule/blob/master/src/AuraSqlInject.php) for `Aura\Sql\ExtendedPdoInterface` interface
+ * [AuraSqlInject](https://github.com/ray-di/Ray.AuraSqlModule/blob/1.x/src/AuraSqlInject.php) for `Aura\Sql\ExtendedPdoInterface` interface
  
 #### Master / Slave database
 
