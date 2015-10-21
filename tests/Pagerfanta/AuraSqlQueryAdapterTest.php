@@ -3,7 +3,9 @@
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\SqlQuery\Common\Select;
+use Aura\SqlQuery\QueryFactory;
 use Pagerfanta\Pagerfanta;
+use Ray\Aop\Exception\InvalidArgumentException;
 
 class AuraSqlQueryAdapterTest extends AuraSqlQueryTestCase
 {

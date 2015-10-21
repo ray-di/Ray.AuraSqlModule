@@ -66,7 +66,7 @@ final class Page implements \IteratorAggregate
      */
     public function getIterator()
     {
-        $this->pagerfanta->getIterator();
+        return $this->pagerfanta->getIterator();
     }
 
     public function __toString()
@@ -83,7 +83,7 @@ final class Page implements \IteratorAggregate
         RouteGeneratorInterface $routeGenerator,
         ViewInterface $view,
         array $viewOption
-    ){
+    ) {
         $this->pagerfanta = $pagerfanta;
         $this->routeGenerator = $routeGenerator;
         $this->view = $view;

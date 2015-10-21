@@ -12,6 +12,8 @@ class IsInMethodMatcher extends AbstractMatcher
 {
     /**
      * {@inheritdoc}
+     *
+     * @codeCoverageIgnore
      */
     public function matchesClass(\ReflectionClass $class, array $arguments)
     {

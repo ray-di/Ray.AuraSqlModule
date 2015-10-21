@@ -8,7 +8,7 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
 
-interface AuraSqlPagerInterface
+interface AuraSqlPagerInterface extends \ArrayAccess
 {
     /**
      * @param ExtendedPdoInterface    $pdo
@@ -18,11 +18,4 @@ interface AuraSqlPagerInterface
      * @param RouteGeneratorInterface $routeGenerator
      */
     public function init(ExtendedPdoInterface $pdo, $sql, array $params, $paging, RouteGeneratorInterface $routeGenerator);
-
-    /**
-     * @param int   $page
-     *
-     * @return Page
-     */
-    public function execute($page);
 }

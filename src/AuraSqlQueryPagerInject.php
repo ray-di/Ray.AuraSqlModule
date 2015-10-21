@@ -16,11 +16,11 @@ trait AuraSqlQueryPagerInject
     protected $queryPagerFactory;
 
     /**
-     * @param AuraSqlQueryPagerFactoryInterface $pagerFactory
+     * @param AuraSqlQueryPagerFactoryInterface $queryPagerFactory
      *
      * @\Ray\Di\Di\Inject
      */
-    public function setAuraSqlPager(AuraSqlQueryPagerFactoryInterface $queryPagerFactory)
+    public function setAuraSqlQueryPager(AuraSqlQueryPagerFactoryInterface $queryPagerFactory)
     {
         $this->queryPagerFactory = $queryPagerFactory;
     }
