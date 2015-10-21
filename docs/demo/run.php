@@ -1,11 +1,14 @@
 <?php
 
-require dirname(dirname(__DIR__)) . '/vendor/autoload.php';
-
 use Aura\Sql\ExtendedPdo;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 use Ray\AuraSqlModule\AuraSqlInject;
 use Ray\AuraSqlModule\AuraSqlModule;
 use Ray\Di\Injector;
+
+$loader = require dirname(dirname(__DIR__)) . '/vendor/autoload.php';
+/* @var $loader \Composer\Autoload\ClassLoader */
+AnnotationRegistry::registerLoader([$loader, 'loadClass']);
 
 class Fake
 {
