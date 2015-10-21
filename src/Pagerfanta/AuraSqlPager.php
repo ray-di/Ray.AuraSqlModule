@@ -7,6 +7,7 @@
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
+use Pagerfanta\Exception\LogicException;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\ViewInterface;
 use Ray\AuraSqlModule\Annotation\PagerViewOption;
@@ -74,12 +75,11 @@ class AuraSqlPager implements AuraSqlPagerInterface
     }
 
     /**
-     * @param array $params
-     * @param int   $page
+     * @param int $page
      *
      * @return Page
      */
-    public function execute($page)
+    private function execute($page)
     {
         if (! $this->routeGenerator instanceof RouteGeneratorInterface) {
             throw new NotInitialized();
@@ -87,13 +87,45 @@ class AuraSqlPager implements AuraSqlPagerInterface
         $pagerfanta = new Pagerfanta(new ExtendedPdoAdapter($this->pdo, $this->sql, $this->params));
         $pagerfanta->setCurrentPage($page);
         $pagerfanta->setMaxPerPage($this->paging);
-        $pager = new Page($pagerfanta, $this->routeGenerator, $this->view, $this->viewOptions);
-        $pager->maxPerPage = $pagerfanta->getMaxPerPage();
-        $pager->current = $pagerfanta->getCurrentPage();
-        $pager->hasNext = $pagerfanta->hasNextPage();
-        $pager->hasPrevious = $pagerfanta->hasPreviousPage();
-        $pager->data = $pagerfanta->getCurrentPageResults();
+        $page = new Page($pagerfanta, $this->routeGenerator, $this->view, $this->viewOptions);
+        $page->maxPerPage = $pagerfanta->getMaxPerPage();
+        $page->current = $pagerfanta->getCurrentPage();
+        $page->hasNext = $pagerfanta->hasNextPage();
+        $page->hasPrevious = $pagerfanta->hasPreviousPage();
+        $page->data = $pagerfanta->getCurrentPageResults();
 
-        return $pager;
+        return $page;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function offsetExists($offset)
+    {
+        throw new LogicException('unsupported');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function offsetGet($offset)
+    {
+        return $this->execute($offset);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function offsetSet($offset, $value)
+    {
+        throw new LogicException('read only');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function offsetUnset($offset)
+    {
+        throw new LogicException('read only');
     }
 }

@@ -27,6 +27,18 @@ class ExtendedPdoAdapterTest extends AbstractPdoTestCase
         $this->assertSame(PHP_EOL  . 'LIMIT 10 OFFSET 1', $limitClause);
     }
 
+    public function testGetLimitClauseZeroOffset()
+    {
+        $limitClause = $this->pdoAdapter->getLimitClause(0, 10);
+        $this->assertSame(PHP_EOL  . 'LIMIT 10', $limitClause);
+    }
+
+    public function testGetLimitClauseZeroOffsetZeroLimit()
+    {
+        $limitClause = $this->pdoAdapter->getLimitClause(0, 0);
+        $this->assertSame('', $limitClause);
+    }
+
     public function testGetSlice()
     {
         $slice = $this->pdoAdapter->getSlice(2, 1);

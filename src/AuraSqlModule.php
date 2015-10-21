@@ -8,9 +8,9 @@ namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdoInterface;
 use Aura\SqlQuery\Common\SelectInterface;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use Ray\AuraSqlModule\Annotation\AuraSqlConfig;
 use Ray\AuraSqlModule\Annotation\Transactional;
+use Ray\AuraSqlModule\Pagerfanta\AuraSqlPagerModule;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 
@@ -42,5 +42,6 @@ class AuraSqlModule extends AbstractModule
             [TransactionalInterceptor::class]
         );
         $this->install(new TransactionalModule);
+        $this->install(new AuraSqlPagerModule());
     }
 }

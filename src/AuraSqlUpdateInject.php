@@ -16,7 +16,7 @@ trait AuraSqlUpdateInject
     protected $update;
 
     /**
-     * @param UpdateInterface $insert
+     * @param UpdateInterface $update
      *
      * @\Ray\Di\Di\Inject
      */

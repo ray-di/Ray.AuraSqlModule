@@ -6,17 +6,12 @@
  */
 namespace Ray\AuraSqlModule;
 
-use Aura\Sql\ExtendedPdoInterface;
 use Aura\SqlQuery\Common\DeleteInterface;
 use Aura\SqlQuery\Common\InsertInterface;
 use Aura\SqlQuery\Common\SelectInterface;
 use Aura\SqlQuery\Common\UpdateInterface;
-use Doctrine\Common\Annotations\AnnotationRegistry;
-use Ray\AuraSqlModule\Annotation\AuraSqlConfig;
 use Ray\AuraSqlModule\Annotation\AuraSqlQueryConfig;
-use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\Di\AbstractModule;
-use Ray\Di\Scope;
 
 class AuraSqlQueryModule extends AbstractModule
 {

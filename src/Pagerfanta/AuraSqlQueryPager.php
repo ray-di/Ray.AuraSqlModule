@@ -8,12 +8,13 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
 use Aura\SqlQuery\Common\SelectInterface;
+use Pagerfanta\Exception\LogicException;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\ViewInterface;
 use Ray\AuraSqlModule\Annotation\PagerViewOption;
 use Ray\AuraSqlModule\Exception\NotInitialized;
 
-class AuraSqlQueryPager implements AuraSqlQueryPagerInterface
+class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
 {
     private $pdo;
 
@@ -43,8 +44,8 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface
     private $paging;
 
     /**
-     * @param ViewInterface           $view
-     * @param array                   $viewOptions
+     * @param ViewInterface $view
+     * @param array         $viewOptions
      *
      * @PagerViewOption("viewOptions")
      */
@@ -66,11 +67,9 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface
     }
 
     /**
-     * @param int   $page
-     *
-     * @return Page
+     * @inheritDoc
      */
-    public function execute($page)
+    public function offsetGet($page)
     {
         if (! $this->routeGenerator instanceof RouteGeneratorInterface) {
             throw new NotInitialized();
@@ -91,5 +90,29 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface
         $pager->data = $pagerfanta->getCurrentPageResults();
 
         return $pager;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function offsetExists($offset)
+    {
+        throw new LogicException('unsupported');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function offsetSet($offset, $value)
+    {
+        throw new LogicException('read only');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function offsetUnset($offset)
+    {
+        throw new LogicException('read only');
     }
 }

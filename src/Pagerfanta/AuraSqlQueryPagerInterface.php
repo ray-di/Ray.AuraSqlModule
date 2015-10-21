@@ -20,11 +20,4 @@ interface AuraSqlQueryPagerInterface
      * @return mixed
      */
     public function init(ExtendedPdoInterface $pdo, SelectInterface $select, $paging, RouteGeneratorInterface $routeGenerator);
-
-    /**
-     * @param string $page
-     *
-     * @return Page
-     */
-    public function execute($page);
 }

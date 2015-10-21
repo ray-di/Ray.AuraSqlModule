@@ -41,10 +41,6 @@ class AuraSqlQueryAdapter implements AdapterInterface
     public function __construct(ExtendedPdo $pdo, SelectInterface $select, callable $countQueryBuilderModifier)
     {
         $this->pdo = $pdo;
-        if (!is_callable($countQueryBuilderModifier)) {
-            throw new InvalidArgumentException('The count query builder modifier must be a callable.');
-        }
-
         $this->select = clone $select;
         $this->countQueryBuilderModifier = $countQueryBuilderModifier;
     }
