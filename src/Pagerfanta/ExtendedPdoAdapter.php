@@ -53,7 +53,7 @@ class ExtendedPdoAdapter implements AdapterInterface
             $sth->execute();
             $count = $sth->fetchAll();
 
-            return (integer) $count;
+            return (integer) count($count);
         }
         $count = $this->pdo->query($countQuery)->fetchColumn();
 
@@ -76,7 +76,7 @@ class ExtendedPdoAdapter implements AdapterInterface
      */
     public function getLimitClause($offset, $length)
     {
-        $has_limit = $offset || $length;
+        $hasLimit = $offset || $length;
         if ($offset && $length) {
             $clause = PHP_EOL . "LIMIT {$length}";
             if ($offset) {
@@ -84,7 +84,9 @@ class ExtendedPdoAdapter implements AdapterInterface
             }
 
             return $clause;
-        } elseif ($has_limit && $length) {
+        }
+
+        if ($hasLimit && $length) {
             return PHP_EOL . "LIMIT {$length}";
         }
 
@@ -98,26 +100,27 @@ class ExtendedPdoAdapter implements AdapterInterface
      *
      * @return string
      *
-     * Taken from pear/pager and modified.
-     *
      * @see https://github.com/pear/Pager/blob/master/examples/Pager_Wrapper.php
+     * Taken from pear/pager and modified.
+     * tested at https://github.com/pear/Pager/blob/80c0e31c8b94f913cfbdeccbe83b63822f42a2f8/tests/pager_wrapper_test.php#L19
+     * @codeCoverageIgnore
      */
     public function rewriteCountQuery($query)
     {
         if (preg_match('/^\s*SELECT\s+\bDISTINCT\b/is', $query) || preg_match('/\s+GROUP\s+BY\s+/is', $query)) {
-            return false;
+            return '';
         }
         $openParenthesis = '(?:\()';
         $closeParenthesis = '(?:\))';
         $subQueryInSelect = $openParenthesis . '.*\bFROM\b.*' . $closeParenthesis;
         $pattern = '/(?:.*' . $subQueryInSelect . '.*)\bFROM\b\s+/Uims';
         if (preg_match($pattern, $query)) {
-            return false;
+            return '';
         }
         $subQueryWithLimitOrder = $openParenthesis . '.*\b(LIMIT|ORDER)\b.*' . $closeParenthesis;
         $pattern = '/.*\bFROM\b.*(?:.*' . $subQueryWithLimitOrder . '.*).*/Uims';
         if (preg_match($pattern, $query)) {
-            return false;
+            return '';
         }
         $queryCount = preg_replace('/(?:.*)\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $query, 1);
         list($queryCount, ) = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
