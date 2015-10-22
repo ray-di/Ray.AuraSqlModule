@@ -34,6 +34,7 @@ class AuraSqlQueryPagerModuleTest extends AuraSqlQueryTestCase
         $this->assertSame($expected, $user->data);
         $expected = '<nav><a href="/?page=1&category=sports">Previous</a><a href="/?page=1&category=sports">1</a><span class="current">2</span><a href="/?page=3&category=sports">3</a><a href="/?page=4&category=sports">4</a><a href="/?page=5&category=sports">5</a><span class="dots">...</span><a href="/?page=50&category=sports">50</a><a href="/?page=3&category=sports">Next</a></nav>';
         $this->assertSame($expected, (string) $user);
+        $this->assertSame(50, $user->total);
     }
 
     /**
