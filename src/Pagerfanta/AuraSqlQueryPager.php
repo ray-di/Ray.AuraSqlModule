@@ -88,6 +88,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
         $pager->hasNext = $pagerfanta->hasNextPage();
         $pager->hasPrevious = $pagerfanta->hasPreviousPage();
         $pager->data = $pagerfanta->getCurrentPageResults();
+        $pager->total = $pagerfanta->getNbResults();
 
         return $pager;
     }
