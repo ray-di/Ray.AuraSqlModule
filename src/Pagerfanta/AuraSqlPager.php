@@ -91,8 +91,8 @@ class AuraSqlPager implements AuraSqlPagerInterface
             throw new NotInitialized();
         }
         $pagerfanta = new Pagerfanta(new ExtendedPdoAdapter($this->pdo, $this->sql, $this->params));
-        $pagerfanta->setCurrentPage($currentPage);
         $pagerfanta->setMaxPerPage($this->paging);
+        $pagerfanta->setCurrentPage($currentPage);
         $page = new Page($pagerfanta, $this->routeGenerator, $this->view, $this->viewOptions);
         $page->maxPerPage = $pagerfanta->getMaxPerPage();
         $page->current = $pagerfanta->getCurrentPage();
