@@ -132,17 +132,47 @@ class User
     }
 }
 ```
+## Named Db Module
+
+Use `NamedPdoModule ` to inject different named `Pdo` instance.
+This module install `log_db` named `Pdo` instance.
+
+```php
+class AppModule extends AbstractModule
+{
+    protected function configure()
+    {
+        $this->install(new NamedPdoModule('log_db', 'mysql:host=localhost;dbname=log', 'username', 
+    }
+}
+```
+
+`@Named` is required for named `Pdo` instance.
+
+```php
+    /**
+     * @Inject
+     * @Named("log_db")
+     */
+    public function setLoggerDb(ExtendedPdoInterface $pdo)
+    {
+        // ...
+    }
+```
+
 ## Query Builder
 
 [Aura.SqlQuery](https://github.com/auraphp/Aura.SqlQuery) provides query builders for MySQL, Postgres, SQLite, and Microsoft SQL Server. Following four interfaces are bound and setter trait for them are available.
 
 QueryBuilder interface
+
  * `Aura\SqlQuery\Common\SelectInterface`
  * `Aura\SqlQuery\Common\InsertInterface`
  * `Aura\SqlQuery\Common\UpdateInterface`
  * `Aura\SqlQuery\Common\DeleteInterface`
 
 QueryBuilder setter trait
+
  * `Ray\AuraSqlModule\AuraSqlSelectInject`
  * `Ray\AuraSqlModule\AuraSqlInsertInject`
  * `Ray\AuraSqlModule\AuraSqlUpdateInject`
@@ -189,7 +219,9 @@ $page = $pager[2]; // page 2
 $pager = $factory->newInstance($pdo, $select, 10, '/?page={page}&category=sports');
 $page = $pager[2]; // page 2
 ```
+
 An array access with page number returns `Page` value object.
+
 ```php
 /* @var Pager \Ray\AuraSqlModule\Pagerfanta\Page */
 
@@ -201,7 +233,9 @@ An array access with page number returns `Page` value object.
 // $page->maxPerPage;
 // (string) $page // pager html
 ```
+
 It is iteratable.
+
 ```php
 foreach ($page as $item) {
  // ...
