@@ -12,5 +12,7 @@ class FakeNamedModule extends AbstractModule
     protected function configure()
     {
         $this->install(new NamedPdoModule('log_db', 'sqlite::memory:'));
+        $this->install(new NamedPdoModule(FakeLogDb::class, 'sqlite::memory:'));
+        $this->install(new NamedPdoModule(FakeLogDbInject::class, 'sqlite::memory:'));
     }
 }

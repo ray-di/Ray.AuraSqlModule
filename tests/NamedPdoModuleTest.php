@@ -20,5 +20,7 @@ class NamedPdoModuleTest extends \PHPUnit_Framework_TestCase
         $injector = new Injector(new FakeNamedModule, $_ENV['TMP_DIR']);
         $fakeName = $injector->getInstance(FakeName::class);
         $this->assertInstanceOf(ExtendedPdo::class, $fakeName->pdo);
+        $this->assertInstanceOf(ExtendedPdo::class, $fakeName->pdoAnno);
+        $this->assertInstanceOf(ExtendedPdo::class, $fakeName->pdoSetterInject);
     }
 }
