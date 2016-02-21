@@ -15,6 +15,8 @@ use Ray\Di\Scope;
 
 class AuraSqlModule extends AbstractModule
 {
+    const PARSE_PDO_DSN_REGEX = '/(.*?)\:(host|server)=.*?;(.*)/i';
+
     /**
      * @var string
      */
@@ -59,6 +61,9 @@ class AuraSqlModule extends AbstractModule
         // @Transactional
         $this->install(new TransactionalModule);
         $this->install(new AuraSqlPagerModule());
+        preg_match(self::PARSE_PDO_DSN_REGEX, $this->dsn, $parts);
+        $dbType = isset($parts[2]) ? $parts[2] : '';
+        $this->install(new AuraSqlQueryModule($dbType));
     }
 
     private function configureSingleDsn()
@@ -92,7 +97,7 @@ class AuraSqlModule extends AbstractModule
      */
     private function chageHost($dsn, $host)
     {
-        preg_match("/(.*?)\:(host|server)=.*?;(.*)/i", $dsn, $parts);
+        preg_match(self::PARSE_PDO_DSN_REGEX, $dsn, $parts);
         if (empty($parts)) {
             return $dsn;
         }
