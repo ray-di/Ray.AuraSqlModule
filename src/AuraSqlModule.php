@@ -62,7 +62,7 @@ class AuraSqlModule extends AbstractModule
         $this->install(new TransactionalModule);
         $this->install(new AuraSqlPagerModule());
         preg_match(self::PARSE_PDO_DSN_REGEX, $this->dsn, $parts);
-        $dbType = isset($parts[2]) ? $parts[2] : '';
+        $dbType = isset($parts[1]) ? $parts[1] : '';
         $this->install(new AuraSqlQueryModule($dbType));
     }
 
