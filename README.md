@@ -23,8 +23,13 @@ class AppModule extends AbstractModule
 {
     protected function configure()
     {
-        $this->install(new AuraSqlModule('mysql:host=localhost;dbname=test', 'username', 'password');
-        $this->install(new AuraSqlQueryModule('mysql')); // optional query builder
+        $this->install(
+	        new AuraSqlModule(
+	        		'mysql:host=localhost;dbname=test',
+	        		'username',
+	        		'password',
+	        		'slave1,slave2,slave3' // optional slave server list
+	        );
     }
 }
 ```
@@ -36,24 +41,6 @@ class AppModule extends AbstractModule
 
 Frequently, high-traffic PHP applications use multiple database servers, generally one for writes, and one or more for reads.
 With `AuraSqlReplicationModule`, master / slave database is automatically chosen by `$_SERVER['REQUEST_METHOD']` value. (slave is chosen only when request is `GET`)
- 
-```php
-use Ray\Di\AbstractModule;
-use Ray\AuraSqlModule\AuraSqlModule;
-use Ray\AuraSqlModule\Annotation\AuraSqlConfig;
-use Aura\Sql\ConnectionLocator;
-
-class AppModule extends AbstractModule
-{
-    protected function configure()
-    {
-        $locator = new ConnectionLocator;
-        $locator->setWrite('master', new Connection('mysql:host=localhost;dbname=master', 'username', 'password'));
-        $locator->setRead('slave1', new Connection('mysql:host=localhost;dbname=slave1', 'username', 'password'));
-        $locator->setRead('slave2', new Connection('mysql:host=localhost;dbname=slave2', 'username', 'password'));
-        $this->install(new AuraSqlReplicationModule($locator));
-    }
-}
 
 ```
 

@@ -34,12 +34,13 @@ class NamedPdoModule extends AbstractModule
      * @param string $user
      * @param string $pass
      */
-    public function __construct($qualifer, $dsn, $user = '', $pass= '')
+    public function __construct($qualifer, $dsn, $user = '', $pass = '')
     {
         $this->qualifer = $qualifer;
         $this->dsn = $dsn;
         $this->user = $user;
         $this->pass = $pass;
+        parent::__construct();
     }
 
     /**
