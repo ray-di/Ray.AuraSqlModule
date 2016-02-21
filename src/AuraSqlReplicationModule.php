@@ -44,7 +44,6 @@ class AuraSqlReplicationModule extends AbstractModule
     }
 
     /**
-     * @return void
      */
     protected function installReadWriteConnection()
     {

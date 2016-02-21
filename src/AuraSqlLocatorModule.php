@@ -84,7 +84,6 @@ class AuraSqlLocatorModule extends AbstractModule
     }
 
     /**
-     * @return void
      */
     protected function installReadWriteConnection()
     {
