@@ -68,7 +68,7 @@ class AuraSqlModule extends AbstractModule
 
     private function configureSingleDsn()
     {
-        $this->bind(ExtendedPdoInterface::class)->toConstructor(ExtendedPdo::class, 'dsn=pdo_dsn,username=pdo_user,passwd=pdo_pass,options=pdo_option')->in(Scope::SINGLETON);
+        $this->bind(ExtendedPdoInterface::class)->toConstructor(ExtendedPdo::class, 'dsn=pdo_dsn,username=pdo_user,password=pdo_pass,options=pdo_option')->in(Scope::SINGLETON);
         $this->bind()->annotatedWith('pdo_dsn')->toInstance($this->dsn);
         $this->bind()->annotatedWith('pdo_user')->toInstance($this->user);
         $this->bind()->annotatedWith('pdo_pass')->toInstance($this->password);
