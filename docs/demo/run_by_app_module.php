@@ -12,7 +12,6 @@ $loader = require dirname(dirname(__DIR__)) . '/vendor/autoload.php';
 /* @var $loader \Composer\Autoload\ClassLoader */
 AnnotationRegistry::registerLoader([$loader, 'loadClass']);
 
-
 class Fake
 {
     use AuraSqlInject;
