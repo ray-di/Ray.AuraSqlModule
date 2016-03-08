@@ -82,7 +82,7 @@ class AuraSqlModule extends AbstractModule
         $i = 1;
         $slaves = explode(',', $this->slave);
         foreach ($slaves as $slave) {
-            $slaveDsn = $this->chageHost($this->dsn, $slave);
+            $slaveDsn = $this->changeHost($this->dsn, $slave);
             $name = 'slave' . (string) $i++;
             $locator->setRead($name, new Connection($slaveDsn, $this->user, $this->password));
         }
@@ -95,7 +95,7 @@ class AuraSqlModule extends AbstractModule
      *
      * @return string
      */
-    private function chageHost($dsn, $host)
+    private function changeHost($dsn, $host)
     {
         preg_match(self::PARSE_PDO_DSN_REGEX, $dsn, $parts);
         if (empty($parts)) {
