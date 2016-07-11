@@ -7,7 +7,6 @@
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
-use Pagerfanta\Exception\LogicException;
 
 class AuraSqlPagerFactory implements AuraSqlPagerFactoryInterface
 {
