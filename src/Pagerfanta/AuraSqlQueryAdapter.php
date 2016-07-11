@@ -10,7 +10,6 @@ use Aura\Sql\ExtendedPdo;
 use Aura\SqlQuery\Common\Select;
 use Aura\SqlQuery\Common\SelectInterface;
 use Pagerfanta\Adapter\AdapterInterface;
-use Pagerfanta\Exception\InvalidArgumentException;
 
 class AuraSqlQueryAdapter implements AdapterInterface
 {
