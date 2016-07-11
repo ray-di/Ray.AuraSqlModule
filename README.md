@@ -195,16 +195,37 @@ clas Foo
 
 Pagination service is provided for both `ExtendedPdo` raw sql and `Select` query builder. 
 
-```php
-// for ExtendedPdo
-/* @var $factory \Ray\AuraSqlModule\Pagerfanta\AuraSqlPagerFactoryInterface */
-$pager = $factory->newInstance($pdo, $sql, $params, 10, '/?page={page}&category=sports'); // 10 items per page
-$page = $pager[2]; // page 2
+**ExtendedPdo**
 
-// for Select
-/* @var $factory \Ray\AuraSqlModule\Pagerfanta\AuraSqlQueryPagerFactoryInterface */
-$pager = $factory->newInstance($pdo, $select, 10, '/?page={page}&category=sports');
-$page = $pager[2]; // page 2
+```php
+
+use Ray\AuraSqlModule\AuraSqlPagerInject;
+
+class Foo
+{
+    use AuraSqlPagerInject;
+
+    publuc function bar()
+    {   
+        // ...     
+        $pager = $this->pagerFactory->newInstance($pdo, $sql, $params, 10, '/?page={page}&category=sports'); // 10 items per page
+        $page = $pager[2]; // page 2
+```
+
+**Select query builder**
+
+```php
+use Ray\AuraSqlModule\Pagerfanta\AuraSqlQueryPagerInject;
+
+class Foo
+{
+    use AuraSqlQueryPagerInject;
+
+    publuc function bar()
+    {
+        // ...     
+        $pager = $this->queryPagerFactory->newInstance($pdo, $select, 10, '/?page={page}&category=sports');
+        $page = $pager[2]; // page 2
 ```
 
 An array access with page number returns `Page` value object.

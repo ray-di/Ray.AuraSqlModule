@@ -35,6 +35,7 @@ abstract class AbstractPdoTestCase extends \PHPUnit_Framework_TestCase
 
     private function insertData(\PDO $pdo)
     {
+        unset($pdo);
         $sql = '
             INSERT INTO posts (
                 username,

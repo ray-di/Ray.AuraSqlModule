@@ -27,6 +27,11 @@ class ExtendedPdoAdapter implements AdapterInterface
      */
     private $params;
 
+    /**
+     * @param ExtendedPdoInterface $pdo
+     * @param string               $sql
+     * @param array                $params
+     */
     public function __construct(ExtendedPdoInterface $pdo, $sql, array $params)
     {
         $this->pdo = $pdo;

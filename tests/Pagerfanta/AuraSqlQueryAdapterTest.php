@@ -48,7 +48,8 @@ class AuraSqlQueryAdapterTest extends AuraSqlQueryTestCase
 
     private function createAdapterToTestGetSlice()
     {
-        $countQueryBuilderModifier = function () { };
+        $countQueryBuilderModifier = function () {
+        };
 
         return new AuraSqlQueryAdapter($this->pdo, $this->select, $countQueryBuilderModifier);
     }
