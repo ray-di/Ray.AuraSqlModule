@@ -73,7 +73,7 @@ class AuraSqlQueryAdapterTest extends AuraSqlQueryTestCase
     private function createAdapterToTestGetNbResults()
     {
         $countQueryBuilderModifier = function (Select $select) {
-            foreach ($select->getCols() as $key => $value) {
+            foreach (array_keys($select->getCols()) as $key) {
                 $select->removeCol($key);
             }
             return $select->cols(['COUNT(*) AS total_results'])->limit(1);
