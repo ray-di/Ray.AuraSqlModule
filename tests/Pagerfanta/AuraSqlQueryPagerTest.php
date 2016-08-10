@@ -5,7 +5,7 @@ use Pagerfanta\Exception\LogicException;
 use Pagerfanta\View\DefaultView;
 use Ray\AuraSqlModule\Exception\NotInitialized;
 
-class AuraSqlQueryPagerTest extends \PHPUnit_Framework_TestCase
+class AuraSqlQueryPagerTest extends AuraSqlQueryTestCase
 {
     public function setUp()
     {
@@ -39,5 +39,21 @@ class AuraSqlQueryPagerTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException(LogicException::class);
         $pager = $this->pager;
         unset($pager[1]);
+    }
+
+    public function testOffsetGet()
+    {
+        $this->select = $this->qf->newSelect();
+        $this->select->cols(['p.username'])->from('posts as p');
+        $pager = $this->pager;
+        $pager->init($this->pdo, $this->select, 1, new DefaultRouteGenerator('/?page=1'));
+        $post = $pager[2];
+        $this->assertTrue($post->hasNext);
+        $this->assertTrue($post->hasPrevious);
+        $this->assertSame(1, $post->maxPerPage);
+        $this->assertSame(2, $post->current);
+        $this->assertSame(50, $post->total);
+        $expected = [['username' => 'Jon Doe']];
+        $this->assertSame($expected, $post->data);
     }
 }
