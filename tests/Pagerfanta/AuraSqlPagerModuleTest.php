@@ -41,6 +41,28 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
         $this->assertSame(50, $page->total);
     }
 
+    /**
+     * @depends testNewInstance
+     */
+    public function testArrayAccessWithMaxPage(AuraSqlPagerInterface $pager)
+    {
+        /** @var $page Page */
+        $page = $pager[50];
+        $this->assertFalse($page->hasNext);
+        $this->assertTrue($page->hasPrevious);
+        $expected = [
+                [
+                    'id' => '50',
+                    'username' => 'BEAR',
+                    'post_content' => 'entry #50',
+                ],
+        ];
+        $this->assertSame($expected, $page->data);
+        $expected = '<nav><a href="/?page=49&category=sports">Previous</a><a href="/?page=1&category=sports">1</a><span class="dots">...</span><a href="/?page=46&category=sports">46</a><a href="/?page=47&category=sports">47</a><a href="/?page=48&category=sports">48</a><a href="/?page=49&category=sports">49</a><span class="current">50</span><span class="disabled">Next</span></nav>';
+        $this->assertSame($expected, (string) $page);
+        $this->assertSame(50, $page->total);
+    }
+
     public function testInjectPager()
     {
         /** @var $fakeInject FakePagerInject */

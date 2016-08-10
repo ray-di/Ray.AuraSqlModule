@@ -86,8 +86,8 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
             return $select->cols(['COUNT(*) AS total_results'])->limit(1);
         };
         $pagerfanta = new Pagerfanta(new AuraSqlQueryAdapter($this->pdo, $this->select, $countQueryBuilderModifier));
-        $pagerfanta->setCurrentPage($page);
         $pagerfanta->setMaxPerPage($this->paging);
+        $pagerfanta->setCurrentPage($page);
 
         $pager = new Page($pagerfanta, $this->routeGenerator, $this->view, $this->viewOptions);
         $pager->maxPerPage = $pagerfanta->getMaxPerPage();
