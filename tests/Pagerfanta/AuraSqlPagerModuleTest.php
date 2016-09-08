@@ -19,6 +19,19 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
         return $pager;
     }
 
+    public function testNewInstanceWithBinding()
+    {
+        $factory = (new Injector(new AuraSqlPagerModule()))->getInstance(AuraSqlPagerFactoryInterface::class);
+        /* @var $factory AuraSqlPagerFactoryInterface */
+        $this->assertInstanceOf(AuraSqlPagerFactory::class, $factory);
+        $sql = 'SELECT * FROM posts where id = :id';
+        $params = ['id' => 1];
+        $pager = $factory->newInstance($this->pdo, $sql, $params, 1, '/?page={page}&category=sports');
+        $this->assertInstanceOf(AuraSqlPager::class, $pager);
+
+        return $pager;
+    }
+
     /**
      * @depends testNewInstance
      */
@@ -61,6 +74,28 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
         $expected = '<nav><a href="/?page=49&category=sports">Previous</a><a href="/?page=1&category=sports">1</a><span class="dots">...</span><a href="/?page=46&category=sports">46</a><a href="/?page=47&category=sports">47</a><a href="/?page=48&category=sports">48</a><a href="/?page=49&category=sports">49</a><span class="current">50</span><span class="disabled">Next</span></nav>';
         $this->assertSame($expected, (string) $page);
         $this->assertSame(50, $page->total);
+    }
+
+    /**
+     * @depends testNewInstanceWithBinding
+     */
+    public function testArrayAccessWithBinding(AuraSqlPagerInterface $pager)
+    {
+        /** @var $page Page */
+        $page = $pager[1];
+        $this->assertFalse($page->hasNext);
+        $this->assertFalse($page->hasPrevious);
+        $expected = [
+            [
+                'id' => '1',
+                'username' => 'BEAR',
+                'post_content' => 'entry #1',
+            ],
+        ];
+        $this->assertSame($expected, $page->data);
+        $expected = '<nav><span class="disabled">Previous</span><span class="current">1</span><span class="disabled">Next</span></nav>';
+        $this->assertSame($expected, (string) $page);
+        $this->assertSame(1, $page->total);
     }
 
     public function testInjectPager()
