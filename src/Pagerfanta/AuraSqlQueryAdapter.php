@@ -52,7 +52,7 @@ class AuraSqlQueryAdapter implements AdapterInterface
         $select = $this->prepareCountQueryBuilder();
         $sql = $select->getStatement();
         $sth = $this->pdo->prepare($sql);
-        $sth->execute();
+        $sth->execute($this->select->getBindValues());
         $result = $sth->fetchColumn();
 
         return (int) $result;
@@ -77,7 +77,7 @@ class AuraSqlQueryAdapter implements AdapterInterface
             ->limit($length)
             ->getStatement();
         $sth = $this->pdo->prepare($sql);
-        $sth->execute();
+        $sth->execute($this->select->getBindValues());
         $result = $sth->fetchAll(\PDO::FETCH_ASSOC);
 
         return $result;
