@@ -42,8 +42,6 @@ class AppModule extends AbstractModule
 Frequently, high-traffic PHP applications use multiple database servers, generally one for writes, and one or more for reads.
 With `AuraSqlReplicationModule`, master / slave database is automatically chosen by `$_SERVER['REQUEST_METHOD']` value. (slave is chosen only when request is `GET`)
 
-```
-
 Or when `@ReadOnlyConnection` annotated method is called, Read-only `$pdo`(slave database) is injected to the `$pdo` property. Or `@WriteConnection` for master database connection.
 
 ```php
