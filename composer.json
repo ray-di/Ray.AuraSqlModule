@@ -9,11 +9,11 @@
     "license": "MIT",
     "require": {
         "php": ">=5.5.0",
-        "ray/di": "~2.0",
-        "aura/sql": "~2.0",
-        "aura/sqlquery": "~2.4",
-        "pagerfanta/pagerfanta": "~1.0",
-        "rize/uri-template": "~0.2"
+        "ray/di": "^2.5.0",
+        "aura/sql": "^2.5.1",
+        "aura/sqlquery": "^2.7.1",
+        "pagerfanta/pagerfanta": "^1.0.4",
+        "rize/uri-template": "^0.3.0"
     },
     "autoload": {
         "psr-4": {
