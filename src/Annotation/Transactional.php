@@ -12,4 +12,5 @@ namespace Ray\AuraSqlModule\Annotation;
  */
 final class Transactional
 {
+    public $value = ['pdo'];
 }
