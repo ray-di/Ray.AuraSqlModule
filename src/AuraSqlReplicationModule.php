@@ -21,10 +21,19 @@ class AuraSqlReplicationModule extends AbstractModule
      */
     private $connectionLocator;
 
+    /**
+     * @var string
+     */
+    private $qualifer;
+
     public function __construct(
-        ConnectionLocatorInterface $connectionLocator = null
+        ConnectionLocatorInterface $connectionLocator = null,
+        $qualifer = '',
+        AbstractModule $module = null
     ) {
         $this->connectionLocator = $connectionLocator;
+        $this->qualifer = $qualifer;
+        parent::__construct($module);
     }
 
     /**
@@ -33,10 +42,10 @@ class AuraSqlReplicationModule extends AbstractModule
     protected function configure()
     {
         if ($this->connectionLocator) {
-            $this->bind(ConnectionLocatorInterface::class)->toInstance($this->connectionLocator);
+            $this->bind(ConnectionLocatorInterface::class)->annotatedWith($this->qualifer)->toInstance($this->connectionLocator);
         }
         // ReadOnlyConnection when GET, otherwise WriteConnection
-        $this->bind(ExtendedPdoInterface::class)->toProvider(AuraSqlReplicationDbProvider::class)->in(Scope::SINGLETON);
+        $this->bind(ExtendedPdoInterface::class)->annotatedWith($this->qualifer)->toProvider(AuraSqlReplicationDbProvider::class, $this->qualifer)->in(Scope::SINGLETON);
         // @ReadOnlyConnection @WriteConnection
         $this->installReadWriteConnection();
         // @Transactional

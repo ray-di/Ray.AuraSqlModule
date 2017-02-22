@@ -7,10 +7,17 @@
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocatorInterface;
+use Ray\Di\InjectorInterface;
 use Ray\Di\ProviderInterface;
+use Ray\Di\SetContextInterface;
 
-class AuraSqlReplicationDbProvider implements ProviderInterface
+class AuraSqlReplicationDbProvider implements ProviderInterface, SetContextInterface
 {
+    /**
+     * @var InjectorInterface
+     */
+    private $injector;
+
     /**
      * @var ConnectionLocatorInterface
      */
@@ -19,9 +26,17 @@ class AuraSqlReplicationDbProvider implements ProviderInterface
     /**
      * @param ConnectionLocatorInterface $connectionLocator
      */
-    public function __construct(ConnectionLocatorInterface $connectionLocator)
+    public function __construct(InjectorInterface $injector)
     {
-        $this->connectionLocator = $connectionLocator;
+        $this->injector = $injector;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setContext($context)
+    {
+        $this->connectionLocator = $this->injector->getInstance(ConnectionLocatorInterface::class, $context);
     }
 
     /**

@@ -37,64 +37,80 @@ class AppModule extends AbstractModule
 
  * [AuraSqlInject](https://github.com/ray-di/Ray.AuraSqlModule/blob/1.x/src/AuraSqlInject.php) for `Aura\Sql\ExtendedPdoInterface` interface
  
-#### Master / Slave database
+ ## Replication
+ 
+ Installing `AuraSqlReplicationModule` using a `connection locator` for master/slave connections.
+ 
+ ```php?start_inline
+ use Ray\Di\AbstractModule;
+ use Ray\AuraSqlModule\AuraSqlModule;
+ use Ray\AuraSqlModule\Annotation\AuraSqlConfig;
+ use Aura\Sql\ConnectionLocator;
+ 
+ class AppModule extends AbstractModule
+ {
+     protected function configure()
+     {
+         $locator = new ConnectionLocator;
+         $locator->setWrite('master', new Connection('mysql:host=localhost;dbname=master', 'id', 'pass'));
+         $locator->setRead('slave1',  new Connection('mysql:host=localhost;dbname=slave1', 'id', 'pass'));
+         $locator->setRead('slave2',  new Connection('mysql:host=localhost;dbname=slave2', 'id', 'pass'));
+         $this->install(new AuraSqlReplicationModule($locator));
+     }
+ }
+ 
+ ```
+ 
+You will now have a slave db connection when using HTTP GET, or a master db connection in other HTTP methods.
 
-Frequently, high-traffic PHP applications use multiple database servers, generally one for writes, and one or more for reads.
-With `AuraSqlReplicationModule`, master / slave database is automatically chosen by `$_SERVER['REQUEST_METHOD']` value. (slave is chosen only when request is `GET`)
+## Multiple DB
 
-Or when `@ReadOnlyConnection` annotated method is called, Read-only `$pdo`(slave database) is injected to the `$pdo` property. Or `@WriteConnection` for master database connection.
+You may want to inject different connection destinations on the same DB interface with `@Named($qaulifier)` annotation.
+Two modules are provided. `NamedPdoModule` is for non replication use. and `AuraSqlReplicationModule` is for replication use.
 
-```php
-
-use Ray\AuraSqlModule\Annotation\ReadOnlyConnection; // important
-use Ray\AuraSqlModule\Annotation\WriteConnection;    // important
-
-class User
-{
-    public $pdo;
-
-    /**
-     * @ReadOnlyConnection
-     */
-    public function read()
-    {
-         $this->pdo: // slave db
-    }
-
-    /**
-     * @WriteConnection
-     */
-    public function write()
-    {
-         $this->pdo: // master db
-    }
-}
-```
-
-Master / slave database is automatically switched to inject 
 
 ```php
-
-use Ray\AuraSqlModule\Annotation\AuraSql; // important
-
 /**
- * @AuraSql
+ * @Inject
+ * @Named("log_db")
  */
-class User
+public function setLoggerDb(ExtendedPdoInterface $pdo)
 {
-    public $pdo;
+    // ...
+}
+```
 
-    public function read()
-    {
-         $this->pdo: // slave db
-    }
 
-    public function write()
+### with no replication
+
+Use `NamedPdoModule ` to inject different named `Pdo` instance for **non** Replication use.
+For instance, This module install `log_db` named `Pdo` instance.
+
+```php
+class AppModule extends AbstractModule
+{
+    protected function configure()
     {
-         $this->pdo: // master db
+        $this->install(new NamedPdoModule('log_db', 'mysql:host=localhost;dbname=log', 'username', 
     }
 }
 ```
+
+### with replication
+
+You can set `$qaulifer` in 2nd parameter of AuraSqlReplicationModule.
+
+```php
+class AppModule extends AbstractModule
+{
+    protected function configure()
+    {
+        $this->install(new AuraSqlReplicationModule($locator, 'log_db'));
+    }
+}
+```
+
+## Transaction
 
 Any method marked with `@Transactional` will have a transaction started before, and ended after it is called.
 
@@ -116,33 +132,6 @@ class User
          // $this->pdo->rollback(); when exception thrown.
     }
 }
-```
-## Named Db Module
-
-Use `NamedPdoModule ` to inject different named `Pdo` instance.
-This module install `log_db` named `Pdo` instance.
-
-```php
-class AppModule extends AbstractModule
-{
-    protected function configure()
-    {
-        $this->install(new NamedPdoModule('log_db', 'mysql:host=localhost;dbname=log', 'username', 
-    }
-}
-```
-
-`@Named` is required for named `Pdo` instance.
-
-```php
-    /**
-     * @Inject
-     * @Named("log_db")
-     */
-    public function setLoggerDb(ExtendedPdoInterface $pdo)
-    {
-        // ...
-    }
 ```
 
 ## Query Builder

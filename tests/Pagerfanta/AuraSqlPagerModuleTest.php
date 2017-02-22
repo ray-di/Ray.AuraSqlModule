@@ -49,7 +49,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
                 ],
         ];
         $this->assertSame($expected, $page->data);
-        $expected = '<nav><a href="/?page=1&category=sports">Previous</a><a href="/?page=1&category=sports">1</a><span class="current">2</span><a href="/?page=3&category=sports">3</a><a href="/?page=4&category=sports">4</a><a href="/?page=5&category=sports">5</a><span class="dots">...</span><a href="/?page=50&category=sports">50</a><a href="/?page=3&category=sports">Next</a></nav>';
+        $expected = '<nav><a href="/?page=1&category=sports" rel="prev">Previous</a><a href="/?page=1&category=sports">1</a><span class="current">2</span><a href="/?page=3&category=sports">3</a><a href="/?page=4&category=sports">4</a><a href="/?page=5&category=sports">5</a><span class="dots">...</span><a href="/?page=50&category=sports">50</a><a href="/?page=3&category=sports" rel="next">Next</a></nav>';
         $this->assertSame($expected, (string) $page);
         $this->assertSame(50, $page->total);
     }
@@ -71,7 +71,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
                 ],
         ];
         $this->assertSame($expected, $page->data);
-        $expected = '<nav><a href="/?page=49&category=sports">Previous</a><a href="/?page=1&category=sports">1</a><span class="dots">...</span><a href="/?page=46&category=sports">46</a><a href="/?page=47&category=sports">47</a><a href="/?page=48&category=sports">48</a><a href="/?page=49&category=sports">49</a><span class="current">50</span><span class="disabled">Next</span></nav>';
+        $expected = '<nav><a href="/?page=49&category=sports" rel="prev">Previous</a><a href="/?page=1&category=sports">1</a><span class="dots">...</span><a href="/?page=46&category=sports">46</a><a href="/?page=47&category=sports">47</a><a href="/?page=48&category=sports">48</a><a href="/?page=49&category=sports">49</a><span class="current">50</span><span class="disabled">Next</span></nav>';
         $this->assertSame($expected, (string) $page);
         $this->assertSame(50, $page->total);
     }
