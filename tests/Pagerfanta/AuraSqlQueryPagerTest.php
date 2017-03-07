@@ -56,4 +56,12 @@ class AuraSqlQueryPagerTest extends AuraSqlQueryTestCase
         $expected = [['username' => 'Jon Doe']];
         $this->assertSame($expected, $post->data);
     }
+
+    public function estOffsetGetWithoutInit()
+    {
+        $this->select = $this->qf->newSelect();
+        $this->select->cols(['p.username'])->from('posts as p');
+        $pager = new AuraSqlQueryPager(new DefaultView, []);
+        $post = $pager[2];
+    }
 }

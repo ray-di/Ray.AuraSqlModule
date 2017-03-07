@@ -98,15 +98,9 @@ class AuraSqlModule extends AbstractModule
     private function changeHost($dsn, $host)
     {
         preg_match(self::PARSE_PDO_DSN_REGEX, $dsn, $parts);
-        if (empty($parts)) {
+        if (! $parts) {
             return $dsn;
         }
-//        [
-//            0 => 'mysql:host=localhost;port=3307;dbname=testdb',
-//            1 => 'mysql',
-//            2 => 'host',
-//            3 => 'port=3307;dbname=testdb'
-//        ]
         $dsn = sprintf('%s:%s=%s;%s', $parts[1], $parts[2], $host, $parts[3]);
 
         return $dsn;

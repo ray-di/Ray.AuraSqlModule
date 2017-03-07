@@ -30,5 +30,17 @@
                 "tests/Fake/"
             ]
         }
+    },
+    "scripts": {
+        "test": [
+            "phpmd src text ./phpmd.xml",
+            "phpcs src tests",
+            "phpunit"
+        ],
+        "cs-fix": [
+            "php-cs-fixer fix --config-file=./.php_cs",
+            "phpcbf src"
+        ],
+        "clean": "rm -rf var/tmp/* var/log/* tests/tmp/*"
     }
 }

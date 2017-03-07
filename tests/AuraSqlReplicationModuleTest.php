@@ -42,6 +42,7 @@ class AuraSqlReplicationModuleTest extends \PHPUnit_Framework_TestCase
      */
     public function testLocatorSlave(ConnectionLocator $locator, ExtendedPdo $masterPdo, ExtendedPdo $slavePdo)
     {
+        unset($masterPdo);
         $_SERVER['REQUEST_METHOD'] = 'GET';
         /* @var  $model FakeRepModel */
         $model = (new Injector(new AuraSqlReplicationModule($locator), $_ENV['TMP_DIR']))->getInstance(FakeRepModel::class);
@@ -54,6 +55,7 @@ class AuraSqlReplicationModuleTest extends \PHPUnit_Framework_TestCase
      */
     public function testLocatorMaster(ConnectionLocator $locator, ExtendedPdo $masterPdo, ExtendedPdo $slavePdo)
     {
+        unset($slavePdo);
         $_SERVER['REQUEST_METHOD'] = 'POST';
         /* @var  $model FakeRepModel */
         $model = (new Injector(new AuraSqlReplicationModule($locator), $_ENV['TMP_DIR']))->getInstance(FakeRepModel::class);
@@ -66,6 +68,8 @@ class AuraSqlReplicationModuleTest extends \PHPUnit_Framework_TestCase
      */
     public function testLocatorMasterWithQualifer(ConnectionLocator $locator, ExtendedPdo $masterPdo, ExtendedPdo $slavePdo)
     {
+        unset($masterPdo);
+        unset($slavePdo);
         $_SERVER['REQUEST_METHOD'] = 'POST';
         /* @var  $db1Master ExtendedPdo */
         /* @var  $db2Master ExtendedPdo */

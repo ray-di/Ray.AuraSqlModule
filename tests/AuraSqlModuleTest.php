@@ -33,4 +33,11 @@ class AuraSqlModuleTest extends \PHPUnit_Framework_TestCase
         $dsn = $read->getDsn();
         $this->assertContains($dsn, ['mysql:host=slave1;dbname=testdb', 'mysql:host=slave2;dbname=testdb']);
     }
+
+    public function testNoHost()
+    {
+        $instance = (new Injector(new FakeQualifierModule, $_ENV['TMP_DIR']))->getInstance(ExtendedPdoInterface::class);
+        /* @var $instance ExtendedPdo */
+        $this->assertSame('sqlite::memory:', $instance->getDsn());
+    }
 }
