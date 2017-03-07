@@ -43,4 +43,12 @@ class NamedPdoModuleTest extends \PHPUnit_Framework_TestCase
         /* @var $instance ExtendedPdo */
         $this->assertContains('mysql:host=slave', $instance->getDsn());
     }
+
+    public function testNoHost()
+    {
+        $qualifer = 'log_db';
+        $instance = (new Injector(new FakeNamedQualifierModule, $_ENV['TMP_DIR']))->getInstance(ExtendedPdoInterface::class, $qualifer);
+        /* @var $instance ExtendedPdo */
+        $this->assertSame('sqlite::memory:', $instance->getDsn());
+    }
 }

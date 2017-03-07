@@ -71,10 +71,7 @@ class AuraSqlConnectionInterceptor implements MethodInterceptor
         if (in_array($methodName, $this->readsMethods)) {
             return $this->connectionLocator->getRead();
         }
-        if (in_array($methodName, $this->writeMethods)) {
-            return $this->connectionLocator->getWrite();
-        }
 
-        return $this->connectionLocator->getDefault();
+        return $this->connectionLocator->getWrite();
     }
 }

@@ -77,9 +77,6 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
         }
 
         $countQueryBuilderModifier = function (SelectInterface $select) {
-            if (!$select instanceof Select) {
-                throw new NotInitialized();
-            }
             foreach (array_keys($select->getCols()) as $key) {
                 $select->removeCol($key);
             }
