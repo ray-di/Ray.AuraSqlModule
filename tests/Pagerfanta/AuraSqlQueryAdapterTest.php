@@ -76,6 +76,7 @@ class AuraSqlQueryAdapterTest extends AuraSqlQueryTestCase
             foreach (array_keys($select->getCols()) as $key) {
                 $select->removeCol($key);
             }
+
             return $select->cols(['COUNT(*) AS total_results'])->limit(1);
         };
 
