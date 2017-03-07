@@ -2,12 +2,15 @@
 
 namespace Ray\AuraSqlModule;
 
+use Aura\Sql\ConnectionLocator;
 use Aura\Sql\ExtendedPdo;
 use Aura\Sql\ExtendedPdoInterface;
 use Ray\Di\AbstractModule;
 
 class NamedPdoModule extends AbstractModule
 {
+    const PARSE_PDO_DSN_REGEX = '/(.*?)\:(host|server)=.*?;(.*)/i';
+
     /**
      * @var string
      */
@@ -26,20 +29,25 @@ class NamedPdoModule extends AbstractModule
     /**
      * @var string
      */
-    private $pass;
+    private $password;
 
+    /**
+     * @var string
+     */
+    private $slave;
     /**
      * @param string $qualifer
      * @param string $dsn
      * @param string $user
      * @param string $pass
      */
-    public function __construct($qualifer, $dsn, $user = '', $pass = '')
+    public function __construct($qualifer, $dsn, $user = '', $pass = '', $slave = '')
     {
         $this->qualifer = $qualifer;
         $this->dsn = $dsn;
         $this->user = $user;
-        $this->pass = $pass;
+        $this->password = $pass;
+        $this->slave = $slave;
         parent::__construct();
     }
 
@@ -48,10 +56,11 @@ class NamedPdoModule extends AbstractModule
      */
     protected function configure()
     {
-        $this->bindNamedPdo($this->qualifer, $this->dsn, $this->user, $this->pass);
+        $this->slave ? $this->configureMasterSlaveDsn($this->qualifer, $this->dsn, $this->user, $this->password, $this->slave)
+            : $this->configureSingleDsn($this->qualifer, $this->dsn, $this->user, $this->password);
     }
 
-    private function bindNamedPdo($qualifer, $dsn, $user, $pass)
+    private function configureSingleDsn($qualifer, $dsn, $user, $password)
     {
         $this->bind(ExtendedPdoInterface::class)
             ->annotatedWith($qualifer)
@@ -61,6 +70,43 @@ class NamedPdoModule extends AbstractModule
             );
         $this->bind()->annotatedWith("{$qualifer}_dsn")->toInstance($dsn);
         $this->bind()->annotatedWith("{$qualifer}_username")->toInstance($user);
-        $this->bind()->annotatedWith("{$qualifer}_password")->toInstance($pass);
+        $this->bind()->annotatedWith("{$qualifer}_password")->toInstance($password);
+    }
+
+    private function configureMasterSlaveDsn($qualifer, $dsn, $user, $password, $slaveList)
+    {
+        $locator = new ConnectionLocator();
+        $locator->setWrite('master', new Connection($dsn, $user, $password));
+        $i = 1;
+        $slaves = explode(',', $slaveList);
+        foreach ($slaves as $slave) {
+            $slaveDsn = $this->changeHost($dsn, $slave);
+            $name = 'slave' . (string) $i++;
+            $locator->setRead($name, new Connection($slaveDsn, $user, $password));
+        }
+        $this->install(new AuraSqlReplicationModule($locator, $qualifer));
+    }
+
+    /**
+     * @param string $dsn
+     * @param string $host
+     *
+     * @return string
+     */
+    private function changeHost($dsn, $host)
+    {
+        preg_match(self::PARSE_PDO_DSN_REGEX, $dsn, $parts);
+        if (empty($parts)) {
+            return $dsn;
+        }
+//        [
+//            0 => 'mysql:host=localhost;port=3307;dbname=testdb',
+//            1 => 'mysql',
+//            2 => 'host',
+//            3 => 'port=3307;dbname=testdb'
+//        ]
+        $dsn = sprintf('%s:%s=%s;%s', $parts[1], $parts[2], $host, $parts[3]);
+
+        return $dsn;
     }
 }

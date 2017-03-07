@@ -23,4 +23,24 @@ class NamedPdoModuleTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(ExtendedPdo::class, $fakeName->pdoAnno);
         $this->assertInstanceOf(ExtendedPdo::class, $fakeName->pdoSetterInject);
     }
+
+    public function testReplicationMaster()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $qualifer = 'log_db';
+        $instance = (new Injector(new FakeNamedReplicationModule, $_ENV['TMP_DIR']))->getInstance(ExtendedPdoInterface::class, $qualifer);
+        $this->assertInstanceOf(ExtendedPdo::class, $instance);
+        /* @var $instance ExtendedPdo */
+        $this->assertSame('mysql:host=localhost;dbname=db', $instance->getDsn());
+    }
+
+    public function testReplicationSlave()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $qualifer = 'log_db';
+        $instance = (new Injector(new FakeNamedReplicationModule, $_ENV['TMP_DIR']))->getInstance(ExtendedPdoInterface::class, $qualifer);
+        $this->assertInstanceOf(ExtendedPdo::class, $instance);
+        /* @var $instance ExtendedPdo */
+        $this->assertContains('mysql:host=slave', $instance->getDsn());
+    }
 }
