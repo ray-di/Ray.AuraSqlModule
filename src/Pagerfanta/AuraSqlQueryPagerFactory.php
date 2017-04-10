@@ -22,7 +22,7 @@ class AuraSqlQueryPagerFactory implements AuraSqlQueryPagerFactoryInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function newInstance(ExtendedPdoInterface $pdo, SelectInterface $select, $paging, $uriTemplate)
     {

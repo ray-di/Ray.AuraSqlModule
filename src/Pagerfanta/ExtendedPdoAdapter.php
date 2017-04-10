@@ -51,18 +51,18 @@ class ExtendedPdoAdapter implements AdapterInterface
             $result = $this->pdo->query($this->sql)->fetchAll();
             $count = count($result);
 
-            return (integer) $count;
+            return (int) $count;
         }
         if ($this->params) {
             $sth = $this->pdo->prepareWithValues($this->sql, $this->params);
             $sth->execute();
             $count = $sth->fetchAll();
 
-            return (integer) count($count);
+            return (int) count($count);
         }
         $count = $this->pdo->query($countQuery)->fetchColumn();
 
-        return (integer) $count;
+        return (int) $count;
     }
 
     /**
@@ -128,8 +128,8 @@ class ExtendedPdoAdapter implements AdapterInterface
             return '';
         }
         $queryCount = preg_replace('/(?:.*)\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $query, 1);
-        list($queryCount, ) = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
-        list($queryCount, ) = preg_split('/\bLIMIT\b/is', $queryCount);
+        list($queryCount) = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
+        list($queryCount) = preg_split('/\bLIMIT\b/is', $queryCount);
 
         return trim($queryCount);
     }

@@ -49,7 +49,7 @@ class Connection
 
     public function __invoke()
     {
-        if (!$this->pdo) {
+        if (! $this->pdo) {
             $this->pdo = new ExtendedPdo($this->dsn, $this->id, $this->password);
         }
 

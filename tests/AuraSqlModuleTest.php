@@ -1,5 +1,4 @@
 <?php
-
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocatorInterface;

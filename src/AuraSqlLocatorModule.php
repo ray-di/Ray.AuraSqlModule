@@ -62,6 +62,22 @@ class AuraSqlLocatorModule extends AbstractModule
         $this->install(new TransactionalModule);
     }
 
+    protected function installReadWriteConnection()
+    {
+        // @ReadOnlyConnection
+        $this->bindInterceptor(
+            $this->matcher->any(),
+            $this->matcher->annotatedWith(ReadOnlyConnection::class),
+            [AuraSqlSlaveDbInterceptor::class]
+        );
+        // @WriteConnection
+        $this->bindInterceptor(
+            $this->matcher->any(),
+            $this->matcher->annotatedWith(WriteConnection::class),
+            [AuraSqlMasterDbInterceptor::class]
+        );
+    }
+
     /**
      * @param string[] $methods
      */
@@ -80,24 +96,6 @@ class AuraSqlLocatorModule extends AbstractModule
                 )
             ),
             [AuraSqlConnectionInterceptor::class]
-        );
-    }
-
-    /**
-     */
-    protected function installReadWriteConnection()
-    {
-        // @ReadOnlyConnection
-        $this->bindInterceptor(
-            $this->matcher->any(),
-            $this->matcher->annotatedWith(ReadOnlyConnection::class),
-            [AuraSqlSlaveDbInterceptor::class]
-        );
-        // @WriteConnection
-        $this->bindInterceptor(
-            $this->matcher->any(),
-            $this->matcher->annotatedWith(WriteConnection::class),
-            [AuraSqlMasterDbInterceptor::class]
         );
     }
 }

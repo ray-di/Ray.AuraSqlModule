@@ -21,7 +21,7 @@ class AuraSqlPagerFactory implements AuraSqlPagerFactoryInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function newInstance(ExtendedPdoInterface $pdo, $sql, array $params, $paging, $uriTemplate)
     {

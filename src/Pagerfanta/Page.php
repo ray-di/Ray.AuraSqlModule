@@ -61,12 +61,16 @@ final class Page implements \IteratorAggregate
      */
     private $viewOption;
 
-    /**
-     * @inheritDoc
-     */
-    public function getIterator()
-    {
-        return $this->pagerfanta->getIterator();
+    public function __construct(
+        Pagerfanta $pagerfanta,
+        RouteGeneratorInterface $routeGenerator,
+        ViewInterface $view,
+        array $viewOption
+    ) {
+        $this->pagerfanta = $pagerfanta;
+        $this->routeGenerator = $routeGenerator;
+        $this->view = $view;
+        $this->viewOption = $viewOption;
     }
 
     public function __toString()
@@ -78,15 +82,11 @@ final class Page implements \IteratorAggregate
         );
     }
 
-    public function __construct(
-        Pagerfanta $pagerfanta,
-        RouteGeneratorInterface $routeGenerator,
-        ViewInterface $view,
-        array $viewOption
-    ) {
-        $this->pagerfanta = $pagerfanta;
-        $this->routeGenerator = $routeGenerator;
-        $this->view = $view;
-        $this->viewOption = $viewOption;
+    /**
+     * {@inheritdoc}
+     */
+    public function getIterator()
+    {
+        return $this->pagerfanta->getIterator();
     }
 }

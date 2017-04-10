@@ -45,9 +45,9 @@ class TransactionalInterceptor implements MethodInterceptor
      * @param object $object the object having pdo
      * @param string $prop   the name of pdo property
      *
-     * @return \Pdo
-     *
      * @throws InvalidTransactionalPropertyException
+     *
+     * @return \Pdo
      */
     private function beginTransaction($object, $prop)
     {

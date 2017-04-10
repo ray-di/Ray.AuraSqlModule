@@ -1,5 +1,4 @@
 <?php
-
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 class PdoMySqlAdapterTest extends AbstractPdoTestCase

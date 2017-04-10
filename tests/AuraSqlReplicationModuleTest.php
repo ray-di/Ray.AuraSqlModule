@@ -1,5 +1,4 @@
 <?php
-
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocator;
@@ -68,8 +67,8 @@ class AuraSqlReplicationModuleTest extends \PHPUnit_Framework_TestCase
      */
     public function testLocatorMasterWithQualifer(ConnectionLocator $locator, ExtendedPdo $masterPdo, ExtendedPdo $slavePdo)
     {
-        unset($masterPdo);
-        unset($slavePdo);
+        unset($masterPdo, $slavePdo);
+
         $_SERVER['REQUEST_METHOD'] = 'POST';
         /* @var  $db1Master ExtendedPdo */
         /* @var  $db2Master ExtendedPdo */
