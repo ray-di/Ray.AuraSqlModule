@@ -1,5 +1,4 @@
 <?php
-
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdo;
@@ -39,7 +38,7 @@ abstract class AuraSqlQueryTestCase extends \PHPUnit_Framework_TestCase
 
     private function isAuraSqlQueryNotAvailable()
     {
-        return !class_exists('Aura\SqlQuery\QueryFactory');
+        return ! class_exists('Aura\SqlQuery\QueryFactory');
     }
 
     private function getConnection()
@@ -75,7 +74,7 @@ abstract class AuraSqlQueryTestCase extends \PHPUnit_Framework_TestCase
                 ->into('posts')
                 ->cols([
                     'username' => 'Jon Doe',
-                    'post_content' => 'Post #'.$i
+                    'post_content' => 'Post #' . $i
                 ]);
             $sth = $pdo->prepare($insertPost->getStatement());
             $sth->execute($insertPost->getBindValues());
@@ -83,9 +82,9 @@ abstract class AuraSqlQueryTestCase extends \PHPUnit_Framework_TestCase
                 $insertComment
                     ->into('comments')
                     ->cols([
-                        'post_id'  => $i,
+                        'post_id' => $i,
                         'username' => 'Jon Doe',
-                        'content'  => 'Comment #' . $j
+                        'content' => 'Comment #' . $j
                     ]);
                 $sth = $pdo->prepare($insertComment->getStatement());
                 $sth->execute($insertComment->getBindValues());

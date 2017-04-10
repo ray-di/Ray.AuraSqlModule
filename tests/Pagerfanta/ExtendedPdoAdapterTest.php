@@ -1,5 +1,4 @@
 <?php
-
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 class ExtendedPdoAdapterTest extends AbstractPdoTestCase
@@ -24,13 +23,13 @@ class ExtendedPdoAdapterTest extends AbstractPdoTestCase
     public function testGetLimitClause()
     {
         $limitClause = $this->pdoAdapter->getLimitClause(1, 10);
-        $this->assertSame(PHP_EOL  . 'LIMIT 10 OFFSET 1', $limitClause);
+        $this->assertSame(PHP_EOL . 'LIMIT 10 OFFSET 1', $limitClause);
     }
 
     public function testGetLimitClauseZeroOffset()
     {
         $limitClause = $this->pdoAdapter->getLimitClause(0, 10);
-        $this->assertSame(PHP_EOL  . 'LIMIT 10', $limitClause);
+        $this->assertSame(PHP_EOL . 'LIMIT 10', $limitClause);
     }
 
     public function testGetLimitClauseZeroOffsetZeroLimit()
@@ -58,7 +57,6 @@ class ExtendedPdoAdapterTest extends AbstractPdoTestCase
             ['SELECT * FROM posts', [], 'SELECT COUNT(*) FROM posts', 50],
             ['SELECT DISTINCT id FROM posts', [], '', 50],
             ['SELECT * FROM posts WHERE id > :num', ['num' => 10], 'SELECT COUNT(*) FROM posts WHERE id > :num', 40],
-
         ];
     }
 

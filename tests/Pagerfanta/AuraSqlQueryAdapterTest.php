@@ -1,11 +1,8 @@
 <?php
-
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\SqlQuery\Common\Select;
-use Aura\SqlQuery\QueryFactory;
 use Pagerfanta\Pagerfanta;
-use Ray\Aop\Exception\InvalidArgumentException;
 
 class AuraSqlQueryAdapterTest extends AuraSqlQueryTestCase
 {
@@ -25,11 +22,6 @@ class AuraSqlQueryAdapterTest extends AuraSqlQueryTestCase
         $this->doTestGetNbResults($adapter);
     }
 
-    private function doTestGetNbResults(AuraSqlQueryAdapter $adapter)
-    {
-        $this->assertSame(50, $adapter->getNbResults());
-    }
-
     public function testGetSlice()
     {
         $adapter = $this->createAdapterToTestGetSlice();
@@ -44,6 +36,44 @@ class AuraSqlQueryAdapterTest extends AuraSqlQueryTestCase
         $adapter->getNbResults();
 
         $this->doTestGetSlice($adapter);
+    }
+
+    public function testUsage()
+    {
+        $adapter = $this->createAdapterToTestGetNbResults();
+        $pagerfanta = new Pagerfanta($adapter);
+        $maxPerPage = 2;
+        $pagerfanta->setMaxPerPage($maxPerPage);
+        $maxPerPage = $pagerfanta->getMaxPerPage();
+        $this->assertSame(2, $maxPerPage);
+
+        $currentPage = 2;
+        $pagerfanta->setCurrentPage($currentPage);
+        $currentPage = $pagerfanta->getCurrentPage();
+        $this->assertSame(2, $currentPage);
+
+        $nbResults = $pagerfanta->getNbResults();
+        $this->assertSame(50, $nbResults);
+
+        $currentPageResults = $pagerfanta->getCurrentPageResults();
+        $expected = [
+                [
+                    'id' => '3',
+                    'username' => 'Jon Doe',
+                    'post_content' => 'Post #3',
+                ],
+                [
+                    'id' => '4',
+                    'username' => 'Jon Doe',
+                    'post_content' => 'Post #4',
+                ],
+        ];
+        $this->assertSame($expected, $currentPageResults);
+    }
+
+    private function doTestGetNbResults(AuraSqlQueryAdapter $adapter)
+    {
+        $this->assertSame(50, $adapter->getNbResults());
     }
 
     private function createAdapterToTestGetSlice()
@@ -81,38 +111,5 @@ class AuraSqlQueryAdapterTest extends AuraSqlQueryTestCase
         };
 
         return new AuraSqlQueryAdapter($this->pdo, $this->select, $countQueryBuilderModifier);
-    }
-
-    public function testUsage()
-    {
-        $adapter = $this->createAdapterToTestGetNbResults();
-        $pagerfanta = new Pagerfanta($adapter);
-        $maxPerPage = 2;
-        $pagerfanta->setMaxPerPage($maxPerPage);
-        $maxPerPage = $pagerfanta->getMaxPerPage();
-        $this->assertSame(2, $maxPerPage);
-
-        $currentPage = 2;
-        $pagerfanta->setCurrentPage($currentPage);
-        $currentPage = $pagerfanta->getCurrentPage();
-        $this->assertSame(2, $currentPage);
-
-        $nbResults = $pagerfanta->getNbResults();
-        $this->assertSame(50, $nbResults);
-
-        $currentPageResults = $pagerfanta->getCurrentPageResults();
-        $expected = [
-                [
-                    'id' => '3',
-                    'username' => 'Jon Doe',
-                    'post_content' => 'Post #3',
-                ],
-                [
-                    'id' => '4',
-                    'username' => 'Jon Doe',
-                    'post_content' => 'Post #4',
-                ],
-        ];
-        $this->assertSame($expected, $currentPageResults);
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdo;
