@@ -24,12 +24,12 @@ class AppModule extends AbstractModule
     protected function configure()
     {
         $this->install(
-	        new AuraSqlModule(
-	        		'mysql:host=localhost;dbname=test',
-	        		'username',
-	        		'password',
-	        		'slave1,slave2,slave3' // optional slave server list
-	        );
+            new AuraSqlModule(
+                'mysql:host=localhost;dbname=test',
+                'username',
+                'password',
+                'slave1,slave2,slave3' // optional slave server list
+        );
     }
 }
 ```
