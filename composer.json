@@ -35,15 +35,9 @@
         }
     },
     "scripts": {
-        "test": [
-            "phpmd src text ./phpmd.xml",
-            "phpcs src tests",
-            "phpunit"
-        ],
-        "cs-fix": [
-            "php-cs-fixer fix --config-file=./.php_cs",
-            "phpcbf src"
-        ],
-        "clean": "rm -rf var/tmp/* var/log/* tests/tmp/*"
+        "test": ["phpunit"],
+        "coverage": ["php -dzend_extension=xdebug.so ./vendor/bin/phpunit --coverage-text --coverage-html=build/coverage"],
+        "cs": ["php-cs-fixer fix -v --dry-run", "phpcs --standard=./phpcs.xml src"],
+        "cs-fix": ["php-cs-fixer fix -v", "phpcbf src"]
     }
 }
