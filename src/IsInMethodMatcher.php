@@ -25,7 +25,7 @@ class IsInMethodMatcher extends AbstractMatcher
      */
     public function matchesMethod(\ReflectionMethod $method, array $arguments)
     {
-        $result = in_array($method->name, $arguments[0]);
+        $result = in_array($method->name, $arguments[0], true);
 
         return $result;
     }

@@ -1,5 +1,4 @@
 <?php
-
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocator;
@@ -35,6 +34,7 @@ class NamedPdoModule extends AbstractModule
      * @var string
      */
     private $slave;
+
     /**
      * @param string $qualifer
      * @param string $dsn

@@ -75,7 +75,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function offsetExists($offset)
     {
@@ -83,7 +83,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function offsetGet($currentPage)
     {
@@ -105,7 +105,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function offsetSet($offset, $value)
     {
@@ -113,7 +113,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function offsetUnset($offset)
     {

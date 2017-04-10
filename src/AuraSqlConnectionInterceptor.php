@@ -51,7 +51,7 @@ class AuraSqlConnectionInterceptor implements MethodInterceptor
      */
     public function invoke(MethodInvocation $invocation)
     {
-        $connection =  $this->getConnection($invocation);
+        $connection = $this->getConnection($invocation);
         $object = $invocation->getThis();
         $ref = new \ReflectionProperty($object, self::PROP);
         $ref->setAccessible(true);
@@ -68,7 +68,7 @@ class AuraSqlConnectionInterceptor implements MethodInterceptor
     private function getConnection(MethodInvocation $invocation)
     {
         $methodName = $invocation->getMethod()->name;
-        if (in_array($methodName, $this->readsMethods)) {
+        if (in_array($methodName, $this->readsMethods, true)) {
             return $this->connectionLocator->getRead();
         }
 

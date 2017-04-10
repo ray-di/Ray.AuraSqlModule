@@ -29,7 +29,7 @@ class AuraSqlQueryAdapter implements AdapterInterface
      * Constructor.
      *
      * @param Select   $select
-     * @param callable $countQueryBuilderModifier A callable to modifier the query builder to count.
+     * @param callable $countQueryBuilderModifier a callable to modifier the query builder to count
      */
 
     /**
@@ -58,14 +58,6 @@ class AuraSqlQueryAdapter implements AdapterInterface
         return (int) $result;
     }
 
-    private function prepareCountQueryBuilder()
-    {
-        $select = clone $this->select;
-        call_user_func($this->countQueryBuilderModifier, $select);
-
-        return $select;
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -81,5 +73,13 @@ class AuraSqlQueryAdapter implements AdapterInterface
         $result = $sth->fetchAll(\PDO::FETCH_ASSOC);
 
         return $result;
+    }
+
+    private function prepareCountQueryBuilder()
+    {
+        $select = clone $this->select;
+        call_user_func($this->countQueryBuilderModifier, $select);
+
+        return $select;
     }
 }

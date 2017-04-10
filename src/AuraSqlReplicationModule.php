@@ -8,7 +8,6 @@ namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocatorInterface;
 use Aura\Sql\ExtendedPdoInterface;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use Ray\AuraSqlModule\Annotation\ReadOnlyConnection;
 use Ray\AuraSqlModule\Annotation\WriteConnection;
 use Ray\Di\AbstractModule;
@@ -52,8 +51,6 @@ class AuraSqlReplicationModule extends AbstractModule
         $this->install(new TransactionalModule);
     }
 
-    /**
-     */
     protected function installReadWriteConnection()
     {
         // @ReadOnlyConnection
