@@ -19,12 +19,12 @@ class AuraSqlReplicationDbProvider implements ProviderInterface, SetContextInter
     private $injector;
 
     /**
-     * @var ConnectionLocatorInterface
+     * @var string
      */
-    private $connectionLocator;
+    private $context = '';
 
     /**
-     * @param ConnectionLocatorInterface $connectionLocator
+     * @param InjectorInterface $injector
      */
     public function __construct(InjectorInterface $injector)
     {
@@ -36,7 +36,7 @@ class AuraSqlReplicationDbProvider implements ProviderInterface, SetContextInter
      */
     public function setContext($context)
     {
-        $this->connectionLocator = $this->injector->getInstance(ConnectionLocatorInterface::class, $context);
+        $this->context = $context;
     }
 
     /**
@@ -44,8 +44,9 @@ class AuraSqlReplicationDbProvider implements ProviderInterface, SetContextInter
      */
     public function get()
     {
+        $connectionLocator = $this->injector->getInstance(ConnectionLocatorInterface::class, $this->context);
         $isGetRequest = isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'GET';
-        $pdo = $isGetRequest ? $this->connectionLocator->getRead() : $this->connectionLocator->getWrite();
+        $pdo = $isGetRequest ? $connectionLocator->getRead() : $connectionLocator->getWrite();
 
         return $pdo;
     }
