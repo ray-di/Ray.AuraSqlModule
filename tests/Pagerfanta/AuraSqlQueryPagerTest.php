@@ -44,7 +44,7 @@ class AuraSqlQueryPagerTest extends AuraSqlQueryTestCase
     public function testOffsetGet()
     {
         $this->select = $this->qf->newSelect();
-        $this->select->cols(['p.username'])->from('posts as p');
+        $this->select->cols(['p.username'])->from('posts as p')->orderBy(['p.username']);
         $pager = $this->pager;
         $pager->init($this->pdo, $this->select, 1, new DefaultRouteGenerator('/?page=1'));
         $post = $pager[2];
