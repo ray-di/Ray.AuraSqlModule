@@ -81,7 +81,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
                 $select->removeCol($key);
             }
 
-            return $select->cols(['COUNT(*) AS total_results'])->limit(1);
+            return $select->cols(['COUNT(*) AS total_results'])->resetOrderBy()->limit(1);
         };
         $pagerfanta = new Pagerfanta(new AuraSqlQueryAdapter($this->pdo, $this->select, $countQueryBuilderModifier));
         $pagerfanta->setMaxPerPage($this->paging);
