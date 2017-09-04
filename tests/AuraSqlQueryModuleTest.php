@@ -53,7 +53,7 @@ class AuraSqlQueryModuleTest extends \PHPUnit_Framework_TestCase
     {
         /** @var $fakeInject FakeQueryInject */
         $fakeInject = (new Injector(new AuraSqlQueryModule('mysql')))->getInstance(FakeQueryInject::class);
-        list($select, $insert, $update, $delete) = $fakeInject->get();
+        list(,$select, $insert, $update, $delete) = $fakeInject->get();
         $this->assertInstanceOf(SelectInterface::class, $select);
         $this->assertInstanceOf(InsertInterface::class, $insert);
         $this->assertInstanceOf(UpdateInterface::class, $update);
