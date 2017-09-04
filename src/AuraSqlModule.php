@@ -15,7 +15,7 @@ use Ray\Di\Scope;
 
 class AuraSqlModule extends AbstractModule
 {
-    const PARSE_PDO_DSN_REGEX = '/(.*?)\:(host|server)=.*?;(.*)/i';
+    const PARSE_PDO_DSN_REGEX = '/(.*?)\:(?:(host|server)=.*?;)?(.*)/i';
 
     /**
      * @var string

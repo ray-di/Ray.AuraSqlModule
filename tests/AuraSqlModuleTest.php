@@ -20,6 +20,27 @@ class AuraSqlModuleTest extends \PHPUnit_Framework_TestCase
         (new DiCompiler(new AuraSqlModule('sqlite::memory:'), $_ENV['TMP_DIR']))->compile();
     }
 
+    public function testMysql()
+    {
+        $fakeInject = (new Injector(new AuraSqlModule('mysql:host=localhost;dbname=master'), $_ENV['TMP_DIR']))->getInstance(FakeQueryInject::class);
+        list($db,) = $fakeInject->get();
+        $this->assertEquals('mysql', $db);
+    }
+
+    public function testPgsql()
+    {
+        $fakeInject = (new Injector(new AuraSqlModule('pgsql:host=localhost;dbname=master'), $_ENV['TMP_DIR']))->getInstance(FakeQueryInject::class);
+        list($db,) = $fakeInject->get();
+        $this->assertEquals('pgsql', $db);
+    }
+
+    public function testSqlite()
+    {
+        $fakeInject = (new Injector(new AuraSqlModule('sqlite:memory:'), $_ENV['TMP_DIR']))->getInstance(FakeQueryInject::class);
+        list($db,) = $fakeInject->get();
+        $this->assertEquals('sqlite', $db);
+    }
+
     public function testSlaveModule()
     {
         $module = new AuraSqlModule('mysql:host=localhost;dbname=testdb', 'root', '', 'slave1,slave2');
