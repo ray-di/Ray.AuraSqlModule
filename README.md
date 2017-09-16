@@ -254,9 +254,3 @@ $this->bind()->annotatedWith(PagerViewOption::class)->toInstance($pagerViewOptio
 
     $ php docs/demo/run.php
     // It works!
-
-## Requirements
-
- * PHP 5.4+
- * hhvm
- 
