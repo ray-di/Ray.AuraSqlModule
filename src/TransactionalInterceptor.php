@@ -10,7 +10,6 @@ use Aura\Sql\ExtendedPdoInterface;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 use Ray\Aop\ReflectionMethod;
-use Ray\Aop\ReflectiveMethodInvocation;
 use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\AuraSqlModule\Exception\RollbackException;
 
@@ -32,7 +31,7 @@ class TransactionalInterceptor implements MethodInterceptor
     public function invoke(MethodInvocation $invocation)
     {
         /** @var ReflectionMethod $method */
-        $method =  $invocation->getMethod();
+        $method = $invocation->getMethod();
         /** @var Transactional $transactional */
         $transactional = $method->getAnnotation(Transactional::class);
         if (\count($transactional->value) > 1) {
