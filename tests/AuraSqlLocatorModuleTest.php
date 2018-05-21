@@ -3,10 +3,11 @@ namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocator;
 use Aura\Sql\ExtendedPdo;
+use PHPUnit\Framework\TestCase;
 use Ray\AuraSqlModule\Exception\RollbackException;
 use Ray\Di\Injector;
 
-class AuraSqlLocatorModuleTest extends \PHPUnit_Framework_TestCase
+class AuraSqlLocatorModuleTest extends TestCase
 {
     /**
      * @var ExtendedPdo
@@ -66,7 +67,7 @@ class AuraSqlLocatorModuleTest extends \PHPUnit_Framework_TestCase
 
     public function testTransactional()
     {
-        $this->setExpectedException(RollbackException::class);
+        $this->expectException(RollbackException::class);
         $this->model->dbError();
     }
 }

@@ -2,8 +2,9 @@
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdo;
+use PHPUnit\Framework\TestCase;
 
-abstract class AbstractPdoTestCase extends \PHPUnit_Framework_TestCase
+abstract class AbstractPdoTestCase extends TestCase
 {
     /**
      * @var ExtendedPdo

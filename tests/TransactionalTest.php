@@ -1,15 +1,15 @@
 <?php
 namespace Ray\AuraSqlModule;
 
+use PHPUnit\Framework\TestCase;
+use Ray\AuraSqlModule\Exception\InvalidTransactionalPropertyException;
 use Ray\Di\Injector;
 
-class TransactionalTest extends \PHPUnit_Framework_TestCase
+class TransactionalTest extends TestCase
 {
-    /**
-     * @expectedException \Ray\AuraSqlModule\Exception\InvalidTransactionalPropertyException
-     */
     public function testInvalidPropertyException()
     {
+        $this->expectException(InvalidTransactionalPropertyException::class);
         $ro = (new Injector(new FakeMultiDbModule))->getInstance(FakeMultiDb::class);
         /* @var $ro FakeMultiDb */
         $ro->noProp();

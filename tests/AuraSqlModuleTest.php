@@ -4,10 +4,12 @@ namespace Ray\AuraSqlModule;
 use Aura\Sql\ConnectionLocatorInterface;
 use Aura\Sql\ExtendedPdo;
 use Aura\Sql\ExtendedPdoInterface;
+use PHPUnit\Framework\TestCase;
 use Ray\Compiler\DiCompiler;
+use Ray\Compiler\ScriptInjector;
 use Ray\Di\Injector;
 
-class AuraSqlModuleTest extends \PHPUnit_Framework_TestCase
+class AuraSqlModuleTest extends TestCase
 {
     public function testModule()
     {
@@ -18,6 +20,8 @@ class AuraSqlModuleTest extends \PHPUnit_Framework_TestCase
     public function testCompile()
     {
         (new DiCompiler(new AuraSqlModule('sqlite::memory:'), $_ENV['TMP_DIR']))->compile();
+        $pdo = (new ScriptInjector($_ENV['TMP_DIR']))->getInstance(ExtendedPdoInterface::class);
+        $this->assertInstanceOf(ExtendedPdoInterface::class, $pdo);
     }
 
     public function testMysql()

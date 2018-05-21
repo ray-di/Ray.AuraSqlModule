@@ -4,9 +4,10 @@ namespace Ray\AuraSqlModule;
 use Aura\Sql\ConnectionLocator;
 use Aura\Sql\ExtendedPdo;
 use Aura\Sql\ExtendedPdoInterface;
+use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
 
-class AuraSqlReplicationModuleTest extends \PHPUnit_Framework_TestCase
+class AuraSqlReplicationModuleTest extends TestCase
 {
     /**
      * @var ExtendedPdo
