@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the Ray.AuraSqlModule package
+ * This file is part of the Ray.AuraSqlModule package.
  *
  * @license http://opensource.org/licenses/MIT MIT
  */
@@ -44,7 +44,7 @@ class ExtendedPdoAdapter implements AdapterInterface
         if (! $countQuery) {
             // GROUP BY => fetch the whole result set and count the rows returned
             $result = $this->pdo->query($this->sql)->fetchAll();
-            $count = count($result);
+            $count = \count($result);
 
             return $count;
         }
@@ -55,7 +55,7 @@ class ExtendedPdoAdapter implements AdapterInterface
             $sth->execute();
             $count = $sth->fetchAll();
 
-            return count($count);
+            return \count($count);
         }
         $count = $this->pdo->query($countQuery)->fetchColumn();
 
@@ -109,25 +109,25 @@ class ExtendedPdoAdapter implements AdapterInterface
      */
     public function rewriteCountQuery($query)
     {
-        if (preg_match('/^\s*SELECT\s+\bDISTINCT\b/is', $query) || preg_match('/\s+GROUP\s+BY\s+/is', $query)) {
+        if (\preg_match('/^\s*SELECT\s+\bDISTINCT\b/is', $query) || \preg_match('/\s+GROUP\s+BY\s+/is', $query)) {
             return '';
         }
         $openParenthesis = '(?:\()';
         $closeParenthesis = '(?:\))';
         $subQueryInSelect = $openParenthesis . '.*\bFROM\b.*' . $closeParenthesis;
         $pattern = '/(?:.*' . $subQueryInSelect . '.*)\bFROM\b\s+/Uims';
-        if (preg_match($pattern, $query)) {
+        if (\preg_match($pattern, $query)) {
             return '';
         }
         $subQueryWithLimitOrder = $openParenthesis . '.*\b(LIMIT|ORDER)\b.*' . $closeParenthesis;
         $pattern = '/.*\bFROM\b.*(?:.*' . $subQueryWithLimitOrder . '.*).*/Uims';
-        if (preg_match($pattern, $query)) {
+        if (\preg_match($pattern, $query)) {
             return '';
         }
-        $queryCount = preg_replace('/(?:.*)\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $query, 1);
-        list($queryCount) = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
-        list($queryCount) = preg_split('/\bLIMIT\b/is', $queryCount);
+        $queryCount = \preg_replace('/(?:.*)\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $query, 1);
+        list($queryCount) = \preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
+        list($queryCount) = \preg_split('/\bLIMIT\b/is', $queryCount);
 
-        return trim($queryCount);
+        return \trim($queryCount);
     }
 }

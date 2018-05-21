@@ -1,6 +1,10 @@
 <?php
-
-if (! function_exists('\\uri_template')) {
+/**
+ * This file is part of the Ray.AuraSqlModule package.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ */
+if (! \function_exists('\\uri_template')) {
     /**
      * Implementation of URI Template(RFC6570) specification for PHP
      *

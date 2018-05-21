@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the Ray.AuraSqlModule package
+ * This file is part of the Ray.AuraSqlModule package.
  *
  * @license http://opensource.org/licenses/MIT MIT
  */
@@ -77,7 +77,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
         }
 
         $countQueryBuilderModifier = function (Select $select) {
-            foreach (array_keys($select->getCols()) as $key) {
+            foreach (\array_keys($select->getCols()) as $key) {
                 $select->removeCol($key);
             }
 

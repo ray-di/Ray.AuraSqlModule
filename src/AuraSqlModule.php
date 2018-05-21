@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the Ray.AuraSqlModule package
+ * This file is part of the Ray.AuraSqlModule package.
  *
  * @license http://opensource.org/licenses/MIT MIT
  */
@@ -61,7 +61,7 @@ class AuraSqlModule extends AbstractModule
         // @Transactional
         $this->install(new TransactionalModule);
         $this->install(new AuraSqlPagerModule());
-        preg_match(self::PARSE_PDO_DSN_REGEX, $this->dsn, $parts);
+        \preg_match(self::PARSE_PDO_DSN_REGEX, $this->dsn, $parts);
         $dbType = $parts[1] ?? '';
         $this->install(new AuraSqlQueryModule($dbType));
     }
@@ -80,7 +80,7 @@ class AuraSqlModule extends AbstractModule
         $locator = new ConnectionLocator;
         $locator->setWrite('master', new Connection($this->dsn, $this->user, $this->password));
         $i = 1;
-        $slaves = explode(',', $this->slave);
+        $slaves = \explode(',', $this->slave);
         foreach ($slaves as $slave) {
             $slaveDsn = $this->changeHost($this->dsn, $slave);
             $name = 'slave' . (string) $i++;
@@ -97,11 +97,11 @@ class AuraSqlModule extends AbstractModule
      */
     private function changeHost($dsn, $host)
     {
-        preg_match(self::PARSE_PDO_DSN_REGEX, $dsn, $parts);
+        \preg_match(self::PARSE_PDO_DSN_REGEX, $dsn, $parts);
         if (! $parts) {
             return $dsn;
         }
-        $dsn = sprintf('%s:%s=%s;%s', $parts[1], $parts[2], $host, $parts[3]);
+        $dsn = \sprintf('%s:%s=%s;%s', $parts[1], $parts[2], $host, $parts[3]);
 
         return $dsn;
     }

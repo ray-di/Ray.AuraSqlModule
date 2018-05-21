@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the Ray.AuraSqlModule package
+ * This file is part of the Ray.AuraSqlModule package.
  *
  * @license http://opensource.org/licenses/MIT MIT
  */
@@ -25,7 +25,7 @@ class IsInMethodMatcher extends AbstractMatcher
      */
     public function matchesMethod(\ReflectionMethod $method, array $arguments)
     {
-        $result = in_array($method->name, $arguments[0], true);
+        $result = \in_array($method->name, $arguments[0], true);
 
         return $result;
     }

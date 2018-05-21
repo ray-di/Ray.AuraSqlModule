@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Ray.AuraSqlModule package.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ */
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\SqlQuery\Common\Select;
@@ -103,7 +108,7 @@ class AuraSqlQueryAdapterTest extends AuraSqlQueryTestCase
     private function createAdapterToTestGetNbResults()
     {
         $countQueryBuilderModifier = function (Select $select) {
-            foreach (array_keys($select->getCols()) as $key) {
+            foreach (\array_keys($select->getCols()) as $key) {
                 $select->removeCol($key);
             }
 

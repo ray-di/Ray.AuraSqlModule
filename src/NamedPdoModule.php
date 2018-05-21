@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Ray.AuraSqlModule package.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ */
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocator;
@@ -77,7 +82,7 @@ class NamedPdoModule extends AbstractModule
         $locator = new ConnectionLocator();
         $locator->setWrite('master', new Connection($dsn, $user, $password));
         $i = 1;
-        $slaves = explode(',', $slaveList);
+        $slaves = \explode(',', $slaveList);
         foreach ($slaves as $slave) {
             $slaveDsn = $this->changeHost($dsn, $slave);
             $name = 'slave' . (string) $i++;
@@ -94,11 +99,11 @@ class NamedPdoModule extends AbstractModule
      */
     private function changeHost($dsn, $host)
     {
-        preg_match(self::PARSE_PDO_DSN_REGEX, $dsn, $parts);
+        \preg_match(self::PARSE_PDO_DSN_REGEX, $dsn, $parts);
         if (! $parts) {
             return $dsn;
         }
-        $dsn = sprintf('%s:%s=%s;%s', $parts[1], $parts[2], $host, $parts[3]);
+        $dsn = \sprintf('%s:%s=%s;%s', $parts[1], $parts[2], $host, $parts[3]);
 
         return $dsn;
     }

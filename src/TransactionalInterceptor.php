@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the Ray.AuraSqlModule package
+ * This file is part of the Ray.AuraSqlModule package.
  *
  * @license http://opensource.org/licenses/MIT MIT
  */
@@ -31,7 +31,7 @@ class TransactionalInterceptor implements MethodInterceptor
     {
         /* @var Transactional $transactional */
         $transactional = $invocation->getMethod()->getAnnotation(Transactional::class);
-        if (count($transactional->value) > 1) {
+        if (\count($transactional->value) > 1) {
             return (new PropTransaction)($invocation, $transactional);
         }
         if (! $this->pdo instanceof ExtendedPdoInterface) {
