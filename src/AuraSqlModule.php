@@ -43,7 +43,7 @@ class AuraSqlModule extends AbstractModule
      * @param string $password
      * @param string $slave    comma separated slave host list
      */
-    public function __construct($dsn, $user = '', $password = '', $slave = null)
+    public function __construct(string $dsn, string $user = '', string $password = '', string $slave = '')
     {
         $this->dsn = $dsn;
         $this->user = $user;
