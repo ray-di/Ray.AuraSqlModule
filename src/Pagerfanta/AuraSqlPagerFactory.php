@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the Ray.AuraSqlModule package
+ * This file is part of the Ray.AuraSqlModule package.
  *
  * @license http://opensource.org/licenses/MIT MIT
  */
@@ -23,7 +23,7 @@ class AuraSqlPagerFactory implements AuraSqlPagerFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function newInstance(ExtendedPdoInterface $pdo, $sql, array $params, $paging, $uriTemplate)
+    public function newInstance(ExtendedPdoInterface $pdo, string $sql, array $params, int $paging, string $uriTemplate) : AuraSqlPagerInterface
     {
         $this->auraSqlPager->init($pdo, $sql, $params, $paging, new DefaultRouteGenerator($uriTemplate));
 

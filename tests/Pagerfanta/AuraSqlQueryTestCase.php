@@ -1,8 +1,13 @@
 <?php
+/**
+ * This file is part of the Ray.AuraSqlModule package.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ */
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdo;
-use Aura\SqlQuery\Common\Select;
+use Aura\SqlQuery\Common\SelectInterface;
 use Aura\SqlQuery\QueryFactory;
 use PHPUnit\Framework\TestCase;
 
@@ -14,7 +19,7 @@ abstract class AuraSqlQueryTestCase extends TestCase
     protected $pdo;
 
     /**
-     * @var Select
+     * @var SelectInterface
      */
     protected $select;
 
@@ -39,7 +44,7 @@ abstract class AuraSqlQueryTestCase extends TestCase
 
     private function isAuraSqlQueryNotAvailable()
     {
-        return ! class_exists('Aura\SqlQuery\QueryFactory');
+        return ! \class_exists('Aura\SqlQuery\QueryFactory');
     }
 
     private function getConnection()

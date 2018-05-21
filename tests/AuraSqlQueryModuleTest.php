@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Ray.AuraSqlModule package.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ */
 namespace Ray\AuraSqlModule;
 
 use Aura\SqlQuery\Common\Delete;
@@ -52,7 +57,7 @@ class AuraSqlQueryModuleTest extends TestCase
 
     public function testInjectQuery()
     {
-        /** @var $fakeInject FakeQueryInject */
+        /* @var FakeQueryInject $fakeInject  */
         $fakeInject = (new Injector(new AuraSqlQueryModule('mysql')))->getInstance(FakeQueryInject::class);
         list(, $select, $insert, $update, $delete) = $fakeInject->get();
         $this->assertInstanceOf(SelectInterface::class, $select);

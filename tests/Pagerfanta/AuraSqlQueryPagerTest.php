@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Ray.AuraSqlModule package.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ */
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Pagerfanta\Exception\LogicException;
@@ -7,6 +12,11 @@ use Ray\AuraSqlModule\Exception\NotInitialized;
 
 class AuraSqlQueryPagerTest extends AuraSqlQueryTestCase
 {
+    /**
+     * @var AuraSqlQueryPager
+     */
+    private $pager;
+
     public function setUp()
     {
         parent::setUp();

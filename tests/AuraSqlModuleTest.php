@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file is part of the Ray.AuraSqlModule package.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ */
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocatorInterface;
@@ -48,9 +53,9 @@ class AuraSqlModuleTest extends TestCase
     public function testSlaveModule()
     {
         $module = new AuraSqlModule('mysql:host=localhost;dbname=testdb', 'root', '', 'slave1,slave2');
+        /** @var \Ray\Di\Instance $instance */
         $instance = $module->getContainer()->getContainer()['Aura\Sql\ConnectionLocatorInterface-'];
-        /* @var $instance \Ray\Di\Instance */
-        /* @var $locator ConnectionLocatorInterface */
+        /** @var ConnectionLocatorInterface $locator */
         $locator = $instance->value;
         $this->assertInstanceOf(ConnectionLocatorInterface::class, $locator);
         $read = $locator->getRead();

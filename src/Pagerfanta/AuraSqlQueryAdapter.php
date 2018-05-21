@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the Ray.AuraSqlModule package
+ * This file is part of the Ray.AuraSqlModule package.
  *
  * @license http://opensource.org/licenses/MIT MIT
  */
@@ -16,7 +16,7 @@ class AuraSqlQueryAdapter implements AdapterInterface
     private $pdo;
 
     /**
-     * @var Select
+     * @var SelectInterface
      */
     private $select;
 
@@ -78,7 +78,7 @@ class AuraSqlQueryAdapter implements AdapterInterface
     private function prepareCountQueryBuilder()
     {
         $select = clone $this->select;
-        call_user_func($this->countQueryBuilderModifier, $select);
+        \call_user_func($this->countQueryBuilderModifier, $select);
 
         return $select;
     }

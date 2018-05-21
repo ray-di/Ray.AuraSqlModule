@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the Ray.AuraSqlModule package
+ * This file is part of the Ray.AuraSqlModule package.
  *
  * @license http://opensource.org/licenses/MIT MIT
  */
@@ -32,7 +32,7 @@ class AuraSqlLocatorModule extends AbstractModule
     private $writeMethods;
 
     public function __construct(
-        ConnectionLocatorInterface $connectionLocator = null,
+        ConnectionLocatorInterface $connectionLocator,
         array $readMethods = [],
         array $writeMethods = [],
         AbstractModule $module = null
@@ -55,7 +55,7 @@ class AuraSqlLocatorModule extends AbstractModule
         if ($this->connectionLocator) {
             $this->bind(ConnectionLocatorInterface::class)->toInstance($this->connectionLocator);
         }
-        $methods = array_merge($this->readMethods, $this->writeMethods);
+        $methods = \array_merge($this->readMethods, $this->writeMethods);
         // @AuraSql
         $this->installLocatorDb($methods);
         // @ReadOnlyConnection @WriteConnection

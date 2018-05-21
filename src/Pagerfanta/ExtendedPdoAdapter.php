@@ -1,10 +1,10 @@
 <?php
 /**
- * This file is part of the Ray.AuraSqlModule package
+ * This file is part of the Ray.AuraSqlModule package.
  *
  * @license http://opensource.org/licenses/MIT MIT
  */
-namespace Ray\AuraSqlModule\PagerFanta;
+namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdo;
 use Aura\Sql\ExtendedPdoInterface;
@@ -13,7 +13,7 @@ use Pagerfanta\Adapter\AdapterInterface;
 class ExtendedPdoAdapter implements AdapterInterface
 {
     /**
-     * @var ExtendedPdo
+     * @var ExtendedPdoInterface
      */
     private $pdo;
 
@@ -23,16 +23,11 @@ class ExtendedPdoAdapter implements AdapterInterface
     private $sql;
 
     /**
-     * @var
+     * @var array
      */
     private $params;
 
-    /**
-     * @param ExtendedPdoInterface $pdo
-     * @param string               $sql
-     * @param array                $params
-     */
-    public function __construct(ExtendedPdoInterface $pdo, $sql, array $params)
+    public function __construct(ExtendedPdoInterface $pdo, string $sql, array $params)
     {
         $this->pdo = $pdo;
         $this->sql = $sql;
@@ -49,16 +44,18 @@ class ExtendedPdoAdapter implements AdapterInterface
         if (! $countQuery) {
             // GROUP BY => fetch the whole result set and count the rows returned
             $result = $this->pdo->query($this->sql)->fetchAll();
-            $count = count($result);
+            $count = \count($result);
 
-            return (int) $count;
+            return $count;
         }
         if ($this->params) {
-            $sth = $this->pdo->prepareWithValues($this->sql, $this->params);
+            /** @var ExtendedPdo $pdo */
+            $pdo = $this->pdo;
+            $sth = $pdo->prepareWithValues($this->sql, $this->params);
             $sth->execute();
             $count = $sth->fetchAll();
 
-            return (int) count($count);
+            return \count($count);
         }
         $count = $this->pdo->query($countQuery)->fetchColumn();
 
@@ -112,25 +109,25 @@ class ExtendedPdoAdapter implements AdapterInterface
      */
     public function rewriteCountQuery($query)
     {
-        if (preg_match('/^\s*SELECT\s+\bDISTINCT\b/is', $query) || preg_match('/\s+GROUP\s+BY\s+/is', $query)) {
+        if (\preg_match('/^\s*SELECT\s+\bDISTINCT\b/is', $query) || \preg_match('/\s+GROUP\s+BY\s+/is', $query)) {
             return '';
         }
         $openParenthesis = '(?:\()';
         $closeParenthesis = '(?:\))';
         $subQueryInSelect = $openParenthesis . '.*\bFROM\b.*' . $closeParenthesis;
         $pattern = '/(?:.*' . $subQueryInSelect . '.*)\bFROM\b\s+/Uims';
-        if (preg_match($pattern, $query)) {
+        if (\preg_match($pattern, $query)) {
             return '';
         }
         $subQueryWithLimitOrder = $openParenthesis . '.*\b(LIMIT|ORDER)\b.*' . $closeParenthesis;
         $pattern = '/.*\bFROM\b.*(?:.*' . $subQueryWithLimitOrder . '.*).*/Uims';
-        if (preg_match($pattern, $query)) {
+        if (\preg_match($pattern, $query)) {
             return '';
         }
-        $queryCount = preg_replace('/(?:.*)\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $query, 1);
-        list($queryCount) = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
-        list($queryCount) = preg_split('/\bLIMIT\b/is', $queryCount);
+        $queryCount = \preg_replace('/(?:.*)\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $query, 1);
+        list($queryCount) = \preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
+        list($queryCount) = \preg_split('/\bLIMIT\b/is', $queryCount);
 
-        return trim($queryCount);
+        return \trim($queryCount);
     }
 }

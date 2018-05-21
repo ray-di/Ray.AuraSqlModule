@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the Ray.AuraSqlModule package
+ * This file is part of the Ray.AuraSqlModule package.
  *
  * @license http://opensource.org/licenses/MIT MIT
  */
@@ -20,9 +20,10 @@ class AuraSqlQueryModule extends AbstractModule
     /**
      * @param string $db
      */
-    public function __construct($db)
+    public function __construct($db, AbstractModule $module = null)
     {
         $this->db = $db;
+        parent::__construct($module);
     }
 
     /**

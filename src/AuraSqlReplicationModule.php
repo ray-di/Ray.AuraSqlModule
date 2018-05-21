@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the Ray.AuraSqlModule package
+ * This file is part of the Ray.AuraSqlModule package.
  *
  * @license http://opensource.org/licenses/MIT MIT
  */
@@ -26,7 +26,7 @@ class AuraSqlReplicationModule extends AbstractModule
     private $qualifer;
 
     public function __construct(
-        ConnectionLocatorInterface $connectionLocator = null,
+        ConnectionLocatorInterface $connectionLocator,
         $qualifer = '',
         AbstractModule $module = null
     ) {
