@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Ray\\AuraSqlModule\\": "src/"
+            "Ray\\AuraSqlModule\\": ["src/", "src-deprecated"]
         },
         "files": [
             "src-files/uri_template.php"
