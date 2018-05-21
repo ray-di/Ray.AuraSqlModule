@@ -1,7 +1,7 @@
 <?php
 
 $header = <<<'EOF'
-This file is part of the __PACKAGE__ package.
+This file is part of the Ray.AuraSqlModule package.
 
 @license http://opensource.org/licenses/MIT MIT
 EOF;
@@ -10,7 +10,7 @@ return \PhpCsFixer\Config::create()
     ->setRiskyAllowed(true)
     ->setRules(array(
         '@PSR2' => true,
-//        'header_comment' => ['header' => $header, 'commentType' => 'PHPDoc', 'separate' => 'none'],
+        'header_comment' => ['header' => $header, 'commentType' => 'PHPDoc', 'separate' => 'none'],
         'array_syntax' => ['syntax' => 'short'],
         'binary_operator_spaces' => ['align_equals' => false, 'align_double_arrow' => false],
         'blank_line_after_opening_tag' => true,
@@ -25,19 +25,19 @@ return \PhpCsFixer\Config::create()
         'dir_constant' => true,
         'ereg_to_preg' => true,
         'function_typehint_space' => true,
-        'general_phpdoc_annotation_remove' => ['author', 'category', 'package', 'copyright', 'version'],
+        'general_phpdoc_annotation_remove' => true,
         'hash_to_slash_comment' => true,
         'heredoc_to_nowdoc' => true,
         'include' => true,
         'indentation_type' => true,
-//        'is_null' => ['use_yoda_style' => false],
+        'is_null' => ['use_yoda_style' => false],
         'linebreak_after_opening_tag' => true,
         'lowercase_cast' => true,
 //        'mb_str_functions' => true,
         'method_separation' => true,
         'modernize_types_casting' => true,
         'native_function_casing' => true,
-//        'native_function_invocation' => true,
+        'native_function_invocation' => true,
         'new_with_braces' => false, //
         'no_alias_functions' => true,
         'no_blank_lines_after_class_opening' => true,
@@ -78,7 +78,7 @@ return \PhpCsFixer\Config::create()
         'php_unit_dedicate_assert' => true,
         'php_unit_fqcn_annotation' => true,
         'php_unit_strict' => true,
-//        'phpdoc_add_missing_param_annotation' => true,
+        'phpdoc_add_missing_param_annotation' => true,
         'phpdoc_align' => true,
         'phpdoc_annotation_without_dot' => true,
         'phpdoc_indent' => true,
@@ -87,7 +87,7 @@ return \PhpCsFixer\Config::create()
         'phpdoc_no_alias_tag' => ['property-read' => 'property', 'property-write' => 'property', 'type' => 'var'],
         'phpdoc_no_empty_return' => true,
         'phpdoc_no_package' => true,
-//        'phpdoc_no_useless_inheritdoc' => true,
+        'phpdoc_no_useless_inheritdoc' => true,
         'phpdoc_order' => true,
         'phpdoc_return_self_reference' => true,
         'phpdoc_scalar' => true,
@@ -108,7 +108,7 @@ return \PhpCsFixer\Config::create()
         'self_accessor' => true,
         'short_scalar_cast' => true,
 //        'silenced_deprecation_error' => true,
-//        'simplified_null_return' => true,
+        'simplified_null_return' => true,
 //        'single_blank_line_before_namespace' => true,
         'single_quote' => true,
         'space_after_semicolon' => true,
@@ -126,5 +126,6 @@ return \PhpCsFixer\Config::create()
         PhpCsFixer\Finder::create()
             ->exclude('tests/Fake')
             ->exclude('tests/tmp')
+            ->exclude('src-data')
             ->in(__DIR__)
     )->setLineEnding("\n");
