@@ -32,7 +32,7 @@ class AuraSqlLocatorModule extends AbstractModule
     private $writeMethods;
 
     public function __construct(
-        ConnectionLocatorInterface $connectionLocator = null,
+        ConnectionLocatorInterface $connectionLocator,
         array $readMethods = [],
         array $writeMethods = [],
         AbstractModule $module = null
