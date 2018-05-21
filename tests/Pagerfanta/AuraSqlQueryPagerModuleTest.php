@@ -33,7 +33,7 @@ class AuraSqlQueryPagerModuleTest extends AuraSqlQueryTestCase
      */
     public function testArrayAccess(AuraSqlQueryPager $pager)
     {
-        /** @var $page Page */
+        /* @var Page $page */
         $page = $pager[2];
         $this->assertTrue($page->hasNext);
         $this->assertTrue($page->hasPrevious);
@@ -55,7 +55,7 @@ class AuraSqlQueryPagerModuleTest extends AuraSqlQueryTestCase
      */
     public function testArrayAccessWithMaxPage(AuraSqlQueryPager $pager)
     {
-        /** @var $page Page */
+        /* @var Page $page */
         $page = $pager[50];
         $this->assertFalse($page->hasNext);
         $this->assertTrue($page->hasPrevious);
@@ -87,7 +87,7 @@ class AuraSqlQueryPagerModuleTest extends AuraSqlQueryTestCase
      */
     public function testArrayAccessWithBinding(AuraSqlQueryPager $pager)
     {
-        /** @var $page Page */
+        /* @var Page $page  */
         $page = $pager[1];
         $this->assertFalse($page->hasNext);
         $this->assertFalse($page->hasPrevious);
