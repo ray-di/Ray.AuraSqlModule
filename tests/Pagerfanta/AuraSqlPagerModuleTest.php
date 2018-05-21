@@ -10,7 +10,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
     public function testNewInstance()
     {
         $factory = (new Injector(new AuraSqlPagerModule()))->getInstance(AuraSqlPagerFactoryInterface::class);
-        /* @var $factory AuraSqlPagerFactoryInterface */
+        /* @var  AuraSqlPagerFactoryInterface $factory */
         $this->assertInstanceOf(AuraSqlPagerFactory::class, $factory);
         $sql = 'SELECT * FROM posts';
         $pager = $factory->newInstance($this->pdo, $sql, [], 1, '/?page={page}&category=sports');
@@ -22,7 +22,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
     public function testNewInstanceWithBinding()
     {
         $factory = (new Injector(new AuraSqlPagerModule()))->getInstance(AuraSqlPagerFactoryInterface::class);
-        /* @var $factory AuraSqlPagerFactoryInterface */
+        /* @var AuraSqlPagerFactoryInterface $factory  */
         $this->assertInstanceOf(AuraSqlPagerFactory::class, $factory);
         $sql = 'SELECT * FROM posts where id = :id';
         $params = ['id' => 1];
@@ -81,7 +81,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
      */
     public function testArrayAccessWithBinding(AuraSqlPagerInterface $pager)
     {
-        /** @var $page Page */
+        /* @var Page $page */
         $page = $pager[1];
         $this->assertFalse($page->hasNext);
         $this->assertFalse($page->hasPrevious);
@@ -100,7 +100,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
 
     public function testInjectPager()
     {
-        /** @var $fakeInject FakePagerInject */
+        /* @var FakePagerInject $fakeInject */
         $fakeInject = (new Injector(new AuraSqlModule('')))->getInstance(FakePagerInject::class);
         list($pager, $queryPager) = $fakeInject->get();
         $this->assertInstanceOf(AuraSqlPagerFactoryInterface::class, $pager);
