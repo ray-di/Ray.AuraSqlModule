@@ -9,13 +9,15 @@ namespace Ray\AuraSqlModule;
 use Aura\Sql\ExtendedPdoInterface;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
+use Ray\Aop\ReflectionMethod;
+use Ray\Aop\ReflectiveMethodInvocation;
 use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\AuraSqlModule\Exception\RollbackException;
 
 class TransactionalInterceptor implements MethodInterceptor
 {
     /**
-     * @var ExtendedPdoInterface
+     * @var ExtendedPdoInterface | null
      */
     private $pdo;
 
@@ -29,8 +31,10 @@ class TransactionalInterceptor implements MethodInterceptor
      */
     public function invoke(MethodInvocation $invocation)
     {
-        /* @var Transactional $transactional */
-        $transactional = $invocation->getMethod()->getAnnotation(Transactional::class);
+        /** @var ReflectionMethod $method */
+        $method =  $invocation->getMethod();
+        /** @var Transactional $transactional */
+        $transactional = $method->getAnnotation(Transactional::class);
         if (\count($transactional->value) > 1) {
             return (new PropTransaction)($invocation, $transactional);
         }
