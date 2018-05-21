@@ -31,7 +31,7 @@ class TransactionalInterceptor implements MethodInterceptor
     {
         /* @var Transactional $transactional */
         $transactional = $invocation->getMethod()->getAnnotation(Transactional::class);
-        if (count($transactional->value) > 0) {
+        if (count($transactional->value) > 1) {
             return (new PropTransaction)($invocation, $transactional);
         }
         if (! $this->pdo instanceof ExtendedPdoInterface) {

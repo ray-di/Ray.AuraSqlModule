@@ -2,7 +2,6 @@
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdo;
-use Aura\SqlQuery\Common\Select;
 use Aura\SqlQuery\Common\SelectInterface;
 use Aura\SqlQuery\QueryFactory;
 use PHPUnit\Framework\TestCase;

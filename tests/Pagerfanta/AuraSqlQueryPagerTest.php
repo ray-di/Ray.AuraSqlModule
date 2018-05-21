@@ -11,7 +11,7 @@ class AuraSqlQueryPagerTest extends AuraSqlQueryTestCase
      * @var AuraSqlQueryPager
      */
     private $pager;
-    
+
     public function setUp()
     {
         parent::setUp();

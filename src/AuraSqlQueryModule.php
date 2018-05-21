@@ -20,9 +20,10 @@ class AuraSqlQueryModule extends AbstractModule
     /**
      * @param string $db
      */
-    public function __construct($db)
+    public function __construct($db, AbstractModule $module = null)
     {
         $this->db = $db;
+        parent::__construct($module);
     }
 
     /**

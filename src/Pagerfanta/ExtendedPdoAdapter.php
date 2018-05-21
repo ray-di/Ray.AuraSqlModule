@@ -4,7 +4,7 @@
  *
  * @license http://opensource.org/licenses/MIT MIT
  */
-namespace Ray\AuraSqlModule\PagerFanta;
+namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdo;
 use Aura\Sql\ExtendedPdoInterface;
@@ -13,7 +13,7 @@ use Pagerfanta\Adapter\AdapterInterface;
 class ExtendedPdoAdapter implements AdapterInterface
 {
     /**
-     * @var ExtendedPdo
+     * @var ExtendedPdoInterface
      */
     private $pdo;
 
@@ -23,7 +23,7 @@ class ExtendedPdoAdapter implements AdapterInterface
     private $sql;
 
     /**
-     * @var
+     * @var array
      */
     private $params;
 
@@ -46,14 +46,16 @@ class ExtendedPdoAdapter implements AdapterInterface
             $result = $this->pdo->query($this->sql)->fetchAll();
             $count = count($result);
 
-            return (int) $count;
+            return $count;
         }
         if ($this->params) {
-            $sth = $this->pdo->prepareWithValues($this->sql, $this->params);
+            /** @var ExtendedPdo $pdo */
+            $pdo = $this->pdo;
+            $sth = $pdo->prepareWithValues($this->sql, $this->params);
             $sth->execute();
             $count = $sth->fetchAll();
 
-            return (int) count($count);
+            return count($count);
         }
         $count = $this->pdo->query($countQuery)->fetchColumn();
 

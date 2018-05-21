@@ -18,7 +18,7 @@ class AuraSqlPagerFactoryTest extends AbstractPdoTestCase
 
     public function testNewInstance()
     {
-        $pager = $this->factory->newInstance($this->pdo, 'SELECT * FROM posts', [], 1, new DefaultRouteGenerator('/{?page}'));
+        $pager = $this->factory->newInstance($this->pdo, 'SELECT * FROM posts', [], 1, '/{?page}');
         $this->assertInstanceOf(AuraSqlPager::class, $pager);
         $page = $pager[1];
         $this->assertInstanceOf(Page::class, $page);

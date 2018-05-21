@@ -37,7 +37,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
      */
     public function testArrayAccess(AuraSqlPagerInterface $pager)
     {
-        /** @var $page Page */
+        /** @var Page $page */
         $page = $pager[2];
         $this->assertTrue($page->hasNext);
         $this->assertTrue($page->hasPrevious);
@@ -59,7 +59,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
      */
     public function testArrayAccessWithMaxPage(AuraSqlPagerInterface $pager)
     {
-        /** @var $page Page */
+        /** @var Page $page */
         $page = $pager[50];
         $this->assertFalse($page->hasNext);
         $this->assertTrue($page->hasPrevious);
