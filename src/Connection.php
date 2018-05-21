@@ -35,12 +35,7 @@ class Connection
      */
     private $pdo;
 
-    /**
-     * @param string $dsn
-     * @param string $id
-     * @param string $password
-     */
-    public function __construct($dsn, $id = null, $password = null)
+    public function __construct(string $dsn, string $id = '', string $password = '')
     {
         $this->dsn = $dsn;
         $this->id = $id;
