@@ -7,6 +7,7 @@
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
+use Aura\SqlQuery\Common\Select;
 use Aura\SqlQuery\Common\SelectInterface;
 use Pagerfanta\Exception\LogicException;
 use Pagerfanta\Pagerfanta;
@@ -75,7 +76,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
             throw new NotInitialized();
         }
 
-        $countQueryBuilderModifier = function (SelectInterface $select) {
+        $countQueryBuilderModifier = function (Select $select) {
             foreach (array_keys($select->getCols()) as $key) {
                 $select->removeCol($key);
             }
