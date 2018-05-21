@@ -16,7 +16,7 @@ class AuraSqlQueryAdapter implements AdapterInterface
     private $pdo;
 
     /**
-     * @var Select
+     * @var SelectInterface
      */
     private $select;
 
