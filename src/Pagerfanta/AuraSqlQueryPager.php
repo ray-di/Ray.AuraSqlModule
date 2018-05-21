@@ -7,7 +7,6 @@
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
-use Aura\SqlQuery\Common\Select;
 use Aura\SqlQuery\Common\SelectInterface;
 use Pagerfanta\Exception\LogicException;
 use Pagerfanta\Pagerfanta;

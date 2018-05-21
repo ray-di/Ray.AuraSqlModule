@@ -3,9 +3,10 @@ namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdo;
 use Aura\Sql\ExtendedPdoInterface;
+use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
 
-class NamedPdoModuleTest extends \PHPUnit_Framework_TestCase
+class NamedPdoModuleTest extends TestCase
 {
     public function testModule()
     {

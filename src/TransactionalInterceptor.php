@@ -6,60 +6,46 @@
  */
 namespace Ray\AuraSqlModule;
 
+use Aura\Sql\ExtendedPdoInterface;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 use Ray\AuraSqlModule\Annotation\Transactional;
-use Ray\AuraSqlModule\Exception\InvalidTransactionalPropertyException;
 use Ray\AuraSqlModule\Exception\RollbackException;
 
 class TransactionalInterceptor implements MethodInterceptor
 {
     /**
+     * @var ExtendedPdoInterface
+     */
+    private $pdo;
+
+    public function __construct(ExtendedPdoInterface $pdo = null)
+    {
+        $this->pdo = $pdo;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function invoke(MethodInvocation $invocation)
     {
+        /* @var Transactional $transactional */
         $transactional = $invocation->getMethod()->getAnnotation(Transactional::class);
-        $object = $invocation->getThis();
-        $transactions = [];
-        /* @var $transactions \PDO[] */
-        foreach ($transactional->value as $prop) {
-            $transactions[] = $this->beginTransaction($object, $prop);
+        if (count($transactional->value) > 0) {
+            return (new PropTransaction)($invocation, $transactional);
+        }
+        if (! $this->pdo instanceof ExtendedPdoInterface) {
+            return $invocation->proceed();
         }
         try {
+            $this->pdo->beginTransaction();
             $result = $invocation->proceed();
-            foreach ($transactions as $db) {
-                $db->commit();
-            }
-        } catch (\Exception $e) {
-            foreach ($transactions as $db) {
-                $db->rollback();
-            }
-            throw new RollbackException($e, 0, $e);
+            $this->pdo->commit();
+        } catch (\PDOException $e) {
+            $this->pdo->rollBack();
+            throw new RollbackException($e->getMessage(), 0, $e);
         }
 
         return $result;
-    }
-
-    /**
-     * @param object $object the object having pdo
-     * @param string $prop   the name of pdo property
-     *
-     * @throws InvalidTransactionalPropertyException
-     *
-     * @return \Pdo
-     */
-    private function beginTransaction($object, $prop)
-    {
-        try {
-            $ref = new \ReflectionProperty($object, $prop);
-        } catch (\ReflectionException $e) {
-            throw new InvalidTransactionalPropertyException($prop, 0, $e);
-        }
-        $ref->setAccessible(true);
-        $db = $ref->getValue($object);
-        $db->beginTransaction();
-
-        return $db;
     }
 }

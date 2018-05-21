@@ -3,10 +3,12 @@ namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocator;
 use Aura\Sql\ExtendedPdo;
+use PHPUnit\Framework\TestCase;
 use Ray\AuraSqlModule\Exception\RollbackException;
 use Ray\Di\Injector;
+use Ray\Di\NullModule;
 
-class AuraSqlLocatorModuleTest extends \PHPUnit_Framework_TestCase
+class AuraSqlLocatorModuleTest extends TestCase
 {
     /**
      * @var ExtendedPdo
@@ -38,7 +40,10 @@ class AuraSqlLocatorModuleTest extends \PHPUnit_Framework_TestCase
         $this->masterPdo = $master();
         $locator->setWrite('master', $master);
         $this->locator = $locator;
-        $this->model = (new Injector(new AuraSqlLocatorModule($this->locator, ['read'], ['write']), $_ENV['TMP_DIR']))->getInstance(FakeModel::class);
+        $modue = new NullModule;
+        $modue->install(new AuraSqlMasterModule('sqlite::memory:', '', ''));
+        $modue->install(new AuraSqlLocatorModule($this->locator, ['read'], ['write']));
+        $this->model = (new Injector($modue))->getInstance(FakeModel::class);
     }
 
     public function testLocator()
@@ -66,7 +71,7 @@ class AuraSqlLocatorModuleTest extends \PHPUnit_Framework_TestCase
 
     public function testTransactional()
     {
-        $this->setExpectedException(RollbackException::class);
+        $this->expectException(RollbackException::class);
         $this->model->dbError();
     }
 }

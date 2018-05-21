@@ -4,10 +4,12 @@ namespace Ray\AuraSqlModule;
 use Aura\Sql\ConnectionLocatorInterface;
 use Aura\Sql\ExtendedPdo;
 use Aura\Sql\ExtendedPdoInterface;
+use PHPUnit\Framework\TestCase;
 use Ray\Compiler\DiCompiler;
+use Ray\Compiler\ScriptInjector;
 use Ray\Di\Injector;
 
-class AuraSqlModuleTest extends \PHPUnit_Framework_TestCase
+class AuraSqlModuleTest extends TestCase
 {
     public function testModule()
     {
@@ -18,27 +20,29 @@ class AuraSqlModuleTest extends \PHPUnit_Framework_TestCase
     public function testCompile()
     {
         (new DiCompiler(new AuraSqlModule('sqlite::memory:'), $_ENV['TMP_DIR']))->compile();
+        $pdo = (new ScriptInjector($_ENV['TMP_DIR']))->getInstance(ExtendedPdoInterface::class);
+        $this->assertInstanceOf(ExtendedPdoInterface::class, $pdo);
     }
 
     public function testMysql()
     {
         $fakeInject = (new Injector(new AuraSqlModule('mysql:host=localhost;dbname=master'), $_ENV['TMP_DIR']))->getInstance(FakeQueryInject::class);
-        list($db,) = $fakeInject->get();
-        $this->assertEquals('mysql', $db);
+        list($db) = $fakeInject->get();
+        $this->assertSame('mysql', $db);
     }
 
     public function testPgsql()
     {
         $fakeInject = (new Injector(new AuraSqlModule('pgsql:host=localhost;dbname=master'), $_ENV['TMP_DIR']))->getInstance(FakeQueryInject::class);
-        list($db,) = $fakeInject->get();
-        $this->assertEquals('pgsql', $db);
+        list($db) = $fakeInject->get();
+        $this->assertSame('pgsql', $db);
     }
 
     public function testSqlite()
     {
         $fakeInject = (new Injector(new AuraSqlModule('sqlite:memory:'), $_ENV['TMP_DIR']))->getInstance(FakeQueryInject::class);
-        list($db,) = $fakeInject->get();
-        $this->assertEquals('sqlite', $db);
+        list($db) = $fakeInject->get();
+        $this->assertSame('sqlite', $db);
     }
 
     public function testSlaveModule()

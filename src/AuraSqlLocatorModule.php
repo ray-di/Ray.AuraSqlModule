@@ -34,11 +34,13 @@ class AuraSqlLocatorModule extends AbstractModule
     public function __construct(
         ConnectionLocatorInterface $connectionLocator = null,
         array $readMethods = [],
-        array $writeMethods = []
+        array $writeMethods = [],
+        AbstractModule $module = null
     ) {
         $this->connectionLocator = $connectionLocator;
         $this->readMethods = $readMethods;
         $this->writeMethods = $writeMethods;
+        parent::__construct($module);
     }
 
     /**

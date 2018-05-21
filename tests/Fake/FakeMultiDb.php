@@ -51,11 +51,4 @@ class FakeMultiDb
 
         return $users;
     }
-
-    /**
-     * @Transactional
-     */
-    public function noProp()
-    {
-    }
 }
