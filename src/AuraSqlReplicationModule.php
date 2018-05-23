@@ -27,7 +27,7 @@ class AuraSqlReplicationModule extends AbstractModule
 
     public function __construct(
         ConnectionLocatorInterface $connectionLocator,
-        $qualifer = '',
+        string $qualifer = '',
         AbstractModule $module = null
     ) {
         $this->connectionLocator = $connectionLocator;

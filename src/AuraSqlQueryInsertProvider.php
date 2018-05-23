@@ -22,7 +22,7 @@ class AuraSqlQueryInsertProvider implements ProviderInterface
      *
      * @AuraSqlQueryConfig
      */
-    public function __construct($db)
+    public function __construct(string $db)
     {
         $this->db = $db;
     }

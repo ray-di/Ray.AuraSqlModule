@@ -15,12 +15,12 @@ use Ray\Di\AbstractModule;
 
 class AuraSqlQueryModule extends AbstractModule
 {
+    /**
+     * @var string
+     */
     private $db;
 
-    /**
-     * @param string $db
-     */
-    public function __construct($db, AbstractModule $module = null)
+    public function __construct(string $db, AbstractModule $module = null)
     {
         $this->db = $db;
         parent::__construct($module);
