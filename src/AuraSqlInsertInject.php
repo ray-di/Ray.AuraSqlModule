@@ -16,8 +16,6 @@ trait AuraSqlInsertInject
     protected $insert;
 
     /**
-     * @param InsertInterface $insert
-     *
      * @\Ray\Di\Di\Inject
      */
     public function setAuraSqlInsert(InsertInterface $insert)

@@ -7,6 +7,7 @@
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocatorInterface;
+use Aura\Sql\ExtendedPdoInterface;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 use Ray\AuraSqlModule\Annotation\Read;
@@ -22,20 +23,16 @@ class AuraSqlConnectionInterceptor implements MethodInterceptor
     private $connectionLocator;
 
     /**
-     * @var array
+     * @var string[]
      */
     private $readsMethods = [];
 
     /**
-     * @var array
+     * @var string[]
      */
     private $writeMethods = [];
 
     /**
-     * @param ConnectionLocatorInterface $connectionLocator
-     * @param array                      $readMethods
-     * @param array                      $writeMethods
-     *
      * @Read("readMethods")
      * @Write("writeMethods")
      */
@@ -60,12 +57,7 @@ class AuraSqlConnectionInterceptor implements MethodInterceptor
         return $invocation->proceed();
     }
 
-    /**
-     * @param MethodInvocation $invocation
-     *
-     * @return \Aura\Sql\ExtendedPdoInterface
-     */
-    private function getConnection(MethodInvocation $invocation)
+    private function getConnection(MethodInvocation $invocation) : ExtendedPdoInterface
     {
         $methodName = $invocation->getMethod()->name;
         if (\in_array($methodName, $this->readsMethods, true)) {

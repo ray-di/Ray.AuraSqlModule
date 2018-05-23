@@ -89,13 +89,7 @@ class AuraSqlModule extends AbstractModule
         $this->install(new AuraSqlReplicationModule($locator));
     }
 
-    /**
-     * @param string $dsn
-     * @param string $host
-     *
-     * @return string
-     */
-    private function changeHost($dsn, $host)
+    private function changeHost($dsn, $host) : string
     {
         \preg_match(self::PARSE_PDO_DSN_REGEX, $dsn, $parts);
         if (! $parts) {

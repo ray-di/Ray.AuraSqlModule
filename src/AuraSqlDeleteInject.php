@@ -16,8 +16,6 @@ trait AuraSqlDeleteInject
     protected $delete;
 
     /**
-     * @param DeleteInterface $delete
-     *
      * @\Ray\Di\Di\Inject
      */
     public function setAuraSqlDelete(DeleteInterface $delete)

@@ -23,9 +23,6 @@ class AuraSqlReplicationDbProvider implements ProviderInterface, SetContextInter
      */
     private $context = '';
 
-    /**
-     * @param InjectorInterface $injector
-     */
     public function __construct(InjectorInterface $injector)
     {
         $this->injector = $injector;

@@ -28,12 +28,7 @@ class AuraSqlMasterModule extends AbstractModule
      */
     private $password;
 
-    /**
-     * @param string $dsn
-     * @param string $user
-     * @param string $password
-     */
-    public function __construct($dsn, $user = '', $password = '', AbstractModule $module = null)
+    public function __construct(string $dsn, string $user = '', string $password = '', AbstractModule $module = null)
     {
         $this->dsn = $dsn;
         $this->user = $user;

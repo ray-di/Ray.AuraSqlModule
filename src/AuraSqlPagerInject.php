@@ -16,8 +16,6 @@ trait AuraSqlPagerInject
     protected $pagerFactory;
 
     /**
-     * @param AuraSqlPagerFactoryInterface $pagerFactory
-     *
      * @\Ray\Di\Di\Inject
      */
     public function setAuraSqlPager(AuraSqlPagerFactoryInterface $pagerFactory)
