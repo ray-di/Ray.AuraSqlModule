@@ -17,6 +17,8 @@ class IsInMethodMatcher extends AbstractMatcher
      */
     public function matchesClass(\ReflectionClass $class, array $arguments)
     {
+        unset($class, $arguments);
+
         return true;
     }
 
