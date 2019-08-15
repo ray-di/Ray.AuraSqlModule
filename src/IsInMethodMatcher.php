@@ -15,8 +15,10 @@ class IsInMethodMatcher extends AbstractMatcher
      *
      * @codeCoverageIgnore
      */
-    public function matchesClass(\ReflectionClass $class, array $arguments) // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter
+    public function matchesClass(\ReflectionClass $class, array $arguments)
     {
+        unset($class, $arguments);
+
         return true;
     }
 
