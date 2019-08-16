@@ -13,7 +13,7 @@ class ExtendedPdoAdapterTest extends AbstractPdoTestCase
      */
     protected $pdoAdapter;
 
-    protected function setUp()
+    protected function setUp() : void
     {
         parent::setUp();
         $this->pdoAdapter = new ExtendedPdoAdapter($this->pdo, 'SELECT * FROM posts', []);
