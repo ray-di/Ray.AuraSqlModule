@@ -54,7 +54,7 @@ class AuraSqlModule extends AbstractModule
      * @param string $slave    comma separated slave host list
      * @param array  $options
      */
-    public function __construct(string $dsn, string $user = '', string $password = '', string $slave = '', array $options = [], array $attributes)
+    public function __construct(string $dsn, string $user = '', string $password = '', string $slave = '', array $options = [], array $attributes = [])
     {
         $this->dsn = $dsn;
         $this->user = $user;
@@ -81,11 +81,11 @@ class AuraSqlModule extends AbstractModule
 
     private function configureSingleDsn()
     {
-        $this->bind(ExtendedPdoInterface::class)->toConstructor(ExtendedPdo::class, 'dsn=pdo_dsn,username=pdo_user,password=pdo_pass,options=pdo_option')->in(Scope::SINGLETON);
+        $this->bind(ExtendedPdoInterface::class)->toConstructor(ExtendedPdo::class, 'dsn=pdo_dsn,username=pdo_user,password=pdo_pass,options=pdo_options,attributes=pdo_attributes')->in(Scope::SINGLETON);
         $this->bind()->annotatedWith('pdo_dsn')->toInstance($this->dsn);
         $this->bind()->annotatedWith('pdo_user')->toInstance($this->user);
         $this->bind()->annotatedWith('pdo_pass')->toInstance($this->password);
-        $this->bind()->annotatedWith('pdo_option')->toInstance($this->options);
+        $this->bind()->annotatedWith('pdo_options')->toInstance($this->options);
         $this->bind()->annotatedWith('pdo_attributes')->toInstance($this->options);
     }
 
