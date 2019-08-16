@@ -28,11 +28,23 @@ class AuraSqlMasterModule extends AbstractModule
      */
     private $password;
 
-    public function __construct(string $dsn, string $user = '', string $password = '', AbstractModule $module = null)
+    /**
+     * @var array
+     */
+    private $options;
+
+    /**
+     * @var array
+     */
+    private $attributes;
+
+    public function __construct(string $dsn, string $user = '', string $password = '', array $options = [], array $attributes = [], AbstractModule $module = null)
     {
         $this->dsn = $dsn;
         $this->user = $user;
         $this->password = $password;
+        $this->options = $options;
+        $this->attributes = $attributes;
         parent::__construct($module);
     }
 
@@ -41,10 +53,11 @@ class AuraSqlMasterModule extends AbstractModule
      */
     protected function configure()
     {
-        $this->bind(ExtendedPdoInterface::class)->toConstructor(ExtendedPdo::class, 'dsn=pdo_dsn,username=pdo_user,password=pdo_pass,options=pdo_option')->in(Scope::SINGLETON);
+        $this->bind(ExtendedPdoInterface::class)->toConstructor(ExtendedPdo::class, 'dsn=pdo_dsn,username=pdo_user,password=pdo_pass,options=pdo_option,attributes=pdo_attributes')->in(Scope::SINGLETON);
         $this->bind()->annotatedWith('pdo_dsn')->toInstance($this->dsn);
         $this->bind()->annotatedWith('pdo_user')->toInstance($this->user);
         $this->bind()->annotatedWith('pdo_pass')->toInstance($this->password);
-        $this->bind()->annotatedWith('pdo_option')->toInstance([]);
+        $this->bind()->annotatedWith('pdo_option')->toInstance($this->options);
+        $this->bind()->annotatedWith('pdo_attributes')->toInstance($this->attributes);
     }
 }
