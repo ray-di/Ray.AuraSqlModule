@@ -48,11 +48,12 @@ class AuraSqlModule extends AbstractModule
     private $attributes;
 
     /**
-     * @param string $dsn
-     * @param string $user
-     * @param string $password
-     * @param string $slave    comma separated slave host list
-     * @param array  $options
+     * @param string $dsn        Data Source Name (DSN)
+     * @param string $user       User name for the DSN string
+     * @param string $password   Password for the DSN string
+     * @param string $slave      Comma separated slave host list
+     * @param array  $options    A key=>value array of driver-specific connection options
+     * @param array  $attributes Attributes to set after connection
      */
     public function __construct(string $dsn, string $user = '', string $password = '', string $slave = '', array $options = [], array $attributes = [])
     {
