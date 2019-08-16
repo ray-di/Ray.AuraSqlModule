@@ -28,7 +28,7 @@ class AuraSqlQueryModuleTest extends TestCase
     protected function setUp() : void
     {
         parent::setUp();
-        $this->injector = new Injector(new AuraSqlQueryModule('sqlite'), $_ENV['TMP_DIR']);
+        $this->injector = new Injector(new AuraSqlQueryModule('sqlite'), __DIR__ . '/tmp');
     }
 
     public function testSelect()

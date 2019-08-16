@@ -50,7 +50,7 @@ class AuraSqlReplicationModuleTest extends TestCase
         unset($masterPdo);
         $_SERVER['REQUEST_METHOD'] = 'GET';
         /* @var  $model FakeRepModel */
-        $model = (new Injector(new AuraSqlReplicationModule($locator), $_ENV['TMP_DIR']))->getInstance(FakeRepModel::class);
+        $model = (new Injector(new AuraSqlReplicationModule($locator), __DIR__ . '/tmp'))->getInstance(FakeRepModel::class);
         $this->assertInstanceOf(ExtendedPdo::class, $model->pdo);
         $this->assertSame($slavePdo, $model->pdo);
     }
@@ -63,7 +63,7 @@ class AuraSqlReplicationModuleTest extends TestCase
         unset($slavePdo);
         $_SERVER['REQUEST_METHOD'] = 'POST';
         /* @var  $model FakeRepModel */
-        $model = (new Injector(new AuraSqlReplicationModule($locator), $_ENV['TMP_DIR']))->getInstance(FakeRepModel::class);
+        $model = (new Injector(new AuraSqlReplicationModule($locator), __DIR__ . '/tmp'))->getInstance(FakeRepModel::class);
         $this->assertInstanceOf(ExtendedPdo::class, $model->pdo);
         $this->assertSame($masterPdo, $model->pdo);
     }
@@ -79,8 +79,8 @@ class AuraSqlReplicationModuleTest extends TestCase
         /* @var  $db1Master ExtendedPdo */
         /* @var  $db2Master ExtendedPdo */
         list(list($locator2)) = $this->connectionProvider();
-        $db1Master = (new Injector(new AuraSqlReplicationModule($locator, 'db1'), $_ENV['TMP_DIR']))->getInstance(ExtendedPdoInterface::class, 'db1');
-        $db2Master = (new Injector(new AuraSqlReplicationModule($locator2, 'db2'), $_ENV['TMP_DIR']))->getInstance(ExtendedPdoInterface::class, 'db2');
+        $db1Master = (new Injector(new AuraSqlReplicationModule($locator, 'db1'), __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class, 'db1');
+        $db2Master = (new Injector(new AuraSqlReplicationModule($locator2, 'db2'), __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class, 'db2');
         $this->assertInstanceOf(ExtendedPdo::class, $db1Master);
         $this->assertInstanceOf(ExtendedPdo::class, $db2Master);
         $this->assertNotSame($db1Master, $db2Master);
