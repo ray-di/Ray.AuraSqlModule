@@ -124,9 +124,9 @@ class ExtendedPdoAdapter implements AdapterInterface
             return '';
         }
         $queryCount = \preg_replace('/(?:.*)\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $query, 1);
-        list($queryCount) = \preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
-        list($queryCount) = \preg_split('/\bLIMIT\b/is', $queryCount);
+        list($queryCount) = \preg_split('/\s+ORDER\s+BY\s+/is', (string) $queryCount);
+        list($queryCount) = \preg_split('/\bLIMIT\b/is', (string) $queryCount);
 
-        return \trim($queryCount);
+        return \trim((string) $queryCount);
     }
 }
