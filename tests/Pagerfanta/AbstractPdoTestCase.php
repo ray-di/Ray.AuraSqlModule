@@ -16,7 +16,7 @@ abstract class AbstractPdoTestCase extends TestCase
      */
     protected $pdo;
 
-    protected function setUp()
+    protected function setUp() : void
     {
         $this->pdo = $this->getConnection();
         $this->createSchema($this->pdo);

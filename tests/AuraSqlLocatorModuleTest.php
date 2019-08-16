@@ -35,7 +35,7 @@ class AuraSqlLocatorModuleTest extends TestCase
      */
     private $model;
 
-    protected function setUp()
+    protected function setUp() : void
     {
         $locator = new ConnectionLocator;
         $slave = new Connection('sqlite::memory:');

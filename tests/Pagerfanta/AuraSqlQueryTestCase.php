@@ -28,7 +28,7 @@ abstract class AuraSqlQueryTestCase extends TestCase
      */
     protected $qf;
 
-    protected function setUp()
+    protected function setUp() : void
     {
         if ($this->isAuraSqlQueryNotAvailable()) {
             $this->markTestSkipped('Aura Sql Query is not available');
