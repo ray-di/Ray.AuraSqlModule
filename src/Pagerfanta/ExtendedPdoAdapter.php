@@ -69,7 +69,7 @@ class ExtendedPdoAdapter implements AdapterInterface
         $sql = $this->sql . $this->getLimitClause($offset, $length);
         $result = $this->pdo->perform($sql, $this->params)->fetchAll(\PDO::FETCH_ASSOC);
 
-        return $result;
+        return ! $result ? [] : $result;
     }
 
     /**
