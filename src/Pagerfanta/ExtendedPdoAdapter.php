@@ -44,22 +44,21 @@ class ExtendedPdoAdapter implements AdapterInterface
         if (! $countQuery) {
             // GROUP BY => fetch the whole result set and count the rows returned
             $result = $this->pdo->query($this->sql)->fetchAll();
-            $count = \count($result);
 
-            return $count;
+            return ! $result ? 0 : \count($result);
         }
         if ($this->params) {
             /** @var ExtendedPdo $pdo */
             $pdo = $this->pdo;
             $sth = $pdo->prepareWithValues($this->sql, $this->params);
             $sth->execute();
-            $count = $sth->fetchAll();
+            $result = $sth->fetchAll();
 
-            return \count($count);
+            return ! $result ? 0 : \count($result);
         }
         $count = $this->pdo->query($countQuery)->fetchColumn();
 
-        return (int) $count;
+        return ! $count ? 0 : (int) $count;
     }
 
     /**
@@ -70,7 +69,7 @@ class ExtendedPdoAdapter implements AdapterInterface
         $sql = $this->sql . $this->getLimitClause($offset, $length);
         $result = $this->pdo->perform($sql, $this->params)->fetchAll(\PDO::FETCH_ASSOC);
 
-        return $result;
+        return ! $result ? [] : $result;
     }
 
     /**
@@ -125,9 +124,9 @@ class ExtendedPdoAdapter implements AdapterInterface
             return '';
         }
         $queryCount = \preg_replace('/(?:.*)\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $query, 1);
-        list($queryCount) = \preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
-        list($queryCount) = \preg_split('/\bLIMIT\b/is', $queryCount);
+        list($queryCount) = \preg_split('/\s+ORDER\s+BY\s+/is', (string) $queryCount);
+        list($queryCount) = \preg_split('/\bLIMIT\b/is', (string) $queryCount);
 
-        return \trim($queryCount);
+        return \trim((string) $queryCount);
     }
 }

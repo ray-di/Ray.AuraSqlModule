@@ -18,34 +18,34 @@ class AuraSqlModuleTest extends TestCase
 {
     public function testModule()
     {
-        $instance = (new Injector(new AuraSqlModule('sqlite::memory:'), $_ENV['TMP_DIR']))->getInstance(ExtendedPdoInterface::class);
+        $instance = (new Injector(new AuraSqlModule('sqlite::memory:'), __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class);
         $this->assertInstanceOf(ExtendedPdo::class, $instance);
     }
 
     public function testCompile()
     {
-        (new DiCompiler(new AuraSqlModule('sqlite::memory:'), $_ENV['TMP_DIR']))->compile();
-        $pdo = (new ScriptInjector($_ENV['TMP_DIR']))->getInstance(ExtendedPdoInterface::class);
+        (new DiCompiler(new AuraSqlModule('sqlite::memory:'), __DIR__ . '/tmp'))->compile();
+        $pdo = (new ScriptInjector(__DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class);
         $this->assertInstanceOf(ExtendedPdoInterface::class, $pdo);
     }
 
     public function testMysql()
     {
-        $fakeInject = (new Injector(new AuraSqlModule('mysql:host=localhost;dbname=master'), $_ENV['TMP_DIR']))->getInstance(FakeQueryInject::class);
+        $fakeInject = (new Injector(new AuraSqlModule('mysql:host=localhost;dbname=master'), __DIR__ . '/tmp'))->getInstance(FakeQueryInject::class);
         list($db) = $fakeInject->get();
         $this->assertSame('mysql', $db);
     }
 
     public function testPgsql()
     {
-        $fakeInject = (new Injector(new AuraSqlModule('pgsql:host=localhost;dbname=master'), $_ENV['TMP_DIR']))->getInstance(FakeQueryInject::class);
+        $fakeInject = (new Injector(new AuraSqlModule('pgsql:host=localhost;dbname=master'), __DIR__ . '/tmp'))->getInstance(FakeQueryInject::class);
         list($db) = $fakeInject->get();
         $this->assertSame('pgsql', $db);
     }
 
     public function testSqlite()
     {
-        $fakeInject = (new Injector(new AuraSqlModule('sqlite:memory:'), $_ENV['TMP_DIR']))->getInstance(FakeQueryInject::class);
+        $fakeInject = (new Injector(new AuraSqlModule('sqlite:memory:'), __DIR__ . '/tmp'))->getInstance(FakeQueryInject::class);
         list($db) = $fakeInject->get();
         $this->assertSame('sqlite', $db);
     }
@@ -65,7 +65,7 @@ class AuraSqlModuleTest extends TestCase
 
     public function testNoHost()
     {
-        $instance = (new Injector(new FakeQualifierModule, $_ENV['TMP_DIR']))->getInstance(ExtendedPdoInterface::class);
+        $instance = (new Injector(new FakeQualifierModule, __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class);
         /* @var $instance ExtendedPdo */
         $this->assertSame('sqlite::memory:', $instance->getDsn());
     }

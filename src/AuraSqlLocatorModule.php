@@ -52,9 +52,7 @@ class AuraSqlLocatorModule extends AbstractModule
             $this->bind()->annotatedWith(Read::class)->toInstance($this->readMethods);
             $this->bind()->annotatedWith(Write::class)->toInstance($this->writeMethods);
         }
-        if ($this->connectionLocator) {
-            $this->bind(ConnectionLocatorInterface::class)->toInstance($this->connectionLocator);
-        }
+        $this->bind(ConnectionLocatorInterface::class)->toInstance($this->connectionLocator);
         $methods = \array_merge($this->readMethods, $this->writeMethods);
         // @AuraSql
         $this->installLocatorDb($methods);
