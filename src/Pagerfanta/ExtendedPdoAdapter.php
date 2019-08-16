@@ -44,22 +44,21 @@ class ExtendedPdoAdapter implements AdapterInterface
         if (! $countQuery) {
             // GROUP BY => fetch the whole result set and count the rows returned
             $result = $this->pdo->query($this->sql)->fetchAll();
-            $count = \count($result);
 
-            return $count;
+            return ! $result ? 0 : \count($result);
         }
         if ($this->params) {
             /** @var ExtendedPdo $pdo */
             $pdo = $this->pdo;
             $sth = $pdo->prepareWithValues($this->sql, $this->params);
             $sth->execute();
-            $count = $sth->fetchAll();
+            $result = $sth->fetchAll();
 
-            return \count($count);
+            return ! $result ? 0 : \count($result);
         }
         $count = $this->pdo->query($countQuery)->fetchColumn();
 
-        return (int) $count;
+        return ! $count ? 0 : (int) $count;
     }
 
     /**
