@@ -38,17 +38,30 @@ class AuraSqlModule extends AbstractModule
     private $slave;
 
     /**
+     * @var array
+     */
+    private $options;
+
+    /**
+     * @var array
+     */
+    private $attributes;
+
+    /**
      * @param string $dsn
      * @param string $user
      * @param string $password
      * @param string $slave    comma separated slave host list
+     * @param array  $options
      */
-    public function __construct(string $dsn, string $user = '', string $password = '', string $slave = '')
+    public function __construct(string $dsn, string $user = '', string $password = '', string $slave = '', array $options = [], array $attributes)
     {
         $this->dsn = $dsn;
         $this->user = $user;
         $this->password = $password;
         $this->slave = $slave;
+        $this->options = $options;
+        $this->attributes = $attributes;
         parent::__construct();
     }
 
@@ -72,7 +85,8 @@ class AuraSqlModule extends AbstractModule
         $this->bind()->annotatedWith('pdo_dsn')->toInstance($this->dsn);
         $this->bind()->annotatedWith('pdo_user')->toInstance($this->user);
         $this->bind()->annotatedWith('pdo_pass')->toInstance($this->password);
-        $this->bind()->annotatedWith('pdo_option')->toInstance([]);
+        $this->bind()->annotatedWith('pdo_option')->toInstance($this->options);
+        $this->bind()->annotatedWith('pdo_attributes')->toInstance($this->options);
     }
 
     private function configureMasterSlaveDsn()
