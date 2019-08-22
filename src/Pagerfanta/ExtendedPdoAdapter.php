@@ -108,6 +108,9 @@ class ExtendedPdoAdapter implements AdapterInterface
      */
     public function rewriteCountQuery($query)
     {
+        if (\is_int(\strpos(\strtolower($query), 'union'))) {
+            return '';
+        }
         if (\preg_match('/^\s*SELECT\s+\bDISTINCT\b/is', $query) || \preg_match('/\s+GROUP\s+BY\s+/is', $query)) {
             return '';
         }
