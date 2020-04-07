@@ -6,7 +6,6 @@
  */
 namespace Ray\AuraSqlModule\Pagerfanta;
 
-use Aura\Sql\ExtendedPdo;
 use Aura\Sql\ExtendedPdoInterface;
 use Pagerfanta\Adapter\AdapterInterface;
 
