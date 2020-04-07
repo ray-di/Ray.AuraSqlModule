@@ -52,7 +52,7 @@ class ExtendedPdoAdapter implements AdapterInterface
 
             return ! $count ? 0 : (int) $count;
         }
-        $count = $this->pdo->query($countQuery)->fetchColumn();
+        $count = $this->pdo->fetchValue($countQuery);
 
         return ! $count ? 0 : (int) $count;
     }
