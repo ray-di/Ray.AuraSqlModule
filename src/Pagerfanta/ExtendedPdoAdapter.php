@@ -48,13 +48,9 @@ class ExtendedPdoAdapter implements AdapterInterface
             return ! $result ? 0 : \count($result);
         }
         if ($this->params) {
-            /** @var ExtendedPdo $pdo */
-            $pdo = $this->pdo;
-            $sth = $pdo->prepareWithValues($countQuery, $this->params);
-            $sth->execute();
-            $result = $sth->fetchColumn();
+            $count = $this->pdo->fetchValue($countQuery, $this->params);
 
-            return ! $result ? 0 : (int) $result;
+            return ! $count ? 0 : (int) $count;
         }
         $count = $this->pdo->query($countQuery)->fetchColumn();
 
