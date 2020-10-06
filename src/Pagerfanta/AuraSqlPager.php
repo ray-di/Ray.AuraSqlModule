@@ -65,7 +65,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     /**
      * {@inheritdoc}
      */
-    public function init(ExtendedPdoInterface $pdo, $sql, array $params, $paging, RouteGeneratorInterface $routeGenerator)
+    public function init(ExtendedPdoInterface $pdo, $sql, array $params, $paging, RouteGeneratorInterface $routeGenerator) : void
     {
         $this->pdo = $pdo;
         $this->sql = $sql;
@@ -76,6 +76,8 @@ class AuraSqlPager implements AuraSqlPagerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @phpstan-param mixed $offset
      */
     public function offsetExists($offset)
     {
@@ -84,8 +86,10 @@ class AuraSqlPager implements AuraSqlPagerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @phpstan-param int $currentPage
      */
-    public function offsetGet($currentPage)
+    public function offsetGet($currentPage) : Page
     {
         if (! $this->routeGenerator instanceof RouteGeneratorInterface) {
             throw new NotInitialized();
@@ -106,6 +110,9 @@ class AuraSqlPager implements AuraSqlPagerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @phpstan-param int   $offset
+     * @phpstan-param mixed $value
      */
     public function offsetSet($offset, $value)
     {
@@ -114,6 +121,8 @@ class AuraSqlPager implements AuraSqlPagerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @phpstan-param int   $offset
      */
     public function offsetUnset($offset)
     {

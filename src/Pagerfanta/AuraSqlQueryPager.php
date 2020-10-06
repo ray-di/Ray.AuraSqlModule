@@ -17,6 +17,9 @@ use Ray\AuraSqlModule\Exception\NotInitialized;
 
 class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
 {
+    /**
+     * @var ExtendedPdoInterface
+     */
     private $pdo;
 
     /**
@@ -71,8 +74,10 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
 
     /**
      * {@inheritdoc}
+     *
+     * @phpstan-param int $page
      */
-    public function offsetGet($page)
+    public function offsetGet($page) : Page
     {
         if (! $this->routeGenerator instanceof RouteGeneratorInterface) {
             throw new NotInitialized();
@@ -102,24 +107,31 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
 
     /**
      * {@inheritdoc}
+     *
+     * @psalm-param int $offset
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset) : bool
     {
         throw new LogicException('unsupported');
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @param int    $offset
+     * @param string $value
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value) : void
     {
         throw new LogicException('read only');
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @psalm-param int $offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset) : void
     {
         throw new LogicException('read only');
     }

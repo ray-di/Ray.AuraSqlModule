@@ -58,7 +58,7 @@ class Connection
         $this->attributes = $attributes;
     }
 
-    public function __invoke(): ExtendedPdo
+    public function __invoke() : ExtendedPdo
     {
         if (! $this->pdo instanceof ExtendedPdo) {
             $this->pdo = new ExtendedPdo($this->dsn, $this->id, $this->password, $this->options, $this->attributes);

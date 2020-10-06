@@ -66,7 +66,7 @@ class AuraSqlLocatorModule extends AbstractModule
         $this->install(new TransactionalModule);
     }
 
-    protected function installReadWriteConnection(): void
+    protected function installReadWriteConnection() : void
     {
         // @ReadOnlyConnection
         $this->bindInterceptor(
@@ -85,7 +85,7 @@ class AuraSqlLocatorModule extends AbstractModule
     /**
      * @param string[] $methods
      */
-    private function installLocatorDb(array $methods): void
+    private function installLocatorDb(array $methods) : void
     {
         // locator db
         $this->bindInterceptor(

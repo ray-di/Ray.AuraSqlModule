@@ -15,5 +15,8 @@ use Ray\Di\Di\Qualifier;
  */
 final class AuraSqlQueryConfig
 {
+    /**
+     * @var array<string, string>
+     */
     public $value;
 }

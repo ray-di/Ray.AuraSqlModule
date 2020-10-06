@@ -48,10 +48,10 @@ class AuraSqlModule extends AbstractModule
     private $attributes;
 
     /**
-     * @param string $dsn        Data Source Name (DSN)
-     * @param string $user       User name for the DSN string
-     * @param string $password   Password for the DSN string
-     * @param string $slave      Comma separated slave host list
+     * @param string $dsn      Data Source Name (DSN)
+     * @param string $user     User name for the DSN string
+     * @param string $password Password for the DSN string
+     * @param string $slave    Comma separated slave host list
      * @phpstan-param array<string>  $options    A key=>value array of driver-specific connection options
      * @phpstan array array<string> Attributes to set after connection
      */
@@ -80,7 +80,7 @@ class AuraSqlModule extends AbstractModule
         $this->install(new AuraSqlQueryModule($dbType));
     }
 
-    private function configureSingleDsn(): void
+    private function configureSingleDsn() : void
     {
         $this->bind(ExtendedPdoInterface::class)->toConstructor(ExtendedPdo::class, 'dsn=pdo_dsn,username=pdo_user,password=pdo_pass,options=pdo_options,attributes=pdo_attributes')->in(Scope::SINGLETON);
         $this->bind()->annotatedWith('pdo_dsn')->toInstance($this->dsn);
@@ -90,7 +90,7 @@ class AuraSqlModule extends AbstractModule
         $this->bind()->annotatedWith('pdo_attributes')->toInstance($this->options);
     }
 
-    private function configureMasterSlaveDsn(): void
+    private function configureMasterSlaveDsn() : void
     {
         $locator = new ConnectionLocator;
         $locator->setWrite('master', new Connection($this->dsn, $this->user, $this->password));

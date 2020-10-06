@@ -18,7 +18,7 @@ trait AuraSqlInsertInject
     /**
      * @\Ray\Di\Di\Inject
      */
-    public function setAuraSqlInsert(InsertInterface $insert): void
+    public function setAuraSqlInsert(InsertInterface $insert) : void
     {
         $this->insert = $insert;
     }

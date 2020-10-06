@@ -70,7 +70,7 @@ class ExtendedPdoAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function getLimitClause($offset, $length)
+    public function getLimitClause(int $offset, int $length) : string
     {
         $hasLimit = $offset || $length;
         if ($offset && $length) {

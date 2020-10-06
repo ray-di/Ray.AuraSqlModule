@@ -17,5 +17,5 @@ interface AuraSqlPagerInterface extends \ArrayAccess
      * @param int                     $paging
      * @param RouteGeneratorInterface $routeGenerator
      */
-    public function init(ExtendedPdoInterface $pdo, $sql, array $params, $paging, RouteGeneratorInterface $routeGenerator);
+    public function init(ExtendedPdoInterface $pdo, $sql, array $params, $paging, RouteGeneratorInterface $routeGenerator) : void;
 }

@@ -46,7 +46,7 @@ class NamedPdoModuleTest extends TestCase
         $instance = (new Injector(new FakeNamedReplicationModule, __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class, $qualifer);
         $this->assertInstanceOf(ExtendedPdo::class, $instance);
         /* @var $instance ExtendedPdo */
-        $this->assertContains('mysql:host=slave', $instance->getDsn());
+        $this->assertStringContainsString('mysql:host=slave', $instance->getDsn());
     }
 
     public function testNoHost()
