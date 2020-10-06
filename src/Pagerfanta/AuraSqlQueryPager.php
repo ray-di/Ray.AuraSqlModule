@@ -65,6 +65,8 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
         $this->select = $select;
         $this->paging = $paging;
         $this->routeGenerator = $routeGenerator;
+
+        return $this;
     }
 
     /**
