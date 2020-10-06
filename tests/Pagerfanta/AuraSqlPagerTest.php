@@ -28,14 +28,14 @@ class AuraSqlPagerTest extends TestCase
     {
         $this->expectException(NotInitialized::class);
         $pager = $this->pager;
-        $pager[1];
+        $pager[1]; // @phpstan-ignore-line
     }
 
     public function testOffsetExists()
     {
         $this->expectException(LogicException::class);
         $pager = $this->pager;
-        isset($pager[1]);
+        isset($pager[1]); // @phpstan-ignore-line
     }
 
     public function testOffsetSet()
