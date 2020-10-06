@@ -61,6 +61,7 @@ class ExtendedPdoAdapterTest extends AbstractPdoTestCase
         return [
             ['SELECT * FROM posts', [], 'SELECT COUNT(*) FROM posts', 50],
             ['SELECT DISTINCT id FROM posts', [], '', 50],
+            ['SELECT DISTINCT id FROM posts WHERE id > :num', ['num' => 10], '', 40],
             ['SELECT * FROM posts WHERE id > :num', ['num' => 10], 'SELECT COUNT(*) FROM posts WHERE id > :num', 40],
             ['SELECT id FROM posts UNION SELECT id FROM posts', [], '', 50],
         ];
