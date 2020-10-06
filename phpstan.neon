@@ -4,4 +4,3 @@ parameters:
     - src
   excludes_analyse:
     - */tests/tmp/*
-  checkMissingIterableValueType: false

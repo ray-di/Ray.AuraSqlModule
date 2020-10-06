@@ -16,7 +16,7 @@ interface AuraSqlPagerInterface extends \ArrayAccess
     /**
      * @param ExtendedPdoInterface    $pdo
      * @param string                  $sql
-     * @param array                   $params
+     * @param array<mixed>            $params
      * @param int                     $paging
      * @param RouteGeneratorInterface $routeGenerator
      */

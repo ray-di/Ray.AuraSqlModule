@@ -13,7 +13,7 @@ namespace Ray\AuraSqlModule\Annotation;
 final class Transactional
 {
     /**
-     * @var array
+     * @var array<string>
      *
      * @deprecated
      */

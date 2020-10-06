@@ -22,10 +22,13 @@ class ExtendedPdoAdapter implements AdapterInterface
     private $sql;
 
     /**
-     * @var array
+     * @var array<mixed>
      */
     private $params;
 
+    /**
+     * @param array<mixed> $params
+     */
     public function __construct(ExtendedPdoInterface $pdo, string $sql, array $params)
     {
         $this->pdo = $pdo;
@@ -58,6 +61,8 @@ class ExtendedPdoAdapter implements AdapterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return array<array>
      */
     public function getSlice($offset, $length)
     {

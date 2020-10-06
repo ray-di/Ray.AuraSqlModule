@@ -26,7 +26,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     private $routeGenerator;
 
     /**
-     * @var array
+     * @var array<array>
      */
     private $viewOptions;
 
@@ -41,7 +41,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     private $sql;
 
     /**
-     * @var array
+     * @var array<mixed>
      */
     private $params;
 
@@ -52,7 +52,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
 
     /**
      * @param ViewInterface $view
-     * @param array         $viewOptions
+     * @param array<array>  $viewOptions
      *
      * @PagerViewOption("viewOptions")
      */

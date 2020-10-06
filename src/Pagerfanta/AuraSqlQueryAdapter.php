@@ -53,6 +53,8 @@ class AuraSqlQueryAdapter implements AdapterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @phpstan-return array<int, array>
      */
     public function getSlice($offset, $length)
     {

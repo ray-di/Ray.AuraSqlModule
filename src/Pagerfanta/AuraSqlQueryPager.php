@@ -36,7 +36,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
     private $routeGenerator;
 
     /**
-     * @var array
+     * @var array<array>$viewOptions
      */
     private $viewOptions;
 
@@ -52,7 +52,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
 
     /**
      * @param ViewInterface $view
-     * @param array         $viewOptions
+     * @param array<array>  $viewOptions
      *
      * @PagerViewOption("viewOptions")
      */
@@ -94,7 +94,6 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
         $pagerfanta = new Pagerfanta(new AuraSqlQueryAdapter($this->pdo, $this->select, $countQueryBuilderModifier));
         $pagerfanta->setMaxPerPage($this->paging);
         $pagerfanta->setCurrentPage($page);
-
         $pager = new Page($pagerfanta, $this->routeGenerator, $this->view, $this->viewOptions);
         $pager->maxPerPage = $pagerfanta->getMaxPerPage();
         $pager->current = $pagerfanta->getCurrentPage();
