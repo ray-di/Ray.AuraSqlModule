@@ -64,6 +64,7 @@ class AuraSqlQueryAdapter implements AdapterInterface
         $sth = $this->pdo->prepare($sql);
         $sth->execute($this->select->getBindValues());
         $result = $sth->fetchAll(\PDO::FETCH_ASSOC);
+        \assert(\is_array($result));
 
         return $result;
     }
