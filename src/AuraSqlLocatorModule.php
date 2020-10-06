@@ -31,6 +31,10 @@ class AuraSqlLocatorModule extends AbstractModule
      */
     private $writeMethods;
 
+    /**
+     * @phpstan-param array<string> $readMethods
+     * @phpstan-param array<string> $writeMethods
+     */
     public function __construct(
         ConnectionLocatorInterface $connectionLocator,
         array $readMethods = [],
@@ -62,7 +66,7 @@ class AuraSqlLocatorModule extends AbstractModule
         $this->install(new TransactionalModule);
     }
 
-    protected function installReadWriteConnection()
+    protected function installReadWriteConnection(): void
     {
         // @ReadOnlyConnection
         $this->bindInterceptor(
@@ -81,7 +85,7 @@ class AuraSqlLocatorModule extends AbstractModule
     /**
      * @param string[] $methods
      */
-    private function installLocatorDb(array $methods)
+    private function installLocatorDb(array $methods): void
     {
         // locator db
         $this->bindInterceptor(

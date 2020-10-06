@@ -1,7 +1,8 @@
 parameters:
-  level: 5
+  level: 6
   paths:
     - src
-    - tests
   excludes_analyse:
     - */tests/tmp/*
+  checkMissingIterableValueType: false
+  checkGenericClassInNonGenericObjectType: false

@@ -15,6 +15,9 @@ class DefaultRouteGenerator implements RouteGeneratorInterface
         $this->uri = $uri;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function __invoke($page)
     {
         return uri_template($this->uri, ['page' => $page]);

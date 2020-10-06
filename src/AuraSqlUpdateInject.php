@@ -18,7 +18,7 @@ trait AuraSqlUpdateInject
     /**
      * @\Ray\Di\Di\Inject
      */
-    public function setAuraSqlUpdate(UpdateInterface $update)
+    public function setAuraSqlUpdate(UpdateInterface $update): void
     {
         $this->update = $update;
     }

@@ -38,12 +38,12 @@ class AuraSqlModule extends AbstractModule
     private $slave;
 
     /**
-     * @var array
+     * @var array<string>
      */
     private $options;
 
     /**
-     * @var array
+     * @var array<string>
      */
     private $attributes;
 
@@ -52,8 +52,8 @@ class AuraSqlModule extends AbstractModule
      * @param string $user       User name for the DSN string
      * @param string $password   Password for the DSN string
      * @param string $slave      Comma separated slave host list
-     * @param array  $options    A key=>value array of driver-specific connection options
-     * @param array  $attributes Attributes to set after connection
+     * @phpstan-param array<string>  $options    A key=>value array of driver-specific connection options
+     * @phpstan array array<string> Attributes to set after connection
      */
     public function __construct(string $dsn, string $user = '', string $password = '', string $slave = '', array $options = [], array $attributes = [])
     {
@@ -80,7 +80,7 @@ class AuraSqlModule extends AbstractModule
         $this->install(new AuraSqlQueryModule($dbType));
     }
 
-    private function configureSingleDsn()
+    private function configureSingleDsn(): void
     {
         $this->bind(ExtendedPdoInterface::class)->toConstructor(ExtendedPdo::class, 'dsn=pdo_dsn,username=pdo_user,password=pdo_pass,options=pdo_options,attributes=pdo_attributes')->in(Scope::SINGLETON);
         $this->bind()->annotatedWith('pdo_dsn')->toInstance($this->dsn);
@@ -90,7 +90,7 @@ class AuraSqlModule extends AbstractModule
         $this->bind()->annotatedWith('pdo_attributes')->toInstance($this->options);
     }
 
-    private function configureMasterSlaveDsn()
+    private function configureMasterSlaveDsn(): void
     {
         $locator = new ConnectionLocator;
         $locator->setWrite('master', new Connection($this->dsn, $this->user, $this->password));
@@ -104,7 +104,7 @@ class AuraSqlModule extends AbstractModule
         $this->install(new AuraSqlReplicationModule($locator));
     }
 
-    private function changeHost($dsn, $host) : string
+    private function changeHost(string $dsn, string $host) : string
     {
         \preg_match(self::PARSE_PDO_DSN_REGEX, $dsn, $parts);
         if (! $parts) {

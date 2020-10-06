@@ -18,7 +18,7 @@ trait AuraSqlQueryPagerInject
     /**
      * @\Ray\Di\Di\Inject
      */
-    public function setAuraSqlQueryPager(AuraSqlQueryPagerFactoryInterface $queryPagerFactory)
+    public function setAuraSqlQueryPager(AuraSqlQueryPagerFactoryInterface $queryPagerFactory): void
     {
         $this->queryPagerFactory = $queryPagerFactory;
     }

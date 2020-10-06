@@ -18,7 +18,7 @@ trait AuraSqlPagerInject
     /**
      * @\Ray\Di\Di\Inject
      */
-    public function setAuraSqlPager(AuraSqlPagerFactoryInterface $pagerFactory)
+    public function setAuraSqlPager(AuraSqlPagerFactoryInterface $pagerFactory): void
     {
         $this->pagerFactory = $pagerFactory;
     }

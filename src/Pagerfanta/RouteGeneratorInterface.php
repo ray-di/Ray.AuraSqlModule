@@ -8,5 +8,9 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 
 interface RouteGeneratorInterface
 {
+    /**
+     * @phpstan-param int $page;
+     * @phpstan-return string
+     */
     public function __invoke($page);
 }

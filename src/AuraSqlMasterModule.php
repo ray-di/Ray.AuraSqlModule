@@ -29,15 +29,19 @@ class AuraSqlMasterModule extends AbstractModule
     private $password;
 
     /**
-     * @var array
+     * @var array<string>
      */
     private $options;
 
     /**
-     * @var array
+     * @var array<string>
      */
     private $attributes;
 
+    /**
+     * @phpstan-param array<string> $options
+     * @phpstan-param array<string> $attributes
+     */
     public function __construct(string $dsn, string $user = '', string $password = '', array $options = [], array $attributes = [], AbstractModule $module = null)
     {
         $this->dsn = $dsn;

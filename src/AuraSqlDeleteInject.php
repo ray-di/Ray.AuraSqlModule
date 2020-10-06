@@ -18,7 +18,7 @@ trait AuraSqlDeleteInject
     /**
      * @\Ray\Di\Di\Inject
      */
-    public function setAuraSqlDelete(DeleteInterface $delete)
+    public function setAuraSqlDelete(DeleteInterface $delete): void
     {
         $this->delete = $delete;
     }

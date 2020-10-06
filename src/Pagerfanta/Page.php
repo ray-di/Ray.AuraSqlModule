@@ -61,6 +61,9 @@ final class Page implements \IteratorAggregate
      */
     private $viewOption;
 
+    /**
+     * @phpstan-param array<string> $viewOption
+     */
     public function __construct(
         Pagerfanta $pagerfanta,
         RouteGeneratorInterface $routeGenerator,
