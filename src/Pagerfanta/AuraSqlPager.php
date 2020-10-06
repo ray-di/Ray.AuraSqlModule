@@ -76,8 +76,6 @@ class AuraSqlPager implements AuraSqlPagerInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @phpstan-param mixed $offset
      */
     public function offsetExists($offset)
     {
@@ -110,9 +108,6 @@ class AuraSqlPager implements AuraSqlPagerInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @phpstan-param int   $offset
-     * @phpstan-param mixed $value
      */
     public function offsetSet($offset, $value)
     {
@@ -121,8 +116,6 @@ class AuraSqlPager implements AuraSqlPagerInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @phpstan-param int   $offset
      */
     public function offsetUnset($offset)
     {

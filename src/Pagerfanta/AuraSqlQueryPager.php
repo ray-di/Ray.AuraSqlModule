@@ -15,6 +15,9 @@ use Pagerfanta\View\ViewInterface;
 use Ray\AuraSqlModule\Annotation\PagerViewOption;
 use Ray\AuraSqlModule\Exception\NotInitialized;
 
+/**
+ * @implements \ArrayAccess<int, Page>
+ */
 class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
 {
     /**
@@ -74,8 +77,6 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
 
     /**
      * {@inheritdoc}
-     *
-     * @phpstan-param int $page
      */
     public function offsetGet($page) : Page
     {
@@ -107,8 +108,6 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
 
     /**
      * {@inheritdoc}
-     *
-     * @psalm-param int $offset
      */
     public function offsetExists($offset) : bool
     {
@@ -117,9 +116,6 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
 
     /**
      * {@inheritdoc}
-     *
-     * @param int    $offset
-     * @param string $value
      */
     public function offsetSet($offset, $value) : void
     {
@@ -128,8 +124,6 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
 
     /**
      * {@inheritdoc}
-     *
-     * @psalm-param int $offset
      */
     public function offsetUnset($offset) : void
     {

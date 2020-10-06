@@ -9,6 +9,9 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\ViewInterface;
 
+/**
+ * @implements \IteratorAggregate<int, Page>
+ */
 final class Page implements \IteratorAggregate
 {
     /**
