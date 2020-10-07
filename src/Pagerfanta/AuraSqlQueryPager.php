@@ -97,7 +97,9 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
         $pager = new Page($pagerfanta, $this->routeGenerator, $this->view, $this->viewOptions);
         $pager->maxPerPage = $pagerfanta->getMaxPerPage();
         $pager->current = $pagerfanta->getCurrentPage();
+        /** @psalm-suppress UndefinedDocblockClass */
         $pager->hasNext = $pagerfanta->hasNextPage();
+        /** @psalm-suppress UndefinedDocblockClass */
         $pager->hasPrevious = $pagerfanta->hasPreviousPage();
         $pager->data = $pagerfanta->getCurrentPageResults();
         $pager->total = $pagerfanta->getNbResults();
