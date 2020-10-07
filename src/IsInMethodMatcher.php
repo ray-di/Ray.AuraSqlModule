@@ -14,8 +14,7 @@ class IsInMethodMatcher extends AbstractMatcher
      * {@inheritdoc}
      *
      * @codeCoverageIgnore
-     * @template T of object
-     * @phpstan-param \ReflectionClass<T> $class
+     * @phpstan-param \ReflectionClass<object> $class
      * @phpstan-param array<mixed> $arguments
      */
     public function matchesClass(\ReflectionClass $class, array $arguments) : bool
