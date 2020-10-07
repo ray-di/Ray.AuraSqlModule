@@ -15,5 +15,8 @@ use Ray\Di\Di\Qualifier;
  */
 final class Read
 {
+    /**
+     * @var string
+     */
     public $value;
 }

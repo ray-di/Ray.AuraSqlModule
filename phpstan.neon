@@ -1,3 +1,6 @@
 parameters:
-    excludes_analyse:
-        - */tests/tmp/*
+  level: max
+  paths:
+    - src
+  excludes_analyse:
+    - */tests/tmp/*

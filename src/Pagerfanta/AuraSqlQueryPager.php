@@ -15,8 +15,14 @@ use Pagerfanta\View\ViewInterface;
 use Ray\AuraSqlModule\Annotation\PagerViewOption;
 use Ray\AuraSqlModule\Exception\NotInitialized;
 
+/**
+ * @implements \ArrayAccess<int, Page>
+ */
 class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
 {
+    /**
+     * @var ExtendedPdoInterface
+     */
     private $pdo;
 
     /**
@@ -30,7 +36,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
     private $routeGenerator;
 
     /**
-     * @var array
+     * @var array<array>$viewOptions
      */
     private $viewOptions;
 
@@ -46,7 +52,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
 
     /**
      * @param ViewInterface $view
-     * @param array         $viewOptions
+     * @param array<array>  $viewOptions
      *
      * @PagerViewOption("viewOptions")
      */
@@ -65,12 +71,14 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
         $this->select = $select;
         $this->paging = $paging;
         $this->routeGenerator = $routeGenerator;
+
+        return $this;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function offsetGet($page)
+    public function offsetGet($page) : Page
     {
         if (! $this->routeGenerator instanceof RouteGeneratorInterface) {
             throw new NotInitialized();
@@ -86,11 +94,12 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
         $pagerfanta = new Pagerfanta(new AuraSqlQueryAdapter($this->pdo, $this->select, $countQueryBuilderModifier));
         $pagerfanta->setMaxPerPage($this->paging);
         $pagerfanta->setCurrentPage($page);
-
         $pager = new Page($pagerfanta, $this->routeGenerator, $this->view, $this->viewOptions);
         $pager->maxPerPage = $pagerfanta->getMaxPerPage();
         $pager->current = $pagerfanta->getCurrentPage();
+        /** @psalm-suppress UndefinedDocblockClass */
         $pager->hasNext = $pagerfanta->hasNextPage();
+        /** @psalm-suppress UndefinedDocblockClass */
         $pager->hasPrevious = $pagerfanta->hasPreviousPage();
         $pager->data = $pagerfanta->getCurrentPageResults();
         $pager->total = $pagerfanta->getNbResults();
@@ -101,7 +110,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset) : bool
     {
         throw new LogicException('unsupported');
     }
@@ -109,7 +118,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value) : void
     {
         throw new LogicException('read only');
     }
@@ -117,7 +126,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset) : void
     {
         throw new LogicException('read only');
     }

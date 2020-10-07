@@ -58,13 +58,13 @@ class NamedPdoModule extends AbstractModule
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure() : void
     {
         $this->slave ? $this->configureMasterSlaveDsn($this->qualifer, $this->dsn, $this->user, $this->password, $this->slave)
             : $this->configureSingleDsn($this->qualifer, $this->dsn, $this->user, $this->password);
     }
 
-    private function configureSingleDsn($qualifer, $dsn, $user, $password)
+    private function configureSingleDsn(string $qualifer, string $dsn, string $user, string $password) : void
     {
         $this->bind(ExtendedPdoInterface::class)
             ->annotatedWith($qualifer)
@@ -77,7 +77,7 @@ class NamedPdoModule extends AbstractModule
         $this->bind()->annotatedWith("{$qualifer}_password")->toInstance($password);
     }
 
-    private function configureMasterSlaveDsn($qualifer, $dsn, $user, $password, $slaveList)
+    private function configureMasterSlaveDsn(string $qualifer, string $dsn, string $user, string $password, string $slaveList) : void
     {
         $locator = new ConnectionLocator();
         $locator->setWrite('master', new Connection($dsn, $user, $password));

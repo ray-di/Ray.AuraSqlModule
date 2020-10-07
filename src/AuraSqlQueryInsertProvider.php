@@ -6,6 +6,7 @@
  */
 namespace Ray\AuraSqlModule;
 
+use Aura\SqlQuery\Common\InsertInterface;
 use Aura\SqlQuery\QueryFactory;
 use Ray\AuraSqlModule\Annotation\AuraSqlQueryConfig;
 use Ray\Di\ProviderInterface;
@@ -29,6 +30,8 @@ class AuraSqlQueryInsertProvider implements ProviderInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return InsertInterface
      */
     public function get()
     {

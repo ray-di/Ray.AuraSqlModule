@@ -31,12 +31,12 @@ class Connection
     private $password;
 
     /**
-     * @var array
+     * @var array<string>
      */
     private $options;
 
     /**
-     * @var array
+     * @var array<string>
      */
     private $attributes;
 
@@ -45,6 +45,10 @@ class Connection
      */
     private $pdo;
 
+    /**
+     * @phpstan-param array<string> $options
+     * @phpstan-param array<string> $attributes
+     */
     public function __construct(string $dsn, string $id = '', string $password = '', array $options = [], array $attributes = [])
     {
         $this->dsn = $dsn;
@@ -54,7 +58,7 @@ class Connection
         $this->attributes = $attributes;
     }
 
-    public function __invoke()
+    public function __invoke() : ExtendedPdo
     {
         if (! $this->pdo instanceof ExtendedPdo) {
             $this->pdo = new ExtendedPdo($this->dsn, $this->id, $this->password, $this->options, $this->attributes);

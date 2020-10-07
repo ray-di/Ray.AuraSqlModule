@@ -18,7 +18,7 @@ class AuraSqlPagerModule extends AbstractModule
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure() : void
     {
         $this->bind(ViewInterface::class)->to(DefaultView::class);
         $this->bind(TemplateInterface::class)->to(DefaultTemplate::class);

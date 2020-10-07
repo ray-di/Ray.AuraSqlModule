@@ -12,6 +12,9 @@ use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\AuraSqlModule\Exception\InvalidTransactionalPropertyException;
 use Ray\AuraSqlModule\Exception\RollbackException;
 
+/**
+ * @deprecated
+ */
 final class PropTransaction
 {
     public function __invoke(MethodInvocation $invocation, Transactional $transactional)

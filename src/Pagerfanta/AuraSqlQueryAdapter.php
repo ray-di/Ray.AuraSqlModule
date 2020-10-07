@@ -6,13 +6,15 @@
  */
 namespace Ray\AuraSqlModule\Pagerfanta;
 
-use Aura\Sql\ExtendedPdo;
-use Aura\SqlQuery\Common\Select;
+use Aura\Sql\ExtendedPdoInterface;
 use Aura\SqlQuery\Common\SelectInterface;
 use Pagerfanta\Adapter\AdapterInterface;
 
 class AuraSqlQueryAdapter implements AdapterInterface
 {
+    /**
+     * @var ExtendedPdoInterface
+     */
     private $pdo;
 
     /**
@@ -26,18 +28,9 @@ class AuraSqlQueryAdapter implements AdapterInterface
     private $countQueryBuilderModifier;
 
     /**
-     * Constructor.
-     *
-     * @param Select   $select
      * @param callable $countQueryBuilderModifier a callable to modifier the query builder to count
      */
-
-    /**
-     * @param ExtendedPdo     $pdo
-     * @param SelectInterface $select
-     * @param callable        $countQueryBuilderModifier
-     */
-    public function __construct(ExtendedPdo $pdo, SelectInterface $select, callable $countQueryBuilderModifier)
+    public function __construct(ExtendedPdoInterface $pdo, SelectInterface $select, callable $countQueryBuilderModifier)
     {
         $this->pdo = $pdo;
         $this->select = clone $select;
@@ -60,6 +53,8 @@ class AuraSqlQueryAdapter implements AdapterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @phpstan-return array<int, array>
      */
     public function getSlice($offset, $length)
     {
@@ -71,11 +66,12 @@ class AuraSqlQueryAdapter implements AdapterInterface
         $sth = $this->pdo->prepare($sql);
         $sth->execute($this->select->getBindValues());
         $result = $sth->fetchAll(\PDO::FETCH_ASSOC);
+        \assert(\is_array($result));
 
         return $result;
     }
 
-    private function prepareCountQueryBuilder()
+    private function prepareCountQueryBuilder() : SelectInterface
     {
         $select = clone $this->select;
         \call_user_func($this->countQueryBuilderModifier, $select);

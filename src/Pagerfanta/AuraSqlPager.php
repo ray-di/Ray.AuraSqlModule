@@ -26,7 +26,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     private $routeGenerator;
 
     /**
-     * @var array
+     * @var array<array>
      */
     private $viewOptions;
 
@@ -41,7 +41,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     private $sql;
 
     /**
-     * @var array
+     * @var array<mixed>
      */
     private $params;
 
@@ -52,7 +52,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
 
     /**
      * @param ViewInterface $view
-     * @param array         $viewOptions
+     * @param array<array>  $viewOptions
      *
      * @PagerViewOption("viewOptions")
      */
@@ -65,7 +65,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     /**
      * {@inheritdoc}
      */
-    public function init(ExtendedPdoInterface $pdo, $sql, array $params, $paging, RouteGeneratorInterface $routeGenerator)
+    public function init(ExtendedPdoInterface $pdo, $sql, array $params, $paging, RouteGeneratorInterface $routeGenerator) : void
     {
         $this->pdo = $pdo;
         $this->sql = $sql;
@@ -84,8 +84,10 @@ class AuraSqlPager implements AuraSqlPagerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @phpstan-param int $currentPage
      */
-    public function offsetGet($currentPage)
+    public function offsetGet($currentPage) : Page
     {
         if (! $this->routeGenerator instanceof RouteGeneratorInterface) {
             throw new NotInitialized();
@@ -96,7 +98,9 @@ class AuraSqlPager implements AuraSqlPagerInterface
         $page = new Page($pagerfanta, $this->routeGenerator, $this->view, $this->viewOptions);
         $page->maxPerPage = $pagerfanta->getMaxPerPage();
         $page->current = $pagerfanta->getCurrentPage();
-        $page->hasNext = $pagerfanta->hasNextPage();
+        /** @psalm-suppress UndefinedDocblockClass */
+        $page->hasNext = (bool) $pagerfanta->hasNextPage();
+        /** @psalm-suppress UndefinedDocblockClass */
         $page->hasPrevious = $pagerfanta->hasPreviousPage();
         $page->data = $pagerfanta->getCurrentPageResults();
         $page->total = $pagerfanta->getNbResults();

@@ -18,7 +18,7 @@ trait AuraSqlSelectInject
     /**
      * @\Ray\Di\Di\Inject
      */
-    public function setAuraSqlSelect(SelectInterface $select)
+    public function setAuraSqlSelect(SelectInterface $select) : void
     {
         $this->select = $select;
     }
