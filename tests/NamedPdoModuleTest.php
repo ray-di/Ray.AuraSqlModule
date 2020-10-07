@@ -1,12 +1,15 @@
 <?php
 
 declare(strict_types=1);
+
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdo;
 use Aura\Sql\ExtendedPdoInterface;
 use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
+
+use function assert;
 
 class NamedPdoModuleTest extends TestCase
 {
@@ -31,8 +34,8 @@ class NamedPdoModuleTest extends TestCase
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $qualifer = 'log_db';
         $instance = (new Injector(new FakeNamedReplicationModule(), __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class, $qualifer);
+        assert($instance instanceof ExtendedPdo);
         $this->assertInstanceOf(ExtendedPdo::class, $instance);
-        /** @var ExtendedPdo $instance */
         $this->assertSame('mysql:host=localhost;dbname=db', $instance->getDsn());
     }
 
@@ -42,7 +45,6 @@ class NamedPdoModuleTest extends TestCase
         $qualifer = 'log_db';
         $instance = (new Injector(new FakeNamedReplicationModule(), __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class, $qualifer);
         $this->assertInstanceOf(ExtendedPdo::class, $instance);
-        /** @var ExtendedPdo $instance */
         $this->assertStringContainsString('mysql:host=slave', $instance->getDsn());
     }
 

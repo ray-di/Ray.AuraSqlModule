@@ -1,19 +1,21 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Pagerfanta;
 
+use ArrayAccess;
 use Aura\Sql\ExtendedPdoInterface;
 
 /**
- * @extends \ArrayAccess<int, Page>
+ * @extends ArrayAccess<int, Page>
  */
-interface AuraSqlPagerInterface extends \ArrayAccess
+interface AuraSqlPagerInterface extends ArrayAccess
 {
     /**
-     * @param ExtendedPdoInterface    $pdo
-     * @param string                  $sql
-     * @param array<mixed>            $params
-     * @param int                     $paging
-     * @param RouteGeneratorInterface $routeGenerator
+     * @param string       $sql
+     * @param array<mixed> $params
+     * @param int          $paging
      */
-    public function init(ExtendedPdoInterface $pdo, $sql, array $params, $paging, RouteGeneratorInterface $routeGenerator) : void;
+    public function init(ExtendedPdoInterface $pdo, $sql, array $params, $paging, RouteGeneratorInterface $routeGenerator): void;
 }

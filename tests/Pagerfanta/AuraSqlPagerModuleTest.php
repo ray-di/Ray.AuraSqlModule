@@ -1,15 +1,18 @@
 <?php
 
 declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Ray\AuraSqlModule\AuraSqlModule;
 use Ray\AuraSqlModule\FakePagerInject;
 use Ray\Di\Injector;
 
+use function assert;
+
 class AuraSqlPagerModuleTest extends AbstractPdoTestCase
 {
-    public function testNewInstance()
+    public function testNewInstance(): AuraSqlPagerInterface
     {
         $factory = (new Injector(new AuraSqlPagerModule()))->getInstance(AuraSqlPagerFactoryInterface::class);
         /** @var AuraSqlPagerFactoryInterface $factory */
@@ -21,7 +24,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
         return $pager;
     }
 
-    public function testNewInstanceWithBinding()
+    public function testNewInstanceWithBinding(): AuraSqlPagerInterface
     {
         $factory = (new Injector(new AuraSqlPagerModule()))->getInstance(AuraSqlPagerFactoryInterface::class);
         /** @var AuraSqlPagerFactoryInterface $factory */
@@ -37,10 +40,10 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
     /**
      * @depends testNewInstance
      */
-    public function testArrayAccess(AuraSqlPagerInterface $pager)
+    public function testArrayAccess(AuraSqlPagerInterface $pager): void
     {
         $page = $pager[2];
-        \assert($page instanceof Page);
+        assert($page instanceof Page);
         $this->assertTrue($page->hasNext);
         $this->assertTrue($page->hasPrevious);
         $expected = [
@@ -62,7 +65,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
     public function testArrayAccessWithMaxPage(AuraSqlPagerInterface $pager)
     {
         $page = $pager[50];
-        \assert($page instanceof Page);
+        assert($page instanceof Page);
         $this->assertFalse($page->hasNext);
         $this->assertTrue($page->hasPrevious);
         $expected = [
@@ -84,7 +87,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
     public function testArrayAccessWithBinding(AuraSqlPagerInterface $pager)
     {
         $page = $pager[1];
-        \assert($page instanceof Page);
+        assert($page instanceof Page);
         $this->assertFalse($page->hasNext);
         $this->assertFalse($page->hasPrevious);
         $expected = [
@@ -103,7 +106,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
     public function testInjectPager()
     {
         $fakeInject = (new Injector(new AuraSqlModule('')))->getInstance(FakePagerInject::class);
-        \assert($fakeInject instanceof FakePagerInject);
+        assert($fakeInject instanceof FakePagerInject);
         [$pager, $queryPager] = $fakeInject->get();
         $this->assertInstanceOf(AuraSqlPagerFactoryInterface::class, $pager);
         $this->assertInstanceOf(AuraSqlQueryPagerFactoryInterface::class, $queryPager);

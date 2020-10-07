@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule;
 
 use Aura\SqlQuery\Common\UpdateInterface;
@@ -8,9 +11,7 @@ use Ray\Di\ProviderInterface;
 
 class AuraSqlQueryUpdateProvider implements ProviderInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $db;
 
     /**

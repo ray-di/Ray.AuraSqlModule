@@ -1,20 +1,22 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocatorInterface;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
+use ReflectionProperty;
 
 class AuraSqlSlaveDbInterceptor implements MethodInterceptor
 {
     /**
      * DB property name
      */
-    const PROP = 'pdo';
+    public const PROP = 'pdo';
 
-    /**
-     * @var ConnectionLocatorInterface
-     */
+    /** @var ConnectionLocatorInterface */
     private $connectionLocator;
 
     public function __construct(ConnectionLocatorInterface $connectionLocator)
@@ -28,7 +30,7 @@ class AuraSqlSlaveDbInterceptor implements MethodInterceptor
     public function invoke(MethodInvocation $invocation)
     {
         $object = $invocation->getThis();
-        $ref = new \ReflectionProperty($object, self::PROP);
+        $ref = new ReflectionProperty($object, self::PROP);
         $ref->setAccessible(true);
         $connection = $this->connectionLocator->getRead();
         $ref->setValue($object, $connection);

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
@@ -10,44 +13,29 @@ use Ray\AuraSqlModule\Exception\NotInitialized;
 
 class AuraSqlPager implements AuraSqlPagerInterface
 {
-    /**
-     * @var ViewInterface
-     */
+    /** @var ViewInterface */
     private $view;
 
-    /**
-     * @var RouteGeneratorInterface
-     */
+    /** @var RouteGeneratorInterface */
     private $routeGenerator;
 
-    /**
-     * @var array<array>
-     */
+    /** @var array<array<string>> */
     private $viewOptions;
 
-    /**
-     * @var ExtendedPdoInterface
-     */
+    /** @var ExtendedPdoInterface */
     private $pdo;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $sql;
 
-    /**
-     * @var array<mixed>
-     */
+    /** @var array<mixed> */
     private $params;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $paging;
 
     /**
-     * @param ViewInterface $view
-     * @param array<array>  $viewOptions
+     * @param array<array<string>> $viewOptions
      *
      * @PagerViewOption("viewOptions")
      */
@@ -60,7 +48,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     /**
      * {@inheritdoc}
      */
-    public function init(ExtendedPdoInterface $pdo, $sql, array $params, $paging, RouteGeneratorInterface $routeGenerator) : void
+    public function init(ExtendedPdoInterface $pdo, $sql, array $params, $paging, RouteGeneratorInterface $routeGenerator): void
     {
         $this->pdo = $pdo;
         $this->sql = $sql;
@@ -82,11 +70,12 @@ class AuraSqlPager implements AuraSqlPagerInterface
      *
      * @phpstan-param int $currentPage
      */
-    public function offsetGet($currentPage) : Page
+    public function offsetGet($currentPage): Page
     {
         if (! $this->routeGenerator instanceof RouteGeneratorInterface) {
             throw new NotInitialized();
         }
+
         $pagerfanta = new Pagerfanta(new ExtendedPdoAdapter($this->pdo, $this->sql, $this->params));
         $pagerfanta->setMaxPerPage($this->paging);
         $pagerfanta->setCurrentPage($currentPage);

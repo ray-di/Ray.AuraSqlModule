@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocator;
@@ -24,7 +25,7 @@ class AuraSqlLocatorModuleTest extends TestCase
     /** @var FakeModel */
     private $model;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $locator = new ConnectionLocator();
         $slave = new Connection('sqlite::memory:');

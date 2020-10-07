@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Pagerfanta\View\DefaultView;
@@ -10,7 +11,7 @@ class AuraSqlPagerFactoryTest extends AbstractPdoTestCase
     /** @var AuraSqlPagerFactory */
     private $factory;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
         $this->factory = new AuraSqlPagerFactory(new AuraSqlPager(new DefaultView(), []));

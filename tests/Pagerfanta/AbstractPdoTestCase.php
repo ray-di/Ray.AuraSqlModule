@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdo;
@@ -12,14 +13,14 @@ abstract class AbstractPdoTestCase extends TestCase
     /** @var ExtendedPdo */
     protected $pdo;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->pdo = $this->getConnection();
         $this->createSchema($this->pdo);
         $this->insertData($this->pdo);
     }
 
-    private function getConnection()
+    private function getConnection(): ExtendedPdo
     {
         return new ExtendedPdo('sqlite::memory:');
     }

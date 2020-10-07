@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule;
 
 use Ray\AuraSqlModule\Annotation\Transactional;
@@ -9,7 +12,7 @@ class TransactionalModule extends AbstractModule
     /**
      * {@inheritdoc}
      */
-    protected function configure() : void
+    protected function configure(): void
     {
         // @Transactional
         $this->bindInterceptor(

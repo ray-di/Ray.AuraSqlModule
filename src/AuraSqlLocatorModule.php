@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocatorInterface;
@@ -9,21 +12,17 @@ use Ray\AuraSqlModule\Annotation\Write;
 use Ray\AuraSqlModule\Annotation\WriteConnection;
 use Ray\Di\AbstractModule;
 
+use function array_merge;
+
 class AuraSqlLocatorModule extends AbstractModule
 {
-    /**
-     * @var ConnectionLocatorInterface
-     */
+    /** @var ConnectionLocatorInterface */
     private $connectionLocator;
 
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     private $readMethods;
 
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     private $writeMethods;
 
     /**
@@ -34,7 +33,7 @@ class AuraSqlLocatorModule extends AbstractModule
         ConnectionLocatorInterface $connectionLocator,
         array $readMethods = [],
         array $writeMethods = [],
-        AbstractModule $module = null
+        ?AbstractModule $module = null
     ) {
         $this->connectionLocator = $connectionLocator;
         $this->readMethods = $readMethods;
@@ -45,23 +44,24 @@ class AuraSqlLocatorModule extends AbstractModule
     /**
      * {@inheritdoc}
      */
-    protected function configure() : void
+    protected function configure(): void
     {
         if ((bool) $this->readMethods && (bool) $this->writeMethods) {
             $this->bind()->annotatedWith(Read::class)->toInstance($this->readMethods);
             $this->bind()->annotatedWith(Write::class)->toInstance($this->writeMethods);
         }
+
         $this->bind(ConnectionLocatorInterface::class)->toInstance($this->connectionLocator);
-        $methods = \array_merge($this->readMethods, $this->writeMethods);
+        $methods = array_merge($this->readMethods, $this->writeMethods);
         // @AuraSql
         $this->installLocatorDb($methods);
         // @ReadOnlyConnection @WriteConnection
         $this->installReadWriteConnection();
         // @Transactional
-        $this->install(new TransactionalModule);
+        $this->install(new TransactionalModule());
     }
 
-    protected function installReadWriteConnection() : void
+    protected function installReadWriteConnection(): void
     {
         // @ReadOnlyConnection
         $this->bindInterceptor(
@@ -80,7 +80,7 @@ class AuraSqlLocatorModule extends AbstractModule
     /**
      * @param string[] $methods
      */
-    private function installLocatorDb(array $methods) : void
+    private function installLocatorDb(array $methods): void
     {
         // locator db
         $this->bindInterceptor(

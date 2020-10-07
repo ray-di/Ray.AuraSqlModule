@@ -1,12 +1,15 @@
 <?php
 
 declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdo;
 use Aura\SqlQuery\Common\SelectInterface;
 use Aura\SqlQuery\QueryFactory;
 use PHPUnit\Framework\TestCase;
+
+use function class_exists;
 
 abstract class AuraSqlQueryTestCase extends TestCase
 {
@@ -19,7 +22,7 @@ abstract class AuraSqlQueryTestCase extends TestCase
     /** @var QueryFactory */
     protected $qf;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         if ($this->isAuraSqlQueryNotAvailable()) {
             $this->markTestSkipped('Aura Sql Query is not available');
@@ -34,17 +37,17 @@ abstract class AuraSqlQueryTestCase extends TestCase
         $this->select->cols(['p.*'])->from('posts as p');
     }
 
-    private function isAuraSqlQueryNotAvailable()
+    private function isAuraSqlQueryNotAvailable(): bool
     {
-        return ! \class_exists('Aura\SqlQuery\QueryFactory');
+        return ! class_exists('Aura\SqlQuery\QueryFactory');
     }
 
-    private function getConnection()
+    private function getConnection(): ExtendedPdo
     {
         return new ExtendedPdo('sqlite::memory:');
     }
 
-    private function createSchema(ExtendedPdo $pdo)
+    private function createSchema(ExtendedPdo $pdo): void
     {
         $stm = 'CREATE TABLE IF NOT EXISTS `posts` (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -61,7 +64,7 @@ abstract class AuraSqlQueryTestCase extends TestCase
         $pdo->exec($stm);
     }
 
-    private function insertData(ExtendedPdo $pdo)
+    private function insertData(ExtendedPdo $pdo): void
     {
         $insertPost = $this->qf->newInsert();
         $insertComment = $this->qf->newInsert();

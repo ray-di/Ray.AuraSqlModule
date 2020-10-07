@@ -1,25 +1,27 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
 use Aura\SqlQuery\Common\SelectInterface;
 use Pagerfanta\Adapter\AdapterInterface;
+use PDO;
+
+use function assert;
+use function call_user_func;
+use function is_array;
 
 class AuraSqlQueryAdapter implements AdapterInterface
 {
-    /**
-     * @var ExtendedPdoInterface
-     */
+    /** @var ExtendedPdoInterface */
     private $pdo;
 
-    /**
-     * @var SelectInterface
-     */
+    /** @var SelectInterface */
     private $select;
 
-    /**
-     * @var callable
-     */
+    /** @var callable */
     private $countQueryBuilderModifier;
 
     /**
@@ -60,16 +62,16 @@ class AuraSqlQueryAdapter implements AdapterInterface
             ->getStatement();
         $sth = $this->pdo->prepare($sql);
         $sth->execute($this->select->getBindValues());
-        $result = $sth->fetchAll(\PDO::FETCH_ASSOC);
-        \assert(\is_array($result));
+        $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+        assert(is_array($result));
 
         return $result;
     }
 
-    private function prepareCountQueryBuilder() : SelectInterface
+    private function prepareCountQueryBuilder(): SelectInterface
     {
         $select = clone $this->select;
-        \call_user_func($this->countQueryBuilderModifier, $select);
+        call_user_func($this->countQueryBuilderModifier, $select);
 
         return $select;
     }

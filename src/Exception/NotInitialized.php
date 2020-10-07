@@ -1,6 +1,11 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Exception;
 
-class NotInitialized extends \RuntimeException
+use RuntimeException;
+
+class NotInitialized extends RuntimeException
 {
 }

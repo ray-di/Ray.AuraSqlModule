@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocatorInterface;
@@ -11,6 +12,8 @@ use Ray\Compiler\DiCompiler;
 use Ray\Compiler\ScriptInjector;
 use Ray\Di\Injector;
 use Ray\Di\Instance;
+
+use function assert;
 
 class AuraSqlModuleTest extends TestCase
 {
@@ -52,9 +55,9 @@ class AuraSqlModuleTest extends TestCase
     {
         $module = new AuraSqlModule('mysql:host=localhost;dbname=testdb', 'root', '', 'slave1,slave2');
         $instance = $module->getContainer()->getContainer()['Aura\Sql\ConnectionLocatorInterface-'];
-        \assert($instance instanceof Instance);
+        assert($instance instanceof Instance);
         $locator = $instance->value;
-        \assert($locator instanceof ConnectionLocatorInterface);
+        assert($locator instanceof ConnectionLocatorInterface);
         $this->assertInstanceOf(ConnectionLocatorInterface::class, $locator);
         $read = $locator->getRead();
         $dsn = $read->getDsn();

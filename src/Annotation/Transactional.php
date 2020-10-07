@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Annotation;
 
 /**
@@ -9,7 +12,6 @@ final class Transactional
 {
     /**
      * @var array<string>
-     *
      * @deprecated
      */
     public $value = ['pdo'];

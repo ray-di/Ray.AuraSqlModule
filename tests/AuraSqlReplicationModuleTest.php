@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocator;
@@ -9,18 +10,14 @@ use Aura\Sql\ExtendedPdoInterface;
 use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
 
+use function assert;
+
 class AuraSqlReplicationModuleTest extends TestCase
 {
-    /** @var ExtendedPdo */
-    private $slavePdo;
-
-    /** @var ExtendedPdo */
-    private $masterPdo;
-
-    /** @var ConnectionLocator */
-    private $locator;
-
-    public function connectionProvider()
+    /**
+     * @return array<list<string>>
+     */
+    public function connectionProvider(): array
     {
         $locator = new ConnectionLocator();
         $slave = new Connection('sqlite::memory:');
@@ -41,7 +38,7 @@ class AuraSqlReplicationModuleTest extends TestCase
         unset($masterPdo);
         $_SERVER['REQUEST_METHOD'] = 'GET';
         $model = (new Injector(new AuraSqlReplicationModule($locator), __DIR__ . '/tmp'))->getInstance(FakeRepModel::class);
-        \assert($model instanceof FakeRepModel);
+        assert($model instanceof FakeRepModel);
         $this->assertInstanceOf(ExtendedPdo::class, $model->pdo);
         $this->assertSame($slavePdo, $model->pdo);
     }
@@ -54,7 +51,7 @@ class AuraSqlReplicationModuleTest extends TestCase
         unset($slavePdo);
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $model = (new Injector(new AuraSqlReplicationModule($locator), __DIR__ . '/tmp'))->getInstance(FakeRepModel::class);
-        \assert($model instanceof FakeRepModel);
+        assert($model instanceof FakeRepModel);
         $this->assertInstanceOf(ExtendedPdo::class, $model->pdo);
         $this->assertSame($masterPdo, $model->pdo);
     }

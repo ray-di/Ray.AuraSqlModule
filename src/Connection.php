@@ -1,43 +1,32 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdo;
 
 /**
  * This file is part of the Ray.AuraSqlModule package
- *
- * @license http://opensource.org/licenses/MIT MIT
  */
 class Connection
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $dsn;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $id;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $password;
 
-    /**
-     * @var array<string>
-     */
+    /** @var array<string> */
     private $options;
 
-    /**
-     * @var array<string>
-     */
+    /** @var array<string> */
     private $attributes;
 
-    /**
-     * @var ExtendedPdo
-     */
+    /** @var ExtendedPdo */
     private $pdo;
 
     /**
@@ -53,7 +42,7 @@ class Connection
         $this->attributes = $attributes;
     }
 
-    public function __invoke() : ExtendedPdo
+    public function __invoke(): ExtendedPdo
     {
         if (! $this->pdo instanceof ExtendedPdo) {
             $this->pdo = new ExtendedPdo($this->dsn, $this->id, $this->password, $this->options, $this->attributes);

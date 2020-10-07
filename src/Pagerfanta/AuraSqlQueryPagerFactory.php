@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
@@ -6,9 +9,7 @@ use Aura\SqlQuery\Common\SelectInterface;
 
 class AuraSqlQueryPagerFactory implements AuraSqlQueryPagerFactoryInterface
 {
-    /**
-     * @var AuraSqlQueryPagerInterface
-     */
+    /** @var AuraSqlQueryPagerInterface */
     private $auraSqlQueryPager;
 
     public function __construct(AuraSqlQueryPagerInterface $auraSqlQueryPager)

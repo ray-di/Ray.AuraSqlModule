@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule;
 
 use Aura\SqlQuery\Common\DeleteInterface;
@@ -8,9 +11,7 @@ use Ray\Di\ProviderInterface;
 
 class AuraSqlQueryDeleteProvider implements ProviderInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $db;
 
     /**

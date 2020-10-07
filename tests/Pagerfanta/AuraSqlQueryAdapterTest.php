@@ -1,11 +1,14 @@
 <?php
 
 declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\SqlQuery\Common\Select;
 use Pagerfanta\Pagerfanta;
 use PDO;
+
+use function array_keys;
 
 class AuraSqlQueryAdapterTest extends AuraSqlQueryTestCase
 {
@@ -79,7 +82,7 @@ class AuraSqlQueryAdapterTest extends AuraSqlQueryTestCase
         $this->assertSame(50, $adapter->getNbResults());
     }
 
-    private function createAdapterToTestGetSlice()
+    private function createAdapterToTestGetSlice(): AuraSqlQueryAdapter
     {
         $countQueryBuilderModifier = static function () {
         };
@@ -103,10 +106,10 @@ class AuraSqlQueryAdapterTest extends AuraSqlQueryTestCase
         $this->assertSame($expectedResults, $results);
     }
 
-    private function createAdapterToTestGetNbResults()
+    private function createAdapterToTestGetNbResults(): AuraSqlQueryAdapter
     {
         $countQueryBuilderModifier = static function (Select $select) {
-            foreach (\array_keys($select->getCols()) as $key) {
+            foreach (array_keys($select->getCols()) as $key) {
                 $select->removeCol($key);
             }
 

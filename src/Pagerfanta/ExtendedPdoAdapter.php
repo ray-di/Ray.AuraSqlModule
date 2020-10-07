@@ -1,24 +1,33 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
 use Pagerfanta\Adapter\AdapterInterface;
+use PDO;
+
+use function count;
+use function is_int;
+use function preg_match;
+use function preg_replace;
+use function preg_split;
+use function strpos;
+use function strtolower;
+use function trim;
+
+use const PHP_EOL;
 
 class ExtendedPdoAdapter implements AdapterInterface
 {
-    /**
-     * @var ExtendedPdoInterface
-     */
+    /** @var ExtendedPdoInterface */
     private $pdo;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $sql;
 
-    /**
-     * @var array<mixed>
-     */
+    /** @var array<mixed> */
     private $params;
 
     /**
@@ -42,13 +51,15 @@ class ExtendedPdoAdapter implements AdapterInterface
             // GROUP BY => fetch the whole result set and count the rows returned
             $result = $this->pdo->perform($this->sql, $this->params)->fetchAll();
 
-            return ! $result ? 0 : \count($result);
+            return ! $result ? 0 : count($result);
         }
+
         if ($this->params) {
             $count = $this->pdo->fetchValue($countQuery, $this->params);
 
             return ! $count ? 0 : (int) $count;
         }
+
         $count = $this->pdo->fetchValue($countQuery);
 
         return ! $count ? 0 : (int) $count;
@@ -62,7 +73,7 @@ class ExtendedPdoAdapter implements AdapterInterface
     public function getSlice($offset, $length)
     {
         $sql = $this->sql . $this->getLimitClause($offset, $length);
-        $result = $this->pdo->perform($sql, $this->params)->fetchAll(\PDO::FETCH_ASSOC);
+        $result = $this->pdo->perform($sql, $this->params)->fetchAll(PDO::FETCH_ASSOC);
 
         return ! $result ? [] : $result;
     }
@@ -70,7 +81,7 @@ class ExtendedPdoAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function getLimitClause(int $offset, int $length) : string
+    public function getLimitClause(int $offset, int $length): string
     {
         $hasLimit = $offset || $length;
         if ($offset && $length) {
@@ -103,28 +114,32 @@ class ExtendedPdoAdapter implements AdapterInterface
      */
     public function rewriteCountQuery($query)
     {
-        if (\is_int(\strpos(\strtolower($query), 'union'))) {
+        if (is_int(strpos(strtolower($query), 'union'))) {
             return '';
         }
-        if (\preg_match('/^\s*SELECT\s+\bDISTINCT\b/is', $query) || \preg_match('/\s+GROUP\s+BY\s+/is', $query)) {
+
+        if (preg_match('/^\s*SELECT\s+\bDISTINCT\b/is', $query) || preg_match('/\s+GROUP\s+BY\s+/is', $query)) {
             return '';
         }
+
         $openParenthesis = '(?:\()';
         $closeParenthesis = '(?:\))';
         $subQueryInSelect = $openParenthesis . '.*\bFROM\b.*' . $closeParenthesis;
         $pattern = '/(?:.*' . $subQueryInSelect . '.*)\bFROM\b\s+/Uims';
-        if (\preg_match($pattern, $query)) {
+        if (preg_match($pattern, $query)) {
             return '';
         }
+
         $subQueryWithLimitOrder = $openParenthesis . '.*\b(LIMIT|ORDER)\b.*' . $closeParenthesis;
         $pattern = '/.*\bFROM\b.*(?:.*' . $subQueryWithLimitOrder . '.*).*/Uims';
-        if (\preg_match($pattern, $query)) {
+        if (preg_match($pattern, $query)) {
             return '';
         }
-        $queryCount = \preg_replace('/(?:.*)\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $query, 1);
-        list($queryCount) = \preg_split('/\s+ORDER\s+BY\s+/is', (string) $queryCount);
-        list($queryCount) = \preg_split('/\bLIMIT\b/is', (string) $queryCount);
 
-        return \trim((string) $queryCount);
+        $queryCount = preg_replace('/(?:.*)\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $query, 1);
+        [$queryCount] = preg_split('/\s+ORDER\s+BY\s+/is', (string) $queryCount);
+        [$queryCount] = preg_split('/\bLIMIT\b/is', (string) $queryCount);
+
+        return trim((string) $queryCount);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 class PdoMySqlAdapterTest extends AbstractPdoTestCase
@@ -8,7 +9,7 @@ class PdoMySqlAdapterTest extends AbstractPdoTestCase
     /** @var ExtendedPdoAdapter */
     private $adapter;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
         $sql = 'SELECT * FROM posts';

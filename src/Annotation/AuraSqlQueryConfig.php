@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Annotation;
 
 use Ray\Di\Di\Qualifier;
@@ -10,8 +13,6 @@ use Ray\Di\Di\Qualifier;
  */
 final class AuraSqlQueryConfig
 {
-    /**
-     * @var array<string, string>
-     */
+    /** @var array<string, string> */
     public $value;
 }

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocatorInterface;
@@ -9,14 +12,10 @@ use Ray\Di\SetContextInterface;
 
 class AuraSqlReplicationDbProvider implements ProviderInterface, SetContextInterface
 {
-    /**
-     * @var InjectorInterface
-     */
+    /** @var InjectorInterface */
     private $injector;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $context = '';
 
     public function __construct(InjectorInterface $injector)
@@ -29,7 +28,7 @@ class AuraSqlReplicationDbProvider implements ProviderInterface, SetContextInter
      *
      * @param string $context
      */
-    public function setContext($context) : void
+    public function setContext($context): void
     {
         $this->context = $context;
     }
@@ -43,8 +42,7 @@ class AuraSqlReplicationDbProvider implements ProviderInterface, SetContextInter
     {
         $connectionLocator = $this->injector->getInstance(ConnectionLocatorInterface::class, $this->context);
         $isGetRequest = isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'GET';
-        $pdo = $isGetRequest ? $connectionLocator->getRead() : $connectionLocator->getWrite();
 
-        return $pdo;
+        return $isGetRequest ? $connectionLocator->getRead() : $connectionLocator->getWrite();
     }
 }

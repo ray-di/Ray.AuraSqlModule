@@ -1,6 +1,11 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Exception;
 
-class InvalidTransactionalPropertyException extends \LogicException
+use LogicException;
+
+class InvalidTransactionalPropertyException extends LogicException
 {
 }

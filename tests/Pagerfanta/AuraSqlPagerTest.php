@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Pagerfanta\Exception\LogicException;
@@ -13,7 +14,7 @@ class AuraSqlPagerTest extends TestCase
     /** @var AuraSqlPager */
     private $pager;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
         $this->pager = new AuraSqlPager(new DefaultView(), []);
