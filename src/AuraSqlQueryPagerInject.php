@@ -1,24 +1,20 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule;
 
 use Ray\AuraSqlModule\Pagerfanta\AuraSqlQueryPagerFactoryInterface;
 
 trait AuraSqlQueryPagerInject
 {
-    /**
-     * @var AuraSqlQueryPagerFactoryInterface
-     */
+    /** @var AuraSqlQueryPagerFactoryInterface */
     protected $queryPagerFactory;
 
     /**
      * @\Ray\Di\Di\Inject
      */
-    public function setAuraSqlQueryPager(AuraSqlQueryPagerFactoryInterface $queryPagerFactory) : void
+    public function setAuraSqlQueryPager(AuraSqlQueryPagerFactoryInterface $queryPagerFactory): void
     {
         $this->queryPagerFactory = $queryPagerFactory;
     }

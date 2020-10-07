@@ -1,9 +1,7 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdo;
@@ -13,36 +11,26 @@ use Ray\Di\Scope;
 
 class AuraSqlMasterModule extends AbstractModule
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $dsn;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $user;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $password;
 
-    /**
-     * @var array<string>
-     */
+    /** @var array<string> */
     private $options;
 
-    /**
-     * @var array<string>
-     */
+    /** @var array<string> */
     private $attributes;
 
     /**
      * @phpstan-param array<string> $options
      * @phpstan-param array<string> $attributes
      */
-    public function __construct(string $dsn, string $user = '', string $password = '', array $options = [], array $attributes = [], AbstractModule $module = null)
+    public function __construct(string $dsn, string $user = '', string $password = '', array $options = [], array $attributes = [], ?AbstractModule $module = null)
     {
         $this->dsn = $dsn;
         $this->user = $user;
@@ -55,7 +43,7 @@ class AuraSqlMasterModule extends AbstractModule
     /**
      * {@inheritdoc}
      */
-    protected function configure() : void
+    protected function configure(): void
     {
         $this->bind(ExtendedPdoInterface::class)->toConstructor(ExtendedPdo::class, 'dsn=pdo_dsn,username=pdo_user,password=pdo_pass,options=pdo_option,attributes=pdo_attributes')->in(Scope::SINGLETON);
         $this->bind()->annotatedWith('pdo_dsn')->toInstance($this->dsn);

@@ -1,9 +1,7 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocatorInterface;
@@ -15,20 +13,16 @@ use Ray\Di\Scope;
 
 class AuraSqlReplicationModule extends AbstractModule
 {
-    /**
-     * @var ConnectionLocatorInterface
-     */
+    /** @var ConnectionLocatorInterface */
     private $connectionLocator;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $qualifer;
 
     public function __construct(
         ConnectionLocatorInterface $connectionLocator,
         string $qualifer = '',
-        AbstractModule $module = null
+        ?AbstractModule $module = null
     ) {
         $this->connectionLocator = $connectionLocator;
         $this->qualifer = $qualifer;
@@ -38,7 +32,7 @@ class AuraSqlReplicationModule extends AbstractModule
     /**
      * {@inheritdoc}
      */
-    protected function configure() : void
+    protected function configure(): void
     {
         $this->bind(ConnectionLocatorInterface::class)->annotatedWith($this->qualifer)->toInstance($this->connectionLocator);
         // ReadOnlyConnection when GET, otherwise WriteConnection
@@ -46,10 +40,10 @@ class AuraSqlReplicationModule extends AbstractModule
         // @ReadOnlyConnection @WriteConnection
         $this->installReadWriteConnection();
         // @Transactional
-        $this->install(new TransactionalModule);
+        $this->install(new TransactionalModule());
     }
 
-    protected function installReadWriteConnection() : void
+    protected function installReadWriteConnection(): void
     {
         // @ReadOnlyConnection
         $this->bindInterceptor(

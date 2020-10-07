@@ -1,19 +1,17 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Pagerfanta;
+
+use const PHP_EOL;
 
 class ExtendedPdoAdapterTest extends AbstractPdoTestCase
 {
-    /**
-     * @var ExtendedPdoAdapter
-     */
+    /** @var ExtendedPdoAdapter */
     protected $pdoAdapter;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->pdoAdapter = new ExtendedPdoAdapter($this->pdo, 'SELECT * FROM posts', []);
@@ -56,7 +54,10 @@ class ExtendedPdoAdapterTest extends AbstractPdoTestCase
         $this->assertSame($expected, $slice);
     }
 
-    public function splProvider()
+    /**
+     * @return array<array<string>>
+     */
+    public function splProvider(): array
     {
         return [
             ['SELECT * FROM posts', [], 'SELECT COUNT(*) FROM posts', 50],
@@ -68,13 +69,11 @@ class ExtendedPdoAdapterTest extends AbstractPdoTestCase
     }
 
     /**
-     * @dataProvider splProvider
+     * @phpstan-param array<mixed> $params
      *
-     * @param mixed $sql
-     * @param mixed $expectedCountQuery
-     * @param mixed $expectedNbResult
+     * @dataProvider splProvider
      */
-    public function testRewriteCountQuery($sql, array $params, $expectedCountQuery, $expectedNbResult)
+    public function testRewriteCountQuery(string $sql, array $params, string $expectedCountQuery, int $expectedNbResult): void
     {
         $pdoAdapter = new ExtendedPdoAdapter($this->pdo, $sql, $params);
         $rewrite = $pdoAdapter->rewriteCountQuery($sql);

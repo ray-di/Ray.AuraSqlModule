@@ -1,9 +1,7 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule;
 
 use Aura\SqlQuery\Common\DeleteInterface;
@@ -15,12 +13,10 @@ use Ray\Di\AbstractModule;
 
 class AuraSqlQueryModule extends AbstractModule
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $db;
 
-    public function __construct(string $db, AbstractModule $module = null)
+    public function __construct(string $db, ?AbstractModule $module = null)
     {
         $this->db = $db;
         parent::__construct($module);
@@ -29,7 +25,7 @@ class AuraSqlQueryModule extends AbstractModule
     /**
      * {@inheritdoc}
      */
-    protected function configure() : void
+    protected function configure(): void
     {
         $this->bind()->annotatedWith(AuraSqlQueryConfig::class)->toInstance($this->db);
         $this->bind(SelectInterface::class)->toProvider(AuraSqlQuerySelectProvider::class);

@@ -1,9 +1,7 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocator;
@@ -15,29 +13,21 @@ use Ray\Di\NullModule;
 
 class AuraSqlLocatorModuleTest extends TestCase
 {
-    /**
-     * @var ExtendedPdo
-     */
+    /** @var ExtendedPdo */
     private $slavePdo;
 
-    /**
-     * @var ExtendedPdo
-     */
+    /** @var ExtendedPdo */
     private $masterPdo;
 
-    /**
-     * @var ConnectionLocator
-     */
+    /** @var ConnectionLocator */
     private $locator;
 
-    /**
-     * @var FakeModel
-     */
+    /** @var FakeModel */
     private $model;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
-        $locator = new ConnectionLocator;
+        $locator = new ConnectionLocator();
         $slave = new Connection('sqlite::memory:');
         $this->slavePdo = $slave();
         $locator->setRead('slave', $slave);
@@ -45,7 +35,7 @@ class AuraSqlLocatorModuleTest extends TestCase
         $this->masterPdo = $master();
         $locator->setWrite('master', $master);
         $this->locator = $locator;
-        $modue = new NullModule;
+        $modue = new NullModule();
         $modue->install(new AuraSqlMasterModule('sqlite::memory:', '', ''));
         $modue->install(new AuraSqlLocatorModule($this->locator, ['read'], ['write']));
         $this->model = (new Injector($modue))->getInstance(FakeModel::class);

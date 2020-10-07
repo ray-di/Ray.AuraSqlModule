@@ -1,13 +1,14 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\SqlQuery\Common\Select;
 use Pagerfanta\Pagerfanta;
+use PDO;
+
+use function array_keys;
 
 class AuraSqlQueryAdapterTest extends AuraSqlQueryTestCase
 {
@@ -62,16 +63,16 @@ class AuraSqlQueryAdapterTest extends AuraSqlQueryTestCase
 
         $currentPageResults = $pagerfanta->getCurrentPageResults();
         $expected = [
-                [
-                    'id' => '3',
-                    'username' => 'Jon Doe',
-                    'post_content' => 'Post #3',
-                ],
-                [
-                    'id' => '4',
-                    'username' => 'Jon Doe',
-                    'post_content' => 'Post #4',
-                ],
+            [
+                'id' => '3',
+                'username' => 'Jon Doe',
+                'post_content' => 'Post #3',
+            ],
+            [
+                'id' => '4',
+                'username' => 'Jon Doe',
+                'post_content' => 'Post #4',
+            ],
         ];
         $this->assertSame($expected, $currentPageResults);
     }
@@ -81,9 +82,9 @@ class AuraSqlQueryAdapterTest extends AuraSqlQueryTestCase
         $this->assertSame(50, $adapter->getNbResults());
     }
 
-    private function createAdapterToTestGetSlice()
+    private function createAdapterToTestGetSlice(): AuraSqlQueryAdapter
     {
-        $countQueryBuilderModifier = function () {
+        $countQueryBuilderModifier = static function () {
         };
 
         return new AuraSqlQueryAdapter($this->pdo, $this->select, $countQueryBuilderModifier);
@@ -99,16 +100,16 @@ class AuraSqlQueryAdapterTest extends AuraSqlQueryTestCase
 
         $sth = $this->pdo->prepare($select->getStatement());
         $sth->execute();
-        $expectedResults = $sth->fetchAll(\PDO::FETCH_ASSOC);
+        $expectedResults = $sth->fetchAll(PDO::FETCH_ASSOC);
         $results = $adapter->getSlice($offset, $length);
 
         $this->assertSame($expectedResults, $results);
     }
 
-    private function createAdapterToTestGetNbResults()
+    private function createAdapterToTestGetNbResults(): AuraSqlQueryAdapter
     {
-        $countQueryBuilderModifier = function (Select $select) {
-            foreach (\array_keys($select->getCols()) as $key) {
+        $countQueryBuilderModifier = static function (Select $select) {
+            foreach (array_keys($select->getCols()) as $key) {
                 $select->removeCol($key);
             }
 

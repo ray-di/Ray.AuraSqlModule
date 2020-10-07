@@ -1,9 +1,7 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
@@ -12,10 +10,8 @@ use Aura\SqlQuery\Common\SelectInterface;
 interface AuraSqlQueryPagerFactoryInterface
 {
     /**
-     * @param ExtendedPdoInterface $pdo
-     * @param SelectInterface      $select
-     * @param int                  $paging
-     * @param string               $uriTemplate
+     * @param int    $paging
+     * @param string $uriTemplate
      *
      * @return AuraSqlQueryPagerInterface
      */

@@ -1,18 +1,16 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 interface RouteGeneratorInterface
 {
     /**
-     * @phpstan-param int $page;
-     * @phpstan-return string
-     *
      * @param mixed $page
+     * @phpstan-param int $page;
+     *
+     * @phpstan-return string
      */
     public function __invoke($page);
 }

@@ -1,9 +1,7 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule;
 
 use Aura\SqlQuery\Common\UpdateInterface;
@@ -13,9 +11,7 @@ use Ray\Di\ProviderInterface;
 
 class AuraSqlQueryUpdateProvider implements ProviderInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $db;
 
     /**

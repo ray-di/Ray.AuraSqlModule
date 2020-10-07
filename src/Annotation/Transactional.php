@@ -1,9 +1,7 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Annotation;
 
 /**
@@ -14,7 +12,6 @@ final class Transactional
 {
     /**
      * @var array<string>
-     *
      * @deprecated
      */
     public $value = ['pdo'];

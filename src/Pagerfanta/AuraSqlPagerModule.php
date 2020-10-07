@@ -1,9 +1,7 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Pagerfanta\View\DefaultView;
@@ -18,7 +16,7 @@ class AuraSqlPagerModule extends AbstractModule
     /**
      * {@inheritdoc}
      */
-    protected function configure() : void
+    protected function configure(): void
     {
         $this->bind(ViewInterface::class)->to(DefaultView::class);
         $this->bind(TemplateInterface::class)->to(DefaultTemplate::class);

@@ -1,9 +1,7 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdo;
@@ -11,28 +9,25 @@ use Aura\SqlQuery\Common\SelectInterface;
 use Aura\SqlQuery\QueryFactory;
 use PHPUnit\Framework\TestCase;
 
+use function class_exists;
+
 abstract class AuraSqlQueryTestCase extends TestCase
 {
-    /**
-     * @var ExtendedPdo
-     */
+    /** @var ExtendedPdo */
     protected $pdo;
 
-    /**
-     * @var SelectInterface
-     */
+    /** @var SelectInterface */
     protected $select;
 
-    /**
-     * @var QueryFactory
-     */
+    /** @var QueryFactory */
     protected $qf;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         if ($this->isAuraSqlQueryNotAvailable()) {
             $this->markTestSkipped('Aura Sql Query is not available');
         }
+
         $this->qf = new QueryFactory('sqlite');
         $this->select = $this->qf->newSelect();
 
@@ -42,17 +37,17 @@ abstract class AuraSqlQueryTestCase extends TestCase
         $this->select->cols(['p.*'])->from('posts as p');
     }
 
-    private function isAuraSqlQueryNotAvailable()
+    private function isAuraSqlQueryNotAvailable(): bool
     {
-        return ! \class_exists('Aura\SqlQuery\QueryFactory');
+        return ! class_exists('Aura\SqlQuery\QueryFactory');
     }
 
-    private function getConnection()
+    private function getConnection(): ExtendedPdo
     {
         return new ExtendedPdo('sqlite::memory:');
     }
 
-    private function createSchema(ExtendedPdo $pdo)
+    private function createSchema(ExtendedPdo $pdo): void
     {
         $stm = 'CREATE TABLE IF NOT EXISTS `posts` (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -69,7 +64,7 @@ abstract class AuraSqlQueryTestCase extends TestCase
         $pdo->exec($stm);
     }
 
-    private function insertData(ExtendedPdo $pdo)
+    private function insertData(ExtendedPdo $pdo): void
     {
         $insertPost = $this->qf->newInsert();
         $insertComment = $this->qf->newInsert();
@@ -80,7 +75,7 @@ abstract class AuraSqlQueryTestCase extends TestCase
                 ->into('posts')
                 ->cols([
                     'username' => 'Jon Doe',
-                    'post_content' => 'Post #' . $i
+                    'post_content' => 'Post #' . $i,
                 ]);
             $sth = $pdo->prepare($insertPost->getStatement());
             $sth->execute($insertPost->getBindValues());
@@ -90,7 +85,7 @@ abstract class AuraSqlQueryTestCase extends TestCase
                     ->cols([
                         'post_id' => $i,
                         'username' => 'Jon Doe',
-                        'content' => 'Comment #' . $j
+                        'content' => 'Comment #' . $j,
                     ]);
                 $sth = $pdo->prepare($insertComment->getStatement());
                 $sth->execute($insertComment->getBindValues());

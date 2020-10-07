@@ -1,11 +1,10 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Pagerfanta;
 
+use ArrayAccess;
 use Aura\Sql\ExtendedPdoInterface;
 use Aura\SqlQuery\Common\Select;
 use Aura\SqlQuery\Common\SelectInterface;
@@ -15,44 +14,33 @@ use Pagerfanta\View\ViewInterface;
 use Ray\AuraSqlModule\Annotation\PagerViewOption;
 use Ray\AuraSqlModule\Exception\NotInitialized;
 
+use function array_keys;
+
 /**
- * @implements \ArrayAccess<int, Page>
+ * @implements ArrayAccess<int, Page>
  */
-class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
+class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
 {
-    /**
-     * @var ExtendedPdoInterface
-     */
+    /** @var ExtendedPdoInterface */
     private $pdo;
 
-    /**
-     * @var ViewInterface
-     */
+    /** @var ViewInterface */
     private $view;
 
-    /**
-     * @var RouteGeneratorInterface
-     */
+    /** @var RouteGeneratorInterface */
     private $routeGenerator;
 
-    /**
-     * @var array<array>$viewOptions
-     */
+    /** @var array<array<string>> */
     private $viewOptions;
 
-    /**
-     * @var SelectInterface
-     */
+    /** @var SelectInterface */
     private $select;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $paging;
 
     /**
-     * @param ViewInterface $view
-     * @param array<array>  $viewOptions
+     * @param array<array<string>> $viewOptions
      *
      * @PagerViewOption("viewOptions")
      */
@@ -78,14 +66,14 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function offsetGet($page) : Page
+    public function offsetGet($page): Page
     {
         if (! $this->routeGenerator instanceof RouteGeneratorInterface) {
             throw new NotInitialized();
         }
 
-        $countQueryBuilderModifier = function (Select $select) {
-            foreach (\array_keys($select->getCols()) as $key) {
+        $countQueryBuilderModifier = static function (Select $select) {
+            foreach (array_keys($select->getCols()) as $key) {
                 $select->removeCol($key);
             }
 
@@ -110,7 +98,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function offsetExists($offset) : bool
+    public function offsetExists($offset): bool
     {
         throw new LogicException('unsupported');
     }
@@ -118,7 +106,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function offsetSet($offset, $value) : void
+    public function offsetSet($offset, $value): void
     {
         throw new LogicException('read only');
     }
@@ -126,7 +114,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, \ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function offsetUnset($offset) : void
+    public function offsetUnset($offset): void
     {
         throw new LogicException('read only');
     }

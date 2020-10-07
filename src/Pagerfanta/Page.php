@@ -1,67 +1,46 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Pagerfanta;
 
+use IteratorAggregate;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\ViewInterface;
 
 /**
- * @implements \IteratorAggregate<int, Page>
+ * @implements IteratorAggregate<int, Page>
  */
-final class Page implements \IteratorAggregate
+final class Page implements IteratorAggregate
 {
-    /**
-     * @var int
-     */
+    /** @var int */
     public $maxPerPage;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     public $current;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     public $total;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     public $hasNext;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     public $hasPrevious;
 
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     public $data;
 
-    /**
-     * @var Pagerfanta<int, array>
-     */
+    /** @var Pagerfanta<int, array<mixed>> */
     private $pagerfanta;
 
-    /**
-     * @var callable
-     */
+    /** @var callable */
     private $routeGenerator;
 
-    /**
-     * @var ViewInterface
-     */
+    /** @var ViewInterface */
     private $view;
 
-    /**
-     * @var array<string, mixed>
-     */
+    /** @var array<string, mixed> */
     private $viewOption;
 
     /**
@@ -80,7 +59,7 @@ final class Page implements \IteratorAggregate
         $this->viewOption = $viewOption;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->view->render(
             $this->pagerfanta,

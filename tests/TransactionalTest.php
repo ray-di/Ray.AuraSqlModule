@@ -1,9 +1,7 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule;
 
 use PHPUnit\Framework\TestCase;
@@ -13,8 +11,8 @@ class TransactionalTest extends TestCase
 {
     public function testMutipleTransaction()
     {
-        $ro = (new Injector(new FakeMultiDbModule))->getInstance(FakeMultiDb::class);
-        /* @var $ro FakeMultiDb */
+        $ro = (new Injector(new FakeMultiDbModule()))->getInstance(FakeMultiDb::class);
+        /** @var FakeMultiDb $ro */
         $ro->write();
         $users = $ro->read();
         $expected = [

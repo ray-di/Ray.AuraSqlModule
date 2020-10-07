@@ -1,9 +1,7 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocatorInterface;
@@ -12,37 +10,30 @@ use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 use Ray\AuraSqlModule\Annotation\Read;
 use Ray\AuraSqlModule\Annotation\Write;
+use ReflectionProperty;
+
+use function in_array;
 
 class AuraSqlConnectionInterceptor implements MethodInterceptor
 {
-    const PROP = 'pdo';
+    public const PROP = 'pdo';
 
-    /**
-     * @var ConnectionLocatorInterface
-     */
+    /** @var ConnectionLocatorInterface */
     private $connectionLocator;
 
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     private $readsMethods = [];
 
     /**
-     * @var string[]
-     */
-    private $writeMethods = [];
-
-    /**
+     * @phpstan-param array<string> $readMethods
+     *
      * @Read("readMethods")
      * @Write("writeMethods")
-     * @phpstan-param array<string> $readMethods
-     * @phpstan-param array<string> $writeMethods
      */
-    public function __construct(ConnectionLocatorInterface $connectionLocator, array $readMethods, array $writeMethods)
+    public function __construct(ConnectionLocatorInterface $connectionLocator, array $readMethods)
     {
         $this->connectionLocator = $connectionLocator;
         $this->readsMethods = $readMethods;
-        $this->writeMethods = $writeMethods;
     }
 
     /**
@@ -52,17 +43,17 @@ class AuraSqlConnectionInterceptor implements MethodInterceptor
     {
         $connection = $this->getConnection($invocation);
         $object = $invocation->getThis();
-        $ref = new \ReflectionProperty($object, self::PROP);
+        $ref = new ReflectionProperty($object, self::PROP);
         $ref->setAccessible(true);
         $ref->setValue($object, $connection);
 
         return $invocation->proceed();
     }
 
-    private function getConnection(MethodInvocation $invocation) : ExtendedPdoInterface
+    private function getConnection(MethodInvocation $invocation): ExtendedPdoInterface
     {
         $methodName = $invocation->getMethod()->name;
-        if (\in_array($methodName, $this->readsMethods, true)) {
+        if (in_array($methodName, $this->readsMethods, true)) {
             return $this->connectionLocator->getRead();
         }
 

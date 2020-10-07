@@ -1,21 +1,21 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
+
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Ray\AuraSqlModule\AuraSqlModule;
 use Ray\AuraSqlModule\FakePagerInject;
 use Ray\Di\Injector;
 
+use function assert;
+
 class AuraSqlPagerModuleTest extends AbstractPdoTestCase
 {
-    public function testNewInstance()
+    public function testNewInstance(): AuraSqlPagerInterface
     {
         $factory = (new Injector(new AuraSqlPagerModule()))->getInstance(AuraSqlPagerFactoryInterface::class);
-        /* @var  AuraSqlPagerFactoryInterface $factory */
+        /** @var AuraSqlPagerFactoryInterface $factory */
         $this->assertInstanceOf(AuraSqlPagerFactory::class, $factory);
         $sql = 'SELECT * FROM posts';
         $pager = $factory->newInstance($this->pdo, $sql, [], 1, '/?page={page}&category=sports');
@@ -24,10 +24,10 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
         return $pager;
     }
 
-    public function testNewInstanceWithBinding()
+    public function testNewInstanceWithBinding(): AuraSqlPagerInterface
     {
         $factory = (new Injector(new AuraSqlPagerModule()))->getInstance(AuraSqlPagerFactoryInterface::class);
-        /* @var AuraSqlPagerFactoryInterface $factory  */
+        /** @var AuraSqlPagerFactoryInterface $factory */
         $this->assertInstanceOf(AuraSqlPagerFactory::class, $factory);
         $sql = 'SELECT * FROM posts where id = :id';
         $params = ['id' => 1];
@@ -40,18 +40,18 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
     /**
      * @depends testNewInstance
      */
-    public function testArrayAccess(AuraSqlPagerInterface $pager)
+    public function testArrayAccess(AuraSqlPagerInterface $pager): void
     {
-        /** @var Page $page */
         $page = $pager[2];
+        assert($page instanceof Page);
         $this->assertTrue($page->hasNext);
         $this->assertTrue($page->hasPrevious);
         $expected = [
-                [
-                    'id' => '2',
-                    'username' => 'BEAR',
-                    'post_content' => 'entry #2',
-                ],
+            [
+                'id' => '2',
+                'username' => 'BEAR',
+                'post_content' => 'entry #2',
+            ],
         ];
         $this->assertSame($expected, $page->data);
         $expected = '<nav><a href="/?page=1&category=sports" rel="prev">Previous</a><a href="/?page=1&category=sports">1</a><span class="current">2</span><a href="/?page=3&category=sports">3</a><a href="/?page=4&category=sports">4</a><a href="/?page=5&category=sports">5</a><span class="dots">...</span><a href="/?page=50&category=sports">50</a><a href="/?page=3&category=sports" rel="next">Next</a></nav>';
@@ -64,16 +64,16 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
      */
     public function testArrayAccessWithMaxPage(AuraSqlPagerInterface $pager)
     {
-        /** @var Page $page */
         $page = $pager[50];
+        assert($page instanceof Page);
         $this->assertFalse($page->hasNext);
         $this->assertTrue($page->hasPrevious);
         $expected = [
-                [
-                    'id' => '50',
-                    'username' => 'BEAR',
-                    'post_content' => 'entry #50',
-                ],
+            [
+                'id' => '50',
+                'username' => 'BEAR',
+                'post_content' => 'entry #50',
+            ],
         ];
         $this->assertSame($expected, $page->data);
         $expected = '<nav><a href="/?page=49&category=sports" rel="prev">Previous</a><a href="/?page=1&category=sports">1</a><span class="dots">...</span><a href="/?page=46&category=sports">46</a><a href="/?page=47&category=sports">47</a><a href="/?page=48&category=sports">48</a><a href="/?page=49&category=sports">49</a><span class="current">50</span><span class="disabled">Next</span></nav>';
@@ -86,8 +86,8 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
      */
     public function testArrayAccessWithBinding(AuraSqlPagerInterface $pager)
     {
-        /* @var Page $page */
         $page = $pager[1];
+        assert($page instanceof Page);
         $this->assertFalse($page->hasNext);
         $this->assertFalse($page->hasPrevious);
         $expected = [
@@ -105,9 +105,9 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
 
     public function testInjectPager()
     {
-        /* @var FakePagerInject $fakeInject */
         $fakeInject = (new Injector(new AuraSqlModule('')))->getInstance(FakePagerInject::class);
-        list($pager, $queryPager) = $fakeInject->get();
+        assert($fakeInject instanceof FakePagerInject);
+        [$pager, $queryPager] = $fakeInject->get();
         $this->assertInstanceOf(AuraSqlPagerFactoryInterface::class, $pager);
         $this->assertInstanceOf(AuraSqlQueryPagerFactoryInterface::class, $queryPager);
     }
