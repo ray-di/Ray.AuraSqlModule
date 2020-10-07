@@ -2,6 +2,7 @@
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/badges/quality-score.png?b=1.x)](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/?branch=1.x)
 [![Code Coverage](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/badges/coverage.png?b=1.x)](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/?branch=1.x)
+[![Type Coverage](https://shepherd.dev/github/ray-di/Ray.AuraSqlModule/coverage.svg)](https://shepherd.dev/github/ray-di/Ray.AuraSqlModule)
 [![Build Status](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/badges/build.png?b=1.x)](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/build-status/1.x)
 [![Build Status](https://travis-ci.org/ray-di/Ray.AuraSqlModule.svg?branch=1.x)](https://travis-ci.org/ray-di/Ray.AuraSqlModule)
 
