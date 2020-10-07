@@ -59,8 +59,8 @@ jobs:
     - stage: Code Quality
       name: Coding standards
       php: 7.4
-      install: composer global require --dev friendsofphp/php-cs-fixer ^2.0;
+      install: composer global require --dev doctrine/coding-standard ^8.1
       script:
-        - ~/.composer/vendor/bin/php-cs-fixer --dry-run -v fix;
+        - ~/.composer/vendor/bin/phpcs --standard=./phpcs.xml src tests
   allow_failures:
     - php: nightly
