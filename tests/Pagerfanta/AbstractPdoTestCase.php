@@ -1,19 +1,15 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdo;
+use PDO;
 use PHPUnit\Framework\TestCase;
 
 abstract class AbstractPdoTestCase extends TestCase
 {
-    /**
-     * @var ExtendedPdo
-     */
+    /** @var ExtendedPdo */
     protected $pdo;
 
     protected function setUp() : void
@@ -28,7 +24,7 @@ abstract class AbstractPdoTestCase extends TestCase
         return new ExtendedPdo('sqlite::memory:');
     }
 
-    private function createSchema(\PDO $pdo)
+    private function createSchema(PDO $pdo)
     {
         $sql = 'CREATE TABLE IF NOT EXISTS `posts` (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -38,7 +34,7 @@ abstract class AbstractPdoTestCase extends TestCase
         $pdo->exec($sql);
     }
 
-    private function insertData(\PDO $pdo)
+    private function insertData(PDO $pdo)
     {
         unset($pdo);
         $sql = '
@@ -53,10 +49,11 @@ abstract class AbstractPdoTestCase extends TestCase
         for ($i = 1; $i <= 50; $i++) {
             $userName = 'BEAR';
             $content = 'entry #' . $i;
-            $sth->bindParam(':username', $userName, \PDO::PARAM_STR);
-            $sth->bindParam(':post_content', $content, \PDO::PARAM_STR);
+            $sth->bindParam(':username', $userName, PDO::PARAM_STR);
+            $sth->bindParam(':post_content', $content, PDO::PARAM_STR);
             $sth->execute();
         }
+
         $result = $this->pdo->query('SELECT * FROM posts')->fetchColumn();
     }
 }

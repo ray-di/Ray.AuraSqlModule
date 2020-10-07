@@ -1,16 +1,13 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
 namespace Ray\AuraSqlModule\Pagerfanta;
+
+use const PHP_EOL;
 
 class ExtendedPdoAdapterTest extends AbstractPdoTestCase
 {
-    /**
-     * @var ExtendedPdoAdapter
-     */
+    /** @var ExtendedPdoAdapter */
     protected $pdoAdapter;
 
     protected function setUp() : void
@@ -68,11 +65,11 @@ class ExtendedPdoAdapterTest extends AbstractPdoTestCase
     }
 
     /**
-     * @dataProvider splProvider
-     *
      * @param mixed $sql
      * @param mixed $expectedCountQuery
      * @param mixed $expectedNbResult
+     *
+     * @dataProvider splProvider
      */
     public function testRewriteCountQuery($sql, array $params, $expectedCountQuery, $expectedNbResult)
     {

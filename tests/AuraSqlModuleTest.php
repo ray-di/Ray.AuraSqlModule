@@ -1,9 +1,6 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocatorInterface;
@@ -13,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 use Ray\Compiler\DiCompiler;
 use Ray\Compiler\ScriptInjector;
 use Ray\Di\Injector;
+use Ray\Di\Instance;
 
 class AuraSqlModuleTest extends TestCase
 {
@@ -32,31 +30,31 @@ class AuraSqlModuleTest extends TestCase
     public function testMysql()
     {
         $fakeInject = (new Injector(new AuraSqlModule('mysql:host=localhost;dbname=master'), __DIR__ . '/tmp'))->getInstance(FakeQueryInject::class);
-        list($db) = $fakeInject->get();
+        [$db] = $fakeInject->get();
         $this->assertSame('mysql', $db);
     }
 
     public function testPgsql()
     {
         $fakeInject = (new Injector(new AuraSqlModule('pgsql:host=localhost;dbname=master'), __DIR__ . '/tmp'))->getInstance(FakeQueryInject::class);
-        list($db) = $fakeInject->get();
+        [$db] = $fakeInject->get();
         $this->assertSame('pgsql', $db);
     }
 
     public function testSqlite()
     {
         $fakeInject = (new Injector(new AuraSqlModule('sqlite:memory:'), __DIR__ . '/tmp'))->getInstance(FakeQueryInject::class);
-        list($db) = $fakeInject->get();
+        [$db] = $fakeInject->get();
         $this->assertSame('sqlite', $db);
     }
 
     public function testSlaveModule()
     {
         $module = new AuraSqlModule('mysql:host=localhost;dbname=testdb', 'root', '', 'slave1,slave2');
-        /** @var \Ray\Di\Instance $instance */
         $instance = $module->getContainer()->getContainer()['Aura\Sql\ConnectionLocatorInterface-'];
-        /** @var ConnectionLocatorInterface $locator */
+        \assert($instance instanceof Instance);
         $locator = $instance->value;
+        \assert($locator instanceof ConnectionLocatorInterface);
         $this->assertInstanceOf(ConnectionLocatorInterface::class, $locator);
         $read = $locator->getRead();
         $dsn = $read->getDsn();
@@ -65,8 +63,8 @@ class AuraSqlModuleTest extends TestCase
 
     public function testNoHost()
     {
-        $instance = (new Injector(new FakeQualifierModule, __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class);
-        /* @var $instance ExtendedPdo */
+        $instance = (new Injector(new FakeQualifierModule(), __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class);
+        /** @var ExtendedPdo $instance */
         $this->assertSame('sqlite::memory:', $instance->getDsn());
     }
 }

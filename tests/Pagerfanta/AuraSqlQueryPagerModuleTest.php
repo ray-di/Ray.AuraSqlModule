@@ -1,11 +1,9 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
 namespace Ray\AuraSqlModule\Pagerfanta;
 
+use Iterator;
 use Ray\Di\Injector;
 
 class AuraSqlQueryPagerModuleTest extends AuraSqlQueryTestCase
@@ -13,7 +11,7 @@ class AuraSqlQueryPagerModuleTest extends AuraSqlQueryTestCase
     public function testNewInstance()
     {
         $factory = (new Injector(new AuraSqlPagerModule()))->getInstance(AuraSqlQueryPagerFactoryInterface::class);
-        /* @var $factory AuraSqlQueryPagerFactoryInterface */
+        /** @var AuraSqlQueryPagerFactoryInterface $factory */
         $this->assertInstanceOf(AuraSqlQueryPagerFactory::class, $factory);
         $pager = $factory->newInstance($this->pdo, $this->select, 1, '/?page={page}&category=sports');
         $this->assertInstanceOf(AuraSqlQueryPager::class, $pager);
@@ -25,7 +23,7 @@ class AuraSqlQueryPagerModuleTest extends AuraSqlQueryTestCase
     {
         $this->select->where('id = :id')->bindValue('id', 1);
         $factory = (new Injector(new AuraSqlPagerModule()))->getInstance(AuraSqlQueryPagerFactoryInterface::class);
-        /* @var $factory AuraSqlQueryPagerFactoryInterface */
+        /** @var AuraSqlQueryPagerFactoryInterface $factory */
         $this->assertInstanceOf(AuraSqlQueryPagerFactory::class, $factory);
         $pager = $factory->newInstance($this->pdo, $this->select, 1, '/?page={page}&category=sports');
         $this->assertInstanceOf(AuraSqlQueryPager::class, $pager);
@@ -38,16 +36,16 @@ class AuraSqlQueryPagerModuleTest extends AuraSqlQueryTestCase
      */
     public function testArrayAccess(AuraSqlQueryPager $pager)
     {
-        /* @var Page $page */
         $page = $pager[2];
+        \assert($page instanceof Page);
         $this->assertTrue($page->hasNext);
         $this->assertTrue($page->hasPrevious);
         $expected = [
-                [
-                    'id' => '2',
-                    'username' => 'Jon Doe',
-                    'post_content' => 'Post #2',
-                ],
+            [
+                'id' => '2',
+                'username' => 'Jon Doe',
+                'post_content' => 'Post #2',
+            ],
         ];
         $this->assertSame($expected, $page->data);
         $expected = '<nav><a href="/?page=1&category=sports" rel="prev">Previous</a><a href="/?page=1&category=sports">1</a><span class="current">2</span><a href="/?page=3&category=sports">3</a><a href="/?page=4&category=sports">4</a><a href="/?page=5&category=sports">5</a><span class="dots">...</span><a href="/?page=50&category=sports">50</a><a href="/?page=3&category=sports" rel="next">Next</a></nav>';
@@ -60,16 +58,16 @@ class AuraSqlQueryPagerModuleTest extends AuraSqlQueryTestCase
      */
     public function testArrayAccessWithMaxPage(AuraSqlQueryPager $pager)
     {
-        /* @var Page $page */
         $page = $pager[50];
+        \assert($page instanceof Page);
         $this->assertFalse($page->hasNext);
         $this->assertTrue($page->hasPrevious);
         $expected = [
-                [
-                    'id' => '50',
-                    'username' => 'Jon Doe',
-                    'post_content' => 'Post #50',
-                ],
+            [
+                'id' => '50',
+                'username' => 'Jon Doe',
+                'post_content' => 'Post #50',
+            ],
         ];
         $this->assertSame($expected, $page->data);
         $expected = '<nav><a href="/?page=49&category=sports" rel="prev">Previous</a><a href="/?page=1&category=sports">1</a><span class="dots">...</span><a href="/?page=46&category=sports">46</a><a href="/?page=47&category=sports">47</a><a href="/?page=48&category=sports">48</a><a href="/?page=49&category=sports">49</a><span class="current">50</span><span class="disabled">Next</span></nav>';
@@ -84,7 +82,7 @@ class AuraSqlQueryPagerModuleTest extends AuraSqlQueryTestCase
     {
         $page = $pager[1];
         $itelator = $page->getIterator();
-        $this->assertInstanceOf(\Iterator::class, $itelator);
+        $this->assertInstanceOf(Iterator::class, $itelator);
     }
 
     /**
@@ -92,8 +90,8 @@ class AuraSqlQueryPagerModuleTest extends AuraSqlQueryTestCase
      */
     public function testArrayAccessWithBinding(AuraSqlQueryPager $pager)
     {
-        /* @var Page $page  */
         $page = $pager[1];
+        \assert($page instanceof Page);
         $this->assertFalse($page->hasNext);
         $this->assertFalse($page->hasPrevious);
         $expected = [

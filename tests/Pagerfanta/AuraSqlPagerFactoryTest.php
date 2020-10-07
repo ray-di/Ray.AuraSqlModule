@@ -1,24 +1,19 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Pagerfanta\View\DefaultView;
 
 class AuraSqlPagerFactoryTest extends AbstractPdoTestCase
 {
-    /**
-     * @var AuraSqlPagerFactory
-     */
+    /** @var AuraSqlPagerFactory */
     private $factory;
 
     public function setUp() : void
     {
         parent::setUp();
-        $this->factory = new AuraSqlPagerFactory(new AuraSqlPager(new DefaultView, []));
+        $this->factory = new AuraSqlPagerFactory(new AuraSqlPager(new DefaultView(), []));
     }
 
     public function testNewInstance()

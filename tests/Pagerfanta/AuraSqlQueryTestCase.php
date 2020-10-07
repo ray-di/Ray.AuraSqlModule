@@ -1,9 +1,6 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdo;
@@ -13,19 +10,13 @@ use PHPUnit\Framework\TestCase;
 
 abstract class AuraSqlQueryTestCase extends TestCase
 {
-    /**
-     * @var ExtendedPdo
-     */
+    /** @var ExtendedPdo */
     protected $pdo;
 
-    /**
-     * @var SelectInterface
-     */
+    /** @var SelectInterface */
     protected $select;
 
-    /**
-     * @var QueryFactory
-     */
+    /** @var QueryFactory */
     protected $qf;
 
     protected function setUp() : void
@@ -33,6 +24,7 @@ abstract class AuraSqlQueryTestCase extends TestCase
         if ($this->isAuraSqlQueryNotAvailable()) {
             $this->markTestSkipped('Aura Sql Query is not available');
         }
+
         $this->qf = new QueryFactory('sqlite');
         $this->select = $this->qf->newSelect();
 
@@ -80,7 +72,7 @@ abstract class AuraSqlQueryTestCase extends TestCase
                 ->into('posts')
                 ->cols([
                     'username' => 'Jon Doe',
-                    'post_content' => 'Post #' . $i
+                    'post_content' => 'Post #' . $i,
                 ]);
             $sth = $pdo->prepare($insertPost->getStatement());
             $sth->execute($insertPost->getBindValues());
@@ -90,7 +82,7 @@ abstract class AuraSqlQueryTestCase extends TestCase
                     ->cols([
                         'post_id' => $i,
                         'username' => 'Jon Doe',
-                        'content' => 'Comment #' . $j
+                        'content' => 'Comment #' . $j,
                     ]);
                 $sth = $pdo->prepare($insertComment->getStatement());
                 $sth->execute($insertComment->getBindValues());

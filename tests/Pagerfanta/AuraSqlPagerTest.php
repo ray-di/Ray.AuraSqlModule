@@ -1,9 +1,6 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Pagerfanta\Exception\LogicException;
@@ -13,15 +10,13 @@ use Ray\AuraSqlModule\Exception\NotInitialized;
 
 class AuraSqlPagerTest extends TestCase
 {
-    /**
-     * @var AuraSqlPager
-     */
+    /** @var AuraSqlPager */
     private $pager;
 
     public function setUp() : void
     {
         parent::setUp();
-        $this->pager = new AuraSqlPager(new DefaultView, []);
+        $this->pager = new AuraSqlPager(new DefaultView(), []);
     }
 
     public function testExecute()

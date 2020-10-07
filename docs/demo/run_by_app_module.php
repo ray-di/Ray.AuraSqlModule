@@ -1,9 +1,4 @@
 <?php
-/**
- * This file is part of the Ray.AuraSqlModule package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
 use Aura\Sql\ExtendedPdo;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Ray\AuraSqlModule\AuraSqlInject;
