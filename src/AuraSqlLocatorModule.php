@@ -50,7 +50,7 @@ class AuraSqlLocatorModule extends AbstractModule
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure() : void
     {
         if ((bool) $this->readMethods && (bool) $this->writeMethods) {
             $this->bind()->annotatedWith(Read::class)->toInstance($this->readMethods);

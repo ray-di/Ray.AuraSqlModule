@@ -58,7 +58,7 @@ class NamedPdoModule extends AbstractModule
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure() : void
     {
         $this->slave ? $this->configureMasterSlaveDsn($this->qualifer, $this->dsn, $this->user, $this->password, $this->slave)
             : $this->configureSingleDsn($this->qualifer, $this->dsn, $this->user, $this->password);

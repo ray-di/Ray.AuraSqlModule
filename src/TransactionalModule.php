@@ -14,7 +14,7 @@ class TransactionalModule extends AbstractModule
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure() : void
     {
         // @Transactional
         $this->bindInterceptor(

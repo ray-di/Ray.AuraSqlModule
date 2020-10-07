@@ -69,7 +69,7 @@ class AuraSqlModule extends AbstractModule
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure() : void
     {
         $this->slave ? $this->configureMasterSlaveDsn() : $this->configureSingleDsn();
         // @Transactional

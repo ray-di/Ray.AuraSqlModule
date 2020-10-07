@@ -7,6 +7,7 @@
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocatorInterface;
+use Aura\Sql\PdoInterface;
 use Ray\Di\InjectorInterface;
 use Ray\Di\ProviderInterface;
 use Ray\Di\SetContextInterface;
@@ -30,14 +31,18 @@ class AuraSqlReplicationDbProvider implements ProviderInterface, SetContextInter
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $context
      */
-    public function setContext($context)
+    public function setContext($context) : void
     {
         $this->context = $context;
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @return PdoInterface
      */
     public function get()
     {

@@ -6,6 +6,7 @@
  */
 namespace Ray\AuraSqlModule;
 
+use Aura\SqlQuery\Common\UpdateInterface;
 use Aura\SqlQuery\QueryFactory;
 use Ray\AuraSqlModule\Annotation\AuraSqlQueryConfig;
 use Ray\Di\ProviderInterface;
@@ -29,6 +30,8 @@ class AuraSqlQueryUpdateProvider implements ProviderInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return UpdateInterface
      */
     public function get()
     {

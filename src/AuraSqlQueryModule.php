@@ -29,7 +29,7 @@ class AuraSqlQueryModule extends AbstractModule
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure() : void
     {
         $this->bind()->annotatedWith(AuraSqlQueryConfig::class)->toInstance($this->db);
         $this->bind(SelectInterface::class)->toProvider(AuraSqlQuerySelectProvider::class);

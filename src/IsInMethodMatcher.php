@@ -14,8 +14,11 @@ class IsInMethodMatcher extends AbstractMatcher
      * {@inheritdoc}
      *
      * @codeCoverageIgnore
+     * @template T of object
+     * @phpstan-param \ReflectionClass<T> $class
+     * @phpstan-param array<mixed> $arguments
      */
-    public function matchesClass(\ReflectionClass $class, array $arguments)
+    public function matchesClass(\ReflectionClass $class, array $arguments) : bool
     {
         unset($class, $arguments);
 
@@ -24,8 +27,10 @@ class IsInMethodMatcher extends AbstractMatcher
 
     /**
      * {@inheritdoc}
+     *
+     * @phpstan-param array<mixed> $arguments
      */
-    public function matchesMethod(\ReflectionMethod $method, array $arguments)
+    public function matchesMethod(\ReflectionMethod $method, array $arguments) : bool
     {
         $result = \in_array($method->name, $arguments[0], true);
 

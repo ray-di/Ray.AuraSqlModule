@@ -38,7 +38,7 @@ class AuraSqlReplicationModule extends AbstractModule
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure() : void
     {
         $this->bind(ConnectionLocatorInterface::class)->annotatedWith($this->qualifer)->toInstance($this->connectionLocator);
         // ReadOnlyConnection when GET, otherwise WriteConnection
