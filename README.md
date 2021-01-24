@@ -253,5 +253,5 @@ $this->bind()->annotatedWith(PagerViewOption::class)->toInstance($pagerViewOptio
 
 ## Demo
 
-    $ php docs/demo/run.php
+    $ php demo/run.php
     // It works!
