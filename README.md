@@ -10,7 +10,7 @@ An [Aura.Sql](https://github.com/auraphp/Aura.Sql) Module for [Ray.Di](https://g
 
 ### Composer install
 
-    $ composer require ray/aura-sql-module
+    $ composer require ray/aura-sql-module ^3.0
  
 ### Module install
 
@@ -255,3 +255,9 @@ $this->bind()->annotatedWith(PagerViewOption::class)->toInstance($pagerViewOptio
 
     $ php docs/demo/run.php
     // It works!
+
+## Version
+
+* Version 1.x supports [Aura.Sql 2](https://github.com/auraphp/Aura.Sql/tree/2.x) on PHP 7.x
+* Version 2.x supports [Aura.Sql 3](https://github.com/auraphp/Aura.Sql/tree/3.x) on PHP 7.x and 8.x
+
