@@ -72,11 +72,8 @@ Two modules are provided. `NamedPdoModule` is for non replication use. and `Aura
 
 
 ```php
-/**
- * @Inject
- * @Named("log_db")
- */
-public function setLoggerDb(ExtendedPdoInterface $pdo)
+#[Inject]
+public function setLoggerDb(#[Named('log_db') ExtendedPdoInterface $pdo)
 {
     // ...
 }
@@ -125,10 +122,7 @@ class User
 {
     public $pdo;
 
-    /**
-     * @WriteConnection
-     * @Transactional
-     */
+    #[WriteConnection, Transactional]
     public function write()
     {
          // $this->pdo->rollback(); when exception thrown.
