@@ -15,11 +15,14 @@ use Doctrine\Common\Annotations\NamedArgumentConstructorAnnotation;
 final class Transactional implements NamedArgumentConstructorAnnotation
 {
     /**
-     * @var array<string>
+     * @var ?array<string>
      * @deprecated
      */
     public $value;
 
+    /**
+     * @param array<string> $value
+     */
     public function __construct(array $value = ['pdo'])
     {
         $this->value = $value;

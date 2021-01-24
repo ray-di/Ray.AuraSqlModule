@@ -16,10 +16,12 @@ use Ray\Di\Di\Qualifier;
 #[Attribute(Attribute::TARGET_METHOD), Qualifier]
 final class AuraSqlConfig implements NamedArgumentConstructorAnnotation
 {
-    /** @var array<string> */
+    /** @var ?array<string> */
     public $value;
 
-    /** @var array<string> */
+    /**
+     * @param array<string> $value
+     */
     public function __construct(?array $value = null)
     {
         $this->value = $value;
