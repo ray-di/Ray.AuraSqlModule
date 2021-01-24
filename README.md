@@ -255,12 +255,3 @@ $this->bind()->annotatedWith(PagerViewOption::class)->toInstance($pagerViewOptio
 
     $ php docs/demo/run.php
     // It works!
-
-## Versions
-
-* Version 1.x supports [Aura.Sql 2](https://github.com/auraphp/Aura.Sql/tree/2.x) on PHP 7.x
-* Version 2.x supports [Aura.Sql 3](https://github.com/auraphp/Aura.Sql/tree/3.x) on PHP 7.x and 8.x
-
-Ray.AuraSqlModule is unchanged.It keeps 100% BC.
-The main functionality methods of Aura.Sql v3 is alos unchanged.
-See [Aura.Sql v3 UPGRADE GUIDE](https://github.com/auraphp/Aura.Sql/blob/3.x/docs/upgrade.md).
