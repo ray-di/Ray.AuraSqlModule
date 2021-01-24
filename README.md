@@ -10,7 +10,7 @@ An [Aura.Sql](https://github.com/auraphp/Aura.Sql) Module for [Ray.Di](https://g
 
 ### Composer install
 
-    $ composer require ray/aura-sql-module ^3.0
+    $ composer require ray/aura-sql-module
  
 ### Module install
 
