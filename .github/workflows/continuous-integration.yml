@@ -59,3 +59,7 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           file: ./coverage.xml
+
+      - name: Run Demo
+        if: ${{ matrix.php-version == '8.0' }}
+        run: php demo/run.php
