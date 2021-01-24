@@ -19,6 +19,7 @@ class FakeMultiDb
     /**
      * @Named("pdo1=pdo1,pdo2=pdo2,pdo3=pdo3")
      */
+    #[Named('pdo1=pdo1,pdo2=pdo2,pdo3=pdo3')]
     public function __construct(ExtendedPdoInterface $pdo1, ExtendedPdoInterface $pdo2, ExtendedPdoInterface $pdo3)
     {
         $this->pdo1 = $pdo1;
@@ -32,6 +33,7 @@ class FakeMultiDb
     /**
      * @Transactional({"pdo1","pdo2","pdo3"})
      */
+    #[Transactional(['pdo1', 'pdo2', 'pdo3'])]
     public function write()
     {
         $stmt1 = $this->pdo1->prepare('INSERT INTO user (name, age) VALUES (?, ?)');
@@ -50,5 +52,15 @@ class FakeMultiDb
         $users[] = $this->pdo3->fetchAll('SELECT * FROM user');
 
         return $users;
+    }
+
+    /**
+     * @Transactional()
+     */
+    #[Transactional]
+    public function writeNoValueTransactional()
+    {
+        $stmt1 = $this->pdo1->prepare('INSERT INTO user (name, age) VALUES (?, ?)');
+        $stmt1->execute(['koriym', 18]);
     }
 }

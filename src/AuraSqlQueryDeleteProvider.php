@@ -19,6 +19,7 @@ class AuraSqlQueryDeleteProvider implements ProviderInterface
      *
      * @AuraSqlQueryConfig
      */
+    #[AuraSqlQueryConfig]
     public function __construct(string $db)
     {
         $this->db = $db;

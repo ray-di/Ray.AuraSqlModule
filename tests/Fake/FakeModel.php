@@ -11,6 +11,7 @@ use Ray\AuraSqlModule\Annotation\WriteConnection;
 /**
  * @AuraSql
  */
+#[AuraSql]
 class FakeModel
 {
     /**
@@ -36,6 +37,7 @@ class FakeModel
     /**
      * @ReadOnlyConnection
      */
+    #[ReadOnlyConnection]
     public function slave()
     {
         return true;
@@ -45,6 +47,7 @@ class FakeModel
      * @WriteConnection
      * @Transactional
      */
+    #[WriteConnection, Transactional]
     public function master()
     {
         return true;
@@ -54,6 +57,7 @@ class FakeModel
      * @WriteConnection
      * @Transactional
      */
+    #[WriteConnection, Transactional]
     public function dbError()
     {
         $this->pdo->exec('xxx');
@@ -62,6 +66,7 @@ class FakeModel
     /**
      * @Transactional
      */
+    #[Transactional]
     public function noDb()
     {
         $this->pdo->exec('xxx');

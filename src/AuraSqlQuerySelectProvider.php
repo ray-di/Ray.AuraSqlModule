@@ -19,6 +19,7 @@ class AuraSqlQuerySelectProvider implements ProviderInterface
      *
      * @AuraSqlQueryConfig
      */
+    #[AuraSqlQueryConfig()]
     public function __construct($db)
     {
         $this->db = $db;

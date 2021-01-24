@@ -6,24 +6,24 @@ namespace Ray\AuraSqlModule\Annotation;
 
 use Attribute;
 use Doctrine\Common\Annotations\NamedArgumentConstructorAnnotation;
+use Ray\Di\Di\Qualifier;
 
 /**
  * @Annotation
  * @Target("METHOD")
+ * @Qualifier
+ * @deprecated -- No one using?
  */
-#[Attribute(Attribute::TARGET_METHOD)]
-final class Transactional implements NamedArgumentConstructorAnnotation
+#[Attribute(Attribute::TARGET_METHOD), Qualifier]
+final class AuraSqlConfig implements NamedArgumentConstructorAnnotation
 {
-    /**
-     * @var ?array<string>
-     * @deprecated
-     */
+    /** @var ?array<string> */
     public $value;
 
     /**
      * @param array<string> $value
      */
-    public function __construct(array $value = ['pdo'])
+    public function __construct(?array $value = null)
     {
         $this->value = $value;
     }

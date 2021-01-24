@@ -1,18 +1,16 @@
 # Ray.AuraSqlModule
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/badges/quality-score.png?b=1.x)](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/?branch=1.x)
-[![Code Coverage](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/badges/coverage.png?b=1.x)](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/?branch=1.x)
+[![codecov](https://codecov.io/gh/ray-di/Ray.AuraSqlModule/branch/1.x/graph/badge.svg?token=gcWaftzoXp)](https://codecov.io/gh/ray-di/Ray.AuraSqlModule)
 [![Type Coverage](https://shepherd.dev/github/ray-di/Ray.AuraSqlModule/coverage.svg)](https://shepherd.dev/github/ray-di/Ray.AuraSqlModule)
-[![Build Status](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/badges/build.png?b=1.x)](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/build-status/1.x)
-[![Build Status](https://travis-ci.org/ray-di/Ray.AuraSqlModule.svg?branch=1.x)](https://travis-ci.org/ray-di/Ray.AuraSqlModule)
+![Continuous Integration](https://github.com/ray-di/Ray.AuraSqlModule/workflows/Continuous%20Integration/badge.svg)
 
-[Aura.Sql](https://github.com/auraphp/Aura.Sql) Module for [Ray.Di](https://github.com/koriym/Ray.Di)
+An [Aura.Sql](https://github.com/auraphp/Aura.Sql) Module for [Ray.Di](https://github.com/koriym/Ray.Di)
 
 ## Installation
 
 ### Composer install
 
-    $ composer require ray/aura-sql-module
+    $ composer require ray/aura-sql-module ^3.0
  
 ### Module install
 

@@ -12,8 +12,10 @@ use Ray\Compiler\DiCompiler;
 use Ray\Compiler\ScriptInjector;
 use Ray\Di\Injector;
 use Ray\Di\Instance;
+use ReflectionProperty;
 
 use function assert;
+use function get_class;
 
 class AuraSqlModuleTest extends TestCase
 {
@@ -59,8 +61,7 @@ class AuraSqlModuleTest extends TestCase
         $locator = $instance->value;
         assert($locator instanceof ConnectionLocatorInterface);
         $this->assertInstanceOf(ConnectionLocatorInterface::class, $locator);
-        $read = $locator->getRead();
-        $dsn = $read->getDsn();
+        $dsn = $this->getDsn($locator->getRead());
         $this->assertContains($dsn, ['mysql:host=slave1;dbname=testdb', 'mysql:host=slave2;dbname=testdb']);
     }
 
@@ -68,6 +69,15 @@ class AuraSqlModuleTest extends TestCase
     {
         $instance = (new Injector(new FakeQualifierModule(), __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class);
         /** @var ExtendedPdo $instance */
-        $this->assertSame('sqlite::memory:', $instance->getDsn());
+        $this->assertSame('sqlite::memory:', $this->getDsn($instance));
+    }
+
+    private function getDsn(ExtendedPdo $pdo): string
+    {
+        $prop = new ReflectionProperty(get_class($pdo), 'args');
+        $prop->setAccessible(true);
+        $args = $prop->getValue($pdo);
+
+        return $args[0]; // dsn
     }
 }
