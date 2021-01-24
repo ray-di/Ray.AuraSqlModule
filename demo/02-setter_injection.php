@@ -1,26 +1,26 @@
 <?php
+
+declare(strict_types=1);
+
 use Aura\Sql\ExtendedPdo;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use Ray\AuraSqlModule\AuraSqlInject;
 use Ray\AuraSqlModule\AuraSqlModule;
 use Ray\Di\Injector;
 
-$loader = require \dirname(\dirname(__DIR__)) . '/vendor/autoload.php';
-/* @var $loader \Composer\Autoload\ClassLoader */
-AnnotationRegistry::registerLoader([$loader, 'loadClass']);
+require dirname(__DIR__) . '/vendor/autoload.php';
 
 class Fake
 {
     use AuraSqlInject;
 
-    public function foo()
+    public function getPdo()
     {
         return $this->pdo;
     }
 }
 
 $fake = (new Injector(new AuraSqlModule('sqlite::memory:')))->getInstance(Fake::class);
-/* @var $fake Fake */
-$works = ($fake->foo() instanceof ExtendedPdo);
+assert($fake instanceof Fake);
+$works = ($fake->getPdo() instanceof ExtendedPdo);
 
 echo($works ? 'It works!' : 'It DOES NOT work!') . PHP_EOL;
