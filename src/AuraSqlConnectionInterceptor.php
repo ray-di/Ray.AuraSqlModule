@@ -9,7 +9,6 @@ use Aura\Sql\ExtendedPdoInterface;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 use Ray\AuraSqlModule\Annotation\Read;
-use Ray\AuraSqlModule\Annotation\Write;
 use ReflectionProperty;
 
 use function in_array;

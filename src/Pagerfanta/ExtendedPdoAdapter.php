@@ -84,9 +84,7 @@ class ExtendedPdoAdapter implements AdapterInterface
     public function getLimitClause(int $offset, int $length): string
     {
         if ($offset && $length) {
-            $clause = PHP_EOL . "LIMIT {$length} OFFSET {$offset}";
-
-            return $clause;
+            return PHP_EOL . "LIMIT {$length} OFFSET {$offset}";
         }
 
         if ($length) {
