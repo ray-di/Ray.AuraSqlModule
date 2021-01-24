@@ -51,4 +51,13 @@ class FakeMultiDb
 
         return $users;
     }
+
+    /**
+     * @Transactional()
+     */
+    public function writeNoValueTransactional()
+    {
+        $stmt1 = $this->pdo1->prepare('INSERT INTO user (name, age) VALUES (?, ?)');
+        $stmt1->execute(['koriym', 18]);
+    }
 }

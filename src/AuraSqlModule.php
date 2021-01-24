@@ -94,7 +94,9 @@ class AuraSqlModule extends AbstractModule
     {
         preg_match(self::PARSE_PDO_DSN_REGEX, $dsn, $parts);
         if (! $parts) {
+            // @codeCoverageIgnoreStart
             return $dsn;
+            // @codeCoverageIgnoreEnd
         }
 
         $dsn = sprintf('%s:%s=%s;%s', $parts[1], $parts[2], $host, $parts[3]);

@@ -6,6 +6,9 @@ namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdoInterface;
 
+/**
+ * @codeCoverageIgnore
+ */
 trait AuraSqlInject
 {
     /** @var ExtendedPdoInterface */
