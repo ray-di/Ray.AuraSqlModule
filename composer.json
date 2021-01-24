@@ -10,7 +10,7 @@
     "require": {
         "php": "^7.3 || ^8.0",
         "ext-pdo": "*",
-        "ray/di": "^2.11",
+        "ray/di": "^2.11.3",
         "ray/aop": "^2.10.3",
         "aura/sql": "^3.0",
         "aura/sqlquery": "^2.7.1",
