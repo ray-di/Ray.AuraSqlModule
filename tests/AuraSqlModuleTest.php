@@ -12,16 +12,10 @@ use Ray\Compiler\DiCompiler;
 use Ray\Compiler\ScriptInjector;
 use Ray\Di\Injector;
 use Ray\Di\Instance;
+use ReflectionProperty;
 
-use ReflectionMethod;
 use function assert;
 use function get_class;
-use function ob_get_clean;
-use function ob_start;
-use function preg_replace;
-use function str_replace;
-use function strpos;
-use function var_dump;
 
 class AuraSqlModuleTest extends TestCase
 {
@@ -80,7 +74,7 @@ class AuraSqlModuleTest extends TestCase
 
     private function getDsn(ExtendedPdo $pdo): string
     {
-        $prop = new \ReflectionProperty(get_class($pdo), 'args');
+        $prop = new ReflectionProperty(get_class($pdo), 'args');
         $prop->setAccessible(true);
         $args = $prop->getValue($pdo);
 
