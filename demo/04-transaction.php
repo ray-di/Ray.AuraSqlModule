@@ -19,25 +19,34 @@ class Fake
 
     public function init()
     {
-        $this->pdo->exec(/** @lang sql */'CREATE TABLE user(name, age)');
+        $this->pdo->exec(/** @lang sql */'CREATE TABLE user(name)');
+        $this->pdo->perform(/** @lang sql */'INSERT INTO user (name) VALUES (?)', ['kuma']);
     }
 
     #[Transactional]
     public function insert()
     {
-        $this->pdo->perform(/** @lang sql */'INSERT INTO user (name, age) VALUES (?, ?)', ['bear', 10]);
+        $this->pdo->perform(/** @lang sql */'INSERT INTO user (name) VALUES (?)', ['bear']);
+        $users = $this->fetch();
+        assert(count($users) === 2);
         $this->pdo->exec('*****');
+    }
+
+    public function fetch()
+    {
+        return $this->pdo->fetchAssoc(/** @lang sql */'SELECT * from user');
     }
 }
 
 $fake = (new Injector(new AuraSqlModule('sqlite::memory:')))->getInstance(Fake::class);
 assert($fake instanceof Fake);
 $fake->init();
-$works = false;
+$rollBacked = false;
+$users = $fake->fetch();
 try {
     $fake->insert();
 } catch (RollbackException $e) {
-    $works = true;
+    $rollBacked = true;
 }
 
-echo($works ? 'It works!' : 'It DOES NOT work!') . PHP_EOL;
+echo(count($users) === 1 && $rollBacked ? 'It works!' : 'It DOES NOT work!') . PHP_EOL;
