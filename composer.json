@@ -8,11 +8,11 @@
     "description": "aura/sql module for Ray.Di",
     "license": "MIT",
     "require": {
-        "php": "^7.2",
+        "php": "^7.3 || ^8.0",
         "ext-pdo": "*",
         "ray/di": "^2.10",
         "ray/aop": "^2.8",
-        "aura/sql": "^2.5.1",
+        "aura/sql": "^3.0",
         "aura/sqlquery": "^2.7.1",
         "pagerfanta/pagerfanta": "^1.0.4",
         "rize/uri-template": "^0.3.0",
