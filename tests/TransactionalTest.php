@@ -48,7 +48,6 @@ class TransactionalTest extends TestCase
             {
                 $this->bind(ExtendedPdoInterface::class)->toInstance(null);
             }
-
         });
         $ro = (new Injector($module))->getInstance(FakeMultiDb::class);
         $ro->write();
@@ -84,7 +83,6 @@ class TransactionalTest extends TestCase
             {
                 $this->bind(ExtendedPdoInterface::class)->toInstance(null);
             }
-
         });
         $ro = (new Injector($module))->getInstance(FakeMultiDb::class);
         $ro->writeNoValueTransactional();
@@ -97,7 +95,7 @@ class TransactionalTest extends TestCase
                 ],
             ],
             [],
-            []
+            [],
         ];
         $this->assertSame($expected, $users);
     }

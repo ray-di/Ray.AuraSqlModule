@@ -21,6 +21,7 @@ class FakeQueryInject
      *
      * @param string $db
      */
+    #[AuraSqlQueryConfig]
     public function __construct($db)
     {
         $this->db = $db;

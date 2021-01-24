@@ -19,6 +19,7 @@ class FakeMultiDb
     /**
      * @Named("pdo1=pdo1,pdo2=pdo2,pdo3=pdo3")
      */
+    #[Named('pdo1=pdo1,pdo2=pdo2,pdo3=pdo3')]
     public function __construct(ExtendedPdoInterface $pdo1, ExtendedPdoInterface $pdo2, ExtendedPdoInterface $pdo3)
     {
         $this->pdo1 = $pdo1;
@@ -32,6 +33,7 @@ class FakeMultiDb
     /**
      * @Transactional({"pdo1","pdo2","pdo3"})
      */
+    #[Transactional(['pdo1', 'pdo2', 'pdo3'])]
     public function write()
     {
         $stmt1 = $this->pdo1->prepare('INSERT INTO user (name, age) VALUES (?, ?)');
@@ -55,6 +57,7 @@ class FakeMultiDb
     /**
      * @Transactional()
      */
+    #[Transactional]
     public function writeNoValueTransactional()
     {
         $stmt1 = $this->pdo1->prepare('INSERT INTO user (name, age) VALUES (?, ?)');

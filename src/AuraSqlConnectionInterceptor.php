@@ -30,6 +30,7 @@ class AuraSqlConnectionInterceptor implements MethodInterceptor
      * @Read("readMethods")
      * @Write("writeMethods")
      */
+    #[Read('readMethods')]
     public function __construct(ConnectionLocatorInterface $connectionLocator, array $readMethods)
     {
         $this->connectionLocator = $connectionLocator;

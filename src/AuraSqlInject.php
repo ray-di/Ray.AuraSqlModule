@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdoInterface;
+use Ray\Di\Di\Inject;
 
 /**
  * @codeCoverageIgnore
@@ -15,9 +16,10 @@ trait AuraSqlInject
     protected $pdo;
 
     /**
-     * @\Ray\Di\Di\Inject
+     * @Inject()
      */
-    public function setAuraSql(?ExtendedPdoInterface $pdo = null)
+    #[Inject]
+    public function setAuraSql(?ExtendedPdoInterface $pdo)
     {
         $this->pdo = $pdo;
     }
