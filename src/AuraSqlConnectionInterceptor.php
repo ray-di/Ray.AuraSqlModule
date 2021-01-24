@@ -9,7 +9,6 @@ use Aura\Sql\ExtendedPdoInterface;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 use Ray\AuraSqlModule\Annotation\Read;
-use Ray\AuraSqlModule\Annotation\Write;
 use ReflectionProperty;
 
 use function in_array;
@@ -28,8 +27,8 @@ class AuraSqlConnectionInterceptor implements MethodInterceptor
      * @phpstan-param array<string> $readMethods
      *
      * @Read("readMethods")
-     * @Write("writeMethods")
      */
+    #[Read('readMethods')]
     public function __construct(ConnectionLocatorInterface $connectionLocator, array $readMethods)
     {
         $this->connectionLocator = $connectionLocator;

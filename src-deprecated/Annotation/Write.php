@@ -12,17 +12,15 @@ use Ray\Di\Di\Qualifier;
  * @Annotation
  * @Target("METHOD")
  * @Qualifier
+ * @deprecated -- No one using?
  */
 #[Attribute(Attribute::TARGET_METHOD), Qualifier]
-final class AuraSqlQueryConfig implements NamedArgumentConstructorAnnotation
+final class Write implements NamedArgumentConstructorAnnotation
 {
-    /** @var ?array<string, string> */
+    /** @var string */
     public $value;
 
-    /**
-     * @param array<string, string> $value
-     */
-    public function __construct(?array $value = null)
+    public function __construct(string $value)
     {
         $this->value = $value;
     }

@@ -44,6 +44,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
      *
      * @PagerViewOption("viewOptions")
      */
+    #[PagerViewOption('viewOptions')]
     public function __construct(ViewInterface $view, array $viewOptions)
     {
         $this->view = $view;
