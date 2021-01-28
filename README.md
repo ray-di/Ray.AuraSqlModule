@@ -242,7 +242,38 @@ use Ray\AuraSqlModule\Annotation\PagerViewOption;
 
 $this->bind(TemplateInterface::class)->to(TwitterBootstrap3Template::class);
 $this->bind()->annotatedWith(PagerViewOption::class)->toInstance($pagerViewOption);
+```
 
+## Profile
+
+To log SQL execution, install `AuraSqlProfileModule`. 
+It will be logged by a logger bound to the [PSR-3](https://www.php-fig.org/psr/psr-3/) logger. This example binds a minimal function logger created in an unnamed class.
+
+```
+class DevModule extends AbstractModule
+{
+    protected function configure()
+    {
+        // ...
+        $this->install(new AuraSqlProfileModule());
+        $this->bind(LoggerInterface::class)->toInstance(
+            /** 
+            new class extends AbstractLogger {
+                /** @inheritDoc */
+                public function log($level, $message, array $context = [])
+                {
+                    $replace = [];
+                    foreach ($context as $key => $val) {
+                        if (! is_array($val) && (! is_object($val) || method_exists($val, '__toString'))) {
+                            $replace['{' . $key . '}'] = $val;
+                        }
+                    }
+            
+                    error_log(strtr($message, $replace));
+                }
+            }
+        );
+}
 ```
 
 ## Demo
