@@ -249,7 +249,7 @@ $this->bind()->annotatedWith(PagerViewOption::class)->toInstance($pagerViewOptio
 To log SQL execution, install `AuraSqlProfileModule`. 
 It will be logged by a logger bound to the [PSR-3](https://www.php-fig.org/psr/psr-3/) logger. This example binds a minimal function logger created in an unnamed class.
 
-```
+```php
 class DevModule extends AbstractModule
 {
     protected function configure()
