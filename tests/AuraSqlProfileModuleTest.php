@@ -18,6 +18,7 @@ use function strtr;
 
 class AuraSqlProfileModuleTest extends TestCase
 {
+    /** @var array<string> */
     public static $log = [];
 
     public function testModule(): ExtendedPdoInterface
@@ -29,6 +30,7 @@ class AuraSqlProfileModuleTest extends TestCase
                 $this->install(new AuraSqlProfileModule());
                 $this->bind(LoggerInterface::class)->toInstance(
                     new class extends AbstractLogger {
+                        /** @inheritDoc */
                         public function log($level, $message, array $context = [])
                         {
                             $replace = [];
