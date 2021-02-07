@@ -14,7 +14,7 @@
         "ray/aop": "^2.10.3",
         "aura/sql": "^3.0",
         "aura/sqlquery": "^2.7.1",
-        "pagerfanta/pagerfanta": "^1.0.4",
+        "pagerfanta/pagerfanta": "^2.6",
         "rize/uri-template": "^0.3.0",
         "doctrine/annotations": "^1.11",
         "psr/log": "^1.1"
