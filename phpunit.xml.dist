@@ -11,6 +11,6 @@
     </testsuite>
   </testsuites>
   <php>
-    <ini name="error_reporting" value="-1"/>
+    <ini name="error_reporting" value="24575"/>
   </php>
 </phpunit>
