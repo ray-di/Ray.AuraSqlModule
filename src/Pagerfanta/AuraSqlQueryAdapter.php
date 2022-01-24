@@ -8,6 +8,7 @@ use Aura\Sql\ExtendedPdoInterface;
 use Aura\SqlQuery\Common\SelectInterface;
 use Pagerfanta\Adapter\AdapterInterface;
 use PDO;
+use PDOStatement;
 
 use function assert;
 use function call_user_func;
@@ -42,6 +43,7 @@ class AuraSqlQueryAdapter implements AdapterInterface
         $select = $this->prepareCountQueryBuilder();
         $sql = $select->getStatement();
         $sth = $this->pdo->prepare($sql);
+        assert($sth instanceof PDOStatement);
         $sth->execute($this->select->getBindValues());
         $result = $sth->fetchColumn();
 
@@ -61,6 +63,7 @@ class AuraSqlQueryAdapter implements AdapterInterface
             ->limit($length)
             ->getStatement();
         $sth = $this->pdo->prepare($sql);
+        assert($sth instanceof PDOStatement);
         $sth->execute($this->select->getBindValues());
         $result = $sth->fetchAll(PDO::FETCH_ASSOC);
         assert(is_array($result));

@@ -31,7 +31,7 @@ final class Page implements IteratorAggregate
     /** @var mixed */
     public $data;
 
-    /** @var Pagerfanta<int, array<mixed>> */
+    /** @var Pagerfanta<mixed> */
     private $pagerfanta;
 
     /** @var callable */
@@ -44,7 +44,7 @@ final class Page implements IteratorAggregate
     private $viewOption;
 
     /**
-     * @phpstan-param Pagerfanta<int, array> $pagerfanta
+     * @phpstan-param Pagerfanta<mixed> $pagerfanta
      * @phpstan-param array<array>      $viewOption
      */
     public function __construct(
