@@ -11,20 +11,17 @@ use Ray\Di\Scope;
 
 class AuraSqlMasterModule extends AbstractModule
 {
-    /** @var string */
-    private $dsn;
+    private string $dsn;
 
-    /** @var string */
-    private $user;
+    private string $user;
 
-    /** @var string */
-    private $password;
+    private string $password;
 
     /** @var array<string> */
-    private $options;
+    private array $options;
 
     /** @var array<string> */
-    private $attributes;
+    private array $attributes;
 
     /**
      * @phpstan-param array<string> $options

@@ -8,23 +8,19 @@ use Aura\Sql\ExtendedPdo;
 
 class Connection
 {
-    /** @var string */
-    private $dsn;
+    private string $dsn;
 
-    /** @var string */
-    private $id;
+    private string $id;
 
-    /** @var string */
-    private $password;
+    private string $password;
 
     /** @var array<string> */
-    private $options;
+    private array $options;
 
     /** @var array<string> */
-    private $attributes;
+    private array $attributes;
 
-    /** @var ExtendedPdo */
-    private $pdo;
+    private ?\Aura\Sql\ExtendedPdo $pdo = null;
 
     /**
      * @phpstan-param array<string> $options

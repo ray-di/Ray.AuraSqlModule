@@ -15,29 +15,24 @@ use ReturnTypeWillChange;
 
 class AuraSqlPager implements AuraSqlPagerInterface
 {
-    /** @var ViewInterface */
-    private $view;
+    private \Pagerfanta\View\ViewInterface $view;
 
-    /** @var RouteGeneratorInterface */
-    private $routeGenerator;
+    private ?\Ray\AuraSqlModule\Pagerfanta\RouteGeneratorInterface $routeGenerator = null;
 
     /** @var array<array<string>> */
-    private $viewOptions;
+    private array $viewOptions;
 
-    /** @var ExtendedPdoInterface */
-    private $pdo;
+    private \Aura\Sql\ExtendedPdoInterface $pdo;
 
-    /** @var string */
-    private $sql;
+    private string $sql;
 
     /** @var array<mixed> */
-    private $params;
+    private array $params;
 
     /**
      * @phpstan-var positive-int
-     * @var int
      */
-    private $paging;
+    private int $paging;
 
     /**
      * @param array<array<string>> $viewOptions

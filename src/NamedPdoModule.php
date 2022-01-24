@@ -17,20 +17,15 @@ class NamedPdoModule extends AbstractModule
 {
     public const PARSE_PDO_DSN_REGEX = '/(.*?)\:(host|server)=.*?;(.*)/i';
 
-    /** @var string */
-    private $qualifer;
+    private string $qualifer;
 
-    /** @var string */
-    private $dsn;
+    private string $dsn;
 
-    /** @var string */
-    private $user;
+    private string $user;
 
-    /** @var string */
-    private $password;
+    private string $password;
 
-    /** @var string */
-    private $slave;
+    private string $slave;
 
     public function __construct(
         string $qualifer,

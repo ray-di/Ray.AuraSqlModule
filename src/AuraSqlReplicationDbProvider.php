@@ -14,11 +14,9 @@ use function assert;
 
 class AuraSqlReplicationDbProvider implements ProviderInterface, SetContextInterface
 {
-    /** @var InjectorInterface */
-    private $injector;
+    private \Ray\Di\InjectorInterface $injector;
 
-    /** @var string */
-    private $context = '';
+    private string $context = '';
 
     public function __construct(InjectorInterface $injector)
     {

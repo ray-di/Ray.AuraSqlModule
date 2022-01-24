@@ -11,8 +11,7 @@ use Ray\Di\ProviderInterface;
 
 class AuraSqlQuerySelectProvider implements ProviderInterface
 {
-    /** @var string */
-    private $db;
+    private string $db;
 
     /**
      * @param string $db The database type

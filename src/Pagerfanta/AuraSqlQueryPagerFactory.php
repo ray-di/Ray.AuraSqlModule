@@ -9,8 +9,7 @@ use Aura\SqlQuery\Common\SelectInterface;
 
 class AuraSqlQueryPagerFactory implements AuraSqlQueryPagerFactoryInterface
 {
-    /** @var AuraSqlQueryPagerInterface */
-    private $auraSqlQueryPager;
+    private \Ray\AuraSqlModule\Pagerfanta\AuraSqlQueryPagerInterface $auraSqlQueryPager;
 
     public function __construct(AuraSqlQueryPagerInterface $auraSqlQueryPager)
     {

@@ -6,8 +6,7 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 
 class PdoMySqlAdapterTest extends AbstractPdoTestCase
 {
-    /** @var ExtendedPdoAdapter */
-    private $adapter;
+    private \Ray\AuraSqlModule\Pagerfanta\ExtendedPdoAdapter $adapter;
 
     public function setUp(): void
     {

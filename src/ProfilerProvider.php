@@ -10,8 +10,7 @@ use Ray\Di\Provider;
 
 class ProfilerProvider implements Provider
 {
-    /** @var LoggerInterface */
-    private $logger;
+    private \Psr\Log\LoggerInterface $logger;
 
     public function __construct(LoggerInterface $logger)
     {

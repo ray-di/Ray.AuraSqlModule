@@ -13,8 +13,7 @@ use Ray\Di\AbstractModule;
 
 class AuraSqlQueryModule extends AbstractModule
 {
-    /** @var string */
-    private $db;
+    private string $db;
 
     public function __construct(string $db, ?AbstractModule $module = null)
     {

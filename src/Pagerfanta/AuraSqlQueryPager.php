@@ -21,26 +21,21 @@ use function array_keys;
  */
 class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
 {
-    /** @var ExtendedPdoInterface */
-    private $pdo;
+    private \Aura\Sql\ExtendedPdoInterface $pdo;
 
-    /** @var ViewInterface */
-    private $view;
+    private \Pagerfanta\View\ViewInterface $view;
 
-    /** @var RouteGeneratorInterface */
-    private $routeGenerator;
+    private ?\Ray\AuraSqlModule\Pagerfanta\RouteGeneratorInterface $routeGenerator = null;
 
     /** @var array<array<string>> */
-    private $viewOptions;
+    private array $viewOptions;
 
-    /** @var SelectInterface */
-    private $select;
+    private \Aura\SqlQuery\Common\SelectInterface $select;
 
     /**
      * @phpstan-var positive-int
-     * @var int
      */
-    private $paging;
+    private int $paging;
 
     /**
      * @param array<array<string>> $viewOptions

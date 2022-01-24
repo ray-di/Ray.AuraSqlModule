@@ -14,6 +14,6 @@ if (PHP_MAJOR_VERSION >= 8) {
     ServiceLocator::setReader(new AttributeReader());
 }
 
-if (! class_exists('ReturnTypeWillChange')) {
+if (! class_exists(\ReturnTypeWillChange::class)) {
     require __DIR__ . '/stub/ReturnTypeWillChange.php';
 }

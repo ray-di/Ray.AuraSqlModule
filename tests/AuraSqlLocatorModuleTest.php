@@ -13,17 +13,13 @@ use Ray\Di\NullModule;
 
 class AuraSqlLocatorModuleTest extends TestCase
 {
-    /** @var ExtendedPdo */
-    private $slavePdo;
+    private \Aura\Sql\ExtendedPdo $slavePdo;
 
-    /** @var ExtendedPdo */
-    private $masterPdo;
+    private \Aura\Sql\ExtendedPdo $masterPdo;
 
-    /** @var ConnectionLocator */
-    private $locator;
+    private \Aura\Sql\ConnectionLocator $locator;
 
-    /** @var FakeModel */
-    private $model;
+    private \Ray\AuraSqlModule\FakeModel $model;
 
     protected function setUp(): void
     {
