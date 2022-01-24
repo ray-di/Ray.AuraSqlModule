@@ -19,7 +19,7 @@ use function assert;
 
 class AuraSqlQueryModuleTest extends TestCase
 {
-    private InjectorInterface $injector;
+    private Injector $injector;
 
     protected function setUp(): void
     {
