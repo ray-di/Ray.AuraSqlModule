@@ -8,8 +8,10 @@ use Aura\Sql\ExtendedPdoInterface;
 use Pagerfanta\Adapter\AdapterInterface;
 use PDO;
 
+use function assert;
 use function count;
 use function is_int;
+use function is_string;
 use function preg_match;
 use function preg_replace;
 use function preg_split;
@@ -56,11 +58,13 @@ class ExtendedPdoAdapter implements AdapterInterface
 
         if ($this->params) {
             $count = $this->pdo->fetchValue($countQuery, $this->params);
+            assert(is_string($count));
 
             return ! $count ? 0 : (int) $count;
         }
 
         $count = $this->pdo->fetchValue($countQuery);
+        assert(is_string($count));
 
         return ! $count ? 0 : (int) $count;
     }
@@ -68,7 +72,10 @@ class ExtendedPdoAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      *
-     * @return array<array>
+     * @param int $offset
+     * @param int $length
+     *
+     * @return array<array<mixed>>
      */
     public function getSlice($offset, $length)
     {
@@ -131,9 +138,13 @@ class ExtendedPdoAdapter implements AdapterInterface
         }
 
         $queryCount = preg_replace('/(?:.*)\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $query, 1);
-        [$queryCount] = preg_split('/\s+ORDER\s+BY\s+/is', (string) $queryCount);
-        [$queryCount] = preg_split('/\bLIMIT\b/is', (string) $queryCount);
+        /** @var array<int> $split */
+        $split = preg_split('/\s+ORDER\s+BY\s+/is', (string) $queryCount);
+        [$queryCount] = $split;
+        /** @var array<int> $split2 */
+        $split2 = preg_split('/\bLIMIT\b/is', (string) $queryCount);
+        [$queryCount2] = $split2;
 
-        return trim((string) $queryCount);
+        return trim((string) $queryCount2);
     }
 }

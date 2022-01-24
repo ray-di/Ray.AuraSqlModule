@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ray\AuraSqlModule\Pagerfanta;
 
+use Iterator;
 use IteratorAggregate;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\ViewInterface;
@@ -45,7 +46,7 @@ final class Page implements IteratorAggregate
 
     /**
      * @phpstan-param Pagerfanta<mixed> $pagerfanta
-     * @phpstan-param array<array>      $viewOption
+     * @phpstan-param array<string, mixed>      $viewOption
      */
     public function __construct(
         Pagerfanta $pagerfanta,
@@ -73,6 +74,9 @@ final class Page implements IteratorAggregate
      */
     public function getIterator()
     {
-        return $this->pagerfanta->getIterator();
+        /** @var Iterator<int, Page> $iterator */
+        $iterator = $this->pagerfanta->getIterator();
+
+        return $iterator;
     }
 }
