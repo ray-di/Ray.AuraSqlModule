@@ -45,6 +45,8 @@ class ExtendedPdoAdapter implements AdapterInterface
      * {@inheritdoc}
      *
      * @phpstan-return positive-int
+     *
+     * @SuppressWarnings(PHPMD.GotoStatement)
      */
     public function getNbResults(): int
     {
