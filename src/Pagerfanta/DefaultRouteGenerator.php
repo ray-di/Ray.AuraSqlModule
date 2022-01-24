@@ -6,8 +6,7 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 
 class DefaultRouteGenerator implements RouteGeneratorInterface
 {
-    /** @var string */
-    private $uri;
+    private string $uri;
 
     public function __construct(string $uri)
     {

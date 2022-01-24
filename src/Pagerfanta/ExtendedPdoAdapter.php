@@ -22,14 +22,11 @@ use const PHP_EOL;
 
 class ExtendedPdoAdapter implements AdapterInterface
 {
-    /** @var ExtendedPdoInterface */
-    private $pdo;
-
-    /** @var string */
-    private $sql;
+    private ExtendedPdoInterface $pdo;
+    private string $sql;
 
     /** @var array<mixed> */
-    private $params;
+    private array $params;
 
     /**
      * @param array<mixed> $params

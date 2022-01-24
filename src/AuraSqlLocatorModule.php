@@ -16,14 +16,13 @@ use function array_merge;
 
 class AuraSqlLocatorModule extends AbstractModule
 {
-    /** @var ConnectionLocatorInterface */
-    private $connectionLocator;
+    private ConnectionLocatorInterface $connectionLocator;
 
     /** @var string[] */
-    private $readMethods;
+    private array $readMethods;
 
     /** @var string[] */
-    private $writeMethods;
+    private array $writeMethods;
 
     /**
      * @phpstan-param array<string> $readMethods

@@ -19,28 +19,19 @@ use function array_keys;
 /**
  * @implements ArrayAccess<int, Page>
  */
+
 class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
 {
-    /** @var ExtendedPdoInterface */
-    private $pdo;
-
-    /** @var ViewInterface */
-    private $view;
-
-    /** @var RouteGeneratorInterface */
-    private $routeGenerator;
+    private ExtendedPdoInterface $pdo;
+    private ViewInterface $view;
+    private ?RouteGeneratorInterface $routeGenerator = null;
 
     /** @var array<array<string>> */
-    private $viewOptions;
+    private array $viewOptions;
+    private SelectInterface $select;
 
-    /** @var SelectInterface */
-    private $select;
-
-    /**
-     * @phpstan-var positive-int
-     * @var int
-     */
-    private $paging;
+    /** @phpstan-var positive-int */
+    private int $paging;
 
     /**
      * @param array<array<string>> $viewOptions

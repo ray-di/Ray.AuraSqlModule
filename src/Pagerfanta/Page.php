@@ -33,16 +33,14 @@ final class Page implements IteratorAggregate
     public $data;
 
     /** @var Pagerfanta<mixed> */
-    private $pagerfanta;
+    private Pagerfanta $pagerfanta;
 
     /** @var callable */
     private $routeGenerator;
-
-    /** @var ViewInterface */
-    private $view;
+    private ViewInterface $view;
 
     /** @var array<string, mixed> */
-    private $viewOption;
+    private array $viewOption;
 
     /**
      * @phpstan-param Pagerfanta<mixed> $pagerfanta

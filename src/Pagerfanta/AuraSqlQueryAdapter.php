@@ -17,11 +17,8 @@ use function is_int;
 
 class AuraSqlQueryAdapter implements AdapterInterface
 {
-    /** @var ExtendedPdoInterface */
-    private $pdo;
-
-    /** @var SelectInterface */
-    private $select;
+    private ExtendedPdoInterface $pdo;
+    private SelectInterface $select;
 
     /** @var callable */
     private $countQueryBuilderModifier;
