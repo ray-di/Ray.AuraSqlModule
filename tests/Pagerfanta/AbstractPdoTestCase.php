@@ -22,7 +22,7 @@ abstract class AbstractPdoTestCase extends TestCase
 
     private function getConnection(): ExtendedPdo
     {
-        return new ExtendedPdo('sqlite::memory:');
+        return new ExtendedPdo('sqlite::memory:', '', '', [PDO::ATTR_STRINGIFY_FETCHES => true]);
     }
 
     private function createSchema(PDO $pdo)
