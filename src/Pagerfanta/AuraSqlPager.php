@@ -61,7 +61,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     /**
      * {@inheritdoc}
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         throw new LogicException('unsupported');
     }
@@ -96,7 +96,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     /**
      * {@inheritdoc}
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         throw new LogicException('read only');
     }
@@ -104,7 +104,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     /**
      * {@inheritdoc}
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         throw new LogicException('read only');
     }
