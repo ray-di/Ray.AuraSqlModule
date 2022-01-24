@@ -1,5 +1,6 @@
 # Ray.AuraSqlModule
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/badges/quality-score.png?b=1.x)](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/?branch=1.x)
 [![codecov](https://codecov.io/gh/ray-di/Ray.AuraSqlModule/branch/1.x/graph/badge.svg?token=gcWaftzoXp)](https://codecov.io/gh/ray-di/Ray.AuraSqlModule)
 [![Type Coverage](https://shepherd.dev/github/ray-di/Ray.AuraSqlModule/coverage.svg)](https://shepherd.dev/github/ray-di/Ray.AuraSqlModule)
 ![Continuous Integration](https://github.com/ray-di/Ray.AuraSqlModule/workflows/Continuous%20Integration/badge.svg)
@@ -275,8 +276,3 @@ class DevModule extends AbstractModule
         );
 }
 ```
-
-## Demo
-
-    $ php demo/run.php
-    // It works!
