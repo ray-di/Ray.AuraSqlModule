@@ -13,7 +13,3 @@ array_map('unlink', (array) glob(__DIR__ . '/tmp/*.{php,txt}', GLOB_BRACE));
 if (PHP_MAJOR_VERSION >= 8) {
     ServiceLocator::setReader(new AttributeReader());
 }
-
-if (! class_exists('ReturnTypeWillChange')) {
-    require __DIR__ . '/stub/ReturnTypeWillChange.php';
-}
