@@ -18,7 +18,7 @@ use function is_array;
 
 class TransactionalInterceptor implements MethodInterceptor
 {
-    private ?\Aura\Sql\ExtendedPdoInterface $pdo;
+    private ?ExtendedPdoInterface $pdo;
 
     public function __construct(?ExtendedPdoInterface $pdo = null)
     {

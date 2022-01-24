@@ -10,28 +10,21 @@ use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\ViewInterface;
 use Ray\AuraSqlModule\Annotation\PagerViewOption;
 use Ray\AuraSqlModule\Exception\NotInitialized;
-// phpcs:ignore SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse
-use ReturnTypeWillChange;
 
 class AuraSqlPager implements AuraSqlPagerInterface
 {
-    private \Pagerfanta\View\ViewInterface $view;
-
-    private ?\Ray\AuraSqlModule\Pagerfanta\RouteGeneratorInterface $routeGenerator = null;
+    private ViewInterface $view;
+    private ?RouteGeneratorInterface $routeGenerator = null;
 
     /** @var array<array<string>> */
     private array $viewOptions;
-
-    private \Aura\Sql\ExtendedPdoInterface $pdo;
-
+    private ExtendedPdoInterface $pdo;
     private string $sql;
 
     /** @var array<mixed> */
     private array $params;
 
-    /**
-     * @phpstan-var positive-int
-     */
+    /** @phpstan-var positive-int */
     private int $paging;
 
     /**

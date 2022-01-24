@@ -40,7 +40,7 @@ abstract class AuraSqlQueryTestCase extends TestCase
 
     private function isAuraSqlQueryNotAvailable(): bool
     {
-        return ! class_exists(\Aura\SqlQuery\QueryFactory::class);
+        return ! class_exists(QueryFactory::class);
     }
 
     private function getConnection(): ExtendedPdo

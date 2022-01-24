@@ -33,12 +33,11 @@ final class Page implements IteratorAggregate
     public $data;
 
     /** @var Pagerfanta<mixed> */
-    private \Pagerfanta\Pagerfanta $pagerfanta;
+    private Pagerfanta $pagerfanta;
 
     /** @var callable */
     private $routeGenerator;
-
-    private \Pagerfanta\View\ViewInterface $view;
+    private ViewInterface $view;
 
     /** @var array<string, mixed> */
     private array $viewOption;

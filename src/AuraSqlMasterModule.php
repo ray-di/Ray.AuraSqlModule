@@ -12,9 +12,7 @@ use Ray\Di\Scope;
 class AuraSqlMasterModule extends AbstractModule
 {
     private string $dsn;
-
     private string $user;
-
     private string $password;
 
     /** @var array<string> */

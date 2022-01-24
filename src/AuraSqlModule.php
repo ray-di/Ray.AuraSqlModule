@@ -20,11 +20,8 @@ class AuraSqlModule extends AbstractModule
     public const PARSE_PDO_DSN_REGEX = '/(.*?)\:(?:(host|server)=.*?;)?(.*)/i';
 
     private string $dsn;
-
     private string $user;
-
     private string $password;
-
     private string $slave;
 
     /** @var array<string> */

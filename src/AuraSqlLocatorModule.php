@@ -16,7 +16,7 @@ use function array_merge;
 
 class AuraSqlLocatorModule extends AbstractModule
 {
-    private \Aura\Sql\ConnectionLocatorInterface $connectionLocator;
+    private ConnectionLocatorInterface $connectionLocator;
 
     /** @var string[] */
     private array $readMethods;

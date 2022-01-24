@@ -8,7 +8,7 @@ use Aura\Sql\ExtendedPdoInterface;
 
 class AuraSqlPagerFactory implements AuraSqlPagerFactoryInterface
 {
-    private \Ray\AuraSqlModule\Pagerfanta\AuraSqlPagerInterface $auraSqlPager;
+    private AuraSqlPagerInterface $auraSqlPager;
 
     public function __construct(AuraSqlPagerInterface $auraSqlPager)
     {

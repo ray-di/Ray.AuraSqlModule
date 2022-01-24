@@ -17,7 +17,7 @@ class AuraSqlConnectionInterceptor implements MethodInterceptor
 {
     public const PROP = 'pdo';
 
-    private \Aura\Sql\ConnectionLocatorInterface $connectionLocator;
+    private ConnectionLocatorInterface $connectionLocator;
 
     /** @var string[] */
     private array $readsMethods = [];

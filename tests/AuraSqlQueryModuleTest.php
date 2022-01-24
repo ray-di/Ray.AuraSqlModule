@@ -14,13 +14,12 @@ use Aura\SqlQuery\Common\Update;
 use Aura\SqlQuery\Common\UpdateInterface;
 use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
-use Ray\Di\InjectorInterface;
 
 use function assert;
 
 class AuraSqlQueryModuleTest extends TestCase
 {
-    private \Ray\Di\InjectorInterface $injector;
+    private InjectorInterface $injector;
 
     protected function setUp(): void
     {

@@ -9,9 +9,7 @@ use Aura\Sql\ExtendedPdo;
 class Connection
 {
     private string $dsn;
-
     private string $id;
-
     private string $password;
 
     /** @var array<string> */
@@ -19,8 +17,7 @@ class Connection
 
     /** @var array<string> */
     private array $attributes;
-
-    private ?\Aura\Sql\ExtendedPdo $pdo = null;
+    private ?ExtendedPdo $pdo = null;
 
     /**
      * @phpstan-param array<string> $options

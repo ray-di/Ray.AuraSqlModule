@@ -13,7 +13,7 @@ class AuraSqlMasterDbInterceptor implements MethodInterceptor
 {
     public const PROP = 'pdo';
 
-    private \Aura\Sql\ConnectionLocatorInterface $connectionLocator;
+    private ConnectionLocatorInterface $connectionLocator;
 
     public function __construct(ConnectionLocatorInterface $connectionLocator)
     {

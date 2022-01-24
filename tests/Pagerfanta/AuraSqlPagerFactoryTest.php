@@ -8,7 +8,7 @@ use Pagerfanta\View\DefaultView;
 
 class AuraSqlPagerFactoryTest extends AbstractPdoTestCase
 {
-    private \Ray\AuraSqlModule\Pagerfanta\AuraSqlPagerFactory $factory;
+    private AuraSqlPagerFactory $factory;
 
     public function setUp(): void
     {
