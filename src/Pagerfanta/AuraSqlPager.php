@@ -10,6 +10,7 @@ use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\ViewInterface;
 use Ray\AuraSqlModule\Annotation\PagerViewOption;
 use Ray\AuraSqlModule\Exception\NotInitialized;
+use ReturnTypeWillChange;
 
 class AuraSqlPager implements AuraSqlPagerInterface
 {
@@ -61,6 +62,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     /**
      * {@inheritdoc}
      */
+    #[ReturnTypeWillChange]
     public function offsetExists($offset): bool
     {
         throw new LogicException('unsupported');
