@@ -12,7 +12,7 @@ class AuraSqlProfileModule extends AbstractModule
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->bind(ProfilerInterface::class)->toProvider(ProfilerProvider::class);
     }
