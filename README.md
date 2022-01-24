@@ -44,7 +44,7 @@ class AppModule extends AbstractModule
  
  Installing `AuraSqlReplicationModule` using a `connection locator` for master/slave connections.
  
- ```php?start_inline
+ ```php
  use Ray\Di\AbstractModule;
  use Ray\AuraSqlModule\AuraSqlModule;
  use Ray\AuraSqlModule\Annotation\AuraSqlConfig;
