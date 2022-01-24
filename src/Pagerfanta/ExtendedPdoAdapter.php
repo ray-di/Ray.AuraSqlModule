@@ -11,7 +11,6 @@ use PDO;
 use function assert;
 use function count;
 use function is_int;
-use function is_string;
 use function preg_match;
 use function preg_replace;
 use function preg_split;
@@ -44,29 +43,33 @@ class ExtendedPdoAdapter implements AdapterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @phpstan-return positive-int
      */
-    public function getNbResults()
+    public function getNbResults(): int
     {
         // be smart and try to guess the total number of records
         $countQuery = $this->rewriteCountQuery($this->sql);
         if (! $countQuery) {
             // GROUP BY => fetch the whole result set and count the rows returned
             $result = $this->pdo->perform($this->sql, $this->params)->fetchAll();
-
-            return ! $result ? 0 : count($result);
+            $count = ! $result ? 0 : count($result);
+            goto ret;
         }
 
         if ($this->params) {
             $count = $this->pdo->fetchValue($countQuery, $this->params);
-            assert(is_string($count));
-
-            return ! $count ? 0 : (int) $count;
+            goto ret;
         }
 
         $count = $this->pdo->fetchValue($countQuery);
-        assert(is_string($count));
+        ret:
+        /** @var string $count */
+        $nbResult = ! $count ? 0 : (int) $count;
+        assert(is_int($nbResult));
+        assert($nbResult > 0);
 
-        return ! $count ? 0 : (int) $count;
+        return $nbResult;
     }
 
     /**
@@ -77,7 +80,7 @@ class ExtendedPdoAdapter implements AdapterInterface
      *
      * @return array<array<mixed>>
      */
-    public function getSlice($offset, $length)
+    public function getSlice(int $offset, int $length): iterable
     {
         $sql = $this->sql . $this->getLimitClause($offset, $length);
         $result = $this->pdo->perform($sql, $this->params)->fetchAll(PDO::FETCH_ASSOC);

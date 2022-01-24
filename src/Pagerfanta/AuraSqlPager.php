@@ -33,7 +33,10 @@ class AuraSqlPager implements AuraSqlPagerInterface
     /** @var array<mixed> */
     private $params;
 
-    /** @var int */
+    /**
+     * @phpstan-var positive-int
+     * @var int
+     */
     private $paging;
 
     /**
@@ -50,6 +53,8 @@ class AuraSqlPager implements AuraSqlPagerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @phpstan-param positive-int $paging
      */
     public function init(ExtendedPdoInterface $pdo, $sql, array $params, $paging, RouteGeneratorInterface $routeGenerator): void
     {
@@ -72,7 +77,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     /**
      * {@inheritdoc}
      *
-     * @phpstan-param int $currentPage
+     * @phpstan-param positive-int $currentPage
      */
     public function offsetGet($currentPage): Page
     {

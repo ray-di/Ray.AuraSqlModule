@@ -71,8 +71,10 @@ final class Page implements IteratorAggregate
 
     /**
      * {@inheritdoc}
+     *
+     * @return Iterator<int, Page>
      */
-    public function getIterator()
+    public function getIterator(): Iterator
     {
         /** @var Iterator<int, Page> $iterator */
         $iterator = $this->pagerfanta->getIterator();

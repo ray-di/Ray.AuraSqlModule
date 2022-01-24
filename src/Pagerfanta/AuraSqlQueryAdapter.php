@@ -13,6 +13,7 @@ use PDOStatement;
 use function assert;
 use function call_user_func;
 use function is_array;
+use function is_int;
 
 class AuraSqlQueryAdapter implements AdapterInterface
 {
@@ -38,7 +39,7 @@ class AuraSqlQueryAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function getNbResults()
+    public function getNbResults(): int
     {
         $select = $this->prepareCountQueryBuilder();
         $sql = $select->getStatement();
@@ -46,8 +47,11 @@ class AuraSqlQueryAdapter implements AdapterInterface
         assert($sth instanceof PDOStatement);
         $sth->execute($this->select->getBindValues());
         $result = $sth->fetchColumn();
+        $nbResults = (int) $result;
+        assert($nbResults > 0);
+        assert(is_int($nbResults));
 
-        return (int) $result;
+        return $nbResults;
     }
 
     /**
@@ -55,7 +59,7 @@ class AuraSqlQueryAdapter implements AdapterInterface
      *
      * @return iterable<array-key, mixed>
      */
-    public function getSlice($offset, $length)
+    public function getSlice(int $offset, int $length): iterable
     {
         $select = clone $this->select;
         $sql = $select
