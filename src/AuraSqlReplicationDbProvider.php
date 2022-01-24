@@ -10,6 +10,8 @@ use Ray\Di\InjectorInterface;
 use Ray\Di\ProviderInterface;
 use Ray\Di\SetContextInterface;
 
+use function assert;
+
 class AuraSqlReplicationDbProvider implements ProviderInterface, SetContextInterface
 {
     /** @var InjectorInterface */
@@ -41,6 +43,7 @@ class AuraSqlReplicationDbProvider implements ProviderInterface, SetContextInter
     public function get()
     {
         $connectionLocator = $this->injector->getInstance(ConnectionLocatorInterface::class, $this->context);
+        assert($connectionLocator instanceof ConnectionLocatorInterface);
         $isGetRequest = isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'GET';
 
         return $isGetRequest ? $connectionLocator->getRead() : $connectionLocator->getWrite();

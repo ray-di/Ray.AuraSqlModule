@@ -34,6 +34,9 @@ class IsInMethodMatcher extends AbstractMatcher
      */
     public function matchesMethod(ReflectionMethod $method, array $arguments): bool
     {
-        return in_array($method->name, $arguments[0], true);
+        /** @var array<mixed> $firstArg */
+        $firstArg = $arguments[0];
+
+        return in_array($method->name, $firstArg, true);
     }
 }

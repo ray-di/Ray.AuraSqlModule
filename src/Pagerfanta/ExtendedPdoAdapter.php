@@ -8,6 +8,7 @@ use Aura\Sql\ExtendedPdoInterface;
 use Pagerfanta\Adapter\AdapterInterface;
 use PDO;
 
+use function assert;
 use function count;
 use function is_int;
 use function preg_match;
@@ -42,35 +43,46 @@ class ExtendedPdoAdapter implements AdapterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @phpstan-return positive-int
+     *
+     * @SuppressWarnings(PHPMD.GotoStatement)
      */
-    public function getNbResults()
+    public function getNbResults(): int
     {
         // be smart and try to guess the total number of records
         $countQuery = $this->rewriteCountQuery($this->sql);
         if (! $countQuery) {
             // GROUP BY => fetch the whole result set and count the rows returned
             $result = $this->pdo->perform($this->sql, $this->params)->fetchAll();
-
-            return ! $result ? 0 : count($result);
+            $count = ! $result ? 0 : count($result);
+            goto ret;
         }
 
         if ($this->params) {
             $count = $this->pdo->fetchValue($countQuery, $this->params);
-
-            return ! $count ? 0 : (int) $count;
+            goto ret;
         }
 
         $count = $this->pdo->fetchValue($countQuery);
+        ret:
+        /** @var string $count */
+        $nbResult = ! $count ? 0 : (int) $count;
+        assert(is_int($nbResult));
+        assert($nbResult > 0);
 
-        return ! $count ? 0 : (int) $count;
+        return $nbResult;
     }
 
     /**
      * {@inheritdoc}
      *
-     * @return array<array>
+     * @param int $offset
+     * @param int $length
+     *
+     * @return array<array<mixed>>
      */
-    public function getSlice($offset, $length)
+    public function getSlice(int $offset, int $length): iterable
     {
         $sql = $this->sql . $this->getLimitClause($offset, $length);
         $result = $this->pdo->perform($sql, $this->params)->fetchAll(PDO::FETCH_ASSOC);
@@ -131,9 +143,13 @@ class ExtendedPdoAdapter implements AdapterInterface
         }
 
         $queryCount = preg_replace('/(?:.*)\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $query, 1);
-        [$queryCount] = preg_split('/\s+ORDER\s+BY\s+/is', (string) $queryCount);
-        [$queryCount] = preg_split('/\bLIMIT\b/is', (string) $queryCount);
+        /** @var array<int> $split */
+        $split = preg_split('/\s+ORDER\s+BY\s+/is', (string) $queryCount);
+        [$queryCount] = $split;
+        /** @var array<int> $split2 */
+        $split2 = preg_split('/\bLIMIT\b/is', (string) $queryCount);
+        [$queryCount2] = $split2;
 
-        return trim((string) $queryCount);
+        return trim((string) $queryCount2);
     }
 }

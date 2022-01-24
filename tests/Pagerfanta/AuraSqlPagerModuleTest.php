@@ -54,7 +54,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
             ],
         ];
         $this->assertSame($expected, $page->data);
-        $expected = '<nav><a href="/?page=1&category=sports" rel="prev">Previous</a><a href="/?page=1&category=sports">1</a><span class="current">2</span><a href="/?page=3&category=sports">3</a><a href="/?page=4&category=sports">4</a><a href="/?page=5&category=sports">5</a><span class="dots">...</span><a href="/?page=50&category=sports">50</a><a href="/?page=3&category=sports" rel="next">Next</a></nav>';
+        $expected = '<nav class="pagination"><a class="pagination__item pagination__item--previous-page" href="/?page=1&category=sports" rel="prev">Previous</a><a class="pagination__item" href="/?page=1&category=sports">1</a><span class="pagination__item pagination__item--current-page">2</span><a class="pagination__item" href="/?page=3&category=sports">3</a><a class="pagination__item" href="/?page=4&category=sports">4</a><a class="pagination__item" href="/?page=5&category=sports">5</a><span class="pagination__item pagination__item--separator">&hellip;</span><a class="pagination__item" href="/?page=50&category=sports">50</a><a class="pagination__item pagination__item--next-page" href="/?page=3&category=sports" rel="next">Next</a></nav>';
         $this->assertSame($expected, (string) $page);
         $this->assertSame(50, $page->total);
     }
@@ -76,7 +76,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
             ],
         ];
         $this->assertSame($expected, $page->data);
-        $expected = '<nav><a href="/?page=49&category=sports" rel="prev">Previous</a><a href="/?page=1&category=sports">1</a><span class="dots">...</span><a href="/?page=46&category=sports">46</a><a href="/?page=47&category=sports">47</a><a href="/?page=48&category=sports">48</a><a href="/?page=49&category=sports">49</a><span class="current">50</span><span class="disabled">Next</span></nav>';
+        $expected = '<nav class="pagination"><a class="pagination__item pagination__item--previous-page" href="/?page=49&category=sports" rel="prev">Previous</a><a class="pagination__item" href="/?page=1&category=sports">1</a><span class="pagination__item pagination__item--separator">&hellip;</span><a class="pagination__item" href="/?page=46&category=sports">46</a><a class="pagination__item" href="/?page=47&category=sports">47</a><a class="pagination__item" href="/?page=48&category=sports">48</a><a class="pagination__item" href="/?page=49&category=sports">49</a><span class="pagination__item pagination__item--current-page">50</span><span class="pagination__item pagination__item--next-page pagination__item--disabled">Next</span></nav>';
         $this->assertSame($expected, (string) $page);
         $this->assertSame(50, $page->total);
     }
@@ -98,7 +98,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
             ],
         ];
         $this->assertSame($expected, $page->data);
-        $expected = '<nav><span class="disabled">Previous</span><span class="current">1</span><span class="disabled">Next</span></nav>';
+        $expected = '<nav class="pagination"><span class="pagination__item pagination__item--previous-page pagination__item--disabled">Previous</span><span class="pagination__item pagination__item--current-page">1</span><span class="pagination__item pagination__item--next-page pagination__item--disabled">Next</span></nav>';
         $this->assertSame($expected, (string) $page);
         $this->assertSame(1, $page->total);
     }

@@ -8,10 +8,12 @@ use Aura\Sql\ExtendedPdoInterface;
 use Aura\SqlQuery\Common\SelectInterface;
 use Pagerfanta\Adapter\AdapterInterface;
 use PDO;
+use PDOStatement;
 
 use function assert;
 use function call_user_func;
 use function is_array;
+use function is_int;
 
 class AuraSqlQueryAdapter implements AdapterInterface
 {
@@ -37,23 +39,27 @@ class AuraSqlQueryAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function getNbResults()
+    public function getNbResults(): int
     {
         $select = $this->prepareCountQueryBuilder();
         $sql = $select->getStatement();
         $sth = $this->pdo->prepare($sql);
+        assert($sth instanceof PDOStatement);
         $sth->execute($this->select->getBindValues());
         $result = $sth->fetchColumn();
+        $nbResults = (int) $result;
+        assert($nbResults > 0);
+        assert(is_int($nbResults));
 
-        return (int) $result;
+        return $nbResults;
     }
 
     /**
      * {@inheritdoc}
      *
-     * @phpstan-return array<int, array>
+     * @return iterable<array-key, mixed>
      */
-    public function getSlice($offset, $length)
+    public function getSlice(int $offset, int $length): iterable
     {
         $select = clone $this->select;
         $sql = $select
@@ -61,6 +67,7 @@ class AuraSqlQueryAdapter implements AdapterInterface
             ->limit($length)
             ->getStatement();
         $sth = $this->pdo->prepare($sql);
+        assert($sth instanceof PDOStatement);
         $sth->execute($this->select->getBindValues());
         $result = $sth->fetchAll(PDO::FETCH_ASSOC);
         assert(is_array($result));

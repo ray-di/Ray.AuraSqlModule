@@ -10,6 +10,8 @@ use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\ViewInterface;
 use Ray\AuraSqlModule\Annotation\PagerViewOption;
 use Ray\AuraSqlModule\Exception\NotInitialized;
+// phpcs:ignore SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse
+use ReturnTypeWillChange;
 
 class AuraSqlPager implements AuraSqlPagerInterface
 {
@@ -31,7 +33,10 @@ class AuraSqlPager implements AuraSqlPagerInterface
     /** @var array<mixed> */
     private $params;
 
-    /** @var int */
+    /**
+     * @phpstan-var positive-int
+     * @var int
+     */
     private $paging;
 
     /**
@@ -48,6 +53,8 @@ class AuraSqlPager implements AuraSqlPagerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @phpstan-param positive-int $paging
      */
     public function init(ExtendedPdoInterface $pdo, $sql, array $params, $paging, RouteGeneratorInterface $routeGenerator): void
     {
@@ -61,7 +68,8 @@ class AuraSqlPager implements AuraSqlPagerInterface
     /**
      * {@inheritdoc}
      */
-    public function offsetExists($offset)
+    #[ReturnTypeWillChange]
+    public function offsetExists($offset): bool
     {
         throw new LogicException('unsupported');
     }
@@ -69,7 +77,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     /**
      * {@inheritdoc}
      *
-     * @phpstan-param int $currentPage
+     * @phpstan-param positive-int $currentPage
      */
     public function offsetGet($currentPage): Page
     {
@@ -96,7 +104,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     /**
      * {@inheritdoc}
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         throw new LogicException('read only');
     }
@@ -104,7 +112,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     /**
      * {@inheritdoc}
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         throw new LogicException('read only');
     }

@@ -2,5 +2,5 @@ parameters:
   level: max
   paths:
     - src
-  excludes_analyse:
+  excludePaths:
     - */tests/tmp/*

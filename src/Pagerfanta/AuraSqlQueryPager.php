@@ -36,7 +36,10 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
     /** @var SelectInterface */
     private $select;
 
-    /** @var int */
+    /**
+     * @phpstan-var positive-int
+     * @var int
+     */
     private $paging;
 
     /**
@@ -52,9 +55,10 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
     }
 
     /**
+     * @phpstan-param positive-int $paging
      * {@inheritdoc}
      */
-    public function init(ExtendedPdoInterface $pdo, SelectInterface $select, $paging, RouteGeneratorInterface $routeGenerator)
+    public function init(ExtendedPdoInterface $pdo, SelectInterface $select, int $paging, RouteGeneratorInterface $routeGenerator)
     {
         $this->pdo = $pdo;
         $this->select = $select;
@@ -65,6 +69,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
     }
 
     /**
+     * @phpstan-param positive-int $page
      * {@inheritdoc}
      */
     public function offsetGet($page): Page

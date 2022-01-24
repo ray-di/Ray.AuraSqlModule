@@ -6,9 +6,6 @@ namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdo;
 
-/**
- * This file is part of the Ray.AuraSqlModule package
- */
 class Connection
 {
     /** @var string */
