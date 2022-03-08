@@ -23,6 +23,12 @@ class ExtendedPdoAdapterTest extends AbstractPdoTestCase
         $this->assertSame(50, $nbResult);
     }
 
+    public function testGetNbResultsShouldReturnZero()
+    {
+        $adapter = new ExtendedPdoAdapter($this->pdo, 'SELECT * FROM posts WHERE posts.username = "_DUMMY_"', []);
+        $this->assertSame(0, $adapter->getNbResults());
+    }
+
     public function testGetLimitClause()
     {
         $limitClause = $this->pdoAdapter->getLimitClause(1, 10);
