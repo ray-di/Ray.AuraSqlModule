@@ -20,6 +20,10 @@ use function trim;
 
 use const PHP_EOL;
 
+/**
+ * @template T
+ * @implements AdapterInterface<T>
+ */
 class ExtendedPdoAdapter implements AdapterInterface
 {
     private ExtendedPdoInterface $pdo;
@@ -40,8 +44,6 @@ class ExtendedPdoAdapter implements AdapterInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @phpstan-return positive-int
      *
      * @SuppressWarnings(PHPMD.GotoStatement)
      */
@@ -66,7 +68,7 @@ class ExtendedPdoAdapter implements AdapterInterface
         /** @var string $count */
         $nbResult = ! $count ? 0 : (int) $count;
         assert(is_int($nbResult));
-        assert($nbResult > 0);
+        assert($nbResult >= 0);
 
         return $nbResult;
     }

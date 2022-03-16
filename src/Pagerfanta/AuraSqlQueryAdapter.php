@@ -15,6 +15,10 @@ use function call_user_func;
 use function is_array;
 use function is_int;
 
+/**
+ * @template T
+ * @implements AdapterInterface<T>
+ */
 class AuraSqlQueryAdapter implements AdapterInterface
 {
     private ExtendedPdoInterface $pdo;
@@ -45,7 +49,7 @@ class AuraSqlQueryAdapter implements AdapterInterface
         $sth->execute($this->select->getBindValues());
         $result = $sth->fetchColumn();
         $nbResults = (int) $result;
-        assert($nbResults > 0);
+        assert($nbResults >= 0);
         assert(is_int($nbResults));
 
         return $nbResults;
