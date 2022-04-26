@@ -9,6 +9,9 @@ use Aura\SqlQuery\QueryFactory;
 use Ray\AuraSqlModule\Annotation\AuraSqlQueryConfig;
 use Ray\Di\ProviderInterface;
 
+/**
+ * @implements ProviderInterface<UpdateInterface>
+ */
 class AuraSqlQueryUpdateProvider implements ProviderInterface
 {
     private string $db;
@@ -26,10 +29,8 @@ class AuraSqlQueryUpdateProvider implements ProviderInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @return UpdateInterface
      */
-    public function get()
+    public function get(): UpdateInterface
     {
         return (new QueryFactory($this->db))->newUpdate();
     }
