@@ -24,7 +24,7 @@ class AuraSqlModule extends AbstractModule
     private string $password;
     private string $slave;
 
-    /** @var array<string> */
+    /** @var array<mixed> */
     private array $options;
 
     /**
