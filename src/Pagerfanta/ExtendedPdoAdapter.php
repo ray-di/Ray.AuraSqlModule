@@ -6,8 +6,6 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
 use Pagerfanta\Adapter\AdapterInterface;
-use PDO;
-
 use function assert;
 use function count;
 use function is_int;
@@ -17,7 +15,6 @@ use function preg_split;
 use function strpos;
 use function strtolower;
 use function trim;
-
 use const PHP_EOL;
 
 /**
@@ -31,15 +28,17 @@ class ExtendedPdoAdapter implements AdapterInterface
 
     /** @var array<mixed> */
     private array $params;
+    private FetcherInterface $fetcher;
 
     /**
      * @param array<mixed> $params
      */
-    public function __construct(ExtendedPdoInterface $pdo, string $sql, array $params)
+    public function __construct(ExtendedPdoInterface $pdo, string $sql, array $params, ?FetcherInterface $fetcher = null)
     {
         $this->pdo = $pdo;
         $this->sql = $sql;
         $this->params = $params;
+        $this->fetcher = $fetcher ?? new FetchAssoc($pdo);
     }
 
     /**
@@ -84,7 +83,7 @@ class ExtendedPdoAdapter implements AdapterInterface
     public function getSlice(int $offset, int $length): iterable
     {
         $sql = $this->sql . $this->getLimitClause($offset, $length);
-        $result = $this->pdo->perform($sql, $this->params)->fetchAll(PDO::FETCH_ASSOC);
+        $result = ($this->fetcher)($sql, $this->params);
 
         return ! $result ? [] : $result;
     }
