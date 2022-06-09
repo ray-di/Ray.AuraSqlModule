@@ -9,7 +9,7 @@ interface FetcherInterface
     /**
      * @param array<mixed> $params
      *
-     * @retrun array<mixed>
+     * @return array<mixed>
      */
     public function __invoke(string $sql, array $params): array;
 }

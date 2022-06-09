@@ -6,6 +6,7 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
 use Pagerfanta\Adapter\AdapterInterface;
+
 use function assert;
 use function count;
 use function is_int;
@@ -15,6 +16,7 @@ use function preg_split;
 use function strpos;
 use function strtolower;
 use function trim;
+
 use const PHP_EOL;
 
 /**
@@ -78,7 +80,7 @@ class ExtendedPdoAdapter implements AdapterInterface
      * @param int $offset
      * @param int $length
      *
-     * @return array<array<mixed>>
+     * @return array<mixed>
      */
     public function getSlice(int $offset, int $length): iterable
     {

@@ -6,6 +6,7 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
 use PDO;
+
 use function assert;
 use function class_exists;
 
@@ -25,7 +26,7 @@ class FetchEntity implements FetcherInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function __invoke(string $sql, array $params): array
     {

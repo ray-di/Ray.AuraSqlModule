@@ -14,6 +14,12 @@ use Ray\AuraSqlModule\Exception\NotInitialized;
 // phpcs:ignore SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse
 use ReturnTypeWillChange;
 
+use function assert;
+use function class_exists;
+
+/**
+ * @template T
+ */
 class AuraSqlPager implements AuraSqlPagerInterface
 {
     private ViewInterface $view;
@@ -110,8 +116,12 @@ class AuraSqlPager implements AuraSqlPagerInterface
         throw new LogicException('read only');
     }
 
+    /**
+     * @return AdapterInterface<T>
+     */
     private function getPdoAdapter(): AdapterInterface
     {
+        assert($this->entity === null || class_exists($this->entity));
         $fetcher = $this->entity ? new FetchEntity($this->pdo, $this->entity) : new FetchAssoc($this->pdo);
 
         return new ExtendedPdoAdapter($this->pdo, $this->sql, $this->params, $fetcher);

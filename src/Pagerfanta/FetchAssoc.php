@@ -17,6 +17,9 @@ final class FetchAssoc implements FetcherInterface
         $this->pdo = $pdo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function __invoke(string $sql, array $params): array
     {
         return $this->pdo->perform($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
