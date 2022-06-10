@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
+use Pagerfanta\Adapter\AdapterInterface;
 use Pagerfanta\Exception\LogicException;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\ViewInterface;
@@ -13,6 +14,12 @@ use Ray\AuraSqlModule\Exception\NotInitialized;
 // phpcs:ignore SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse
 use ReturnTypeWillChange;
 
+use function assert;
+use function class_exists;
+
+/**
+ * @template T
+ */
 class AuraSqlPager implements AuraSqlPagerInterface
 {
     private ViewInterface $view;
@@ -22,6 +29,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     private array $viewOptions;
     private ExtendedPdoInterface $pdo;
     private string $sql;
+    private ?string $entity = null;
 
     /** @var array<mixed> */
     private array $params;
@@ -46,13 +54,14 @@ class AuraSqlPager implements AuraSqlPagerInterface
      *
      * @phpstan-param positive-int $paging
      */
-    public function init(ExtendedPdoInterface $pdo, $sql, array $params, $paging, RouteGeneratorInterface $routeGenerator): void
+    public function init(ExtendedPdoInterface $pdo, $sql, array $params, $paging, RouteGeneratorInterface $routeGenerator, ?string $entity = null): void
     {
         $this->pdo = $pdo;
         $this->sql = $sql;
         $this->params = $params;
         $this->paging = $paging;
         $this->routeGenerator = $routeGenerator;
+        $this->entity = $entity;
     }
 
     /**
@@ -75,7 +84,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
             throw new NotInitialized();
         }
 
-        $pagerfanta = new Pagerfanta(new ExtendedPdoAdapter($this->pdo, $this->sql, $this->params));
+        $pagerfanta = new Pagerfanta($this->getPdoAdapter());
         $pagerfanta->setMaxPerPage($this->paging);
         $pagerfanta->setCurrentPage($currentPage);
         $page = new Page($pagerfanta, $this->routeGenerator, $this->view, $this->viewOptions);
@@ -105,5 +114,16 @@ class AuraSqlPager implements AuraSqlPagerInterface
     public function offsetUnset($offset): void
     {
         throw new LogicException('read only');
+    }
+
+    /**
+     * @return AdapterInterface<T>
+     */
+    private function getPdoAdapter(): AdapterInterface
+    {
+        assert($this->entity === null || class_exists($this->entity));
+        $fetcher = $this->entity ? new FetchEntity($this->pdo, $this->entity) : new FetchAssoc($this->pdo);
+
+        return new ExtendedPdoAdapter($this->pdo, $this->sql, $this->params, $fetcher);
     }
 }

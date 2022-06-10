@@ -18,9 +18,9 @@ class AuraSqlPagerFactory implements AuraSqlPagerFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function newInstance(ExtendedPdoInterface $pdo, string $sql, array $params, int $paging, string $uriTemplate): AuraSqlPagerInterface
+    public function newInstance(ExtendedPdoInterface $pdo, string $sql, array $params, int $paging, string $uriTemplate, ?string $entity = null): AuraSqlPagerInterface
     {
-        $this->auraSqlPager->init($pdo, $sql, $params, $paging, new DefaultRouteGenerator($uriTemplate));
+        $this->auraSqlPager->init($pdo, $sql, $params, $paging, new DefaultRouteGenerator($uriTemplate), $entity);
 
         return $this->auraSqlPager;
     }
