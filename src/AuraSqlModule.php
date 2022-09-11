@@ -19,27 +19,20 @@ class AuraSqlModule extends AbstractModule
 {
     public const PARSE_PDO_DSN_REGEX = '/(.*?)\:(?:(host|server)=.*?;)?(.*)/i';
 
-    /** @var string */
-    private $dsn;
+    private string $dsn;
+    private string $user;
+    private string $password;
+    private string $slave;
 
-    /** @var string */
-    private $user;
-
-    /** @var string */
-    private $password;
-
-    /** @var string */
-    private $slave;
-
-    /** @var array<string> */
-    private $options;
+    /** @var array<mixed> */
+    private array $options;
 
     /**
-     * @param string $dsn      Data Source Name (DSN)
-     * @param string $user     User name for the DSN string
-     * @param string $password Password for the DSN string
-     * @param string $slave    Comma separated slave host list
-     * @phpstan-param array<string> $options    A key=>value array of driver-specific connection options
+     * @param string       $dsn      Data Source Name (DSN)
+     * @param string       $user     User name for the DSN string
+     * @param string       $password Password for the DSN string
+     * @param string       $slave    Comma separated slave host list
+     * @param array<mixed> $options  A key=>value array of driver-specific connection options
      */
     public function __construct(string $dsn, string $user = '', string $password = '', string $slave = '', array $options = [])
     {

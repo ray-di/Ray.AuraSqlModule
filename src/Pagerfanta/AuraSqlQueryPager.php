@@ -19,25 +19,19 @@ use function array_keys;
 /**
  * @implements ArrayAccess<int, Page>
  */
+
 class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
 {
-    /** @var ExtendedPdoInterface */
-    private $pdo;
-
-    /** @var ViewInterface */
-    private $view;
-
-    /** @var RouteGeneratorInterface */
-    private $routeGenerator;
+    private ExtendedPdoInterface $pdo;
+    private ViewInterface $view;
+    private ?RouteGeneratorInterface $routeGenerator = null;
 
     /** @var array<array<string>> */
-    private $viewOptions;
+    private array $viewOptions;
+    private SelectInterface $select;
 
-    /** @var SelectInterface */
-    private $select;
-
-    /** @var int */
-    private $paging;
+    /** @phpstan-var positive-int */
+    private int $paging;
 
     /**
      * @param array<array<string>> $viewOptions
@@ -52,9 +46,10 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
     }
 
     /**
+     * @phpstan-param positive-int $paging
      * {@inheritdoc}
      */
-    public function init(ExtendedPdoInterface $pdo, SelectInterface $select, $paging, RouteGeneratorInterface $routeGenerator)
+    public function init(ExtendedPdoInterface $pdo, SelectInterface $select, int $paging, RouteGeneratorInterface $routeGenerator)
     {
         $this->pdo = $pdo;
         $this->select = $select;
@@ -65,6 +60,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
     }
 
     /**
+     * @phpstan-param positive-int $page
      * {@inheritdoc}
      */
     public function offsetGet($page): Page

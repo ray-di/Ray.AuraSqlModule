@@ -13,11 +13,8 @@ use Ray\Di\Scope;
 
 class AuraSqlReplicationModule extends AbstractModule
 {
-    /** @var ConnectionLocatorInterface */
-    private $connectionLocator;
-
-    /** @var string */
-    private $qualifer;
+    private ConnectionLocatorInterface $connectionLocator;
+    private string $qualifer;
 
     public function __construct(
         ConnectionLocatorInterface $connectionLocator,

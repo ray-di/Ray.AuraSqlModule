@@ -18,8 +18,7 @@ use function is_array;
 
 class TransactionalInterceptor implements MethodInterceptor
 {
-    /** @var ?ExtendedPdoInterface */
-    private $pdo;
+    private ?ExtendedPdoInterface $pdo;
 
     public function __construct(?ExtendedPdoInterface $pdo = null)
     {
@@ -35,7 +34,7 @@ class TransactionalInterceptor implements MethodInterceptor
         assert($method instanceof ReflectionMethod);
         $transactional = $method->getAnnotation(Transactional::class);
         assert($transactional instanceof Transactional);
-        if (is_array($transactional->value) && count($transactional->value) > 1) {
+        if (is_array($transactional->value) && count((array) $transactional->value) > 1) {
             return (new PropTransaction())($invocation, $transactional);
         }
 

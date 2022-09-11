@@ -6,8 +6,7 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 
 class PdoMySqlAdapterTest extends AbstractPdoTestCase
 {
-    /** @var ExtendedPdoAdapter */
-    private $adapter;
+    private ExtendedPdoAdapter $adapter;
 
     public function setUp(): void
     {
@@ -16,12 +15,12 @@ class PdoMySqlAdapterTest extends AbstractPdoTestCase
         $this->adapter = new ExtendedPdoAdapter($this->pdo, $sql, []);
     }
 
-    public function testGetNbResults()
+    public function testGetNbResults(): void
     {
         $this->assertSame(50, $this->adapter->getNbResults());
     }
 
-    public function testGetResults()
+    public function testGetResults(): void
     {
         $expected = [
             [

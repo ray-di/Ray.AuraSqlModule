@@ -7,6 +7,7 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 use Aura\Sql\ExtendedPdo;
 use Aura\SqlQuery\Common\SelectInterface;
 use Aura\SqlQuery\QueryFactory;
+use PDO;
 use PHPUnit\Framework\TestCase;
 
 use function class_exists;
@@ -39,12 +40,12 @@ abstract class AuraSqlQueryTestCase extends TestCase
 
     private function isAuraSqlQueryNotAvailable(): bool
     {
-        return ! class_exists('Aura\SqlQuery\QueryFactory');
+        return ! class_exists(QueryFactory::class);
     }
 
     private function getConnection(): ExtendedPdo
     {
-        return new ExtendedPdo('sqlite::memory:');
+        return new ExtendedPdo('sqlite::memory:', '', '', [PDO::ATTR_STRINGIFY_FETCHES => true]);
     }
 
     private function createSchema(ExtendedPdo $pdo): void

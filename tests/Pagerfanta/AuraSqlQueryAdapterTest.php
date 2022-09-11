@@ -28,6 +28,23 @@ class AuraSqlQueryAdapterTest extends AuraSqlQueryTestCase
         $this->doTestGetNbResults($adapter);
     }
 
+    public function testGetNbResultsShouldReturnZero()
+    {
+        $select = clone $this->select;
+        $select->where('p.username = "_DUMMY_"');
+
+        $countQueryBuilderModifier = static function (Select $select) {
+            foreach (array_keys($select->getCols()) as $key) {
+                $select->removeCol($key);
+            }
+
+            return $select->cols(['COUNT(*) AS total_results'])->limit(1);
+        };
+
+        $adapter = new AuraSqlQueryAdapter($this->pdo, $select, $countQueryBuilderModifier);
+        $this->assertSame(0, $adapter->getNbResults());
+    }
+
     public function testGetSlice()
     {
         $adapter = $this->createAdapterToTestGetSlice();

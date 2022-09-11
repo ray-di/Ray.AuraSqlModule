@@ -11,8 +11,7 @@ use Ray\AuraSqlModule\Exception\NotInitialized;
 
 class AuraSqlPagerTest extends TestCase
 {
-    /** @var AuraSqlPager */
-    private $pager;
+    private AuraSqlPager $pager;
 
     public function setUp(): void
     {

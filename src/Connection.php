@@ -6,28 +6,18 @@ namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdo;
 
-/**
- * This file is part of the Ray.AuraSqlModule package
- */
 class Connection
 {
-    /** @var string */
-    private $dsn;
-
-    /** @var string */
-    private $id;
-
-    /** @var string */
-    private $password;
+    private string $dsn;
+    private string $id;
+    private string $password;
 
     /** @var array<string> */
-    private $options;
+    private array $options;
 
     /** @var array<string> */
-    private $attributes;
-
-    /** @var ExtendedPdo */
-    private $pdo;
+    private array $attributes;
+    private ?ExtendedPdo $pdo = null;
 
     /**
      * @phpstan-param array<string> $options

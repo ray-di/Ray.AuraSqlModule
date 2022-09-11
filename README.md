@@ -1,5 +1,6 @@
 # Ray.AuraSqlModule
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/badges/quality-score.png?b=1.x)](https://scrutinizer-ci.com/g/Ray-Di/Ray.AuraSqlModule/?branch=1.x)
 [![codecov](https://codecov.io/gh/ray-di/Ray.AuraSqlModule/branch/1.x/graph/badge.svg?token=gcWaftzoXp)](https://codecov.io/gh/ray-di/Ray.AuraSqlModule)
 [![Type Coverage](https://shepherd.dev/github/ray-di/Ray.AuraSqlModule/coverage.svg)](https://shepherd.dev/github/ray-di/Ray.AuraSqlModule)
 ![Continuous Integration](https://github.com/ray-di/Ray.AuraSqlModule/workflows/Continuous%20Integration/badge.svg)
@@ -10,7 +11,7 @@ An [Aura.Sql](https://github.com/auraphp/Aura.Sql) Module for [Ray.Di](https://g
 
 ### Composer install
 
-    $ composer require ray/aura-sql-module ^3.0
+    $ composer require ray/aura-sql-module
  
 ### Module install
 
@@ -43,7 +44,7 @@ class AppModule extends AbstractModule
  
  Installing `AuraSqlReplicationModule` using a `connection locator` for master/slave connections.
  
- ```php?start_inline
+ ```php
  use Ray\Di\AbstractModule;
  use Ray\AuraSqlModule\AuraSqlModule;
  use Ray\AuraSqlModule\Annotation\AuraSqlConfig;
@@ -72,11 +73,8 @@ Two modules are provided. `NamedPdoModule` is for non replication use. and `Aura
 
 
 ```php
-/**
- * @Inject
- * @Named("log_db")
- */
-public function setLoggerDb(ExtendedPdoInterface $pdo)
+#[Inject]
+public function setLoggerDb(#[Named('log_db') ExtendedPdoInterface $pdo)
 {
     // ...
 }
@@ -125,10 +123,7 @@ class User
 {
     public $pdo;
 
-    /**
-     * @WriteConnection
-     * @Transactional
-     */
+    #[WriteConnection, Transactional]
     public function write()
     {
          // $this->pdo->rollback(); when exception thrown.
@@ -248,19 +243,36 @@ use Ray\AuraSqlModule\Annotation\PagerViewOption;
 
 $this->bind(TemplateInterface::class)->to(TwitterBootstrap3Template::class);
 $this->bind()->annotatedWith(PagerViewOption::class)->toInstance($pagerViewOption);
-
 ```
 
-## Demo
+## Profile
 
-    $ php docs/demo/run.php
-    // It works!
+To log SQL execution, install `AuraSqlProfileModule`. 
+It will be logged by a logger bound to the [PSR-3](https://www.php-fig.org/psr/psr-3/) logger. This example binds a minimal function logger created in an unnamed class.
 
-## Versions
-
-* Version 1.x supports [Aura.Sql 2](https://github.com/auraphp/Aura.Sql/tree/2.x) on PHP 7.x
-* Version 2.x supports [Aura.Sql 3](https://github.com/auraphp/Aura.Sql/tree/3.x) on PHP 7.x and 8.x
-
-Ray.AuraSqlModule is unchanged.It keeps 100% BC.
-The main functionality methods of Aura.Sql v3 is alos unchanged.
-See [Aura.Sql v3 UPGRADE GUIDE](https://github.com/auraphp/Aura.Sql/blob/3.x/docs/upgrade.md).
+```php
+class DevModule extends AbstractModule
+{
+    protected function configure()
+    {
+        // ...
+        $this->install(new AuraSqlProfileModule());
+        $this->bind(LoggerInterface::class)->toInstance(
+            /** 
+            new class extends AbstractLogger {
+                /** @inheritDoc */
+                public function log($level, $message, array $context = [])
+                {
+                    $replace = [];
+                    foreach ($context as $key => $val) {
+                        if (! is_array($val) && (! is_object($val) || method_exists($val, '__toString'))) {
+                            $replace['{' . $key . '}'] = $val;
+                        }
+                    }
+            
+                    error_log(strtr($message, $replace));
+                }
+            }
+        );
+}
+```

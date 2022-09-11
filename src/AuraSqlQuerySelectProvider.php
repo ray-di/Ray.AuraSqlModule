@@ -9,10 +9,12 @@ use Aura\SqlQuery\QueryFactory;
 use Ray\AuraSqlModule\Annotation\AuraSqlQueryConfig;
 use Ray\Di\ProviderInterface;
 
+/**
+ * @implements ProviderInterface<SelectInterface>
+ */
 class AuraSqlQuerySelectProvider implements ProviderInterface
 {
-    /** @var string */
-    private $db;
+    private string $db;
 
     /**
      * @param string $db The database type
@@ -27,10 +29,8 @@ class AuraSqlQuerySelectProvider implements ProviderInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @return SelectInterface
      */
-    public function get()
+    public function get(): SelectInterface
     {
         return (new QueryFactory($this->db))->newSelect();
     }

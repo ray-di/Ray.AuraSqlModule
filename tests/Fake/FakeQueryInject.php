@@ -11,10 +11,7 @@ class FakeQueryInject
     use AuraSqlUpdateInject;
     use AuraSqlDeleteInject;
 
-    /**
-     * @var string
-     */
-    private $db;
+    private string $db;
 
     /**
      * @AuraSqlQueryConfig
