@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Ray\AuraSqlModule;
 
-use Ray\AuraSqlModule\Annotation\EnvDsn;
-use Ray\AuraSqlModule\Annotation\EnvPassword;
-use Ray\AuraSqlModule\Annotation\EnvUser;
+use Ray\AuraSqlModule\Annotation\EnvAuth;
 use Ray\Di\AbstractModule;
 
 class AuraSqlEnvModule extends AbstractModule
@@ -41,12 +39,16 @@ class AuraSqlEnvModule extends AbstractModule
      */
     protected function configure(): void
     {
-        $this->bind()->annotatedWith(EnvDsn::class)->toInstance($this->dsn);
-        $this->bind()->annotatedWith(EnvUser::class)->toInstance($this->user);
-        $this->bind()->annotatedWith(EnvPassword::class)->toInstance($this->password);
-        $this->bind()->annotatedWith('pdo_dsn')->toProvider(AuthDsnProvider::class);
-        $this->bind()->annotatedWith('pdo_user')->toProvider(AuthUserProvider::class);
-        $this->bind()->annotatedWith('pdo_pass')->toProvider(AuthPasswordProvider::class);
+        $this->bind()->annotatedWith(EnvAuth::class)->toInstance(
+            [
+                'dsn' => $this->dsn,
+                'user' => $this->user,
+                'password' => $this->password,
+            ]
+        );
+        $this->bind()->annotatedWith('pdo_dsn')->toProvider(EnvAuthProvider::class, 'dsn');
+        $this->bind()->annotatedWith('pdo_user')->toProvider(EnvAuthProvider::class, 'user');
+        $this->bind()->annotatedWith('pdo_pass')->toProvider(EnvAuthProvider::class, 'password');
         $this->install(new AuraSqlModule('', '', '', $this->slave, $this->options));
     }
 }
