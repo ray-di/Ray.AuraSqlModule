@@ -10,6 +10,7 @@ use Ray\Di\SetContextInterface;
 
 use function assert;
 use function getenv;
+use function is_string;
 
 /**
  * @implements ProviderInterface<string>
@@ -44,7 +45,7 @@ class EnvAuthProvider implements ProviderInterface, SetContextInterface
     public function get(): string
     {
         $value = (string) getenv($this->envAuth[$this->context]);
-        assert($value);
+        assert(is_string($value));
 
         return $value;
     }
