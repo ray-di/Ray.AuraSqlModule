@@ -14,7 +14,7 @@ use function preg_match;
 
 class AuraSqlModule extends AbstractModule
 {
-    public const PARSE_PDO_DSN_REGEX = '/(.*?)\:(?:(host|server)=.*?;)?(.*)/i';
+    public const PARSE_PDO_DSN_REGEX = '/(.*?):(?:(host|server)=.*?;)?(.*)/i';
 
     private string $dsn;
     private string $user;
