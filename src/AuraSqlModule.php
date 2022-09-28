@@ -74,8 +74,8 @@ class AuraSqlModule extends AbstractModule
         $this->bind()->annotatedWith('pdo_locator_user')->toInstance([$context => $this->user]);
         $this->bind()->annotatedWith('pdo_locator_pass')->toInstance([$context => $this->password]);
         $this->bind()->annotatedWith('pdo_locator_slave')->toInstance([$context => $this->slave]);
-        $this->bind(ConnectionLocatorInterface::class)->annotatedWith($context)->toProvider(ConnectionLocatorProvider::class, $context);
+        $this->bind(ConnectionLocatorInterface::class)->annotatedWith($context)->toProvider(ConnectionLocatorProvider::class, $context)->in(Scope::SINGLETON);
         // ReadOnlyConnection when GET, otherwise WriteConnection
-        $this->bind(ExtendedPdoInterface::class)->toProvider(AuraSqlReplicationDbProvider::class)->in(Scope::SINGLETON);
+        $this->bind(ExtendedPdoInterface::class)->toProvider(AuraSqlReplicationDbProvider::class);
     }
 }
