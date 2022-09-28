@@ -18,6 +18,8 @@ class AuraSqEnvlModuleTest extends TestCase
         putenv('TEST_DSN=sqlite::memory:');
         putenv('TEST_USER=user1');
         putenv('TEST_PASSWORD=password1');
+        // for log db
+        putenv('TEST_SLAVE=SLAVE1,SLAVE2');
     }
 
     public function tearDown(): void
@@ -25,11 +27,22 @@ class AuraSqEnvlModuleTest extends TestCase
         putenv('TEST_DSN');
         putenv('TEST_USER');
         putenv('TEST_PASSWORD');
+        putenv('TEST_SLAVE');
     }
 
-    public function testModule()
+    public function testSingleDbModule(): void
     {
         $module = new AuraSqlEnvModule('TEST_DSN', 'TEST_USER', 'TEST_PASSWORD');
+        $injector = new Injector($module, __DIR__ . '/tmp');
+        $instance = $injector->getInstance(ExtendedPdoInterface::class);
+        $this->assertInstanceOf(ExtendedPdo::class, $instance);
+        $this->assertSame('user1', $injector->getInstance('', 'pdo_user'));
+        $this->assertSame('password1', $injector->getInstance('', 'pdo_pass'));
+    }
+
+    public function testReplicationModule(): void
+    {
+        $module = new AuraSqlEnvModule('TEST_DSN', 'TEST_USER', 'TEST_PASSWORD', 'TEST_SLAVE');
         $injector = new Injector($module, __DIR__ . '/tmp');
         $instance = $injector->getInstance(ExtendedPdoInterface::class);
         $this->assertInstanceOf(ExtendedPdo::class, $instance);
