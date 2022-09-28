@@ -10,8 +10,8 @@ use Aura\Sql\ExtendedPdoInterface;
 use PHPUnit\Framework\TestCase;
 use Ray\Compiler\DiCompiler;
 use Ray\Compiler\ScriptInjector;
+use Ray\Di\DependencyProvider;
 use Ray\Di\Injector;
-use Ray\Di\Instance;
 use ReflectionProperty;
 
 use function assert;
@@ -56,9 +56,9 @@ class AuraSqlModuleTest extends TestCase
     public function testSlaveModule()
     {
         $module = new AuraSqlModule('mysql:host=localhost;dbname=testdb', 'root', '', 'slave1,slave2');
-        $instance = $module->getContainer()->getContainer()['Aura\Sql\ConnectionLocatorInterface-'];
-        assert($instance instanceof Instance);
-        $locator = $instance->value;
+        $provider = $module->getContainer()->getContainer()['Aura\Sql\ConnectionLocatorInterface-'];
+        assert($provider instanceof DependencyProvider);
+        $locator = $provider->inject($module->getContainer());
         assert($locator instanceof ConnectionLocatorInterface);
         $this->assertInstanceOf(ConnectionLocatorInterface::class, $locator);
         $dsn = $this->getDsn($locator->getRead());

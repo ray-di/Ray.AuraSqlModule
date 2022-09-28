@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ray\AuraSqlModule;
 
+use Aura\Sql\ConnectionLocatorInterface;
 use Aura\Sql\ExtendedPdo;
 use Aura\Sql\ExtendedPdoInterface;
 use Ray\AuraSqlModule\Pagerfanta\AuraSqlPagerModule;
@@ -57,17 +58,24 @@ class AuraSqlModule extends AbstractModule
 
     private function configureSingleDsn(): void
     {
-        $this->bind(ExtendedPdoInterface::class)->toConstructor(ExtendedPdo::class, 'dsn=pdo_dsn,username=pdo_user,password=pdo_pass,options=pdo_options,attributes=pdo_attributes')->in(Scope::SINGLETON);
         $this->bind()->annotatedWith('pdo_dsn')->toInstance($this->dsn);
         $this->bind()->annotatedWith('pdo_user')->toInstance($this->user);
         $this->bind()->annotatedWith('pdo_pass')->toInstance($this->password);
+        $this->bind()->annotatedWith('pdo_slave')->toInstance($this->slave);
         $this->bind()->annotatedWith('pdo_options')->toInstance($this->options);
         $this->bind()->annotatedWith('pdo_attributes')->toInstance($this->options);
+        $this->bind(ExtendedPdoInterface::class)->toConstructor(ExtendedPdo::class, 'dsn=pdo_dsn,username=pdo_user,password=pdo_pass,options=pdo_options,attributes=pdo_attributes')->in(Scope::SINGLETON);
     }
 
     private function configureMasterSlaveDsn(): void
     {
-        $locator = ConnectionLocatorFactory::newInstance($this->dsn, $this->user, $this->password, $this->slave);
-        $this->install(new AuraSqlReplicationModule($locator));
+        $context = '';
+        $this->bind()->annotatedWith('pdo_locator_dsn')->toInstance([$context => $this->dsn]);
+        $this->bind()->annotatedWith('pdo_locator_user')->toInstance([$context => $this->user]);
+        $this->bind()->annotatedWith('pdo_locator_pass')->toInstance([$context => $this->password]);
+        $this->bind()->annotatedWith('pdo_locator_slave')->toInstance([$context => $this->slave]);
+        $this->bind(ConnectionLocatorInterface::class)->annotatedWith($context)->toProvider(ConnectionLocatorProvider::class, $context);
+        // ReadOnlyConnection when GET, otherwise WriteConnection
+        $this->bind(ExtendedPdoInterface::class)->toProvider(AuraSqlReplicationDbProvider::class)->in(Scope::SINGLETON);
     }
 }
