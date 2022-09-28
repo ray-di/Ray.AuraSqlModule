@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Ray\AuraSqlModule;
 
-use Aura\Sql\ConnectionLocatorInterface;
 use Ray\AuraSqlModule\Annotation\EnvAuth;
 use Ray\Di\AbstractModule;
 
@@ -45,12 +44,14 @@ class AuraSqlEnvModule extends AbstractModule
                 'dsn' => $this->dsn,
                 'user' => $this->user,
                 'password' => $this->password,
+                'slave' => $this->slave,
             ]
         );
         $this->bind()->annotatedWith('pdo_dsn')->toProvider(EnvAuthProvider::class, 'dsn');
         $this->bind()->annotatedWith('pdo_user')->toProvider(EnvAuthProvider::class, 'user');
         $this->bind()->annotatedWith('pdo_pass')->toProvider(EnvAuthProvider::class, 'password');
-        $this->bind(ConnectionLocatorInterface::class)->toProvider(ConnectionLocatorProvider::class);
+        $this->bind()->annotatedWith('pdo_slave')->toProvider(EnvAuthProvider::class, 'slave');
+
         $this->install(new AuraSqlModule('', '', '', $this->slave, $this->options));
     }
 }
