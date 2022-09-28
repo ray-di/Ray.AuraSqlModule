@@ -36,8 +36,6 @@ class AuraSqlReplicationModule extends AbstractModule
         $this->bind(ExtendedPdoInterface::class)->annotatedWith($this->qualifer)->toProvider(AuraSqlReplicationDbProvider::class, $this->qualifer)->in(Scope::SINGLETON);
         // @ReadOnlyConnection @WriteConnection
         $this->installReadWriteConnection();
-        // @Transactional
-        $this->install(new TransactionalModule());
     }
 
     protected function installReadWriteConnection(): void
