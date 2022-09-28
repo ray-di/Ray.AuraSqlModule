@@ -6,11 +6,8 @@ namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdo;
 use Aura\Sql\ExtendedPdoInterface;
-use Ray\AuraSqlModule\Pagerfanta\AuraSqlPagerModule;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
-
-use function preg_match;
 
 class AuraSqlModule extends AbstractModule
 {
@@ -21,23 +18,34 @@ class AuraSqlModule extends AbstractModule
     private string $password;
     private string $slave;
 
-    /** @var array<mixed> */
+    /** @var array<string> */
     private array $options;
 
+    /** @var array<string> */
+    private array $queries;
+
     /**
-     * @param string       $dsn      Data Source Name (DSN)
-     * @param string       $user     User name for the DSN string
-     * @param string       $password Password for the DSN string
-     * @param string       $slave    Comma separated slave host list
-     * @param array<mixed> $options  A key=>value array of driver-specific connection options
+     * @param string        $dsnKey      Data Source Name (DSN)
+     * @param string        $user        User name for the DSN string
+     * @param string        $passwordKey Password for the DSN string
+     * @param string        $slaveKey    Comma separated slave host list
+     * @param array<string> $options     A key=>value array of driver-specific connection options
+     * @param array<string> $queries
      */
-    public function __construct(string $dsn, string $user = '', string $password = '', string $slave = '', array $options = [])
-    {
-        $this->dsn = $dsn;
+    public function __construct(
+        string $dsnKey,
+        string $user = '',
+        string $passwordKey = '',
+        string $slaveKey = '',
+        array $options = [],
+        array $queries = []
+    ) {
+        $this->dsn = $dsnKey;
         $this->user = $user;
-        $this->password = $password;
-        $this->slave = $slave;
+        $this->password = $passwordKey;
+        $this->slave = $slaveKey;
         $this->options = $options;
+        $this->queries = $queries;
         parent::__construct();
     }
 
@@ -47,12 +55,7 @@ class AuraSqlModule extends AbstractModule
     protected function configure(): void
     {
         $this->slave ? $this->configureMasterSlaveDsn() : $this->configureSingleDsn();
-        // @Transactional
-        $this->install(new TransactionalModule());
-        $this->install(new AuraSqlPagerModule());
-        preg_match(self::PARSE_PDO_DSN_REGEX, $this->dsn, $parts);
-        $dbType = $parts[1] ?? '';
-        $this->install(new AuraSqlQueryModule($dbType));
+        $this->install(new AuraSqlBaseModule($this->dsn));
     }
 
     private function configureSingleDsn(): void
@@ -62,13 +65,23 @@ class AuraSqlModule extends AbstractModule
         $this->bind()->annotatedWith('pdo_pass')->toInstance($this->password);
         $this->bind()->annotatedWith('pdo_slave')->toInstance($this->slave);
         $this->bind()->annotatedWith('pdo_options')->toInstance($this->options);
-        $this->bind()->annotatedWith('pdo_attributes')->toInstance($this->options);
-        $this->bind(ExtendedPdoInterface::class)->toConstructor(ExtendedPdo::class, 'dsn=pdo_dsn,username=pdo_user,password=pdo_pass,options=pdo_options,attributes=pdo_attributes')->in(Scope::SINGLETON);
+        $this->bind()->annotatedWith('pdo_queries')->toInstance($this->queries);
+        $this->bind(ExtendedPdoInterface::class)->toConstructor(
+            ExtendedPdo::class,
+            'dsn=pdo_dsn,username=pdo_user,password=pdo_pass,options=pdo_options,queries=pdo_queries'
+        )->in(Scope::SINGLETON);
     }
 
     private function configureMasterSlaveDsn(): void
     {
-        $locator = ConnectionLocatorFactory::newInstance($this->dsn, $this->user, $this->password, $this->slave, false);
+        $locator = ConnectionLocatorFactory::fromInstance(
+            $this->dsn,
+            $this->user,
+            $this->password,
+            $this->slave,
+            $this->options,
+            $this->queries
+        );
         $this->install(new AuraSqlReplicationModule($locator));
     }
 }

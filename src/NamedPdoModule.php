@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ray\AuraSqlModule;
 
+use Aura\Sql\ConnectionLocator;
 use Aura\Sql\ExtendedPdo;
 use Aura\Sql\ExtendedPdoInterface;
 use Ray\Di\AbstractModule;
@@ -14,24 +15,43 @@ class NamedPdoModule extends AbstractModule
 
     private string $qualifer;
     private string $dsn;
-    private string $user;
+    private string $username;
     private string $password;
     private string $slave;
+
+    /** @var array<string> */
+    private array $options;
+
+    /** @var array<string> */
+    private array $queries;
     private bool $isEnv;
 
+    /**
+     * @param string        $qualifer Qualifer for ExtendedPdoInterface
+     * @param string        $dsn      Data Source Name (DSN)
+     * @param string        $username User name for the DSN string
+     * @param string        $password Password for the DSN string
+     * @param string        $slave    Comma separated slave host list
+     * @param array<string> $options  A key=>value array of driver-specific connection options
+     * @param array<string> $queries  Queries to execute after the connection.
+     */
     public function __construct(
         string $qualifer,
         string $dsn,
-        string $user = '',
-        string $pass = '',
+        string $username = '',
+        string $password = '',
         string $slave = '',
+        array $options = [],
+        array $queries = [],
         bool $isEnv = false
     ) {
         $this->qualifer = $qualifer;
         $this->dsn = $dsn;
-        $this->user = $user;
-        $this->password = $pass;
+        $this->username = $username;
+        $this->password = $password;
         $this->slave = $slave;
+        $this->options = $options;
+        $this->queries = $queries;
         $this->isEnv = $isEnv;
         parent::__construct();
     }
@@ -54,13 +74,36 @@ class NamedPdoModule extends AbstractModule
                 "dsn={$this->qualifer}_dsn,username={$this->qualifer}_username,password={$this->qualifer}_password"
             );
         $this->bind()->annotatedWith("{$this->qualifer}_dsn")->toInstance($this->dsn);
-        $this->bind()->annotatedWith("{$this->qualifer}_username")->toInstance($this->user);
+        $this->bind()->annotatedWith("{$this->qualifer}_username")->toInstance($this->username);
         $this->bind()->annotatedWith("{$this->qualifer}_password")->toInstance($this->password);
     }
 
     private function configureMasterSlaveDsn(): void
     {
-        $locator = ConnectionLocatorFactory::newInstance($this->dsn, $this->user, $this->password, $this->slave, $this->isEnv);
+        $locator = $this->getLocator();
         $this->install(new AuraSqlReplicationModule($locator, $this->qualifer));
+    }
+
+    private function getLocator(): ConnectionLocator
+    {
+        if ($this->isEnv) {
+            return ConnectionLocatorFactory::fromEnv(
+                $this->dsn,
+                $this->username,
+                $this->password,
+                $this->slave,
+                $this->options,
+                $this->queries
+            );
+        }
+
+        return ConnectionLocatorFactory::fromInstance(
+            $this->dsn,
+            $this->username,
+            $this->password,
+            $this->slave,
+            $this->options,
+            $this->queries
+        );
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ray\AuraSqlModule;
 
+use Aura\Sql\ConnectionLocatorInterface;
 use Aura\Sql\ExtendedPdo;
 use Aura\Sql\ExtendedPdoInterface;
 use PHPUnit\Framework\TestCase;
@@ -15,7 +16,7 @@ class AuraSqEnvlModuleTest extends TestCase
 {
     public function setUp(): void
     {
-        putenv('TEST_DSN=sqlite::memory:');
+        putenv('TEST_DSN=mysql:host=localhost;dbname=db');
         putenv('TEST_USER=user1');
         putenv('TEST_PASSWORD=password1');
         // for log db
@@ -46,7 +47,8 @@ class AuraSqEnvlModuleTest extends TestCase
         $injector = new Injector($module, __DIR__ . '/tmp');
         $instance = $injector->getInstance(ExtendedPdoInterface::class);
         $this->assertInstanceOf(ExtendedPdo::class, $instance);
-        $connection = $injector->getInstance(Connection::class);
-        $this->assertTrue($connection->isSame('TEST_DSN', 'TEST_USER', 'TEST_PASSWORD', true));
+        $connectionLocator = $injector->getInstance(ConnectionLocatorInterface::class);
+        $read = $connectionLocator->getRead();
+        $this->assertInstanceOf(ExtendedPdo::class, $read);
     }
 }
