@@ -58,7 +58,8 @@ final class ConnectionLocatorProvider implements ProviderInterface, SetContextIn
             $this->dsn[$this->context],
             $this->user[$this->context],
             $this->password[$this->context],
-            $this->slave[$this->context]
+            $this->slave[$this->context],
+            false
         );
     }
 }

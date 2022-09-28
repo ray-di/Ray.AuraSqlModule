@@ -17,19 +17,22 @@ class NamedPdoModule extends AbstractModule
     private string $user;
     private string $password;
     private string $slave;
+    private bool $isEnv;
 
     public function __construct(
         string $qualifer,
         string $dsn,
         string $user = '',
         string $pass = '',
-        string $slave = ''
+        string $slave = '',
+        bool $isEnv = false
     ) {
         $this->qualifer = $qualifer;
         $this->dsn = $dsn;
         $this->user = $user;
         $this->password = $pass;
         $this->slave = $slave;
+        $this->isEnv = $isEnv;
         parent::__construct();
     }
 
@@ -38,26 +41,26 @@ class NamedPdoModule extends AbstractModule
      */
     protected function configure(): void
     {
-        $this->slave ? $this->configureMasterSlaveDsn($this->qualifer, $this->dsn, $this->user, $this->password, $this->slave)
-            : $this->configureSingleDsn($this->qualifer, $this->dsn, $this->user, $this->password);
+        $this->slave ? $this->configureMasterSlaveDsn()
+            : $this->configureSingleDsn();
     }
 
-    private function configureSingleDsn(string $qualifer, string $dsn, string $user, string $password): void
+    private function configureSingleDsn(): void
     {
         $this->bind(ExtendedPdoInterface::class)
-            ->annotatedWith($qualifer)
+            ->annotatedWith($this->qualifer)
             ->toConstructor(
                 ExtendedPdo::class,
-                "dsn={$qualifer}_dsn,username={$qualifer}_username,password={$qualifer}_password"
+                "dsn={$this->qualifer}_dsn,username={$this->qualifer}_username,password={$this->qualifer}_password"
             );
-        $this->bind()->annotatedWith("{$qualifer}_dsn")->toInstance($dsn);
-        $this->bind()->annotatedWith("{$qualifer}_username")->toInstance($user);
-        $this->bind()->annotatedWith("{$qualifer}_password")->toInstance($password);
+        $this->bind()->annotatedWith("{$this->qualifer}_dsn")->toInstance($this->dsn);
+        $this->bind()->annotatedWith("{$this->qualifer}_username")->toInstance($this->user);
+        $this->bind()->annotatedWith("{$this->qualifer}_password")->toInstance($this->password);
     }
 
-    private function configureMasterSlaveDsn(string $qualifer, string $dsn, string $user, string $password, string $slaveList): void
+    private function configureMasterSlaveDsn(): void
     {
-        $locator = ConnectionLocatorFactory::newInstance($dsn, $user, $password, $slaveList);
-        $this->install(new AuraSqlReplicationModule($locator, $qualifer));
+        $locator = ConnectionLocatorFactory::newInstance($this->dsn, $this->user, $this->password, $this->slave, $this->isEnv);
+        $this->install(new AuraSqlReplicationModule($locator, $this->qualifer));
     }
 }

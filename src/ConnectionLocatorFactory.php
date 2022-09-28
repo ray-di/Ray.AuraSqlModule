@@ -19,16 +19,16 @@ final class ConnectionLocatorFactory
     {
     }
 
-    public static function newInstance(string $dsn, string $user, string $password, string $slave): ConnectionLocator
+    public static function newInstance(string $dsn, string $user, string $password, string $slave, bool $isEnv): ConnectionLocator
     {
-        $writes = ['master' => new Connection($dsn, $user, $password)];
+        $writes = ['master' => new Connection($dsn, $user, $password, [], [], $isEnv)];
         $i = 1;
         $slaves = explode(',', $slave);
         $reads = [];
         foreach ($slaves as $host) {
             $slaveDsn = self::changeHost($dsn, $host);
             $name = 'slave' . (string) $i++;
-            $reads[$name] = new Connection($slaveDsn, $user, $password);
+            $reads[$name] = new Connection($slaveDsn, $user, $password, [], [], $isEnv);
         }
 
         return new ConnectionLocator(null, $reads, $writes);

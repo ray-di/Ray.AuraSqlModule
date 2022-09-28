@@ -44,7 +44,6 @@ class AuraSqlEnvModule extends AbstractModule
                 'dsn' => $this->dsn,
                 'user' => $this->user,
                 'password' => $this->password,
-                'slave' => $this->slave,
             ]
         );
         $this->bind()->annotatedWith('pdo_dsn')->toProvider(EnvAuthProvider::class, 'dsn');
@@ -52,6 +51,11 @@ class AuraSqlEnvModule extends AbstractModule
         $this->bind()->annotatedWith('pdo_pass')->toProvider(EnvAuthProvider::class, 'password');
         $this->bind()->annotatedWith('pdo_slave')->toProvider(EnvAuthProvider::class, 'slave');
 
-        $this->install(new AuraSqlModule('', '', '', $this->slave, $this->options));
+        if ($this->slave) {
+            $locator = ConnectionLocatorFactory::newInstance($this->dsn, $this->user, $this->password, $this->slave, true);
+            $this->install(new AuraSqlReplicationModule($locator));
+        }
+
+        $this->install(new AuraSqlModule('', '', '', '', $this->options));
     }
 }
