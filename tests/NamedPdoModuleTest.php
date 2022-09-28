@@ -55,7 +55,7 @@ class NamedPdoModuleTest extends TestCase
         $qualifer = 'log_db';
         $instance = (new Injector(new FakeNamedQualifierModule(), __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class, $qualifer);
         /** @var ExtendedPdo $instance */
-        $this->assertSame('sqlite::memory:', $this->getDsn($instance));
+        $this->assertSame('mysql:host=slave1;dbname=master', $this->getDsn($instance));
     }
 
     private function getDsn(ExtendedPdo $pdo): string
