@@ -36,8 +36,8 @@ class AuraSqEnvlModuleTest extends TestCase
         $injector = new Injector($module, __DIR__ . '/tmp');
         $instance = $injector->getInstance(ExtendedPdoInterface::class);
         $this->assertInstanceOf(ExtendedPdo::class, $instance);
-        $this->assertSame('user1', $injector->getInstance('', 'pdo_user'));
-        $this->assertSame('password1', $injector->getInstance('', 'pdo_pass'));
+        $connection = $injector->getInstance(Connection::class);
+        $this->assertTrue($connection->isSame('TEST_DSN', 'TEST_USER', 'TEST_PASSWORD', true));
     }
 
     public function testReplicationModule(): void
@@ -46,7 +46,7 @@ class AuraSqEnvlModuleTest extends TestCase
         $injector = new Injector($module, __DIR__ . '/tmp');
         $instance = $injector->getInstance(ExtendedPdoInterface::class);
         $this->assertInstanceOf(ExtendedPdo::class, $instance);
-        $this->assertSame('user1', $injector->getInstance('', 'pdo_user'));
-        $this->assertSame('password1', $injector->getInstance('', 'pdo_pass'));
+        $connection = $injector->getInstance(Connection::class);
+        $this->assertTrue($connection->isSame('TEST_DSN', 'TEST_USER', 'TEST_PASSWORD', true));
     }
 }

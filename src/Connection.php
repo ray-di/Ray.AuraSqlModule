@@ -26,8 +26,14 @@ class Connection
      * @phpstan-param array<string> $options
      * @phpstan-param array<string> $queries
      */
-    public function __construct(string $dsn, string $username = '', string $password = '', array $options = [], array $queries = [], bool $isEnv = false)
-    {
+    public function __construct(
+        string $dsn,
+        string $username = '',
+        string $password = '',
+        array $options = [],
+        array $queries = [],
+        bool $isEnv = false
+    ){
         $this->dsn = $dsn;
         $this->username = $username;
         $this->password = $password;
@@ -41,10 +47,25 @@ class Connection
         if ($this->pdo instanceof ExtendedPdo) {
             return $this->pdo;
         }
+
         $this->pdo = $this->isEnv ?
-            new ExtendedPdo((string) getenv($this->dsn), (string) getenv($this->username), (string) getenv($this->password), $this->options, $this->queries) :
+            new ExtendedPdo(
+                (string) getenv($this->dsn),
+                (string) getenv($this->username),
+                (string) getenv($this->password),
+                $this->options,
+                $this->queries
+            ) :
             new ExtendedPdo($this->dsn, $this->username, $this->password, $this->options, $this->queries);
 
         return $this->pdo;
+    }
+
+    public function isSame(string $dsn, string $username, string $password, bool $isEnv): bool
+    {
+        return $dsn === $this->dsn &&
+            $username === $this->username &&
+            $password === $this->password &&
+            $isEnv === $this->isEnv;
     }
 }

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Ray\AuraSqlModule;
 
-use Ray\AuraSqlModule\Annotation\EnvAuth;
+use Aura\Sql\ExtendedPdoInterface;
 use Ray\Di\AbstractModule;
 
 class AuraSqlEnvModule extends AbstractModule
 {
     private string $dsn;
-    private string $user;
+    private string $username;
     private string $password;
     private string $slave;
 
@@ -19,15 +19,20 @@ class AuraSqlEnvModule extends AbstractModule
 
     /**
      * @param string       $dsn      Data Source Name (DSN)
-     * @param string       $user     User name for the DSN string
+     * @param string       $username User name for the DSN string
      * @param string       $password Password for the DSN string
      * @param string       $slave    Comma separated slave host list
      * @param array<mixed> $options  A key=>value array of driver-specific connection options
      */
-    public function __construct(string $dsn, string $user = '', string $password = '', string $slave = '', array $options = [])
-    {
+    public function __construct(
+        string $dsn,
+        string $username = '',
+        string $password = '',
+        string $slave = '',
+        array $options = []
+    ){
         $this->dsn = $dsn;
-        $this->user = $user;
+        $this->username = $username;
         $this->password = $password;
         $this->slave = $slave;
         $this->options = $options;
@@ -39,20 +44,18 @@ class AuraSqlEnvModule extends AbstractModule
      */
     protected function configure(): void
     {
-        $this->bind()->annotatedWith(EnvAuth::class)->toInstance(
-            [
-                'dsn' => $this->dsn,
-                'user' => $this->user,
-                'password' => $this->password,
-            ]
+        $this->bind(Connection::class)->toInstance(
+            new Connection($this->dsn, $this->username, $this->password, [], [], true)
         );
-        $this->bind()->annotatedWith('pdo_dsn')->toProvider(EnvAuthProvider::class, 'dsn');
-        $this->bind()->annotatedWith('pdo_user')->toProvider(EnvAuthProvider::class, 'user');
-        $this->bind()->annotatedWith('pdo_pass')->toProvider(EnvAuthProvider::class, 'password');
-        $this->bind()->annotatedWith('pdo_slave')->toProvider(EnvAuthProvider::class, 'slave');
-
+        $this->bind(ExtendedPdoInterface::class)->toProvider(ExtendedPdoProvider::class);
         if ($this->slave) {
-            $locator = ConnectionLocatorFactory::newInstance($this->dsn, $this->user, $this->password, $this->slave, true);
+            $locator = ConnectionLocatorFactory::newInstance(
+                $this->dsn,
+                $this->username,
+                $this->password,
+                $this->slave,
+                true
+            );
             $this->install(new AuraSqlReplicationModule($locator));
         }
 
