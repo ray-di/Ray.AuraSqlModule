@@ -12,6 +12,9 @@ use function sprintf;
 
 final class ConnectionLocatorFactory
 {
+    /**
+     * @codeCoverageIgnore
+     */
     private function __construct()
     {
     }
