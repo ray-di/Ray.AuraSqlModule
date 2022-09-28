@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace Ray\AuraSqlModule;
 
-use Aura\Sql\ConnectionLocator;
 use Aura\Sql\ExtendedPdo;
 use Aura\Sql\ExtendedPdoInterface;
 use Ray\AuraSqlModule\Pagerfanta\AuraSqlPagerModule;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 
-use function explode;
 use function preg_match;
-use function sprintf;
 
 class AuraSqlModule extends AbstractModule
 {
@@ -70,30 +67,7 @@ class AuraSqlModule extends AbstractModule
 
     private function configureMasterSlaveDsn(): void
     {
-        $locator = new ConnectionLocator();
-        $locator->setWrite('master', new Connection($this->dsn, $this->user, $this->password));
-        $i = 1;
-        $slaves = explode(',', $this->slave);
-        foreach ($slaves as $slave) {
-            $slaveDsn = $this->changeHost($this->dsn, $slave);
-            $name = 'slave' . (string) $i++;
-            $locator->setRead($name, new Connection($slaveDsn, $this->user, $this->password));
-        }
-
+        $locator = ConnectionLocatorFactory::newInstance($this->dsn, $this->user, $this->password, $this->slave);
         $this->install(new AuraSqlReplicationModule($locator));
-    }
-
-    private function changeHost(string $dsn, string $host): string
-    {
-        preg_match(self::PARSE_PDO_DSN_REGEX, $dsn, $parts);
-        if (! $parts) {
-            // @codeCoverageIgnoreStart
-            return $dsn;
-            // @codeCoverageIgnoreEnd
-        }
-
-        $dsn = sprintf('%s:%s=%s;%s', $parts[1], $parts[2], $host, $parts[3]);
-
-        return $dsn;
     }
 }
