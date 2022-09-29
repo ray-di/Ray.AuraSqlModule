@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
 
 use function putenv;
+use function spl_object_hash;
 
 class AuraSqEnvlModuleTest extends TestCase
 {
@@ -39,6 +40,9 @@ class AuraSqEnvlModuleTest extends TestCase
         $this->assertInstanceOf(ExtendedPdo::class, $instance);
         $connection = $injector->getInstance(Connection::class);
         $this->assertTrue($connection->isSame('TEST_DSN', 'TEST_USER', 'TEST_PASSWORD', true));
+        // test singleton
+        $instance2 = $injector->getInstance(ExtendedPdoInterface::class);
+        $this->assertSame(spl_object_hash($instance), spl_object_hash($instance2));
     }
 
     public function testReplicationModule(): void
