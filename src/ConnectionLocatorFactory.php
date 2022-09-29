@@ -30,8 +30,7 @@ final class ConnectionLocatorFactory
         string $slave,
         array $options,
         array $queries
-    ): ConnectionLocator
-    {
+    ): ConnectionLocator {
         $writes = ['master' => new Connection($dsn, $user, $password, $options, $queries)];
         $i = 1;
         $slaves = explode(',', $slave);
@@ -51,15 +50,14 @@ final class ConnectionLocatorFactory
      */
     public static function fromEnv(
         string $dsn,
-        string $user,
+        string $username,
         string $password,
         string $slave,
         array $options,
         array $queries
-    ): ConnectionLocator
-    {
-        $writes = ['master' => new EnvConnection($dsn, null, $user, $password, $options, $queries)];
-        $reads = ['slave' => new EnvConnection($dsn, $slave, $user, $password, $options, $queries)];
+    ): ConnectionLocator {
+        $writes = ['master' => new EnvConnection($dsn, null, $username, $password, $options, $queries)];
+        $reads = ['slave' => new EnvConnection($dsn, $slave, $username, $password, $options, $queries)];
 
         return new ConnectionLocator(null, $reads, $writes);
     }

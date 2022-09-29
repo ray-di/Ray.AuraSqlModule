@@ -70,7 +70,7 @@ final class EnvConnection
     {
         // write
         if ($this->slave === null) {
-            return getenv($this->dsn);
+            return (string) getenv($this->dsn);
         }
 
         // random read

@@ -64,11 +64,17 @@ class NamedPdoEnvModule extends AbstractModule
     private function configureSingleDsn(): void
     {
         $connection = new EnvConnection(
-            $this->dsn, null, $this->username, $this->password, $this->options, $this->queries
+            $this->dsn,
+            null,
+            $this->username,
+            $this->password,
+            $this->options,
+            $this->queries
         );
         $this->bind(EnvConnection::class)->annotatedWith($this->qualifer)->toInstance($connection);
         $this->bind(ExtendedPdoInterface::class)->annotatedWith($this->qualifer)->toProvider(
-            NamedExtendedPdoProvider::class, $this->qualifer
+            NamedExtendedPdoProvider::class,
+            $this->qualifer
         );
     }
 
