@@ -25,7 +25,7 @@ final class EnvConnection
     private array $queries;
 
     /** @var array<ExtendedPdo> */
-    private array $pdo = [];
+    private static array $pdo = [];
     private ?string $slave;
 
     /**
@@ -51,11 +51,11 @@ final class EnvConnection
     public function __invoke(): ExtendedPdo
     {
         $dsn = $this->getDsn();
-        if (isset($this->pdo[$dsn])) {
-            return $this->pdo[$dsn];
+        if (isset(self::$pdo[$dsn])) {
+            return self::$pdo[$dsn];
         }
 
-        $this->pdo[$dsn] = new ExtendedPdo(
+        self::$pdo[$dsn] = new ExtendedPdo(
             $dsn,
             (string) getenv($this->username),
             (string) getenv($this->password),
@@ -63,7 +63,7 @@ final class EnvConnection
             $this->queries
         );
 
-        return $this->pdo[$dsn];
+        return self::$pdo[$dsn];
     }
 
     private function getDsn(): string
