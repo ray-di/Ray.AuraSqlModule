@@ -47,11 +47,4 @@ class Connection
 
         return $this->pdo;
     }
-
-    public function isSame(string $dsn, string $username, string $password): bool
-    {
-        return $dsn === $this->dsn &&
-            $username === $this->username &&
-            $password === $this->password;
-    }
 }
