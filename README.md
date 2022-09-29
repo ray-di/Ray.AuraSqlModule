@@ -31,11 +31,26 @@ class AppModule extends AbstractModule
                 'password',
                 'slave1,slave2,slave3' // optional slave server list
                 $options,              // optional key=>value array of driver-specific connection options
-                $attributes            // optional key=>value attriburtes
+                $queris                // Queries to execute after the connection.
         );
     }
 }
 ```
+
+Use AuraSqlEnvModule to get the value from the environment variable each time at runtime, instead of specifying the value directly.
+
+```php
+        $this->install(
+            new AuraSqlEnvModule(
+                'PDO_DSN',             // getenv('PDO_DSN')
+                'PDO_USER',            // getenv('PDO_USER')
+                'PDO_PASSWORD',        // getenv('PDO_PASSWORD')
+                'PDO_SLAVE'            // getenv('PDO_SLAVE')
+                $options,              // optional key=>value array of driver-specific connection options
+                $queris                // Queries to execute after the connection.
+        );
+```
+
 ### DI trait
 
  * [AuraSqlInject](https://github.com/ray-di/Ray.AuraSqlModule/blob/1.x/src/AuraSqlInject.php) for `Aura\Sql\ExtendedPdoInterface` interface
@@ -80,7 +95,6 @@ public function setLoggerDb(#[Named('log_db') ExtendedPdoInterface $pdo)
 }
 ```
 
-
 ### with no replication
 
 Use `NamedPdoModule ` to inject different named `Pdo` instance for **non** Replication use.
@@ -95,6 +109,18 @@ class AppModule extends AbstractModule
     }
 }
 ```
+
+Or
+
+```php
+class AppModule extends AbstractModule
+{
+    protected function configure()
+    {
+        $this->install(new NamedPdoEnvModule('log_db', 'LOG_DSN', 'LOG_USERNAME', 
+    }
+}
+
 
 ### with replication
 
