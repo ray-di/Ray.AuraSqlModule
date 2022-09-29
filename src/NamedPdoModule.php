@@ -24,7 +24,6 @@ class NamedPdoModule extends AbstractModule
 
     /** @var array<string> */
     private array $queries;
-    private bool $isEnv;
 
     /**
      * @param string        $qualifer Qualifer for ExtendedPdoInterface
@@ -42,8 +41,7 @@ class NamedPdoModule extends AbstractModule
         string $password = '',
         string $slave = '',
         array $options = [],
-        array $queries = [],
-        bool $isEnv = false
+        array $queries = []
     ) {
         $this->qualifer = $qualifer;
         $this->dsn = $dsn;
@@ -52,7 +50,6 @@ class NamedPdoModule extends AbstractModule
         $this->slave = $slave;
         $this->options = $options;
         $this->queries = $queries;
-        $this->isEnv = $isEnv;
         parent::__construct();
     }
 
@@ -86,17 +83,6 @@ class NamedPdoModule extends AbstractModule
 
     private function getLocator(): ConnectionLocator
     {
-        if ($this->isEnv) {
-            return ConnectionLocatorFactory::fromEnv(
-                $this->dsn,
-                $this->username,
-                $this->password,
-                $this->slave,
-                $this->options,
-                $this->queries
-            );
-        }
-
         return ConnectionLocatorFactory::fromInstance(
             $this->dsn,
             $this->username,

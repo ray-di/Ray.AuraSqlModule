@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Ray\AuraSqlModule;
 
-use Aura\Sql\ConnectionLocator;
 use Aura\Sql\ExtendedPdoInterface;
 use Ray\Di\AbstractModule;
 
@@ -80,19 +79,14 @@ class NamedPdoEnvModule extends AbstractModule
 
     private function configureMasterSlaveDsn(): void
     {
-        $locator = $this->getLocator();
+        $locator = ConnectionLocatorFactory::fromEnv(
+            $this->dsn,
+            $this->username,
+            $this->password,
+            $this->slave,
+            $this->options,
+            $this->queries
+        );
         $this->install(new AuraSqlReplicationModule($locator, $this->qualifer));
-    }
-
-    private function getLocator(): ConnectionLocator
-    {
-            return ConnectionLocatorFactory::fromEnv(
-                $this->dsn,
-                $this->username,
-                $this->password,
-                $this->slave,
-                $this->options,
-                $this->queries
-            );
     }
 }
