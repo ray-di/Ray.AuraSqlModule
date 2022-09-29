@@ -38,8 +38,6 @@ class AuraSqEnvlModuleTest extends TestCase
         $injector = new Injector($module, __DIR__ . '/tmp');
         $instance = $injector->getInstance(ExtendedPdoInterface::class);
         $this->assertInstanceOf(ExtendedPdo::class, $instance);
-        $connection = $injector->getInstance(Connection::class);
-        $this->assertTrue($connection->isSame('TEST_DSN', 'TEST_USER', 'TEST_PASSWORD', true));
         // test singleton
         $instance2 = $injector->getInstance(ExtendedPdoInterface::class);
         $this->assertSame(spl_object_hash($instance), spl_object_hash($instance2));

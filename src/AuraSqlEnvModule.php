@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Ray\AuraSqlModule;
 
-use Aura\Sql\ExtendedPdoInterface;
 use Ray\Di\AbstractModule;
-use Ray\Di\Scope;
 
 class AuraSqlEnvModule extends AbstractModule
 {
@@ -51,28 +49,7 @@ class AuraSqlEnvModule extends AbstractModule
      */
     protected function configure(): void
     {
-        $this->slave ? $this->configureMasterSlaveDsn() : $this->configureSingleDsn();
+        $this->install(new NamedPdoEnvModule('', $this->dsn, $this->username, $this->password, $this->slave, $this->options, $this->queries));
         $this->install(new AuraSqlBaseModule($this->dsn));
-    }
-
-    private function configureSingleDsn(): void
-    {
-        $this->bind(Connection::class)->toInstance(
-            new Connection($this->dsn, $this->username, $this->password, $this->options, $this->queries)
-        );
-        $this->bind(ExtendedPdoInterface::class)->toProvider(ExtendedPdoProvider::class)->in(Scope::SINGLETON);
-    }
-
-    public function configureMasterSlaveDsn(): void
-    {
-        $locator = ConnectionLocatorFactory::fromEnv(
-            $this->dsn,
-            $this->username,
-            $this->password,
-            $this->slave,
-            $this->options,
-            $this->queries
-        );
-        $this->install(new AuraSqlReplicationModule($locator));
     }
 }
