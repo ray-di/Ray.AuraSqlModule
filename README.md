@@ -31,7 +31,7 @@ class AppModule extends AbstractModule
                 'password',
                 'slave1,slave2,slave3' // optional slave server list
                 $options,              // optional key=>value array of driver-specific connection options
-                $queris                // Queries to execute after the connection.
+                $queries               // Queries to execute after the connection.
         );
     }
 }
@@ -47,7 +47,7 @@ Use AuraSqlEnvModule to get the value from the environment variable each time at
                 'PDO_PASSWORD',        // getenv('PDO_PASSWORD')
                 'PDO_SLAVE'            // getenv('PDO_SLAVE')
                 $options,              // optional key=>value array of driver-specific connection options
-                $queris                // Queries to execute after the connection.
+                $queries               // Queries to execute after the connection.
         );
 ```
 
