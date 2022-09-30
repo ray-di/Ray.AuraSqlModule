@@ -11,6 +11,6 @@ class FakeNamedQualifierModule extends AbstractModule
      */
     protected function configure()
     {
-        $this->install(new NamedPdoModule('log_db', 'sqlite::memory:', '', '', 'slave1'));
+        $this->install(new NamedPdoModule('log_db', 'mysql:host=localhost;dbname=master', '', '', 'slave1'));
     }
 }

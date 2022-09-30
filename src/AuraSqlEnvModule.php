@@ -4,33 +4,43 @@ declare(strict_types=1);
 
 namespace Ray\AuraSqlModule;
 
-use Ray\AuraSqlModule\Annotation\EnvAuth;
 use Ray\Di\AbstractModule;
 
 class AuraSqlEnvModule extends AbstractModule
 {
     private string $dsn;
-    private string $user;
+    private string $username;
     private string $password;
     private string $slave;
 
-    /** @var array<mixed> */
+    /** @var array<string> */
     private array $options;
 
+    /** @var array<string> */
+    private array $queries;
+
     /**
-     * @param string       $dsn      Data Source Name (DSN)
-     * @param string       $user     User name for the DSN string
-     * @param string       $password Password for the DSN string
-     * @param string       $slave    Comma separated slave host list
-     * @param array<mixed> $options  A key=>value array of driver-specific connection options
+     * @param string        $dsnKey      Env key for Data Source Name (DSN)
+     * @param string        $usernameKey Env key for Username for the DSN string
+     * @param string        $passwordKey Env key for Password for the DSN string
+     * @param string        $slaveKey    Env key for Comma separated slave host list
+     * @param array<string> $options     A key=>value array of driver-specific connection options
+     * @param array<string> $queries     Queries to execute after the connection.
      */
-    public function __construct(string $dsn, string $user = '', string $password = '', string $slave = '', array $options = [])
-    {
-        $this->dsn = $dsn;
-        $this->user = $user;
-        $this->password = $password;
-        $this->slave = $slave;
+    public function __construct(
+        string $dsnKey,
+        string $usernameKey = '',
+        string $passwordKey = '',
+        string $slaveKey = '',
+        array $options = [],
+        array $queries = []
+    ) {
+        $this->dsn = $dsnKey;
+        $this->username = $usernameKey;
+        $this->password = $passwordKey;
+        $this->slave = $slaveKey;
         $this->options = $options;
+        $this->queries = $queries;
         parent::__construct();
     }
 
@@ -39,16 +49,7 @@ class AuraSqlEnvModule extends AbstractModule
      */
     protected function configure(): void
     {
-        $this->bind()->annotatedWith(EnvAuth::class)->toInstance(
-            [
-                'dsn' => $this->dsn,
-                'user' => $this->user,
-                'password' => $this->password,
-            ]
-        );
-        $this->bind()->annotatedWith('pdo_dsn')->toProvider(EnvAuthProvider::class, 'dsn');
-        $this->bind()->annotatedWith('pdo_user')->toProvider(EnvAuthProvider::class, 'user');
-        $this->bind()->annotatedWith('pdo_pass')->toProvider(EnvAuthProvider::class, 'password');
-        $this->install(new AuraSqlModule('', '', '', $this->slave, $this->options));
+        $this->install(new NamedPdoEnvModule('', $this->dsn, $this->username, $this->password, $this->slave, $this->options, $this->queries));
+        $this->install(new AuraSqlBaseModule($this->dsn));
     }
 }

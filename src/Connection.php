@@ -9,34 +9,41 @@ use Aura\Sql\ExtendedPdo;
 class Connection
 {
     private string $dsn;
-    private string $id;
+    private string $username;
     private string $password;
 
     /** @var array<string> */
     private array $options;
 
     /** @var array<string> */
-    private array $attributes;
+    private array $queries;
     private ?ExtendedPdo $pdo = null;
 
     /**
      * @phpstan-param array<string> $options
-     * @phpstan-param array<string> $attributes
+     * @phpstan-param array<string> $queries
      */
-    public function __construct(string $dsn, string $id = '', string $password = '', array $options = [], array $attributes = [])
-    {
+    public function __construct(
+        string $dsn,
+        string $username = '',
+        string $password = '',
+        array $options = [],
+        array $queries = []
+    ) {
         $this->dsn = $dsn;
-        $this->id = $id;
+        $this->username = $username;
         $this->password = $password;
         $this->options = $options;
-        $this->attributes = $attributes;
+        $this->queries = $queries;
     }
 
     public function __invoke(): ExtendedPdo
     {
-        if (! $this->pdo instanceof ExtendedPdo) {
-            $this->pdo = new ExtendedPdo($this->dsn, $this->id, $this->password, $this->options, $this->attributes);
+        if ($this->pdo instanceof ExtendedPdo) {
+            return $this->pdo;
         }
+
+        $this->pdo = new ExtendedPdo($this->dsn, $this->username, $this->password, $this->options, $this->queries);
 
         return $this->pdo;
     }

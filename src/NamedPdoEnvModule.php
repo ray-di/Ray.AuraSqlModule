@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Ray\AuraSqlModule;
 
-use Aura\Sql\ConnectionLocator;
-use Aura\Sql\ExtendedPdo;
 use Aura\Sql\ExtendedPdoInterface;
 use Ray\Di\AbstractModule;
 
-class NamedPdoModule extends AbstractModule
+class NamedPdoEnvModule extends AbstractModule
 {
     public const PARSE_PDO_DSN_REGEX = '/(.*?)\:(host|server)=.*?;(.*)/i';
 
@@ -64,26 +62,24 @@ class NamedPdoModule extends AbstractModule
 
     private function configureSingleDsn(): void
     {
-        $this->bind(ExtendedPdoInterface::class)
-            ->annotatedWith($this->qualifer)
-            ->toConstructor(
-                ExtendedPdo::class,
-                "dsn={$this->qualifer}_dsn,username={$this->qualifer}_username,password={$this->qualifer}_password"
-            );
-        $this->bind()->annotatedWith("{$this->qualifer}_dsn")->toInstance($this->dsn);
-        $this->bind()->annotatedWith("{$this->qualifer}_username")->toInstance($this->username);
-        $this->bind()->annotatedWith("{$this->qualifer}_password")->toInstance($this->password);
+        $connection = new EnvConnection(
+            $this->dsn,
+            null,
+            $this->username,
+            $this->password,
+            $this->options,
+            $this->queries
+        );
+        $this->bind(EnvConnection::class)->annotatedWith($this->qualifer)->toInstance($connection);
+        $this->bind(ExtendedPdoInterface::class)->annotatedWith($this->qualifer)->toProvider(
+            NamedExtendedPdoProvider::class,
+            $this->qualifer
+        );
     }
 
     private function configureMasterSlaveDsn(): void
     {
-        $locator = $this->getLocator();
-        $this->install(new AuraSqlReplicationModule($locator, $this->qualifer));
-    }
-
-    private function getLocator(): ConnectionLocator
-    {
-        return ConnectionLocatorFactory::fromInstance(
+        $locator = ConnectionLocatorFactory::fromEnv(
             $this->dsn,
             $this->username,
             $this->password,
@@ -91,5 +87,6 @@ class NamedPdoModule extends AbstractModule
             $this->options,
             $this->queries
         );
+        $this->install(new AuraSqlReplicationModule($locator, $this->qualifer));
     }
 }
