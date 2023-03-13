@@ -9,6 +9,7 @@ use Aura\Sql\ExtendedPdoInterface;
 use Ray\AuraSqlModule\Annotation\ReadOnlyConnection;
 use Ray\AuraSqlModule\Annotation\WriteConnection;
 use Ray\Di\AbstractModule;
+use Ray\Di\Scope;
 
 class AuraSqlReplicationModule extends AbstractModule
 {
@@ -37,7 +38,8 @@ class AuraSqlReplicationModule extends AbstractModule
         // ReadOnlyConnection when GET, otherwise WriteConnection
         $this->bind(ExtendedPdoInterface::class)
             ->annotatedWith($this->qualifer)
-            ->toProvider(AuraSqlReplicationDbProvider::class, $this->qualifer);
+            ->toProvider(AuraSqlReplicationDbProvider::class, $this->qualifer)
+            ->in(Scope::SINGLETON);
 
         // @ReadOnlyConnection @WriteConnection
         $this->installReadWriteConnection();
