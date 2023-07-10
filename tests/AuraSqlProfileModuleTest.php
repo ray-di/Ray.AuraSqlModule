@@ -31,7 +31,7 @@ class AuraSqlProfileModuleTest extends TestCase
                 $this->bind(LoggerInterface::class)->toInstance(
                     new class extends AbstractLogger {
                         /** @inheritDoc */
-                        public function log($level, $message, array $context = [])
+                        public function log($level, $message, array $context = []): void
                         {
                             $replace = [];
                             foreach ($context as $key => $val) {
