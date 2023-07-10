@@ -17,7 +17,7 @@
         "pagerfanta/pagerfanta": "^3.5",
         "rize/uri-template": "^0.3.4",
         "doctrine/annotations": "^1.11",
-        "psr/log": "^1.1",
+        "psr/log": "^1.1 || ^2.0 || ^3.0",
         "symfony/polyfill-php81": "^1.24"
     },
     "require-dev": {
