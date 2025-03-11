@@ -13,7 +13,7 @@
         "ray/di": "^2.18",
         "ray/aop": "^2.17",
         "aura/sql": "^6.0",
-        "pagerfanta/pagerfanta": "^3.5",
+        "pagerfanta/pagerfanta": "^3.5 || ^4.0",
         "rize/uri-template": "^0.4",
         "doctrine/annotations": "^1.11 || ^2.0",
         "psr/log": "^1.1 || ^2.0 || ^3.0",
