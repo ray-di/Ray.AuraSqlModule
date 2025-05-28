@@ -61,8 +61,8 @@ Installing `AuraSqlReplicationModule` using a `connection locator` for master/sl
 ```php
 use Ray\Di\AbstractModule;
 use Ray\AuraSqlModule\AuraSqlModule;
-use Ray\AuraSqlModule\Annotation\AuraSqlConfig;
 use Aura\Sql\ConnectionLocator;
+use Aura\Sql\Connection;
 
 class AppModule extends AbstractModule
 {
