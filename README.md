@@ -81,7 +81,7 @@ You will now have a slave db connection when using HTTP GET, or a master db conn
 
 ## Multiple DB
 
-You may want to inject different connection destinations on the same DB interface with `@Named($qualifier)` annotation.
+You may want to inject different connection destinations on the same DB interface with `#[Named($qualifier)]` attribute.
 Two modules are provided. `NamedPdoModule` is for non replication use. and `AuraSqlReplicationModule` is for replication use.
 
 ```php
@@ -135,7 +135,7 @@ class AppModule extends AbstractModule
 
 ## Transaction
 
-Any method marked with `@Transactional` will have a transaction started before, and ended after it is called.
+Any method marked with `#[Transactional]` will have a transaction started before, and ended after it is called.
 
 ```php
 use Ray\AuraSqlModule\Annotation\WriteConnection; // important
