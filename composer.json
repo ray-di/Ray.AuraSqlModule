@@ -62,7 +62,7 @@
     "extra": {
         "bamarni-bin": {
             "bin-links": true,
-            "forwaard-command": true
+            "forward-command": true
         }
     }
 }
