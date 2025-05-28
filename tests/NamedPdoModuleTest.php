@@ -17,7 +17,7 @@ class NamedPdoModuleTest extends TestCase
     public function testModule()
     {
         $qualifer = 'log_db';
-        $instance = (new Injector(new NamedPdoModule($qualifer, 'sqlite::memory:'), __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class, $qualifer);
+        $instance = new Injector(new NamedPdoModule($qualifer, 'sqlite::memory:'), __DIR__ . '/tmp')->getInstance(ExtendedPdoInterface::class, $qualifer);
         $this->assertInstanceOf(ExtendedPdo::class, $instance);
     }
 
@@ -34,7 +34,7 @@ class NamedPdoModuleTest extends TestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $qualifer = 'log_db';
-        $instance = (new Injector(new FakeNamedReplicationModule(), __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class, $qualifer);
+        $instance = new Injector(new FakeNamedReplicationModule(), __DIR__ . '/tmp')->getInstance(ExtendedPdoInterface::class, $qualifer);
         assert($instance instanceof ExtendedPdo);
         $this->assertInstanceOf(ExtendedPdo::class, $instance);
 //        $this->assertSame('mysql:host=localhost;dbname=db', $instance->getDsn());
@@ -44,7 +44,7 @@ class NamedPdoModuleTest extends TestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
         $qualifer = 'log_db';
-        $instance = (new Injector(new FakeNamedReplicationModule(), __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class, $qualifer);
+        $instance = new Injector(new FakeNamedReplicationModule(), __DIR__ . '/tmp')->getInstance(ExtendedPdoInterface::class, $qualifer);
         $this->assertInstanceOf(ExtendedPdo::class, $instance);
         $this->assertStringContainsString('mysql:host=slave', $this->getDsn($instance));
     }
@@ -52,7 +52,7 @@ class NamedPdoModuleTest extends TestCase
     public function testNoHost()
     {
         $qualifer = 'log_db';
-        $instance = (new Injector(new FakeNamedQualifierModule(), __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class, $qualifer);
+        $instance = new Injector(new FakeNamedQualifierModule(), __DIR__ . '/tmp')->getInstance(ExtendedPdoInterface::class, $qualifer);
         /** @var ExtendedPdo $instance */
         $this->assertSame('mysql:host=slave1;dbname=master', $this->getDsn($instance));
     }

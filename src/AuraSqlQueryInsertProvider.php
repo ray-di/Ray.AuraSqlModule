@@ -11,7 +11,7 @@ use Ray\AuraSqlModule\Annotation\AuraSqlQueryConfig;
 use Ray\Di\ProviderInterface;
 
 /** @implements ProviderInterface<InsertInterface> */
-final class AuraSqlQueryInsertProvider implements ProviderInterface
+final readonly class AuraSqlQueryInsertProvider implements ProviderInterface
 {
     /**
      * @param string $db The database type
@@ -19,7 +19,7 @@ final class AuraSqlQueryInsertProvider implements ProviderInterface
      * @AuraSqlQueryConfig
      */
     #[AuraSqlQueryConfig]
-    public function __construct(private readonly string $db)
+    public function __construct(private string $db)
     {
     }
 
@@ -29,6 +29,6 @@ final class AuraSqlQueryInsertProvider implements ProviderInterface
     #[Override]
     public function get(): InsertInterface
     {
-        return (new QueryFactory($this->db))->newInsert();
+        return new QueryFactory($this->db)->newInsert();
     }
 }

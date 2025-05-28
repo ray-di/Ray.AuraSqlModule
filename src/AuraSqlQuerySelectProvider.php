@@ -11,7 +11,7 @@ use Ray\AuraSqlModule\Annotation\AuraSqlQueryConfig;
 use Ray\Di\ProviderInterface;
 
 /** @implements ProviderInterface<SelectInterface> */
-final class AuraSqlQuerySelectProvider implements ProviderInterface
+final readonly class AuraSqlQuerySelectProvider implements ProviderInterface
 {
     /**
      * @param string $db The database type
@@ -19,7 +19,7 @@ final class AuraSqlQuerySelectProvider implements ProviderInterface
      * @AuraSqlQueryConfig
      */
     #[AuraSqlQueryConfig()]
-    public function __construct(private readonly string $db)
+    public function __construct(private string $db)
     {
     }
 
@@ -29,6 +29,6 @@ final class AuraSqlQuerySelectProvider implements ProviderInterface
     #[Override]
     public function get(): SelectInterface
     {
-        return (new QueryFactory($this->db))->newSelect();
+        return new QueryFactory($this->db)->newSelect();
     }
 }

@@ -9,9 +9,9 @@ use Override;
 use Psr\Log\LoggerInterface;
 use Ray\Di\Provider;
 
-final class ProfilerProvider implements Provider
+final readonly class ProfilerProvider implements Provider
 {
-    public function __construct(private readonly LoggerInterface $logger)
+    public function __construct(private LoggerInterface $logger)
     {
     }
 

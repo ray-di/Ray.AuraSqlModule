@@ -8,9 +8,9 @@ use Aura\Sql\ExtendedPdoInterface;
 use Aura\SqlQuery\Common\SelectInterface;
 use Override;
 
-final class AuraSqlQueryPagerFactory implements AuraSqlQueryPagerFactoryInterface
+final readonly class AuraSqlQueryPagerFactory implements AuraSqlQueryPagerFactoryInterface
 {
-    public function __construct(private readonly AuraSqlQueryPagerInterface $auraSqlQueryPager)
+    public function __construct(private AuraSqlQueryPagerInterface $auraSqlQueryPager)
     {
     }
 

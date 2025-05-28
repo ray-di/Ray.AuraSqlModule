@@ -13,7 +13,7 @@ use SensitiveParameter;
 
 final class AuraSqlModule extends AbstractModule
 {
-    public const PARSE_PDO_DSN_REGEX = '/(.*?):(?:(host|server)=.*?;)?(.*)/i';
+    public const string PARSE_PDO_DSN_REGEX = '/(.*?):(?:(host|server)=.*?;)?(.*)/i';
 
     /**
      * @param string        $dsn      Data Source Name (DSN)

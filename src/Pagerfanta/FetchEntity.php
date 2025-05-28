@@ -11,12 +11,12 @@ use PDO;
 use function assert;
 use function class_exists;
 
-final class FetchEntity implements FetcherInterface
+final readonly class FetchEntity implements FetcherInterface
 {
-    private readonly string $entity;
+    private string $entity;
 
     /** @param class-string $entity */
-    public function __construct(private readonly ExtendedPdoInterface $pdo, string $entity)
+    public function __construct(private ExtendedPdoInterface $pdo, string $entity)
     {
         assert(class_exists($entity));
         $this->entity = $entity;

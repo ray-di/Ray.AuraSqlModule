@@ -6,9 +6,9 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Override;
 
-final class DefaultRouteGenerator implements RouteGeneratorInterface
+final readonly class DefaultRouteGenerator implements RouteGeneratorInterface
 {
-    public function __construct(private readonly string $uri)
+    public function __construct(private string $uri)
     {
     }
 

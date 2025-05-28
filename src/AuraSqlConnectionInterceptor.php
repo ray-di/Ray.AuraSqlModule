@@ -14,16 +14,16 @@ use ReflectionProperty;
 
 use function in_array;
 
-final class AuraSqlConnectionInterceptor implements MethodInterceptor
+final readonly class AuraSqlConnectionInterceptor implements MethodInterceptor
 {
-    public const PROP = 'pdo';
+    public const string PROP = 'pdo';
 
     /** @phpstan-param array<string> $readsMethods */
     public function __construct(
-        private readonly ConnectionLocatorInterface $connectionLocator,
+        private ConnectionLocatorInterface $connectionLocator,
         /** @var string[] */
         #[Read]
-        private readonly array $readsMethods
+        private array $readsMethods
     ) {
     }
 

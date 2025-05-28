@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Override;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 use const PHP_EOL;
 
@@ -76,11 +77,8 @@ class ExtendedPdoAdapterTest extends AbstractPdoTestCase
         ];
     }
 
-    /**
-     * @phpstan-param array<mixed> $params
-     *
-     * @dataProvider splProvider
-     */
+    /** @phpstan-param array<mixed> $params */
+    #[DataProvider('splProvider')]
     public function testRewriteCountQuery(string $sql, array $params, string $expectedCountQuery, int $expectedNbResult): void
     {
         $pdoAdapter = new ExtendedPdoAdapter($this->pdo, $sql, $params);

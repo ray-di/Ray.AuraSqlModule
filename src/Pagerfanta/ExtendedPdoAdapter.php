@@ -25,12 +25,12 @@ use const PHP_EOL;
  * @template T
  * @implements AdapterInterface<T>
  */
-final class ExtendedPdoAdapter implements AdapterInterface
+final readonly class ExtendedPdoAdapter implements AdapterInterface
 {
-    private readonly FetcherInterface $fetcher;
+    private FetcherInterface $fetcher;
 
     /** @param array<mixed> $params */
-    public function __construct(private readonly ExtendedPdoInterface $pdo, private readonly string $sql, private readonly array $params, ?FetcherInterface $fetcher = null)
+    public function __construct(private ExtendedPdoInterface $pdo, private string $sql, private array $params, ?FetcherInterface $fetcher = null)
     {
         $this->fetcher = $fetcher ?? new FetchAssoc($this->pdo);
     }
