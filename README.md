@@ -30,9 +30,10 @@ class AppModule extends AbstractModule
                 'mysql:host=localhost;dbname=test',
                 'username',
                 'password',
-                'slave1,slave2,slave3' // optional slave server list
-                $options,              // optional key=>value array of driver-specific connection options
-                $queries               // Queries to execute after the connection.
+                'slave1,slave2,slave3', // optional slave server list
+                $options,               // optional key=>value array of driver-specific connection options
+                $queries                // Queries to execute after the connection.
+            )
         );
     }
 }
@@ -41,52 +42,51 @@ class AppModule extends AbstractModule
 Use AuraSqlEnvModule to get the value from the environment variable each time at runtime, instead of specifying the value directly.
 
 ```php
-        $this->install(
-            new AuraSqlEnvModule(
-                'PDO_DSN',             // getenv('PDO_DSN')
-                'PDO_USER',            // getenv('PDO_USER')
-                'PDO_PASSWORD',        // getenv('PDO_PASSWORD')
-                'PDO_SLAVE'            // getenv('PDO_SLAVE')
-                $options,              // optional key=>value array of driver-specific connection options
-                $queries               // Queries to execute after the connection.
-        );
+$this->install(
+    new AuraSqlEnvModule(
+        'PDO_DSN',             // getenv('PDO_DSN')
+        'PDO_USER',            // getenv('PDO_USER')
+        'PDO_PASSWORD',        // getenv('PDO_PASSWORD')
+        'PDO_SLAVE',           // getenv('PDO_SLAVE')
+        $options,              // optional key=>value array of driver-specific connection options
+        $queries               // Queries to execute after the connection.
+    )
+);
 ```
 
 ## Replication
- 
- Installing `AuraSqlReplicationModule` using a `connection locator` for master/slave connections.
- 
- ```php
- use Ray\Di\AbstractModule;
- use Ray\AuraSqlModule\AuraSqlModule;
- use Ray\AuraSqlModule\Annotation\AuraSqlConfig;
- use Aura\Sql\ConnectionLocator;
- 
- class AppModule extends AbstractModule
- {
-     protected function configure()
-     {
-         $locator = new ConnectionLocator;
-         $locator->setWrite('master', new Connection('mysql:host=localhost;dbname=master', 'id', 'pass'));
-         $locator->setRead('slave1',  new Connection('mysql:host=localhost;dbname=slave1', 'id', 'pass'));
-         $locator->setRead('slave2',  new Connection('mysql:host=localhost;dbname=slave2', 'id', 'pass'));
-         $this->install(new AuraSqlReplicationModule($locator));
-     }
- }
- 
- ```
- 
+
+Installing `AuraSqlReplicationModule` using a `connection locator` for master/slave connections.
+
+```php
+use Ray\Di\AbstractModule;
+use Ray\AuraSqlModule\AuraSqlModule;
+use Ray\AuraSqlModule\Annotation\AuraSqlConfig;
+use Aura\Sql\ConnectionLocator;
+
+class AppModule extends AbstractModule
+{
+    protected function configure()
+    {
+        $locator = new ConnectionLocator;
+        $locator->setWrite('master', new Connection('mysql:host=localhost;dbname=master', 'id', 'pass'));
+        $locator->setRead('slave1',  new Connection('mysql:host=localhost;dbname=slave1', 'id', 'pass'));
+        $locator->setRead('slave2',  new Connection('mysql:host=localhost;dbname=slave2', 'id', 'pass'));
+        $this->install(new AuraSqlReplicationModule($locator));
+    }
+}
+```
+
 You will now have a slave db connection when using HTTP GET, or a master db connection in other HTTP methods.
 
 ## Multiple DB
 
-You may want to inject different connection destinations on the same DB interface with `@Named($qaulifier)` annotation.
+You may want to inject different connection destinations on the same DB interface with `@Named($qualifier)` annotation.
 Two modules are provided. `NamedPdoModule` is for non replication use. and `AuraSqlReplicationModule` is for replication use.
-
 
 ```php
 #[Inject]
-public function setLoggerDb(#[Named('log_db') ExtendedPdoInterface $pdo)
+public function setLoggerDb(#[Named('log_db')] ExtendedPdoInterface $pdo)
 {
     // ...
 }
@@ -102,7 +102,7 @@ class AppModule extends AbstractModule
 {
     protected function configure()
     {
-        $this->install(new NamedPdoModule('log_db', 'mysql:host=localhost;dbname=log', 'username', 
+        $this->install(new NamedPdoModule('log_db', 'mysql:host=localhost;dbname=log', 'username', 'password'));
     }
 }
 ```
@@ -114,14 +114,14 @@ class AppModule extends AbstractModule
 {
     protected function configure()
     {
-        $this->install(new NamedPdoEnvModule('log_db', 'LOG_DSN', 'LOG_USERNAME', 
+        $this->install(new NamedPdoEnvModule('log_db', 'LOG_DSN', 'LOG_USERNAME', 'LOG_PASSWORD'));
     }
 }
 ```
 
 ### with replication
 
-You can set `$qaulifer` in 2nd parameter of AuraSqlReplicationModule.
+You can set `$qualifier` in 2nd parameter of AuraSqlReplicationModule.
 
 ```php
 class AppModule extends AbstractModule
@@ -138,7 +138,6 @@ class AppModule extends AbstractModule
 Any method marked with `@Transactional` will have a transaction started before, and ended after it is called.
 
 ```php
-
 use Ray\AuraSqlModule\Annotation\WriteConnection; // important
 use Ray\AuraSqlModule\Annotation\Transactional;   // important
 
@@ -156,83 +155,141 @@ class User
 
 ## Query Builder
 
-[Aura.SqlQuery](https://github.com/auraphp/Aura.SqlQuery) provides query builders for MySQL, Postgres, SQLite, and Microsoft SQL Server. Following four interfaces are bound and setter trait for them are available.
+[Aura.SqlQuery](https://github.com/auraphp/Aura.SqlQuery) provides query builders for MySQL, Postgres, SQLite, and Microsoft SQL Server. Following four interfaces are bound and can be injected via constructor:
 
-QueryBuilder interface
-
- * `Aura\SqlQuery\Common\SelectInterface`
- * `Aura\SqlQuery\Common\InsertInterface`
- * `Aura\SqlQuery\Common\UpdateInterface`
- * `Aura\SqlQuery\Common\DeleteInterface`
-
-QueryBuilder setter trait
-
- * `Ray\AuraSqlModule\AuraSqlSelectInject`
- * `Ray\AuraSqlModule\AuraSqlInsertInject`
- * `Ray\AuraSqlModule\AuraSqlUpdateInject`
- * `Ray\AuraSqlModule\AuraSqlDeleteInject`
+* `Aura\SqlQuery\Common\SelectInterface`
+* `Aura\SqlQuery\Common\InsertInterface`
+* `Aura\SqlQuery\Common\UpdateInterface`
+* `Aura\SqlQuery\Common\DeleteInterface`
 
 ```php
-use Ray\AuraSqlModule\AuraSqlSelectInject;
-clas Foo
+use Aura\SqlQuery\Common\SelectInterface;
+use Aura\Sql\ExtendedPdoInterface;
+
+class UserRepository
 {
-    use AuraSqlSelectInject;
-    
-    public function bar()
+    public function __construct(
+        private readonly SelectInterface $select,
+        private readonly ExtendedPdoInterface $pdo
+    ) {}
+
+    public function findById(int $id): array
     {
-        /* @var $select \Aura\SqlQuery\Common\SelectInterface */
-        $this->select // 
+        $statement = $this->select
             ->distinct()                    // SELECT DISTINCT
-            ->cols(array(                   // select these columns
+            ->cols([                        // select these columns
                 'id',                       // column name
                 'name AS namecol',          // one way of aliasing
                 'col_name' => 'col_alias',  // another way of aliasing
                 'COUNT(foo) AS foo_count'   // embed calculations directly
-            ))
-            ->from('foo AS f');              // FROM these tables
-        $sth = $this->pdo->prepare($this->select->getStatement());
-        // bind the values and execute
-        $sth->execute($this->select->getBindValues());
-        // get the results back as an associative array
-        $result = $sth->fetch(PDO::FETCH_ASSOC);
-         = $sth->fetch(PDO::FETCH_ASSOC);
+            ])
+            ->from('users AS u')            // FROM these tables
+            ->where('id = :id')
+            ->getStatement();
+
+        return $this->pdo->fetchAssoc($statement, ['id' => $id]);
+    }
+}
+```
+
+### Multiple Query Builders
+
+```php
+use Aura\SqlQuery\Common\SelectInterface;
+use Aura\SqlQuery\Common\InsertInterface;
+use Aura\SqlQuery\Common\UpdateInterface;
+use Aura\Sql\ExtendedPdoInterface;
+
+class UserService
+{
+    public function __construct(
+        private readonly SelectInterface $select,
+        private readonly InsertInterface $insert,
+        private readonly UpdateInterface $update,
+        private readonly ExtendedPdoInterface $pdo
+    ) {}
+
+    public function createUser(array $userData): int
+    {
+        $statement = $this->insert
+            ->into('users')
+            ->cols($userData)
+            ->getStatement();
+
+        $this->pdo->perform($statement, $this->insert->getBindValues());
+        
+        return (int) $this->pdo->lastInsertId();
+    }
+
+    public function updateUser(int $id, array $userData): bool
+    {
+        $statement = $this->update
+            ->table('users')
+            ->cols($userData)
+            ->where('id = :id')
+            ->bindValue('id', $id)
+            ->getStatement();
+
+        return $this->pdo->perform($statement, $this->update->getBindValues());
+    }
+}
 ```
 
 ## Pagination
 
-Pagination service is provided for both `ExtendedPdo` raw sql and `Select` query builder. 
+Pagination service is provided for both `ExtendedPdo` raw sql and `Select` query builder.
 
 **ExtendedPdo**
 
 ```php
+use Ray\AuraSqlModule\Pagerfanta\AuraSqlPagerFactoryInterface;
+use Aura\Sql\ExtendedPdoInterface;
 
-use Ray\AuraSqlModule\AuraSqlPagerInject;
-
-class Foo
+class UserListService
 {
-    use AuraSqlPagerInject;
+    public function __construct(
+        private readonly AuraSqlPagerFactoryInterface $pagerFactory,
+        private readonly ExtendedPdoInterface $pdo
+    ) {}
 
-    publuc function bar()
-    {   
-        // ...     
-        $pager = $this->pagerFactory->newInstance($pdo, $sql, $params, 10, '/?page={page}&category=sports'); // 10 items per page
-        $page = $pager[2]; // page 2
+    public function getUserList(int $page): Page
+    {
+        $sql = 'SELECT * FROM users WHERE active = :active';
+        $params = ['active' => 1];
+        $pager = $this->pagerFactory->newInstance($this->pdo, $sql, $params, 10, '/?page={page}&category=users');
+        
+        return $pager[$page];
+    }
+}
 ```
 
 **Select query builder**
 
 ```php
-use Ray\AuraSqlModule\Pagerfanta\AuraSqlQueryPagerInject;
+use Ray\AuraSqlModule\Pagerfanta\AuraSqlQueryPagerFactoryInterface;
+use Aura\SqlQuery\Common\SelectInterface;
+use Aura\Sql\ExtendedPdoInterface;
 
-class Foo
+class ProductListService
 {
-    use AuraSqlQueryPagerInject;
+    public function __construct(
+        private readonly AuraSqlQueryPagerFactoryInterface $queryPagerFactory,
+        private readonly SelectInterface $select,
+        private readonly ExtendedPdoInterface $pdo
+    ) {}
 
-    publuc function bar()
+    public function getProductList(int $page, string $category): Page
     {
-        // ...     
-        $pager = $this->queryPagerFactory->newInstance($pdo, $select, 10, '/?page={page}&category=sports');
-        $page = $pager[2]; // page 2
+        $select = $this->select
+            ->from('products')
+            ->where('category = :category')
+            ->bindValue('category', $category);
+            
+        $pager = $this->queryPagerFactory->newInstance($this->pdo, $select, 10, '/?page={page}&category=' . $category);
+        
+        return $pager[$page];
+    }
+}
 ```
 
 An array access with page number returns `Page` value object.
@@ -249,12 +306,14 @@ An array access with page number returns `Page` value object.
 // (string) $page // pager html
 ```
 
-It is iteratable.
+It is iterable.
 
 ```php
 foreach ($page as $item) {
- // ...
+    // ...
+}
 ```
+
 ### View
 
 The view template can be changed with binding. See more at [Pagerfanta](https://github.com/whiteoctober/Pagerfanta#views).
@@ -270,8 +329,8 @@ $this->bind()->annotatedWith(PagerViewOption::class)->toInstance($pagerViewOptio
 
 ## Profile
 
-To log SQL execution, install `AuraSqlProfileModule`. 
-It will be logged by a logger bound to the [PSR-3](https://www.php-fig.org/psr/psr-3/) logger. This example binds a minimal function logger created in an unnamed class.
+To log SQL execution, install `AuraSqlProfileModule`.
+It will be logged by a logger bound to the [PSR-3](https://www.php-fig.org/psr/psr-3/) logger. This example binds a minimal function logger created in an anonymous class.
 
 ```php
 class DevModule extends AbstractModule
@@ -281,7 +340,6 @@ class DevModule extends AbstractModule
         // ...
         $this->install(new AuraSqlProfileModule());
         $this->bind(LoggerInterface::class)->toInstance(
-            /** 
             new class extends AbstractLogger {
                 /** @inheritDoc */
                 public function log($level, $message, array $context = [])
@@ -297,5 +355,6 @@ class DevModule extends AbstractModule
                 }
             }
         );
+    }
 }
 ```
