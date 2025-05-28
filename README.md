@@ -133,7 +133,7 @@ class AppModule extends AbstractModule
         $this->install(new NamedPdoEnvModule('log_db', 'LOG_DSN', 'LOG_USERNAME', 
     }
 }
-
+```
 
 ### with replication
 
