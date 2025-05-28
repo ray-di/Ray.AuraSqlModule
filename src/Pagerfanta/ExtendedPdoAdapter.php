@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
+use Override;
 use Pagerfanta\Adapter\AdapterInterface;
 
 use function assert;
@@ -24,12 +25,12 @@ use const PHP_EOL;
  * @template T
  * @implements AdapterInterface<T>
  */
-class ExtendedPdoAdapter implements AdapterInterface
+final readonly class ExtendedPdoAdapter implements AdapterInterface
 {
-    private readonly FetcherInterface $fetcher;
+    private FetcherInterface $fetcher;
 
     /** @param array<mixed> $params */
-    public function __construct(private readonly ExtendedPdoInterface $pdo, private readonly string $sql, private readonly array $params, ?FetcherInterface $fetcher = null)
+    public function __construct(private ExtendedPdoInterface $pdo, private string $sql, private array $params, ?FetcherInterface $fetcher = null)
     {
         $this->fetcher = $fetcher ?? new FetchAssoc($this->pdo);
     }
@@ -39,6 +40,7 @@ class ExtendedPdoAdapter implements AdapterInterface
      *
      * @SuppressWarnings(PHPMD.GotoStatement) // @phpstan-ignore-line
      */
+    #[Override]
     public function getNbResults(): int
     {
         // be smart and try to guess the total number of records
@@ -72,6 +74,7 @@ class ExtendedPdoAdapter implements AdapterInterface
      *
      * @return array<mixed>
      */
+    #[Override]
     public function getSlice(int $offset, int $length): iterable
     {
         $sql = $this->sql . $this->getLimitClause($offset, $length);

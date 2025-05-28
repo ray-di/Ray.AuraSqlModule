@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdo;
+use SensitiveParameter;
 
 use function array_rand;
 use function explode;
@@ -25,6 +26,7 @@ final class EnvConnection
         private readonly string $dsn,
         private readonly ?string $slave,
         private readonly string $username = '',
+        #[SensitiveParameter]
         private readonly string $password = '',
         /** @var array<string> */
         private readonly array $options = [],

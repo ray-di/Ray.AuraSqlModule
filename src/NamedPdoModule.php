@@ -7,11 +7,13 @@ namespace Ray\AuraSqlModule;
 use Aura\Sql\ConnectionLocator;
 use Aura\Sql\ExtendedPdo;
 use Aura\Sql\ExtendedPdoInterface;
+use Override;
 use Ray\Di\AbstractModule;
+use SensitiveParameter;
 
-class NamedPdoModule extends AbstractModule
+final class NamedPdoModule extends AbstractModule
 {
-    public const PARSE_PDO_DSN_REGEX = '/(.*?)\:(host|server)=.*?;(.*)/i';
+    public const string PARSE_PDO_DSN_REGEX = '/(.*?)\:(host|server)=.*?;(.*)/i';
 
     /**
      * @param string        $qualifer Qualifer for ExtendedPdoInterface
@@ -26,6 +28,7 @@ class NamedPdoModule extends AbstractModule
         private readonly string $qualifer,
         private readonly string $dsn,
         private readonly string $username = '',
+        #[SensitiveParameter]
         private readonly string $password = '',
         private readonly string $slave = '',
         private readonly array $options = [],
@@ -37,6 +40,7 @@ class NamedPdoModule extends AbstractModule
     /**
      * {@inheritDoc}
      */
+    #[Override]
     protected function configure(): void
     {
         $this->slave ? $this->configureMasterSlaveDsn()

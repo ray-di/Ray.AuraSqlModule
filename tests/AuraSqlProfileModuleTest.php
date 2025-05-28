@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdoInterface;
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LoggerInterface;
@@ -46,13 +47,13 @@ class AuraSqlProfileModuleTest extends TestCase
                 );
             }
         };
-        $instance = (new Injector($module, __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class);
+        $instance = new Injector($module, __DIR__ . '/tmp')->getInstance(ExtendedPdoInterface::class);
         $this->assertInstanceOf(ExtendedPdoInterface::class, $instance);
 
         return $instance;
     }
 
-    /** @depends testModule */
+    #[Depends('testModule')]
     public function testLog(ExtendedPdoInterface $pdo)
     {
         $pdo->exec(/** @lang sql */'CREATE TABLE user(name, age)');

@@ -5,21 +5,23 @@ declare(strict_types=1);
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocatorInterface;
+use Override;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 use ReflectionProperty;
 
-class AuraSqlMasterDbInterceptor implements MethodInterceptor
+final readonly class AuraSqlMasterDbInterceptor implements MethodInterceptor
 {
-    public const PROP = 'pdo';
+    public const string PROP = 'pdo';
 
-    public function __construct(private readonly ConnectionLocatorInterface $connectionLocator)
+    public function __construct(private ConnectionLocatorInterface $connectionLocator)
     {
     }
 
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function invoke(MethodInvocation $invocation)
     {
         $object = $invocation->getThis();

@@ -31,7 +31,7 @@ class AuraSqlLocatorModuleTest extends TestCase
         $modue = new NullModule();
         $modue->install(new AuraSqlMasterModule('sqlite::memory:', '', ''));
         $modue->install(new AuraSqlLocatorModule($this->locator, ['read'], ['write']));
-        $this->model = (new Injector($modue))->getInstance(FakeModel::class);
+        $this->model = new Injector($modue)->getInstance(FakeModel::class);
     }
 
     public function testLocator()

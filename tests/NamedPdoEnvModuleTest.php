@@ -21,21 +21,21 @@ class NamedPdoEnvModuleTest extends TestCase
     public function testSingletonModule()
     {
         $qualifer = 'log_db';
-        $instance = (new Injector(new NamedPdoEnvModule($qualifer, 'TEST_DSN'), __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class, $qualifer);
+        $instance = new Injector(new NamedPdoEnvModule($qualifer, 'TEST_DSN'), __DIR__ . '/tmp')->getInstance(ExtendedPdoInterface::class, $qualifer);
         $this->assertInstanceOf(ExtendedPdo::class, $instance);
     }
 
     public function testMasterSlaveModule()
     {
         $qualifer = 'log_db';
-        $instance = (new Injector(new NamedPdoEnvModule($qualifer, 'TEST_DSN', 'TEST_USERNAME', 'TEST_PASSWORD', 'SLAVE1,SLAVE2'), __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class, $qualifer);
+        $instance = new Injector(new NamedPdoEnvModule($qualifer, 'TEST_DSN', 'TEST_USERNAME', 'TEST_PASSWORD', 'SLAVE1,SLAVE2'), __DIR__ . '/tmp')->getInstance(ExtendedPdoInterface::class, $qualifer);
         $this->assertInstanceOf(ExtendedPdo::class, $instance);
     }
 
     public function testMasterSlaveModuleSingletonPdo()
     {
         $qualifer = 'log_db';
-        $instance = (new Injector(new NamedPdoEnvModule($qualifer, 'TEST_DSN', 'TEST_USERNAME', 'TEST_PASSWORD', 'SLAVE1,SLAVE2'), __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class, $qualifer);
+        $instance = new Injector(new NamedPdoEnvModule($qualifer, 'TEST_DSN', 'TEST_USERNAME', 'TEST_PASSWORD', 'SLAVE1,SLAVE2'), __DIR__ . '/tmp')->getInstance(ExtendedPdoInterface::class, $qualifer);
         $this->assertInstanceOf(ExtendedPdo::class, $instance);
     }
 }

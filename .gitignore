@@ -1,9 +1,10 @@
 /build/
 /vendor/
 /composer.lock
-/.phpunit.result.cache
 /tests/tmp/*
 /.phpcs-cache
 /.php_cs.cache
 /.phpcs-cache
+/.phpunit.cache
 /vendor-bin/tools/vendor/
+/.phpunit.result.cache

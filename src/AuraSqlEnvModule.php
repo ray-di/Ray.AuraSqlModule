@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Ray\AuraSqlModule;
 
+use Override;
 use Ray\Di\AbstractModule;
 
-class AuraSqlEnvModule extends AbstractModule
+final class AuraSqlEnvModule extends AbstractModule
 {
     /**
      * @param string        $dsn      Env key for Data Source Name (DSN)
@@ -30,6 +31,7 @@ class AuraSqlEnvModule extends AbstractModule
     /**
      * {@inheritDoc}
      */
+    #[Override]
     protected function configure(): void
     {
         $this->install(new NamedPdoEnvModule('', $this->dsn, $this->username, $this->password, $this->slave, $this->options, $this->queries));

@@ -54,7 +54,7 @@ class AuraSqlQueryModuleTest extends TestCase
 
     public function testInjectQuery()
     {
-        $fakeInject = (new Injector(new AuraSqlQueryModule('mysql')))->getInstance(FakeQueryInject::class);
+        $fakeInject = new Injector(new AuraSqlQueryModule('mysql'))->getInstance(FakeQueryInject::class);
         assert($fakeInject instanceof FakeQueryInject);
         [, $select, $insert, $update, $delete] = $fakeInject->get();
         $this->assertInstanceOf(SelectInterface::class, $select);

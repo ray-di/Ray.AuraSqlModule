@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdoInterface;
+use Override;
 use PDOException;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
@@ -13,15 +14,16 @@ use Ray\AuraSqlModule\Exception\RollbackException;
 
 use function count;
 
-class TransactionalInterceptor implements MethodInterceptor
+final readonly class TransactionalInterceptor implements MethodInterceptor
 {
-    public function __construct(private readonly ?ExtendedPdoInterface $pdo = null)
+    public function __construct(private ?ExtendedPdoInterface $pdo = null)
     {
     }
 
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function invoke(MethodInvocation $invocation)
     {
         $method = $invocation->getMethod();

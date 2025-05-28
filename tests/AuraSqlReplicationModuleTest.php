@@ -7,6 +7,7 @@ namespace Ray\AuraSqlModule;
 use Aura\Sql\ConnectionLocator;
 use Aura\Sql\ExtendedPdo;
 use Aura\Sql\ExtendedPdoInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
 
@@ -28,29 +29,29 @@ class AuraSqlReplicationModuleTest extends TestCase
         return [[$locator, $masterPdo, $slavePdo]];
     }
 
-    /** @dataProvider connectionProvider */
+    #[DataProvider('connectionProvider')]
     public function testLocatorSlave(ConnectionLocator $locator, ExtendedPdo $masterPdo, ExtendedPdo $slavePdo)
     {
         unset($masterPdo);
         $_SERVER['REQUEST_METHOD'] = 'GET';
-        $model = (new Injector(new AuraSqlReplicationModule($locator), __DIR__ . '/tmp'))->getInstance(FakeRepModel::class);
+        $model = new Injector(new AuraSqlReplicationModule($locator), __DIR__ . '/tmp')->getInstance(FakeRepModel::class);
         assert($model instanceof FakeRepModel);
         $this->assertInstanceOf(ExtendedPdo::class, $model->pdo);
         $this->assertSame($slavePdo, $model->pdo);
     }
 
-    /** @dataProvider connectionProvider */
+    #[DataProvider('connectionProvider')]
     public function testLocatorMaster(ConnectionLocator $locator, ExtendedPdo $masterPdo, ExtendedPdo $slavePdo)
     {
         unset($slavePdo);
         $_SERVER['REQUEST_METHOD'] = 'POST';
-        $model = (new Injector(new AuraSqlReplicationModule($locator), __DIR__ . '/tmp'))->getInstance(FakeRepModel::class);
+        $model = new Injector(new AuraSqlReplicationModule($locator), __DIR__ . '/tmp')->getInstance(FakeRepModel::class);
         assert($model instanceof FakeRepModel);
         $this->assertInstanceOf(ExtendedPdo::class, $model->pdo);
         $this->assertSame($masterPdo, $model->pdo);
     }
 
-    /** @dataProvider connectionProvider */
+    #[DataProvider('connectionProvider')]
     public function testLocatorMasterWithQualifer(ConnectionLocator $locator, ExtendedPdo $masterPdo, ExtendedPdo $slavePdo)
     {
         unset($masterPdo, $slavePdo);
@@ -59,8 +60,8 @@ class AuraSqlReplicationModuleTest extends TestCase
         /** @var ExtendedPdo $db1Master */
         /** @var ExtendedPdo $db2Master */
         [[$locator2]] = $this->connectionProvider();
-        $db1Master = (new Injector(new AuraSqlReplicationModule($locator, 'db1'), __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class, 'db1');
-        $db2Master = (new Injector(new AuraSqlReplicationModule($locator2, 'db2'), __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class, 'db2');
+        $db1Master = new Injector(new AuraSqlReplicationModule($locator, 'db1'), __DIR__ . '/tmp')->getInstance(ExtendedPdoInterface::class, 'db1');
+        $db2Master = new Injector(new AuraSqlReplicationModule($locator2, 'db2'), __DIR__ . '/tmp')->getInstance(ExtendedPdoInterface::class, 'db2');
         $this->assertInstanceOf(ExtendedPdo::class, $db1Master);
         $this->assertInstanceOf(ExtendedPdo::class, $db2Master);
         $this->assertNotSame($db1Master, $db2Master);

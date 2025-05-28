@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Ray\AuraSqlModule;
 
+use Override;
 use Ray\Aop\AbstractMatcher;
 use ReflectionClass;
 use ReflectionMethod;
 
 use function in_array;
 
-class IsInMethodMatcher extends AbstractMatcher
+final class IsInMethodMatcher extends AbstractMatcher
 {
     /**
      * {@inheritDoc}
@@ -20,6 +21,7 @@ class IsInMethodMatcher extends AbstractMatcher
      *
      * @codeCoverageIgnore
      */
+    #[Override]
     public function matchesClass(ReflectionClass $class, array $arguments): bool
     {
         unset($class, $arguments);
@@ -32,6 +34,7 @@ class IsInMethodMatcher extends AbstractMatcher
      *
      * @phpstan-param array<mixed> $arguments
      */
+    #[Override]
     public function matchesMethod(ReflectionMethod $method, array $arguments): bool
     {
         /** @var array<mixed> $firstArg */

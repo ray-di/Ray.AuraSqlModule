@@ -6,16 +6,18 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
 use Aura\SqlQuery\Common\SelectInterface;
+use Override;
 
-class AuraSqlQueryPagerFactory implements AuraSqlQueryPagerFactoryInterface
+final readonly class AuraSqlQueryPagerFactory implements AuraSqlQueryPagerFactoryInterface
 {
-    public function __construct(private readonly AuraSqlQueryPagerInterface $auraSqlQueryPager)
+    public function __construct(private AuraSqlQueryPagerInterface $auraSqlQueryPager)
     {
     }
 
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function newInstance(ExtendedPdoInterface $pdo, SelectInterface $select, $paging, $uriTemplate)
     {
         $this->auraSqlQueryPager->init($pdo, $select, $paging, new DefaultRouteGenerator($uriTemplate));

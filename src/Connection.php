@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdo;
+use SensitiveParameter;
 
-class Connection
+final class Connection
 {
     private ?ExtendedPdo $pdo = null;
 
@@ -17,6 +18,7 @@ class Connection
     public function __construct(
         private readonly string $dsn,
         private readonly string $username = '',
+        #[SensitiveParameter]
         private readonly string $password = '',
         /** @var array<string> */
         private readonly array $options = [],

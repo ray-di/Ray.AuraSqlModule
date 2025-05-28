@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
+use Override;
 use PDO;
 
 final readonly class FetchAssoc implements FetcherInterface
@@ -16,6 +17,7 @@ final readonly class FetchAssoc implements FetcherInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function __invoke(string $sql, array $params): array
     {
         return $this->pdo->perform($sql, $params)->fetchAll(PDO::FETCH_ASSOC);

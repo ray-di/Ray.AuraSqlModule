@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ray\AuraSqlModule\Pagerfanta;
 
+use PHPUnit\Framework\Attributes\Depends;
 use Ray\AuraSqlModule\AuraSqlModule;
 use Ray\AuraSqlModule\FakePagerInject;
 use Ray\Di\Injector;
@@ -14,7 +15,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
 {
     public function testNewInstance(): AuraSqlPagerInterface
     {
-        $factory = (new Injector(new AuraSqlPagerModule()))->getInstance(AuraSqlPagerFactoryInterface::class);
+        $factory = new Injector(new AuraSqlPagerModule())->getInstance(AuraSqlPagerFactoryInterface::class);
         /** @var AuraSqlPagerFactoryInterface $factory */
         $this->assertInstanceOf(AuraSqlPagerFactory::class, $factory);
         $sql = 'SELECT * FROM posts';
@@ -26,7 +27,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
 
     public function testNewInstanceWithBinding(): AuraSqlPagerInterface
     {
-        $factory = (new Injector(new AuraSqlPagerModule()))->getInstance(AuraSqlPagerFactoryInterface::class);
+        $factory = new Injector(new AuraSqlPagerModule())->getInstance(AuraSqlPagerFactoryInterface::class);
         /** @var AuraSqlPagerFactoryInterface $factory */
         $this->assertInstanceOf(AuraSqlPagerFactory::class, $factory);
         $sql = 'SELECT * FROM posts where id = :id';
@@ -37,7 +38,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
         return $pager;
     }
 
-    /** @depends testNewInstance */
+    #[Depends('testNewInstance')]
     public function testArrayAccess(AuraSqlPagerInterface $pager): void
     {
         $page = $pager[2];
@@ -57,7 +58,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
         $this->assertSame(50, $page->total);
     }
 
-    /** @depends testNewInstance */
+    #[Depends('testNewInstance')]
     public function testArrayAccessWithMaxPage(AuraSqlPagerInterface $pager)
     {
         $page = $pager[50];
@@ -77,7 +78,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
         $this->assertSame(50, $page->total);
     }
 
-    /** @depends testNewInstanceWithBinding */
+    #[Depends('testNewInstanceWithBinding')]
     public function testArrayAccessWithBinding(AuraSqlPagerInterface $pager)
     {
         $page = $pager[1];
@@ -99,7 +100,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
 
     public function testInjectPager()
     {
-        $fakeInject = (new Injector(new AuraSqlModule('')))->getInstance(FakePagerInject::class);
+        $fakeInject = new Injector(new AuraSqlModule(''))->getInstance(FakePagerInject::class);
         assert($fakeInject instanceof FakePagerInject);
         [$pager, $queryPager] = $fakeInject->get();
         $this->assertInstanceOf(AuraSqlPagerFactoryInterface::class, $pager);

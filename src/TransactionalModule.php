@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace Ray\AuraSqlModule;
 
+use Override;
 use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\Di\AbstractModule;
 
-class TransactionalModule extends AbstractModule
+final class TransactionalModule extends AbstractModule
 {
     /**
      * {@inheritDoc}
      */
+    #[Override]
     protected function configure(): void
     {
         // @Transactional

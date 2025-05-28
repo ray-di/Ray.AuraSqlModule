@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
+use Override;
 use PDO;
 
 use function assert;
 use function class_exists;
 
-class FetchEntity implements FetcherInterface
+final readonly class FetchEntity implements FetcherInterface
 {
-    private readonly string $entity;
+    private string $entity;
 
     /** @param class-string $entity */
-    public function __construct(private readonly ExtendedPdoInterface $pdo, string $entity)
+    public function __construct(private ExtendedPdoInterface $pdo, string $entity)
     {
         assert(class_exists($entity));
         $this->entity = $entity;
@@ -24,6 +25,7 @@ class FetchEntity implements FetcherInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function __invoke(string $sql, array $params): array
     {
         $pdoStatement = $this->pdo->perform($sql, $params);

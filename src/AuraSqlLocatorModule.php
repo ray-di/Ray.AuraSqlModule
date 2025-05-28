@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocatorInterface;
+use Override;
 use Ray\AuraSqlModule\Annotation\AuraSql;
 use Ray\AuraSqlModule\Annotation\Read;
 use Ray\AuraSqlModule\Annotation\ReadOnlyConnection;
@@ -14,7 +15,7 @@ use Ray\Di\AbstractModule;
 
 use function array_merge;
 
-class AuraSqlLocatorModule extends AbstractModule
+final class AuraSqlLocatorModule extends AbstractModule
 {
     /**
      * @phpstan-param array<string> $readMethods
@@ -34,6 +35,7 @@ class AuraSqlLocatorModule extends AbstractModule
     /**
      * {@inheritDoc}
      */
+    #[Override]
     protected function configure(): void
     {
         if ((bool) $this->readMethods && (bool) $this->writeMethods) {

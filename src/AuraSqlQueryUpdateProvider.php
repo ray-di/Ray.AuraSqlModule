@@ -6,11 +6,12 @@ namespace Ray\AuraSqlModule;
 
 use Aura\SqlQuery\Common\UpdateInterface;
 use Aura\SqlQuery\QueryFactory;
+use Override;
 use Ray\AuraSqlModule\Annotation\AuraSqlQueryConfig;
 use Ray\Di\ProviderInterface;
 
 /** @implements ProviderInterface<UpdateInterface> */
-class AuraSqlQueryUpdateProvider implements ProviderInterface
+final readonly class AuraSqlQueryUpdateProvider implements ProviderInterface
 {
     /**
      * @param string $db The database type
@@ -18,15 +19,16 @@ class AuraSqlQueryUpdateProvider implements ProviderInterface
      * @AuraSqlQueryConfig
      */
     #[AuraSqlQueryConfig]
-    public function __construct(private readonly string $db)
+    public function __construct(private string $db)
     {
     }
 
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function get(): UpdateInterface
     {
-        return (new QueryFactory($this->db))->newUpdate();
+        return new QueryFactory($this->db)->newUpdate();
     }
 }

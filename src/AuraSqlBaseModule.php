@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Ray\AuraSqlModule;
 
+use Override;
 use Ray\AuraSqlModule\Pagerfanta\AuraSqlPagerModule;
 use Ray\Di\AbstractModule;
 
 use function preg_match;
 
-class AuraSqlBaseModule extends AbstractModule
+final class AuraSqlBaseModule extends AbstractModule
 {
     public function __construct(private readonly string $dsn, ?AbstractModule $module = null)
     {
@@ -19,6 +20,7 @@ class AuraSqlBaseModule extends AbstractModule
     /**
      * {@inheritDoc}
      */
+    #[Override]
     protected function configure(): void
     {
         // @Transactional

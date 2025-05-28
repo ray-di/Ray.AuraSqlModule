@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ray\AuraSqlModule\Pagerfanta;
 
+use Override;
 use Pagerfanta\View\DefaultView;
 use Pagerfanta\View\Template\DefaultTemplate;
 use Pagerfanta\View\Template\TemplateInterface;
@@ -11,11 +12,12 @@ use Pagerfanta\View\ViewInterface;
 use Ray\AuraSqlModule\Annotation\PagerViewOption;
 use Ray\Di\AbstractModule;
 
-class AuraSqlPagerModule extends AbstractModule
+final class AuraSqlPagerModule extends AbstractModule
 {
     /**
      * {@inheritDoc}
      */
+    #[Override]
     protected function configure(): void
     {
         $this->bind(ViewInterface::class)->to(DefaultView::class);

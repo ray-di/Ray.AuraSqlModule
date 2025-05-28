@@ -6,12 +6,13 @@ namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocatorInterface;
 use Aura\Sql\ExtendedPdoInterface;
+use Override;
 use Ray\Di\InjectorInterface;
 use Ray\Di\ProviderInterface;
 use Ray\Di\SetContextInterface;
 
 /** @implements ProviderInterface<ExtendedPdoInterface> */
-class AuraSqlReplicationDbProvider implements ProviderInterface, SetContextInterface
+final class AuraSqlReplicationDbProvider implements ProviderInterface, SetContextInterface
 {
     private string $context = '';
 
@@ -24,6 +25,7 @@ class AuraSqlReplicationDbProvider implements ProviderInterface, SetContextInter
      *
      * @param string $context
      */
+    #[Override]
     public function setContext($context): void
     {
         $this->context = $context;
@@ -32,6 +34,7 @@ class AuraSqlReplicationDbProvider implements ProviderInterface, SetContextInter
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function get(): ExtendedPdoInterface
     {
         $connectionLocator = $this->injector->getInstance(ConnectionLocatorInterface::class, $this->context);

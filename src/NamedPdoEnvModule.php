@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdoInterface;
+use Override;
 use Ray\Di\AbstractModule;
 
-class NamedPdoEnvModule extends AbstractModule
+final class NamedPdoEnvModule extends AbstractModule
 {
-    public const PARSE_PDO_DSN_REGEX = '/(.*?)\:(host|server)=.*?;(.*)/i';
+    public const string PARSE_PDO_DSN_REGEX = '/(.*?)\:(host|server)=.*?;(.*)/i';
 
     /**
      * @param string        $qualifer Qualifer for ExtendedPdoInterface
@@ -35,6 +36,7 @@ class NamedPdoEnvModule extends AbstractModule
     /**
      * {@inheritDoc}
      */
+    #[Override]
     protected function configure(): void
     {
         $this->slave ? $this->configureMasterSlaveDsn()
