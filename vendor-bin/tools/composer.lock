@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "359d0132db36c8fb8eb943e229409924",
+    "content-hash": "f2729badc15831b3f2c9f22f8835c55f",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1814,33 +1814,81 @@
             "time": "2024-12-30T11:07:19+00:00"
         },
         {
-            "name": "pdepend/pdepend",
-            "version": "2.16.2",
+            "name": "openmetrics-php/exposition-text",
+            "version": "v0.4.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/pdepend/pdepend.git",
-                "reference": "f942b208dc2a0868454d01b29f0c75bbcfc6ed58"
+                "url": "https://github.com/openmetrics-php/exposition-text.git",
+                "reference": "fcfca38f693e168f4520bbd359d91528bbb9a8e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/f942b208dc2a0868454d01b29f0c75bbcfc6ed58",
-                "reference": "f942b208dc2a0868454d01b29f0c75bbcfc6ed58",
+                "url": "https://api.github.com/repos/openmetrics-php/exposition-text/zipball/fcfca38f693e168f4520bbd359d91528bbb9a8e8",
+                "reference": "fcfca38f693e168f4520bbd359d91528bbb9a8e8",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.7",
-                "symfony/config": "^2.3.0|^3|^4|^5|^6.0|^7.0",
-                "symfony/dependency-injection": "^2.3.0|^3|^4|^5|^6.0|^7.0",
-                "symfony/filesystem": "^2.3.0|^3|^4|^5|^6.0|^7.0",
+                "php": "^7.2 || ^8.0"
+            },
+            "require-dev": {
+                "ext-xdebug": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "OpenMetricsPhp\\Exposition\\Text\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Holger Woltersdorf",
+                    "email": "hw@hollo.me"
+                }
+            ],
+            "description": "Implementation of the text exposition format of OpenMetrics",
+            "support": {
+                "issues": "https://github.com/openmetrics-php/exposition-text/issues",
+                "source": "https://github.com/openmetrics-php/exposition-text/tree/v0.4.1"
+            },
+            "time": "2024-07-16T12:47:30+00:00"
+        },
+        {
+            "name": "pdepend/pdepend",
+            "version": "3.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pdepend/pdepend.git",
+                "reference": "04632709b73ef136bcc5b5b32708bc130df0ca2e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/04632709b73ef136bcc5b5b32708bc130df0ca2e",
+                "reference": "04632709b73ef136bcc5b5b32708bc130df0ca2e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "php-64bit": "*",
+                "symfony/config": "^5.4 || ^6.0 || ^7.0",
+                "symfony/dependency-injection": "^5.4 || ^6.0 || ^7.0",
+                "symfony/filesystem": "^5.4 || ^6.0 || ^7.0",
                 "symfony/polyfill-mbstring": "^1.19"
             },
             "require-dev": {
-                "easy-doc/easy-doc": "0.0.0|^1.2.3",
-                "gregwar/rst": "^1.0",
-                "squizlabs/php_codesniffer": "^2.0.0"
+                "brianium/paratest": "^7.3",
+                "easy-doc/easy-doc": "0.0.0 || ^1.2.3",
+                "friendsofphp/php-cs-fixer": "^3.57",
+                "gregwar/rst": "^1.0.6",
+                "phpstan/phpstan": "~2.1.0",
+                "phpunit/phpunit": "^10.5.20,<10.5.32",
+                "squizlabs/php_codesniffer": "^3.8.0"
             },
             "bin": [
-                "src/bin/pdepend"
+                "bin/pdepend"
             ],
             "type": "library",
             "extra": {
@@ -1850,7 +1898,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "PDepend\\": "src/main/php/PDepend"
+                    "PDepend\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1866,7 +1914,7 @@
             ],
             "support": {
                 "issues": "https://github.com/pdepend/pdepend/issues",
-                "source": "https://github.com/pdepend/pdepend/tree/2.16.2"
+                "source": "https://github.com/pdepend/pdepend/tree/3.x"
             },
             "funding": [
                 {
@@ -1874,7 +1922,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-12-17T18:09:59+00:00"
+            "time": "2025-03-18T18:57:34+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -2053,39 +2101,43 @@
         },
         {
             "name": "phpmd/phpmd",
-            "version": "2.15.0",
+            "version": "3.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpmd/phpmd.git",
-                "reference": "74a1f56e33afad4128b886e334093e98e1b5e7c0"
+                "reference": "3a8f6ed5293a244cdf4ec3a4f1ebc32db1dadf27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/74a1f56e33afad4128b886e334093e98e1b5e7c0",
-                "reference": "74a1f56e33afad4128b886e334093e98e1b5e7c0",
+                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/3a8f6ed5293a244cdf4ec3a4f1ebc32db1dadf27",
+                "reference": "3a8f6ed5293a244cdf4ec3a4f1ebc32db1dadf27",
                 "shasum": ""
             },
             "require": {
-                "composer/xdebug-handler": "^1.0 || ^2.0 || ^3.0",
+                "composer/xdebug-handler": "^3.0",
                 "ext-xml": "*",
-                "pdepend/pdepend": "^2.16.1",
-                "php": ">=5.3.9"
+                "pdepend/pdepend": "3.x-dev#5fddc0476146acf1455bd4cccf83f20439a0335b",
+                "php": "^8.1"
             },
             "require-dev": {
-                "easy-doc/easy-doc": "0.0.0 || ^1.3.2",
+                "brianium/paratest": "^7.3",
+                "easy-doc/easy-doc": "^1.3.2",
                 "ext-json": "*",
                 "ext-simplexml": "*",
+                "friendsofphp/php-cs-fixer": "^3.57",
                 "gregwar/rst": "^1.0",
                 "mikey179/vfsstream": "^1.6.8",
-                "squizlabs/php_codesniffer": "^2.9.2 || ^3.7.2"
+                "phpstan/phpstan": "~2.1.0",
+                "phpunit/phpunit": "^10.5.20,<10.5.32",
+                "squizlabs/php_codesniffer": "^3.8.0"
             },
             "bin": [
-                "src/bin/phpmd"
+                "bin/phpmd"
             ],
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "PHPMD\\": "src/main/php"
+                "psr-4": {
+                    "PHPMD\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2124,7 +2176,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/phpmd",
                 "issues": "https://github.com/phpmd/phpmd/issues",
-                "source": "https://github.com/phpmd/phpmd/tree/2.15.0"
+                "source": "https://github.com/phpmd/phpmd/tree/3.x"
             },
             "funding": [
                 {
@@ -2132,7 +2184,84 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-12-11T08:22:20+00:00"
+            "time": "2025-04-07T18:47:38+00:00"
+        },
+        {
+            "name": "phpmetrics/phpmetrics",
+            "version": "v3.0.0rc8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpmetrics/PhpMetrics.git",
+                "reference": "7111fe26c10092ed73c88fd325b43ddcd1b08558"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpmetrics/PhpMetrics/zipball/7111fe26c10092ed73c88fd325b43ddcd1b08558",
+                "reference": "7111fe26c10092ed73c88fd325b43ddcd1b08558",
+                "shasum": ""
+            },
+            "require": {
+                "ext-tokenizer": "*",
+                "nikic/php-parser": "^5.4",
+                "openmetrics-php/exposition-text": "^0.4.1",
+                "php": ">=8.1"
+            },
+            "replace": {
+                "halleck45/php-metrics": "*",
+                "halleck45/phpmetrics": "*"
+            },
+            "require-dev": {
+                "phake/phake": "^4.5.3",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan": "^2.1",
+                "phpstan/phpstan-deprecation-rules": "^2.0",
+                "phpstan/phpstan-phpunit": "^2.0",
+                "phpstan/phpstan-strict-rules": "^2.0",
+                "phpunit/phpunit": "^10.5",
+                "roave/security-advisories": "dev-latest",
+                "sebastian/comparator": ">=5.0.0",
+                "squizlabs/php_codesniffer": "^3.11",
+                "symfony/dom-crawler": "^6.4",
+                "vimeo/psalm": "^6.3"
+            },
+            "suggest": {
+                "ext-dom": "To allow XML parsing and report results.",
+                "ext-yaml": "To allow yaml parsing of configuration files."
+            },
+            "bin": [
+                "bin/phpmetrics"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Hal\\": "src/Hal"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jean-François Lépine",
+                    "email": "lepinejeanfrancois@yahoo.fr",
+                    "homepage": "http://www.lepine.pro",
+                    "role": "Copyright Holder"
+                }
+            ],
+            "description": "Static analyzer tool for PHP : Coupling, Cyclomatic complexity, Maintainability Index, Halstead's metrics... and more !",
+            "homepage": "http://www.phpmetrics.org",
+            "keywords": [
+                "analysis",
+                "qa",
+                "quality",
+                "testing"
+            ],
+            "support": {
+                "issues": "https://github.com/PhpMetrics/PhpMetrics/issues",
+                "source": "https://github.com/phpmetrics/PhpMetrics/tree/v3.0.0rc8"
+            },
+            "time": "2025-02-05T09:10:37+00:00"
         },
         {
             "name": "phpstan/phpdoc-parser",
@@ -4067,7 +4196,11 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "pdepend/pdepend": 20,
+        "phpmd/phpmd": 20,
+        "phpmetrics/phpmetrics": 5
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {},

@@ -1,7 +1,9 @@
 {
     "require": {
         "doctrine/coding-standard": "^12.0",
-        "phpmd/phpmd": "^2.9",
+        "phpmd/phpmd": "3.x-dev",
+        "pdepend/pdepend": "3.x-dev",
+        "phpmetrics/phpmetrics": "3.0.0-rc.8@RC",
         "phpstan/phpstan": "^2.1",
         "squizlabs/php_codesniffer": "^3.5",
         "vimeo/psalm": "^6.1",
