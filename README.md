@@ -68,11 +68,7 @@ Use AuraSqlEnvModule to get the value from the environment variable each time at
         );
 ```
 
-### DI trait
-
- * [AuraSqlInject](https://github.com/ray-di/Ray.AuraSqlModule/blob/1.x/src/AuraSqlInject.php) for `Aura\Sql\ExtendedPdoInterface` interface
- 
- ## Replication
+## Replication
  
  Installing `AuraSqlReplicationModule` using a `connection locator` for master/slave connections.
  
