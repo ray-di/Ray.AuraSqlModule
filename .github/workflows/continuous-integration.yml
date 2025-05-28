@@ -9,4 +9,4 @@ jobs:
   ci:
     uses: ray-di/.github/.github/workflows/continuous-integration.yml@v1
     with:
-      current_stable: 8.4
+      current_stable: "8.4"
