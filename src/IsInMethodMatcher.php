@@ -11,7 +11,7 @@ use ReflectionMethod;
 
 use function in_array;
 
-class IsInMethodMatcher extends AbstractMatcher
+final class IsInMethodMatcher extends AbstractMatcher
 {
     /**
      * {@inheritDoc}

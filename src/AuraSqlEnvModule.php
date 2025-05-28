@@ -7,7 +7,7 @@ namespace Ray\AuraSqlModule;
 use Override;
 use Ray\Di\AbstractModule;
 
-class AuraSqlEnvModule extends AbstractModule
+final class AuraSqlEnvModule extends AbstractModule
 {
     /**
      * @param string        $dsn      Env key for Data Source Name (DSN)

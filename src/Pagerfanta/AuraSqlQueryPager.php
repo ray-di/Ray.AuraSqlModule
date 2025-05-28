@@ -19,7 +19,7 @@ use function array_keys;
 
 /** @implements ArrayAccess<int, Page> */
 
-class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
+final class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
 {
     private ExtendedPdoInterface $pdo;
     private ?RouteGeneratorInterface $routeGenerator = null;

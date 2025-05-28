@@ -11,7 +11,7 @@ use PDO;
 use function assert;
 use function class_exists;
 
-class FetchEntity implements FetcherInterface
+final class FetchEntity implements FetcherInterface
 {
     private readonly string $entity;
 

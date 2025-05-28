@@ -6,6 +6,6 @@ namespace Ray\AuraSqlModule\Exception;
 
 use LogicException;
 
-class InvalidTransactionalPropertyException extends LogicException
+final class InvalidTransactionalPropertyException extends LogicException
 {
 }

@@ -12,7 +12,7 @@ use Pagerfanta\View\ViewInterface;
 use Ray\AuraSqlModule\Annotation\PagerViewOption;
 use Ray\Di\AbstractModule;
 
-class AuraSqlPagerModule extends AbstractModule
+final class AuraSqlPagerModule extends AbstractModule
 {
     /**
      * {@inheritDoc}

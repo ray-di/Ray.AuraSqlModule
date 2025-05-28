@@ -6,6 +6,6 @@ namespace Ray\AuraSqlModule\Exception;
 
 use RuntimeException;
 
-class NotInitialized extends RuntimeException
+final class NotInitialized extends RuntimeException
 {
 }

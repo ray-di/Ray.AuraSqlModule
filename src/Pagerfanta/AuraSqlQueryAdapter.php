@@ -18,7 +18,7 @@ use function call_user_func;
  * @template T
  * @implements AdapterInterface<T>
  */
-class AuraSqlQueryAdapter implements AdapterInterface
+final class AuraSqlQueryAdapter implements AdapterInterface
 {
     private readonly SelectInterface $select;
 

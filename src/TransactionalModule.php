@@ -8,7 +8,7 @@ use Override;
 use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\Di\AbstractModule;
 
-class TransactionalModule extends AbstractModule
+final class TransactionalModule extends AbstractModule
 {
     /**
      * {@inheritDoc}

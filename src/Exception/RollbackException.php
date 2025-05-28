@@ -6,6 +6,6 @@ namespace Ray\AuraSqlModule\Exception;
 
 use RuntimeException;
 
-class RollbackException extends RuntimeException
+final class RollbackException extends RuntimeException
 {
 }

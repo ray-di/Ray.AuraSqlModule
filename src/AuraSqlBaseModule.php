@@ -10,7 +10,7 @@ use Ray\Di\AbstractModule;
 
 use function preg_match;
 
-class AuraSqlBaseModule extends AbstractModule
+final class AuraSqlBaseModule extends AbstractModule
 {
     public function __construct(private readonly string $dsn, ?AbstractModule $module = null)
     {

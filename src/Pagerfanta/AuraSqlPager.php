@@ -18,7 +18,7 @@ use function assert;
 use function class_exists;
 
 /** @template T */
-class AuraSqlPager implements AuraSqlPagerInterface
+final class AuraSqlPager implements AuraSqlPagerInterface
 {
     private ?RouteGeneratorInterface $routeGenerator = null;
     private ExtendedPdoInterface $pdo;

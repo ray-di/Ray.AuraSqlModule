@@ -9,8 +9,9 @@ use Aura\Sql\ExtendedPdoInterface;
 use Override;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
+use SensitiveParameter;
 
-class AuraSqlModule extends AbstractModule
+final class AuraSqlModule extends AbstractModule
 {
     public const PARSE_PDO_DSN_REGEX = '/(.*?):(?:(host|server)=.*?;)?(.*)/i';
 
@@ -25,6 +26,7 @@ class AuraSqlModule extends AbstractModule
     public function __construct(
         private readonly string $dsn,
         private readonly string $user = '',
+        #[SensitiveParameter]
         private readonly string $password = '',
         private readonly string $slave = '',
         private readonly array $options = [],

@@ -12,7 +12,7 @@ use Ray\AuraSqlModule\Annotation\WriteConnection;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 
-class AuraSqlReplicationModule extends AbstractModule
+final class AuraSqlReplicationModule extends AbstractModule
 {
     public function __construct(
         private readonly ConnectionLocatorInterface $connectionLocator,

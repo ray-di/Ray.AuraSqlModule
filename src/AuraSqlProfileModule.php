@@ -8,7 +8,7 @@ use Aura\Sql\Profiler\ProfilerInterface;
 use Override;
 use Ray\Di\AbstractModule;
 
-class AuraSqlProfileModule extends AbstractModule
+final class AuraSqlProfileModule extends AbstractModule
 {
     /**
      * {@inheritDoc}

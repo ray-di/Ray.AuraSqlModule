@@ -12,7 +12,7 @@ use Ray\Di\SetContextInterface;
 
 /** @implements ProviderInterface<ExtendedPdo> */
 
-class NamedExtendedPdoProvider implements ProviderInterface, SetContextInterface
+final class NamedExtendedPdoProvider implements ProviderInterface, SetContextInterface
 {
     private string $context;
 

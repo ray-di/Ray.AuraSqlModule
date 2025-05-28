@@ -11,7 +11,7 @@ use Ray\AuraSqlModule\Annotation\AuraSqlQueryConfig;
 use Ray\Di\ProviderInterface;
 
 /** @implements ProviderInterface<SelectInterface> */
-class AuraSqlQuerySelectProvider implements ProviderInterface
+final class AuraSqlQuerySelectProvider implements ProviderInterface
 {
     /**
      * @param string $db The database type

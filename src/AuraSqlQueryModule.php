@@ -12,7 +12,7 @@ use Override;
 use Ray\AuraSqlModule\Annotation\AuraSqlQueryConfig;
 use Ray\Di\AbstractModule;
 
-class AuraSqlQueryModule extends AbstractModule
+final class AuraSqlQueryModule extends AbstractModule
 {
     public function __construct(private readonly string $db, ?AbstractModule $module = null)
     {

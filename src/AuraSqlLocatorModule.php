@@ -15,7 +15,7 @@ use Ray\Di\AbstractModule;
 
 use function array_merge;
 
-class AuraSqlLocatorModule extends AbstractModule
+final class AuraSqlLocatorModule extends AbstractModule
 {
     /**
      * @phpstan-param array<string> $readMethods

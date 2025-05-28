@@ -12,7 +12,7 @@ use Ray\Di\ProviderInterface;
 use Ray\Di\SetContextInterface;
 
 /** @implements ProviderInterface<ExtendedPdoInterface> */
-class AuraSqlReplicationDbProvider implements ProviderInterface, SetContextInterface
+final class AuraSqlReplicationDbProvider implements ProviderInterface, SetContextInterface
 {
     private string $context = '';
 

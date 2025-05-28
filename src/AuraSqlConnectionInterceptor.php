@@ -14,7 +14,7 @@ use ReflectionProperty;
 
 use function in_array;
 
-class AuraSqlConnectionInterceptor implements MethodInterceptor
+final class AuraSqlConnectionInterceptor implements MethodInterceptor
 {
     public const PROP = 'pdo';
 

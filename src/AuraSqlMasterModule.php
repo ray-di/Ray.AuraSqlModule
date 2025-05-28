@@ -9,8 +9,9 @@ use Aura\Sql\ExtendedPdoInterface;
 use Override;
 use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
+use SensitiveParameter;
 
-class AuraSqlMasterModule extends AbstractModule
+final class AuraSqlMasterModule extends AbstractModule
 {
     /**
      * @phpstan-param array<string> $options
@@ -19,6 +20,7 @@ class AuraSqlMasterModule extends AbstractModule
     public function __construct(
         private readonly string $dsn,
         private readonly string $user = '',
+        #[SensitiveParameter]
         private readonly string $password = '',
         /** @var array<string> */
         private readonly array $options = [],
