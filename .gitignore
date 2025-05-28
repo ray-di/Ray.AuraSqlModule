@@ -7,3 +7,4 @@
 /.phpcs-cache
 /.phpunit.cache
 /vendor-bin/tools/vendor/
+/.phpunit.result.cache
