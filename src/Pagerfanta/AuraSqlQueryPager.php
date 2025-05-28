@@ -8,6 +8,7 @@ use ArrayAccess;
 use Aura\Sql\ExtendedPdoInterface;
 use Aura\SqlQuery\Common\Select;
 use Aura\SqlQuery\Common\SelectInterface;
+use Override;
 use Pagerfanta\Exception\LogicException;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\ViewInterface;
@@ -44,6 +45,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
      *
      * {@inheritDoc}
      */
+    #[Override]
     public function init(ExtendedPdoInterface $pdo, SelectInterface $select, int $paging, RouteGeneratorInterface $routeGenerator)
     {
         $this->pdo = $pdo;
@@ -58,6 +60,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
      * @phpstan-param positive-int $page
      * {@inheritDoc}
      */
+    #[Override]
     public function offsetGet($page): Page
     {
         if (! $this->routeGenerator instanceof RouteGeneratorInterface) {
@@ -90,6 +93,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function offsetExists($offset): bool
     {
         throw new LogicException('unsupported');
@@ -98,6 +102,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function offsetSet($offset, $value): void
     {
         throw new LogicException('read only');
@@ -106,6 +111,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function offsetUnset($offset): void
     {
         throw new LogicException('read only');

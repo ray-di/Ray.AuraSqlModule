@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdoInterface;
+use Override;
 use Ray\Di\AbstractModule;
 
 class NamedPdoEnvModule extends AbstractModule
@@ -35,6 +36,7 @@ class NamedPdoEnvModule extends AbstractModule
     /**
      * {@inheritDoc}
      */
+    #[Override]
     protected function configure(): void
     {
         $this->slave ? $this->configureMasterSlaveDsn()

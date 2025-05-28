@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
+use Override;
 
 class AuraSqlPagerFactory implements AuraSqlPagerFactoryInterface
 {
@@ -15,6 +16,7 @@ class AuraSqlPagerFactory implements AuraSqlPagerFactoryInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function newInstance(ExtendedPdoInterface $pdo, string $sql, array $params, int $paging, string $uriTemplate, ?string $entity = null): AuraSqlPagerInterface
     {
         $this->auraSqlPager->init($pdo, $sql, $params, $paging, new DefaultRouteGenerator($uriTemplate), $entity);

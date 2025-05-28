@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ray\AuraSqlModule;
 
+use Override;
 use Ray\AuraSqlModule\Pagerfanta\AuraSqlPagerModule;
 use Ray\Di\AbstractModule;
 
@@ -19,6 +20,7 @@ class AuraSqlBaseModule extends AbstractModule
     /**
      * {@inheritDoc}
      */
+    #[Override]
     protected function configure(): void
     {
         // @Transactional

@@ -8,6 +8,7 @@ use Aura\SqlQuery\Common\DeleteInterface;
 use Aura\SqlQuery\Common\InsertInterface;
 use Aura\SqlQuery\Common\SelectInterface;
 use Aura\SqlQuery\Common\UpdateInterface;
+use Override;
 use Ray\AuraSqlModule\Annotation\AuraSqlQueryConfig;
 use Ray\Di\AbstractModule;
 
@@ -21,6 +22,7 @@ class AuraSqlQueryModule extends AbstractModule
     /**
      * {@inheritDoc}
      */
+    #[Override]
     protected function configure(): void
     {
         $this->bind()->annotatedWith(AuraSqlQueryConfig::class)->toInstance($this->db);

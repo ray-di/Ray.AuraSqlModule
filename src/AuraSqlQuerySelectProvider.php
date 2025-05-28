@@ -6,6 +6,7 @@ namespace Ray\AuraSqlModule;
 
 use Aura\SqlQuery\Common\SelectInterface;
 use Aura\SqlQuery\QueryFactory;
+use Override;
 use Ray\AuraSqlModule\Annotation\AuraSqlQueryConfig;
 use Ray\Di\ProviderInterface;
 
@@ -25,6 +26,7 @@ class AuraSqlQuerySelectProvider implements ProviderInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function get(): SelectInterface
     {
         return (new QueryFactory($this->db))->newSelect();

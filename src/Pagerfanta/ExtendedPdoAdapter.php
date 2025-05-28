@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
+use Override;
 use Pagerfanta\Adapter\AdapterInterface;
 
 use function assert;
@@ -39,6 +40,7 @@ class ExtendedPdoAdapter implements AdapterInterface
      *
      * @SuppressWarnings(PHPMD.GotoStatement) // @phpstan-ignore-line
      */
+    #[Override]
     public function getNbResults(): int
     {
         // be smart and try to guess the total number of records
@@ -72,6 +74,7 @@ class ExtendedPdoAdapter implements AdapterInterface
      *
      * @return array<mixed>
      */
+    #[Override]
     public function getSlice(int $offset, int $length): iterable
     {
         $sql = $this->sql . $this->getLimitClause($offset, $length);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdoInterface;
+use Override;
 use PDOException;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
@@ -22,6 +23,7 @@ class TransactionalInterceptor implements MethodInterceptor
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function invoke(MethodInvocation $invocation)
     {
         $method = $invocation->getMethod();

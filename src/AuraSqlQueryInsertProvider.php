@@ -6,6 +6,7 @@ namespace Ray\AuraSqlModule;
 
 use Aura\SqlQuery\Common\InsertInterface;
 use Aura\SqlQuery\QueryFactory;
+use Override;
 use Ray\AuraSqlModule\Annotation\AuraSqlQueryConfig;
 use Ray\Di\ProviderInterface;
 
@@ -25,6 +26,7 @@ class AuraSqlQueryInsertProvider implements ProviderInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function get(): InsertInterface
     {
         return (new QueryFactory($this->db))->newInsert();

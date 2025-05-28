@@ -6,6 +6,7 @@ namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocatorInterface;
 use Aura\Sql\ExtendedPdoInterface;
+use Override;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 use Ray\AuraSqlModule\Annotation\Read;
@@ -29,6 +30,7 @@ class AuraSqlConnectionInterceptor implements MethodInterceptor
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function invoke(MethodInvocation $invocation)
     {
         $connection = $this->getConnection($invocation);

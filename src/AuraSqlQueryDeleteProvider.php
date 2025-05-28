@@ -6,6 +6,7 @@ namespace Ray\AuraSqlModule;
 
 use Aura\SqlQuery\Common\DeleteInterface;
 use Aura\SqlQuery\QueryFactory;
+use Override;
 use Ray\AuraSqlModule\Annotation\AuraSqlQueryConfig;
 use Ray\Di\ProviderInterface;
 
@@ -25,6 +26,7 @@ class AuraSqlQueryDeleteProvider implements ProviderInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function get(): DeleteInterface
     {
         return (new QueryFactory($this->db))->newDelete();

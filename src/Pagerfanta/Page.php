@@ -6,6 +6,7 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Iterator;
 use IteratorAggregate;
+use Override;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\ViewInterface;
 use Stringable;
@@ -49,6 +50,7 @@ final class Page implements IteratorAggregate, Stringable
         $this->routeGenerator = $routeGenerator;
     }
 
+    #[Override]
     public function __toString(): string
     {
         return (string) $this->view->render(
@@ -63,6 +65,7 @@ final class Page implements IteratorAggregate, Stringable
      *
      * @return Iterator<int, Page>
      */
+    #[Override]
     public function getIterator(): Iterator
     {
         /** @var Iterator<int, Page> $iterator */

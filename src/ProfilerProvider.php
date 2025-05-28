@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\Profiler\Profiler;
+use Override;
 use Psr\Log\LoggerInterface;
 use Ray\Di\Provider;
 
@@ -14,6 +15,7 @@ class ProfilerProvider implements Provider
     {
     }
 
+    #[Override]
     public function get(): Profiler
     {
         $profiler = new Profiler($this->logger);

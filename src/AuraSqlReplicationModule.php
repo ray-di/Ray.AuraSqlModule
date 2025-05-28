@@ -6,6 +6,7 @@ namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocatorInterface;
 use Aura\Sql\ExtendedPdoInterface;
+use Override;
 use Ray\AuraSqlModule\Annotation\ReadOnlyConnection;
 use Ray\AuraSqlModule\Annotation\WriteConnection;
 use Ray\Di\AbstractModule;
@@ -24,6 +25,7 @@ class AuraSqlReplicationModule extends AbstractModule
     /**
      * {@inheritDoc}
      */
+    #[Override]
     protected function configure(): void
     {
         $this->bind(ConnectionLocatorInterface::class)

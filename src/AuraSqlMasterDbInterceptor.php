@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocatorInterface;
+use Override;
 use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 use ReflectionProperty;
@@ -20,6 +21,7 @@ class AuraSqlMasterDbInterceptor implements MethodInterceptor
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function invoke(MethodInvocation $invocation)
     {
         $object = $invocation->getThis();

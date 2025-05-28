@@ -6,6 +6,7 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
 use Aura\SqlQuery\Common\SelectInterface;
+use Override;
 use Pagerfanta\Adapter\AdapterInterface;
 use PDO;
 use PDOStatement;
@@ -34,6 +35,7 @@ class AuraSqlQueryAdapter implements AdapterInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getNbResults(): int
     {
         $select = $this->prepareCountQueryBuilder();
@@ -53,6 +55,7 @@ class AuraSqlQueryAdapter implements AdapterInterface
      *
      * @return iterable<array-key, mixed>
      */
+    #[Override]
     public function getSlice(int $offset, int $length): iterable
     {
         $select = clone $this->select;

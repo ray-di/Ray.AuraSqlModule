@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
+use Override;
 use PDO;
 
 use function assert;
@@ -24,6 +25,7 @@ class FetchEntity implements FetcherInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function __invoke(string $sql, array $params): array
     {
         $pdoStatement = $this->pdo->perform($sql, $params);

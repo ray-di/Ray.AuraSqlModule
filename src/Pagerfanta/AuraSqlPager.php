@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
+use Override;
 use Pagerfanta\Exception\LogicException;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\ViewInterface;
@@ -45,6 +46,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
      *
      * @phpstan-param positive-int $paging
      */
+    #[Override]
     public function init(ExtendedPdoInterface $pdo, $sql, array $params, $paging, RouteGeneratorInterface $routeGenerator, ?string $entity = null): void
     {
         $this->pdo = $pdo;
@@ -58,6 +60,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     #[ReturnTypeWillChange]
     public function offsetExists($offset): bool
     {
@@ -69,6 +72,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
      *
      * @phpstan-param positive-int $currentPage
      */
+    #[Override]
     public function offsetGet($currentPage): Page
     {
         if (! $this->routeGenerator instanceof RouteGeneratorInterface) {
@@ -94,6 +98,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function offsetSet($offset, $value): void
     {
         throw new LogicException('read only');
@@ -102,6 +107,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function offsetUnset($offset): void
     {
         throw new LogicException('read only');

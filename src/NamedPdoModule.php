@@ -7,6 +7,7 @@ namespace Ray\AuraSqlModule;
 use Aura\Sql\ConnectionLocator;
 use Aura\Sql\ExtendedPdo;
 use Aura\Sql\ExtendedPdoInterface;
+use Override;
 use Ray\Di\AbstractModule;
 
 class NamedPdoModule extends AbstractModule
@@ -37,6 +38,7 @@ class NamedPdoModule extends AbstractModule
     /**
      * {@inheritDoc}
      */
+    #[Override]
     protected function configure(): void
     {
         $this->slave ? $this->configureMasterSlaveDsn()
