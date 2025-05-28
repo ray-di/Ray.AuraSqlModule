@@ -6,27 +6,11 @@
 
 An [Aura.Sql](https://github.com/auraphp/Aura.Sql) Module for [Ray.Di](https://github.com/koriym/Ray.Di)
 
-## Requirements
-
-- PHP ^8.4
-- Aura.Sql ^6.0
-
 ## Installation
 
-### Composer install
-
 ```bash
-composer require ray/aura-sql-module:^2.0
+composer require ray/aura-sql-module
 ```
-
-## Version Compatibility
-
-| Version | PHP     | Aura.Sql | Branch | Status |
-|---------|---------|----------|--------|--------|
-| 2.x     | ^8.4    | ^6.0     | 2.x    | Current |
-| 1.x     | ^8.1-8.3| ^5.0     | [1.x](https://github.com/ray-di/Ray.AuraSqlModule/tree/1.x) | Maintained |
-
-> **Note**: For PHP 8.1-8.3 users, please use [v1.x](https://github.com/ray-di/Ray.AuraSqlModule/tree/1.x).
 
 ## Getting started
 
