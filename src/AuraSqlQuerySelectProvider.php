@@ -18,7 +18,7 @@ final readonly class AuraSqlQuerySelectProvider implements ProviderInterface
      *
      * @AuraSqlQueryConfig
      */
-    #[AuraSqlQueryConfig()]
+    #[AuraSqlQueryConfig]
     public function __construct(private string $db)
     {
     }
