@@ -24,7 +24,7 @@ class AuraSqlSlaveDbInterceptor implements MethodInterceptor
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function invoke(MethodInvocation $invocation)
     {

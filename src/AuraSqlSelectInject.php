@@ -12,9 +12,7 @@ trait AuraSqlSelectInject
     /** @var SelectInterface */
     protected $select;
 
-    /**
-     * @Inject
-     */
+    /** @Inject */
     #[Inject]
     public function setAuraSqlSelect(SelectInterface $select): void
     {

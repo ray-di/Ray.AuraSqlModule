@@ -38,17 +38,18 @@ class AuraSqlMasterModule extends AbstractModule
         $this->password = $passwordKey;
         $this->options = $options;
         $this->attributes = $attributes;
+
         parent::__construct($module);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function configure(): void
     {
         $this->bind(ExtendedPdoInterface::class)->toConstructor(
             ExtendedPdo::class,
-            'dsn=pdo_dsn,username=pdo_user,password=pdo_pass,options=pdo_option,attributes=pdo_attributes'
+            'dsn=pdo_dsn,username=pdo_user,password=pdo_pass,options=pdo_option,attributes=pdo_attributes',
         )->in(Scope::SINGLETON);
         $this->bind()->annotatedWith('pdo_dsn')->toInstance($this->dsn);
         $this->bind()->annotatedWith('pdo_user')->toInstance($this->user);

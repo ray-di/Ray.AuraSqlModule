@@ -15,9 +15,7 @@ class FetchEntity implements FetcherInterface
     private ExtendedPdoInterface $pdo;
     private string $entity;
 
-    /**
-     * @param class-string $entity
-     */
+    /** @param class-string $entity */
     public function __construct(ExtendedPdoInterface $pdo, string $entity)
     {
         assert(class_exists($entity));

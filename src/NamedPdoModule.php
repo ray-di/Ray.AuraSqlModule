@@ -50,11 +50,12 @@ class NamedPdoModule extends AbstractModule
         $this->slave = $slave;
         $this->options = $options;
         $this->queries = $queries;
+
         parent::__construct();
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function configure(): void
     {
@@ -68,7 +69,7 @@ class NamedPdoModule extends AbstractModule
             ->annotatedWith($this->qualifer)
             ->toConstructor(
                 ExtendedPdo::class,
-                "dsn={$this->qualifer}_dsn,username={$this->qualifer}_username,password={$this->qualifer}_password"
+                "dsn={$this->qualifer}_dsn,username={$this->qualifer}_username,password={$this->qualifer}_password",
             );
         $this->bind()->annotatedWith("{$this->qualifer}_dsn")->toInstance($this->dsn);
         $this->bind()->annotatedWith("{$this->qualifer}_username")->toInstance($this->username);
@@ -89,7 +90,7 @@ class NamedPdoModule extends AbstractModule
             $this->password,
             $this->slave,
             $this->options,
-            $this->queries
+            $this->queries,
         );
     }
 }

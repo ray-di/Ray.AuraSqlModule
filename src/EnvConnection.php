@@ -60,7 +60,7 @@ final class EnvConnection
             (string) getenv($this->username),
             (string) getenv($this->password),
             $this->options,
-            $this->queries
+            $this->queries,
         );
 
         return self::$pdo[$dsn];
@@ -80,9 +80,7 @@ final class EnvConnection
         return $this->changeHost((string) getenv($this->dsn), $slave);
     }
 
-    /**
-     * @psalm-pure
-     */
+    /** @psalm-pure */
     private function changeHost(string $dsn, string $host): string
     {
         preg_match(AuraSqlModule::PARSE_PDO_DSN_REGEX, $dsn, $parts);

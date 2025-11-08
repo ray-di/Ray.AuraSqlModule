@@ -14,7 +14,7 @@ class DefaultRouteGenerator implements RouteGeneratorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function __invoke($page)
     {

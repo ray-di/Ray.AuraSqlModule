@@ -16,11 +16,12 @@ class AuraSqlBaseModule extends AbstractModule
     public function __construct(string $dsnKey, ?AbstractModule $module = null)
     {
         $this->dsn = $dsnKey;
+
         parent::__construct($module);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function configure(): void
     {

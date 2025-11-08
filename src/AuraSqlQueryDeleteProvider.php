@@ -9,9 +9,7 @@ use Aura\SqlQuery\QueryFactory;
 use Ray\AuraSqlModule\Annotation\AuraSqlQueryConfig;
 use Ray\Di\ProviderInterface;
 
-/**
- * @implements ProviderInterface<DeleteInterface>
- */
+/** @implements ProviderInterface<DeleteInterface> */
 class AuraSqlQueryDeleteProvider implements ProviderInterface
 {
     private string $db;
@@ -28,7 +26,7 @@ class AuraSqlQueryDeleteProvider implements ProviderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function get(): DeleteInterface
     {

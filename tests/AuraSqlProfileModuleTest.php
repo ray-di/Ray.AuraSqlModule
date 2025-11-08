@@ -42,7 +42,7 @@ class AuraSqlProfileModuleTest extends TestCase
 
                             AuraSqlProfileModuleTest::$log[] = strtr($message, $replace);
                         }
-                    }
+                    },
                 );
             }
         };
@@ -52,9 +52,7 @@ class AuraSqlProfileModuleTest extends TestCase
         return $instance;
     }
 
-    /**
-     * @depends testModule
-     */
+    /** @depends testModule */
     public function testLog(ExtendedPdoInterface $pdo)
     {
         $pdo->exec(/** @lang sql */'CREATE TABLE user(name, age)');

@@ -12,9 +12,7 @@ trait AuraSqlInsertInject
     /** @var InsertInterface */
     protected $insert;
 
-    /**
-     * @Inject
-     */
+    /** @Inject */
     #[Inject]
     public function setAuraSqlInsert(InsertInterface $insert): void
     {

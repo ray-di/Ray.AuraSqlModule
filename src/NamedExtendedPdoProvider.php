@@ -11,9 +11,7 @@ use Ray\Di\SetContextInterface;
 
 use function assert;
 
-/**
- * @implements ProviderInterface<ExtendedPdo>
- */
+/** @implements ProviderInterface<ExtendedPdo> */
 
 class NamedExtendedPdoProvider implements ProviderInterface, SetContextInterface
 {
@@ -34,7 +32,7 @@ class NamedExtendedPdoProvider implements ProviderInterface, SetContextInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function get(): ExtendedPdo
     {

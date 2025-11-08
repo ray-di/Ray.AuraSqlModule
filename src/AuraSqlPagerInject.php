@@ -12,9 +12,7 @@ trait AuraSqlPagerInject
     /** @var AuraSqlPagerFactoryInterface */
     protected $pagerFactory;
 
-    /**
-     * @Inject
-     */
+    /** @Inject */
     #[Inject]
     public function setAuraSqlPager(AuraSqlPagerFactoryInterface $pagerFactory): void
     {

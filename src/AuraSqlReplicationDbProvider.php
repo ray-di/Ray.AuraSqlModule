@@ -12,9 +12,7 @@ use Ray\Di\SetContextInterface;
 
 use function assert;
 
-/**
- * @implements ProviderInterface<ExtendedPdoInterface>
- */
+/** @implements ProviderInterface<ExtendedPdoInterface> */
 class AuraSqlReplicationDbProvider implements ProviderInterface, SetContextInterface
 {
     private InjectorInterface $injector;
@@ -26,7 +24,7 @@ class AuraSqlReplicationDbProvider implements ProviderInterface, SetContextInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param string $context
      */
@@ -36,7 +34,7 @@ class AuraSqlReplicationDbProvider implements ProviderInterface, SetContextInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function get(): ExtendedPdoInterface
     {

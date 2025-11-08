@@ -46,11 +46,12 @@ class AuraSqlModule extends AbstractModule
         $this->slave = $slaveKey;
         $this->options = $options;
         $this->queries = $queries;
+
         parent::__construct();
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function configure(): void
     {
@@ -68,7 +69,7 @@ class AuraSqlModule extends AbstractModule
         $this->bind()->annotatedWith('pdo_queries')->toInstance($this->queries);
         $this->bind(ExtendedPdoInterface::class)->toConstructor(
             ExtendedPdo::class,
-            'dsn=pdo_dsn,username=pdo_user,password=pdo_pass,options=pdo_options,queries=pdo_queries'
+            'dsn=pdo_dsn,username=pdo_user,password=pdo_pass,options=pdo_options,queries=pdo_queries',
         )->in(Scope::SINGLETON);
     }
 
@@ -80,7 +81,7 @@ class AuraSqlModule extends AbstractModule
             $this->password,
             $this->slave,
             $this->options,
-            $this->queries
+            $this->queries,
         );
         $this->install(new AuraSqlReplicationModule($locator));
     }

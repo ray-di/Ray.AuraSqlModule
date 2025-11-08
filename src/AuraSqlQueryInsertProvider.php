@@ -9,9 +9,7 @@ use Aura\SqlQuery\QueryFactory;
 use Ray\AuraSqlModule\Annotation\AuraSqlQueryConfig;
 use Ray\Di\ProviderInterface;
 
-/**
- * @implements ProviderInterface<InsertInterface>
- */
+/** @implements ProviderInterface<InsertInterface> */
 class AuraSqlQueryInsertProvider implements ProviderInterface
 {
     private string $db;
@@ -28,7 +26,7 @@ class AuraSqlQueryInsertProvider implements ProviderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function get(): InsertInterface
     {

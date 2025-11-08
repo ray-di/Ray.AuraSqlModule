@@ -13,7 +13,7 @@ use function in_array;
 class IsInMethodMatcher extends AbstractMatcher
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @phpstan-param ReflectionClass<object> $class
      * @phpstan-param array<mixed> $arguments
@@ -28,7 +28,7 @@ class IsInMethodMatcher extends AbstractMatcher
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @phpstan-param array<mixed> $arguments
      */

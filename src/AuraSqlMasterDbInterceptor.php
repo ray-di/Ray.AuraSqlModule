@@ -21,7 +21,7 @@ class AuraSqlMasterDbInterceptor implements MethodInterceptor
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function invoke(MethodInvocation $invocation)
     {

@@ -7,9 +7,7 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 use ArrayAccess;
 use Aura\Sql\ExtendedPdoInterface;
 
-/**
- * @extends ArrayAccess<int, Page>
- */
+/** @extends ArrayAccess<int, Page> */
 interface AuraSqlPagerInterface extends ArrayAccess
 {
     /**

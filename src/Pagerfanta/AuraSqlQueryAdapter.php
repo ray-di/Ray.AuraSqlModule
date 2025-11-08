@@ -27,9 +27,7 @@ class AuraSqlQueryAdapter implements AdapterInterface
     /** @var callable */
     private $countQueryBuilderModifier;
 
-    /**
-     * @param callable $countQueryBuilderModifier a callable to modifier the query builder to count
-     */
+    /** @param callable $countQueryBuilderModifier a callable to modifier the query builder to count */
     public function __construct(ExtendedPdoInterface $pdo, SelectInterface $select, callable $countQueryBuilderModifier)
     {
         $this->pdo = $pdo;
@@ -38,7 +36,7 @@ class AuraSqlQueryAdapter implements AdapterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getNbResults(): int
     {
@@ -56,7 +54,7 @@ class AuraSqlQueryAdapter implements AdapterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return iterable<array-key, mixed>
      */

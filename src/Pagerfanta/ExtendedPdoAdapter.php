@@ -32,9 +32,7 @@ class ExtendedPdoAdapter implements AdapterInterface
     private array $params;
     private FetcherInterface $fetcher;
 
-    /**
-     * @param array<mixed> $params
-     */
+    /** @param array<mixed> $params */
     public function __construct(ExtendedPdoInterface $pdo, string $sql, array $params, ?FetcherInterface $fetcher = null)
     {
         $this->pdo = $pdo;
@@ -44,7 +42,7 @@ class ExtendedPdoAdapter implements AdapterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @SuppressWarnings(PHPMD.GotoStatement)
      */
@@ -75,7 +73,7 @@ class ExtendedPdoAdapter implements AdapterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param int $offset
      * @param int $length
@@ -91,7 +89,7 @@ class ExtendedPdoAdapter implements AdapterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getLimitClause(int $offset, int $length): string
     {

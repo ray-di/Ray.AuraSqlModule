@@ -41,11 +41,12 @@ class AuraSqlEnvModule extends AbstractModule
         $this->slave = $slaveKey;
         $this->options = $options;
         $this->queries = $queries;
+
         parent::__construct();
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function configure(): void
     {

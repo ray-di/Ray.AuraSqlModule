@@ -18,11 +18,12 @@ class AuraSqlQueryModule extends AbstractModule
     public function __construct(string $db, ?AbstractModule $module = null)
     {
         $this->db = $db;
+
         parent::__construct($module);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function configure(): void
     {

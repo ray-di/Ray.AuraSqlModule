@@ -16,9 +16,7 @@ use Ray\AuraSqlModule\Exception\NotInitialized;
 
 use function array_keys;
 
-/**
- * @implements ArrayAccess<int, Page>
- */
+/** @implements ArrayAccess<int, Page> */
 
 class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
 {
@@ -47,7 +45,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
 
     /**
      * @phpstan-param positive-int $paging
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function init(ExtendedPdoInterface $pdo, SelectInterface $select, int $paging, RouteGeneratorInterface $routeGenerator)
     {
@@ -61,7 +59,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
 
     /**
      * @phpstan-param positive-int $page
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function offsetGet($page): Page
     {
@@ -93,7 +91,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function offsetExists($offset): bool
     {
@@ -101,7 +99,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function offsetSet($offset, $value): void
     {
@@ -109,7 +107,7 @@ class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function offsetUnset($offset): void
     {

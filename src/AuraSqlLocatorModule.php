@@ -37,11 +37,12 @@ class AuraSqlLocatorModule extends AbstractModule
         $this->connectionLocator = $connectionLocator;
         $this->readMethods = $readMethods;
         $this->writeMethods = $writeMethods;
+
         parent::__construct($module);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function configure(): void
     {
@@ -66,19 +67,17 @@ class AuraSqlLocatorModule extends AbstractModule
         $this->bindInterceptor(
             $this->matcher->any(),
             $this->matcher->annotatedWith(ReadOnlyConnection::class),
-            [AuraSqlSlaveDbInterceptor::class]
+            [AuraSqlSlaveDbInterceptor::class],
         );
         // @WriteConnection
         $this->bindInterceptor(
             $this->matcher->any(),
             $this->matcher->annotatedWith(WriteConnection::class),
-            [AuraSqlMasterDbInterceptor::class]
+            [AuraSqlMasterDbInterceptor::class],
         );
     }
 
-    /**
-     * @param string[] $methods
-     */
+    /** @param string[] $methods */
     private function installLocatorDb(array $methods): void
     {
         // locator db
@@ -87,13 +86,13 @@ class AuraSqlLocatorModule extends AbstractModule
             $this->matcher->logicalAnd(
                 new IsInMethodMatcher($methods),
                 $this->matcher->logicalNot(
-                    $this->matcher->annotatedWith(ReadOnlyConnection::class)
+                    $this->matcher->annotatedWith(ReadOnlyConnection::class),
                 ),
                 $this->matcher->logicalNot(
-                    $this->matcher->annotatedWith(Connection::class)
-                )
+                    $this->matcher->annotatedWith(Connection::class),
+                ),
             ),
-            [AuraSqlConnectionInterceptor::class]
+            [AuraSqlConnectionInterceptor::class],
         );
     }
 }

@@ -11,6 +11,7 @@ class PdoMySqlAdapterTest extends AbstractPdoTestCase
     public function setUp(): void
     {
         parent::setUp();
+
         $sql = 'SELECT * FROM posts';
         $this->adapter = new ExtendedPdoAdapter($this->pdo, $sql, []);
     }

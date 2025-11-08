@@ -9,9 +9,7 @@ use IteratorAggregate;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\ViewInterface;
 
-/**
- * @implements IteratorAggregate<int, Page>
- */
+/** @implements IteratorAggregate<int, Page> */
 final class Page implements IteratorAggregate
 {
     /** @var int */
@@ -63,12 +61,12 @@ final class Page implements IteratorAggregate
         return (string) $this->view->render(
             $this->pagerfanta,
             $this->routeGenerator,
-            $this->viewOption
+            $this->viewOption,
         );
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return Iterator<int, Page>
      */

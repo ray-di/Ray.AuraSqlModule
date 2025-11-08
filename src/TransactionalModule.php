@@ -10,7 +10,7 @@ use Ray\Di\AbstractModule;
 class TransactionalModule extends AbstractModule
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function configure(): void
     {
@@ -18,7 +18,7 @@ class TransactionalModule extends AbstractModule
         $this->bindInterceptor(
             $this->matcher->any(),
             $this->matcher->annotatedWith(Transactional::class),
-            [TransactionalInterceptor::class]
+            [TransactionalInterceptor::class],
         );
     }
 }

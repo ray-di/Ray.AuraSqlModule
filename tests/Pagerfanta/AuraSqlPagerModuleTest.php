@@ -37,9 +37,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
         return $pager;
     }
 
-    /**
-     * @depends testNewInstance
-     */
+    /** @depends testNewInstance */
     public function testArrayAccess(AuraSqlPagerInterface $pager): void
     {
         $page = $pager[2];
@@ -59,9 +57,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
         $this->assertSame(50, $page->total);
     }
 
-    /**
-     * @depends testNewInstance
-     */
+    /** @depends testNewInstance */
     public function testArrayAccessWithMaxPage(AuraSqlPagerInterface $pager)
     {
         $page = $pager[50];
@@ -81,9 +77,7 @@ class AuraSqlPagerModuleTest extends AbstractPdoTestCase
         $this->assertSame(50, $page->total);
     }
 
-    /**
-     * @depends testNewInstanceWithBinding
-     */
+    /** @depends testNewInstanceWithBinding */
     public function testArrayAccessWithBinding(AuraSqlPagerInterface $pager)
     {
         $page = $pager[1];

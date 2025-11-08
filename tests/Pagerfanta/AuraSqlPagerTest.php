@@ -16,6 +16,7 @@ class AuraSqlPagerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
         $this->pager = new AuraSqlPager(new DefaultView(), []);
     }
 

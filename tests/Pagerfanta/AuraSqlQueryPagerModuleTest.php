@@ -34,9 +34,7 @@ class AuraSqlQueryPagerModuleTest extends AuraSqlQueryTestCase
         return $pager;
     }
 
-    /**
-     * @depends testNewInstance
-     */
+    /** @depends testNewInstance */
     public function testArrayAccess(AuraSqlQueryPager $pager): void
     {
         $page = $pager[2];
@@ -56,9 +54,7 @@ class AuraSqlQueryPagerModuleTest extends AuraSqlQueryTestCase
         $this->assertSame(50, $page->total);
     }
 
-    /**
-     * @depends testNewInstance
-     */
+    /** @depends testNewInstance */
     public function testArrayAccessWithMaxPage(AuraSqlQueryPager $pager): void
     {
         $page = $pager[50];
@@ -78,9 +74,7 @@ class AuraSqlQueryPagerModuleTest extends AuraSqlQueryTestCase
         $this->assertSame(50, $page->total);
     }
 
-    /**
-     * @depends testNewInstance
-     */
+    /** @depends testNewInstance */
     public function testIterator(AuraSqlQueryPager $pager): void
     {
         $page = $pager[1];
@@ -88,9 +82,7 @@ class AuraSqlQueryPagerModuleTest extends AuraSqlQueryTestCase
         $this->assertInstanceOf(Iterator::class, $itelator);
     }
 
-    /**
-     * @depends testNewInstanceWithBinding
-     */
+    /** @depends testNewInstanceWithBinding */
     public function testArrayAccessWithBinding(AuraSqlQueryPager $pager): void
     {
         $page = $pager[1];

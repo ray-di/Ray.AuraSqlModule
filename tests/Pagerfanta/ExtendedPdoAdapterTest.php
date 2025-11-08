@@ -14,6 +14,7 @@ class ExtendedPdoAdapterTest extends AbstractPdoTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->pdoAdapter = new ExtendedPdoAdapter($this->pdo, 'SELECT * FROM posts', []);
     }
 
@@ -60,9 +61,7 @@ class ExtendedPdoAdapterTest extends AbstractPdoTestCase
         $this->assertSame($expected, $slice);
     }
 
-    /**
-     * @return array<array<string>>
-     */
+    /** @return array<array<string>> */
     public function splProvider(): array
     {
         return [

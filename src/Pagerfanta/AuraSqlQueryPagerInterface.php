@@ -9,8 +9,6 @@ use Aura\SqlQuery\Common\SelectInterface;
 
 interface AuraSqlQueryPagerInterface
 {
-    /**
-     * @return AuraSqlQueryPagerInterface
-     */
+    /** @return AuraSqlQueryPagerInterface */
     public function init(ExtendedPdoInterface $pdo, SelectInterface $select, int $paging, RouteGeneratorInterface $routeGenerator);
 }

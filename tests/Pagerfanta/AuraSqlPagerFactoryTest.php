@@ -14,6 +14,7 @@ class AuraSqlPagerFactoryTest extends AbstractPdoTestCase
     public function setUp(): void
     {
         parent::setUp();
+
         $this->factory = new AuraSqlPagerFactory(new AuraSqlPager(new DefaultView(), []));
     }
 
