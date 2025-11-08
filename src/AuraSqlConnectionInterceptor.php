@@ -36,7 +36,6 @@ final readonly class AuraSqlConnectionInterceptor implements MethodInterceptor
         $connection = $this->getConnection($invocation);
         $object = $invocation->getThis();
         $ref = new ReflectionProperty($object, self::PROP);
-        $ref->setAccessible(true);
         $ref->setValue($object, $connection);
 
         return $invocation->proceed();
