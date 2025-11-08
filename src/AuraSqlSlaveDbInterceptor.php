@@ -29,7 +29,6 @@ final readonly class AuraSqlSlaveDbInterceptor implements MethodInterceptor
     {
         $object = $invocation->getThis();
         $ref = new ReflectionProperty($object, self::PROP);
-        $ref->setAccessible(true);
         $connection = $this->connectionLocator->getRead();
         $ref->setValue($object, $connection);
 

@@ -26,7 +26,6 @@ final readonly class AuraSqlMasterDbInterceptor implements MethodInterceptor
     {
         $object = $invocation->getThis();
         $ref = new ReflectionProperty($object, self::PROP);
-        $ref->setAccessible(true);
         $connection = $this->connectionLocator->getWrite();
         $ref->setValue($object, $connection);
 

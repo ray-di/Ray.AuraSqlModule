@@ -60,7 +60,6 @@ class NamedPdoModuleTest extends TestCase
     private function getDsn(ExtendedPdo $pdo): string
     {
         $prop = new ReflectionProperty($pdo::class, 'args');
-        $prop->setAccessible(true);
         $args = $prop->getValue($pdo);
 
         return $args[0]; // dsn
