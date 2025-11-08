@@ -202,7 +202,7 @@ If you prefer not to use Rector, you can manually convert annotations:
 
 1. Replace `/** @AnnotationName */` with `#[AnnotationName]`
 2. Move attributes from docblocks to the line before the method/property/class
-3. For parameter annotations, place the attribute before the parameter type
++3. For parameter annotations, place the attribute before the parameter declaration
 4. Ensure all necessary `use` statements are present
 
 ## Need Help?
