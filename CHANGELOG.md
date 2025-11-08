@@ -1,4 +1,4 @@
-## [1.18.0] - 2025-11-09
+## [1.15.0] - 2025-11-09
 
 ### Changed
 - **PHP 8.4 Requirement**: Updated minimum PHP version to ^8.4
