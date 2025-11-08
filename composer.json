@@ -15,7 +15,6 @@
         "aura/sql": "^6.0",
         "pagerfanta/pagerfanta": "^3.5 || ^4.7",
         "rize/uri-template": "^0.4",
-        "doctrine/annotations": "^1.11 || ^2.0",
         "psr/log": "^1.1 || ^2.0 || ^3.0",
         "aura/sqlquery": "^3.0"
     },
