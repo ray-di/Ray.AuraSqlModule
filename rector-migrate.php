@@ -13,14 +13,10 @@ use Rector\Php80\ValueObject\AnnotationToAttribute;
  * to native PHP 8 attributes for Ray.AuraSqlModule annotations.
  *
  * Usage:
- *   vendor/bin/rector process src --config=rector-migrate.php --dry-run
- *   vendor/bin/rector process src --config=rector-migrate.php
+ *   vendor/bin/rector process src --config=vendor/ray/aura-sql-module/rector-migrate.php --dry-run
+ *   vendor/bin/rector process src --config=vendor/ray/aura-sql-module/rector-migrate.php
  */
 return RectorConfig::configure()
-    ->withPaths([
-        __DIR__ . '/src',
-        __DIR__ . '/tests',
-    ])
     ->withConfiguredRule(
         AnnotationToAttributeRector::class,
         [
