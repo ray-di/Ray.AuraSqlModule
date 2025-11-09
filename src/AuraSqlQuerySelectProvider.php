@@ -13,11 +13,7 @@ use Ray\Di\ProviderInterface;
 /** @implements ProviderInterface<SelectInterface> */
 final readonly class AuraSqlQuerySelectProvider implements ProviderInterface
 {
-    /**
-     * @param string $db The database type
-     *
-     * @AuraSqlQueryConfig
-     */
+    /** @param string $db The database type */
     #[AuraSqlQueryConfig]
     public function __construct(private string $db)
     {
