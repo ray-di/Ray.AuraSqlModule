@@ -16,9 +16,6 @@ class FakeMultiDb
     protected $pdo2;
     protected $pdo3;
 
-    /**
-     * @Named("pdo1=pdo1,pdo2=pdo2,pdo3=pdo3")
-     */
     #[Named('pdo1=pdo1,pdo2=pdo2,pdo3=pdo3')]
     public function __construct(ExtendedPdoInterface $pdo1, ExtendedPdoInterface $pdo2, ExtendedPdoInterface $pdo3)
     {
@@ -30,9 +27,6 @@ class FakeMultiDb
         $this->pdo3->exec('CREATE TABLE user(name, age)');
     }
 
-    /**
-     * @Transactional({"pdo1","pdo2","pdo3"})
-     */
     #[Transactional(['pdo1', 'pdo2', 'pdo3'])]
     public function write()
     {
@@ -54,9 +48,6 @@ class FakeMultiDb
         return $users;
     }
 
-    /**
-     * @Transactional()
-     */
     #[Transactional]
     public function writeNoValueTransactional()
     {

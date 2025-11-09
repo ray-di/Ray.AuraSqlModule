@@ -8,9 +8,6 @@ use Ray\AuraSqlModule\Annotation\ReadOnlyConnection;
 use Ray\AuraSqlModule\Annotation\Transactional;
 use Ray\AuraSqlModule\Annotation\WriteConnection;
 
-/**
- * @AuraSql
- */
 #[AuraSql]
 class FakeModel
 {
@@ -34,38 +31,24 @@ class FakeModel
         return true;
     }
 
-    /**
-     * @ReadOnlyConnection
-     */
     #[ReadOnlyConnection]
     public function slave()
     {
         return true;
     }
 
-    /**
-     * @WriteConnection
-     * @Transactional
-     */
     #[WriteConnection, Transactional]
     public function master()
     {
         return true;
     }
 
-    /**
-     * @WriteConnection
-     * @Transactional
-     */
     #[WriteConnection, Transactional]
     public function dbError()
     {
         $this->pdo->exec('xxx');
     }
 
-    /**
-     * @Transactional
-     */
     #[Transactional]
     public function noDb()
     {

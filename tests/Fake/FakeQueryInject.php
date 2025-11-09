@@ -11,11 +11,7 @@ class FakeQueryInject
     use AuraSqlUpdateInject;
     use AuraSqlDeleteInject;
 
-    /**
-     * @AuraSqlQueryConfig
-     *
-     * @param string $db
-     */
+    /** @param string $db */
     #[AuraSqlQueryConfig]
     public function __construct(private string $db)
     {
