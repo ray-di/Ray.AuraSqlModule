@@ -10,19 +10,21 @@ use Ray\Di\AbstractModule;
 final class AuraSqlEnvModule extends AbstractModule
 {
     /**
-     * @param string        $dsn      Env key for Data Source Name (DSN)
-     * @param string        $username Env key for Username for the DSN string
-     * @param string        $password Env key for Password for the DSN string
-     * @param string        $slave    Env key for Comma separated slave host list
-     * @param array<string> $options  A key=>value array of driver-specific connection options
-     * @param array<string> $queries  Queries to execute after the connection.
+     * @param string              $dsn      Env key for Data Source Name (DSN)
+     * @param string              $username Env key for Username for the DSN string
+     * @param string              $password Env key for Password for the DSN string
+     * @param string              $slave    Env key for Comma separated slave host list
+     * @param array<string,mixed> $options  A key=>value array of driver-specific connection options
+     * @param array<string>       $queries  Queries to execute after the connection.
      */
     public function __construct(
         private readonly string $dsn,
         private readonly string $username = '',
         private readonly string $password = '',
         private readonly string $slave = '',
+        /** @var array<string, mixed> */
         private readonly array $options = [],
+        /** @var array<string> */
         private readonly array $queries = []
     ) {
         parent::__construct();
