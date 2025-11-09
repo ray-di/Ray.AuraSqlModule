@@ -1,0 +1,43 @@
+{
+    "name": "aura/sql",
+    "type": "library",
+    "description": "A PDO extension that provides lazy connections, array quoting, query profiling, value binding, and convenience methods for common fetch styles. Because it extends PDO, existing code that uses PDO can use this without any changes to the existing code.",
+    "keywords": [
+        "mysql",
+        "pdo",
+        "pgsql",
+        "postgres",
+        "postgresql",
+        "sqlite",
+        "sql server",
+        "sqlserver",
+        "sqlsrv"
+    ],
+    "homepage": "https://github.com/auraphp/Aura.Sql",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Aura.Sql Contributors",
+            "homepage": "https://github.com/auraphp/Aura.Sql/contributors"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "psr/log": "^1.0 || ^2.0 || ^3.0",
+        "ext-pdo": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Aura\\Sql\\": "src/"
+        }
+    },
+    "require-dev": {
+        "pds/skeleton": "~1.0",
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Aura\\Sql\\": "tests/"
+        }
+    }
+}

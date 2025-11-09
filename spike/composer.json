@@ -1,0 +1,27 @@
+{
+    "name": "test/migration-test",
+    "description": "Test migration from annotations to attributes",
+    "require": {
+        "php": "^8.4",
+        "ray/aura-sql-module": "1.x-dev"
+    },
+    "require-dev": {
+        "rector/rector": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Test\\": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "..",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

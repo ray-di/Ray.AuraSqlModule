@@ -1,0 +1,24 @@
+{
+    "name": "pagerfanta/twig",
+    "type": "library",
+    "description": "Twig integration for Pagerfanta",
+    "keywords": ["pagerfanta"],
+    "license": "MIT",
+    "require": {
+        "php": "^8.1",
+        "pagerfanta/core": "^3.7 || ^4.0",
+        "twig/twig": "^2.13 || ^3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pagerfanta\\Twig\\": "./"
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "minimum-stability": "dev"
+}
