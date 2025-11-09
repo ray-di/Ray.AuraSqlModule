@@ -2,7 +2,7 @@
 
 ## Overview
 
-Ray.AuraSqlModule v2.x has removed the dependency on `doctrine/annotations` and now exclusively uses native PHP 8 attributes. This guide will help you migrate your application code from Doctrine annotations to PHP 8 attributes.
+Ray.AuraSqlModule v1.15+ has removed the dependency on `doctrine/annotations` and now exclusively uses native PHP 8 attributes. This guide will help you migrate your application code from Doctrine annotations to PHP 8 attributes.
 
 ## Why Migrate?
 
@@ -15,15 +15,7 @@ Ray.AuraSqlModule v2.x has removed the dependency on `doctrine/annotations` and 
 
 ## Migration Steps
 
-### Step 1: Update Ray.AuraSqlModule
-
-First, ensure you're using Ray.AuraSqlModule v2.x:
-
-```bash
-composer require ray/aura-sql-module:^2.0
-```
-
-### Step 2: Install Rector (if not already installed)
+### Step 1: Install Rector (if not already installed)
 
 Rector is an automated refactoring tool that can convert annotations to attributes:
 
@@ -31,7 +23,7 @@ Rector is an automated refactoring tool that can convert annotations to attribut
 composer require --dev rector/rector
 ```
 
-### Step 3: Run Automated Migration
+### Step 2: Run Automated Migration
 
 Ray.AuraSqlModule provides a Rector configuration file for automated migration:
 
@@ -49,7 +41,7 @@ If you have tests that use annotations:
 vendor/bin/rector process tests --config=vendor/ray/aura-sql-module/rector-migrate.php
 ```
 
-### Step 4: Manual Review
+### Step 3: Manual Review
 
 Review the changes made by Rector and adjust if necessary. Pay special attention to:
 
@@ -57,7 +49,7 @@ Review the changes made by Rector and adjust if necessary. Pay special attention
 - Annotations with custom parameters
 - Import statements (Rector should handle these automatically)
 
-### Step 5: Remove doctrine/annotations
+### Step 4: Remove doctrine/annotations
 
 After migration, you can safely remove the doctrine/annotations dependency:
 

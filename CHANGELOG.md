@@ -1,3 +1,8 @@
+## [1.15.1] - 2025-11-09
+
+### Fixed
+- **Documentation**: Corrected incorrect version references in `ANNOTATION_TO_ATTRIBUTE.md`
+
 ## [1.15.0] - 2025-11-09
 
 ### Changed
