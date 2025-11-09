@@ -35,8 +35,7 @@ final readonly class ExtendedPdoAdapter implements AdapterInterface
         private readonly string $sql,
         private readonly array $params,
         ?FetcherInterface $fetcher = null
-    )
-    {
+    ) {
         $this->fetcher = $fetcher ?? new FetchAssoc($this->pdo);
     }
 
