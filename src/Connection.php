@@ -12,15 +12,15 @@ final class Connection
     private ?ExtendedPdo $pdo = null;
 
     /**
-     * @phpstan-param array<string> $options
-     * @phpstan-param array<string> $queries
+     * @phpstan-param array<string, mixed> $options
+     * @phpstan-param array<string>        $queries
      */
     public function __construct(
         private readonly string $dsn,
         private readonly string $username = '',
         #[SensitiveParameter]
         private readonly string $password = '',
-        /** @var array<string> */
+        /** @var array<string, mixed> */
         private readonly array $options = [],
         /** @var array<string> */
         private readonly array $queries = []

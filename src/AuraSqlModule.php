@@ -16,12 +16,12 @@ final class AuraSqlModule extends AbstractModule
     public const string PARSE_PDO_DSN_REGEX = '/(.*?):(?:(host|server)=.*?;)?(.*)/i';
 
     /**
-     * @param string        $dsn      Data Source Name (DSN)
-     * @param string        $user     User name for the DSN string
-     * @param string        $password Password for the DSN string
-     * @param string        $slave    Comma separated slave host list
-     * @param array<string> $options  A key=>value array of driver-specific connection options
-     * @param array<string> $queries
+     * @param string              $dsn      Data Source Name (DSN)
+     * @param string              $user     User name for the DSN string
+     * @param string              $password Password for the DSN string
+     * @param string              $slave    Comma separated slave host list
+     * @param array<string,mixed> $options  A key=>value array of driver-specific connection options
+     * @param array<string>       $queries
      */
     public function __construct(
         private readonly string $dsn,
@@ -29,7 +29,9 @@ final class AuraSqlModule extends AbstractModule
         #[SensitiveParameter]
         private readonly string $password = '',
         private readonly string $slave = '',
+        /** @var array<string, mixed> */
         private readonly array $options = [],
+        /** @var array<string> */
         private readonly array $queries = []
     ) {
         parent::__construct();

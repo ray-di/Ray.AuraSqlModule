@@ -18,8 +18,8 @@ final class ConnectionLocatorFactory
     }
 
     /**
-     * @param array<string> $options
-     * @param array<string> $queries
+     * @param array<string, mixed> $options
+     * @param array<string>        $queries
      */
     public static function fromInstance(
         string $dsn,
@@ -43,8 +43,8 @@ final class ConnectionLocatorFactory
     }
 
     /**
-     * @param array<string> $options
-     * @param array<string> $queries
+     * @param array<string, mixed> $options
+     * @param array<string>        $queries
      */
     public static function fromEnv(
         string $dsn,

@@ -14,17 +14,17 @@ use SensitiveParameter;
 final class AuraSqlMasterModule extends AbstractModule
 {
     /**
-     * @phpstan-param array<string> $options
-     * @phpstan-param array<string> $attributes
+     * @phpstan-param array<string, mixed> $options
+     * @phpstan-param array<string, mixed> $attributes
      */
     public function __construct(
         private readonly string $dsn,
         private readonly string $user = '',
         #[SensitiveParameter]
         private readonly string $password = '',
-        /** @var array<string> */
+        /** @var array<string, mixed> */
         private readonly array $options = [],
-        /** @var array<string> */
+        /** @var array<string, mixed> */
         private readonly array $attributes = [],
         ?AbstractModule $module = null
     ) {

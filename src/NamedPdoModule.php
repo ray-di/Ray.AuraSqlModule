@@ -16,13 +16,13 @@ final class NamedPdoModule extends AbstractModule
     public const string PARSE_PDO_DSN_REGEX = '/(.*?)\:(host|server)=.*?;(.*)/i';
 
     /**
-     * @param string        $qualifer Qualifer for ExtendedPdoInterface
-     * @param string        $dsn      Data Source Name (DSN)
-     * @param string        $username User name for the DSN string
-     * @param string        $password Password for the DSN string
-     * @param string        $slave    Comma separated slave host list
-     * @param array<string> $options  A key=>value array of driver-specific connection options
-     * @param array<string> $queries  Queries to execute after the connection.
+     * @param string              $qualifer Qualifer for ExtendedPdoInterface
+     * @param string              $dsn      Data Source Name (DSN)
+     * @param string              $username User name for the DSN string
+     * @param string              $password Password for the DSN string
+     * @param string              $slave    Comma separated slave host list
+     * @param array<string,mixed> $options  A key=>value array of driver-specific connection options
+     * @param array<string>       $queries  Queries to execute after the connection.
      */
     public function __construct(
         private readonly string $qualifer,
@@ -31,7 +31,9 @@ final class NamedPdoModule extends AbstractModule
         #[SensitiveParameter]
         private readonly string $password = '',
         private readonly string $slave = '',
+        /** @var array<string, mixed> */
         private readonly array $options = [],
+        /** @var array<string> */
         private readonly array $queries = []
     ) {
         parent::__construct();
