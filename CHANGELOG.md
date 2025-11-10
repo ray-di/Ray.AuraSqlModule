@@ -1,12 +1,4 @@
-## [1.16.0] - 2025-11-10
-
-### Changed
-- **Code Modernization**: Converted annotation classes to readonly classes
-  - `Ray\AuraSqlModule\Annotation\Transactional`
-  - `Ray\AuraSqlModule\Annotation\PagerViewOption`
-  - `Ray\AuraSqlModule\Annotation\AuraSqlQueryConfig`
-  - `Ray\AuraSqlModule\Annotation\Read`
-- **Doctrine Annotations Cleanup**: Removed all remaining Doctrine annotation syntax from docblocks in source and test files
+## [1.15.2] - 2025-11-10
 
 ### Fixed
 - **Migration Tool**: Fixed `rector-migrate.php` to work correctly with user projects
@@ -15,11 +7,19 @@
   - Added documentation for processing multiple directories
   - Matches pattern used in Ray.PsrCacheModule (PR #32)
 - **Type Annotations**: Fixed PDO options type from `array<string>` to `array<string, mixed>` in 8 files
+- **Doctrine Annotations Cleanup**: Removed all remaining Doctrine annotation syntax from docblocks in source and test files
+
+### Changed
+- **Code Modernization**: Converted annotation classes to readonly classes
+  - `Ray\AuraSqlModule\Annotation\Transactional`
+  - `Ray\AuraSqlModule\Annotation\PagerViewOption`
+  - `Ray\AuraSqlModule\Annotation\AuraSqlQueryConfig`
+  - `Ray\AuraSqlModule\Annotation\Read`
 
 ### Note
+- **This is a critical fix** for users migrating from annotations to attributes
 - Migration guide has been verified to work correctly with real user projects
 - All annotation classes are now readonly (PHP 8.2+ feature)
-- **This is a critical fix** for users migrating from annotations to attributes
 
 ## [1.15.1] - 2025-11-09
 
