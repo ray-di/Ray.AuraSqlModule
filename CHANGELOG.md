@@ -1,3 +1,25 @@
+## [1.13.7] - 2025-11-10
+
+### Changed
+- **Complete Annotation Removal**: Removed all remaining docblock annotations from codebase
+  - Removed `@Inject` annotations from 7 inject trait files
+  - Removed `@PagerViewOption` annotations from 2 pager files
+  - Removed `@AuraSqlQueryConfig` annotations from 4 query provider files
+  - Removed `@Read` annotation from AuraSqlConnectionInterceptor
+  - Removed various annotations from test fake classes
+  - All DI and AOP configurations now use PHP 8 Attributes exclusively
+
+### Fixed
+- **Coding Standards**: Updated tools to properly detect PHP 8 Attributes
+  - Upgraded `squizlabs/php_codesniffer` from ^3.5 to ^4.0
+  - Upgraded `doctrine/coding-standard` to ^14.0
+  - Upgraded `slevomat/coding-standard` from 6.4.1 to 8.24.0
+  - Fixed false positives where Attributes were reported as unused imports
+
+### Note
+- This release completes the migration from Doctrine Annotations to PHP 8 Attributes
+- The codebase is now fully clean of docblock annotations
+
 ## [1.13.6] - 2025-11-10
 
 ### Fixed
