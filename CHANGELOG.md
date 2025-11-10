@@ -1,3 +1,15 @@
+## [1.15.3] - 2025-11-10
+
+### Fixed
+- **Coding Standards**: Updated tools to properly detect PHP 8 Attributes
+  - Upgraded `squizlabs/php_codesniffer` from ^3.13 to ^4.0
+  - Upgraded `doctrine/coding-standard` from ^13.0 to ^14.0
+  - Upgraded `slevomat/coding-standard` from 8.22.1 to 8.24.0
+  - Fixed false positives where Attributes were reported as unused imports
+
+### Note
+- This update ensures coding standards tools correctly recognize PHP 8 Attributes
+
 ## [1.15.2] - 2025-11-10
 
 ### Fixed

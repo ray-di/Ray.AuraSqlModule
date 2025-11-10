@@ -1,8 +1,8 @@
 {
     "require": {
-        "doctrine/coding-standard": "^13.0.1",
+        "doctrine/coding-standard": "^14.0",
         "phpstan/phpstan": "^2.1",
-        "squizlabs/php_codesniffer": "^3.13",
+        "squizlabs/php_codesniffer": "^4.0",
         "vimeo/psalm": "^6.1",
         "rector/rector": "^2.0.16"
     },
