@@ -12,7 +12,6 @@ trait AuraSqlDeleteInject
     /** @var DeleteInterface */
     protected $delete;
 
-    /** @Inject */
     #[Inject]
     public function setAuraSqlDelete(DeleteInterface $delete): void
     {

@@ -13,11 +13,7 @@ class FakeQueryInject
 
     private string $db;
 
-    /**
-     * @AuraSqlQueryConfig
-     *
-     * @param string $db
-     */
+    /** @param string $db */
     #[AuraSqlQueryConfig]
     public function __construct($db)
     {
