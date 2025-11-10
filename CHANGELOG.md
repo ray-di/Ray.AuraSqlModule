@@ -1,3 +1,16 @@
+## [1.13.6] - 2025-11-10
+
+### Fixed
+- **Migration Tool**: Fixed `rector-migrate.php` to work correctly with user projects
+  - Removed hardcoded `withPaths()` that prevented migration from working
+  - Users can now specify target paths via command line arguments
+  - Added documentation for processing multiple directories
+  - Matches pattern used in Ray.PsrCacheModule (PR #32)
+
+### Note
+- This is a **critical fix** for users migrating from annotations to attributes
+- Migration guide has been verified to work correctly with real user projects
+
 ## [1.13.5] - 2025-11-09
 
 ### Fixed
