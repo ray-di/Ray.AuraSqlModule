@@ -35,11 +35,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     /** @phpstan-var positive-int */
     private int $paging;
 
-    /**
-     * @param array<array<string>> $viewOptions
-     *
-     * @PagerViewOption("viewOptions")
-     */
+    /** @param array<array<string>> $viewOptions */
     #[PagerViewOption('viewOptions')]
     public function __construct(ViewInterface $view, array $viewOptions)
     {

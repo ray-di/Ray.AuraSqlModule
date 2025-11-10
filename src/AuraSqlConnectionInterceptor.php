@@ -22,11 +22,7 @@ class AuraSqlConnectionInterceptor implements MethodInterceptor
     /** @var string[] */
     private array $readsMethods = [];
 
-    /**
-     * @phpstan-param array<string> $readMethods
-     *
-     * @Read("readMethods")
-     */
+    /** @phpstan-param array<string> $readMethods */
     #[Read('readMethods')]
     public function __construct(ConnectionLocatorInterface $connectionLocator, array $readMethods)
     {

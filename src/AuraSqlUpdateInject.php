@@ -12,7 +12,6 @@ trait AuraSqlUpdateInject
     /** @var UpdateInterface */
     protected $update;
 
-    /** @Inject */
     #[Inject]
     public function setAuraSqlUpdate(UpdateInterface $update): void
     {

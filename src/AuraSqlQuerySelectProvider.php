@@ -14,11 +14,7 @@ class AuraSqlQuerySelectProvider implements ProviderInterface
 {
     private string $db;
 
-    /**
-     * @param string $db The database type
-     *
-     * @AuraSqlQueryConfig
-     */
+    /** @param string $db The database type */
     #[AuraSqlQueryConfig()]
     public function __construct($db)
     {

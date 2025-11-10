@@ -13,7 +13,6 @@ trait AuraSqlInject
     /** @var ExtendedPdoInterface */
     protected $pdo;
 
-    /** @Inject() */
     #[Inject]
     public function setAuraSql(?ExtendedPdoInterface $pdo)
     {
