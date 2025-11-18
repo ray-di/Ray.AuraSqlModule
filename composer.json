@@ -10,8 +10,8 @@
     "require": {
         "php": "^8.4",
         "ext-pdo": "*",
-        "ray/di": "^2.18",
-        "ray/aop": "^2.17",
+        "ray/di": "^2.19.1",
+        "ray/aop": "^2.19",
         "aura/sql": "^6.0",
         "pagerfanta/pagerfanta": "^3.5 || ^4.7",
         "rize/uri-template": "^0.4",
