@@ -57,7 +57,13 @@ final class AuraSqlModule extends AbstractModule
         $this->bind()->annotatedWith('pdo_queries')->toInstance($this->queries);
         $this->bind(ExtendedPdoInterface::class)->toConstructor(
             ExtendedPdo::class,
-            'dsn=pdo_dsn,username=pdo_user,password=pdo_pass,options=pdo_options,queries=pdo_queries',
+            [
+                'dsn' => 'pdo_dsn',
+                'username' => 'pdo_user',
+                'password' => 'pdo_pass',
+                'options' => 'pdo_options',
+                'queries' => 'pdo_queries',
+            ],
         )->in(Scope::SINGLETON);
     }
 
