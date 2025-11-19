@@ -12,7 +12,7 @@
         "ext-pdo": "*",
         "ray/di": "^2.19.1",
         "ray/aop": "^2.19",
-        "aura/sql": "^5.0 || ^6.0",
+        "aura/sql": "^6.0",
         "pagerfanta/pagerfanta": "^3.5 || ^4.7",
         "rize/uri-template": "^0.4",
         "psr/log": "^1.1 || ^2.0 || ^3.0",
