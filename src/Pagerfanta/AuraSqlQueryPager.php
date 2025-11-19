@@ -29,9 +29,11 @@ final class AuraSqlQueryPager implements AuraSqlQueryPagerInterface, ArrayAccess
     private int $paging;
 
     /** @param array<string, mixed> $viewOptions */
-    public function __construct(private readonly ViewInterface $view, #[PagerViewOption]
-    private readonly array $viewOptions)
-    {
+    public function __construct(
+        private readonly ViewInterface $view,
+        #[PagerViewOption]
+        private readonly array $viewOptions
+    ) {
     }
 
     /**

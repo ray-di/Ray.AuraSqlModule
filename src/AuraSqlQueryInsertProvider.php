@@ -14,9 +14,10 @@ use Ray\Di\ProviderInterface;
 final readonly class AuraSqlQueryInsertProvider implements ProviderInterface
 {
     /** @param string $db The database type */
-    public function __construct(#[AuraSqlQueryConfig]
-    private string $db)
-    {
+    public function __construct(
+        #[AuraSqlQueryConfig]
+        private string $db
+    ) {
     }
 
     /**
