@@ -17,9 +17,12 @@ class FakeMultiDb
     protected $pdo3;
 
     public function __construct(
-        #[Named('pdo1')] ExtendedPdoInterface $pdo1,
-        #[Named('pdo2')] ExtendedPdoInterface $pdo2,
-        #[Named('pdo3')] ExtendedPdoInterface $pdo3
+        #[Named('pdo1')]
+        ExtendedPdoInterface $pdo1,
+        #[Named('pdo2')]
+        ExtendedPdoInterface $pdo2,
+        #[Named('pdo3')]
+        ExtendedPdoInterface $pdo3
     ) {
         $this->pdo1 = $pdo1;
         $this->pdo2 = $pdo2;
