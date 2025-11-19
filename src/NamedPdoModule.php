@@ -51,6 +51,31 @@ final class NamedPdoModule extends AbstractModule
 
     private function configureSingleDsn(): void
     {
+        if ($this->qualifer === '') {
+            $this->configureSingleDsnWithoutQualifier();
+        } else {
+            $this->configureSingleDsnWithQualifier();
+        }
+    }
+
+    private function configureSingleDsnWithoutQualifier(): void
+    {
+        $this->bind(ExtendedPdoInterface::class)
+            ->toConstructor(
+                ExtendedPdo::class,
+                [
+                    'dsn' => '_dsn',
+                    'username' => '_username',
+                    'password' => '_password',
+                ],
+            );
+        $this->bind()->annotatedWith('_dsn')->toInstance($this->dsn);
+        $this->bind()->annotatedWith('_username')->toInstance($this->username);
+        $this->bind()->annotatedWith('_password')->toInstance($this->password);
+    }
+
+    private function configureSingleDsnWithQualifier(): void
+    {
         $this->bind(ExtendedPdoInterface::class)
             /** @phpstan-ignore argument.type */
             ->annotatedWith($this->qualifer)

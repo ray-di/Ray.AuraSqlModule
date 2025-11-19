@@ -47,6 +47,32 @@ final class NamedPdoEnvModule extends AbstractModule
 
     private function configureSingleDsn(): void
     {
+        if ($this->qualifer === '') {
+            $this->configureSingleDsnWithoutQualifier();
+        } else {
+            $this->configureSingleDsnWithQualifier();
+        }
+    }
+
+    private function configureSingleDsnWithoutQualifier(): void
+    {
+        $connection = new EnvConnection(
+            $this->dsn,
+            null,
+            $this->username,
+            $this->password,
+            $this->options,
+            $this->queries,
+        );
+        $this->bind(EnvConnection::class)->toInstance($connection);
+        $this->bind(ExtendedPdoInterface::class)->toProvider(
+            NamedExtendedPdoProvider::class,
+            '',
+        );
+    }
+
+    private function configureSingleDsnWithQualifier(): void
+    {
         $connection = new EnvConnection(
             $this->dsn,
             null,
