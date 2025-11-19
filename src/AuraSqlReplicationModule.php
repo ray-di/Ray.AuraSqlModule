@@ -28,20 +28,16 @@ final class AuraSqlReplicationModule extends AbstractModule
     #[Override]
     protected function configure(): void
     {
-        $locatorBinding = $this->bind(ConnectionLocatorInterface::class);
-        if ($this->qualifer !== '') {
-            $locatorBinding = $locatorBinding->annotatedWith($this->qualifer);
-        }
-
-        $locatorBinding->toInstance($this->connectionLocator);
+        $this->bind(ConnectionLocatorInterface::class)
+            /** @phpstan-ignore argument.type */
+            ->annotatedWith($this->qualifer)
+            ->toInstance($this->connectionLocator);
 
         // ReadOnlyConnection when GET, otherwise WriteConnection
-        $pdoBinding = $this->bind(ExtendedPdoInterface::class);
-        if ($this->qualifer !== '') {
-            $pdoBinding = $pdoBinding->annotatedWith($this->qualifer);
-        }
-
-        $pdoBinding->toProvider(AuraSqlReplicationDbProvider::class, $this->qualifer)
+        $this->bind(ExtendedPdoInterface::class)
+            /** @phpstan-ignore argument.type */
+            ->annotatedWith($this->qualifer)
+            ->toProvider(AuraSqlReplicationDbProvider::class, $this->qualifer)
             ->in(Scope::SINGLETON);
 
         // @ReadOnlyConnection @WriteConnection
