@@ -8,6 +8,8 @@ use Aura\Sql\ConnectionLocatorInterface;
 use Aura\Sql\ExtendedPdo;
 use Aura\Sql\ExtendedPdoInterface;
 use PHPUnit\Framework\TestCase;
+use Ray\Compiler\CompiledInjector;
+use Ray\Compiler\Compiler;
 use Ray\Compiler\DiCompiler;
 use Ray\Compiler\ScriptInjector;
 use Ray\Di\Injector;
@@ -26,8 +28,11 @@ class AuraSqlModuleTest extends TestCase
 
     public function testCompile()
     {
-        new DiCompiler(new AuraSqlModule('sqlite::memory:'), __DIR__ . '/tmp')->compile();
-        $pdo = new ScriptInjector(__DIR__ . '/tmp')->getInstance(ExtendedPdoInterface::class);
+        $compiler = new Compiler();
+        $scriptDir = __DIR__ . '/tmp';
+        $compiler->compile(new AuraSqlModule('sqlite::memory:'), $scriptDir);
+        $injector = new CompiledInjector($scriptDir);
+        $pdo = $injector->getInstance(ExtendedPdoInterface::class);
         $this->assertInstanceOf(ExtendedPdoInterface::class, $pdo);
     }
 
