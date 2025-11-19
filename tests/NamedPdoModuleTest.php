@@ -25,7 +25,7 @@ class NamedPdoModuleTest extends TestCase
     public function testEmptyQualifierThrowsException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('NamedPdoModule requires a non-empty qualifier');
+        $this->expectExceptionMessage('NamedPdoModule requires a non-empty qualifier. Use AuraSqlModule instead for unqualified bindings.');
 
         new NamedPdoModule('', 'sqlite::memory:');
     }

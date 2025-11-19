@@ -67,11 +67,15 @@ final class NamedPdoModule extends AbstractModule
                     'dsn' => "{$this->qualifer}_dsn",
                     'username' => "{$this->qualifer}_username",
                     'password' => "{$this->qualifer}_password",
+                    'driver_options' => "{$this->qualifer}_options",
+                    'after_connect' => "{$this->qualifer}_queries",
                 ],
             );
         $this->bind()->annotatedWith("{$this->qualifer}_dsn")->toInstance($this->dsn);
         $this->bind()->annotatedWith("{$this->qualifer}_username")->toInstance($this->username);
         $this->bind()->annotatedWith("{$this->qualifer}_password")->toInstance($this->password);
+        $this->bind()->annotatedWith("{$this->qualifer}_options")->toInstance($this->options);
+        $this->bind()->annotatedWith("{$this->qualifer}_queries")->toInstance($this->queries);
     }
 
     private function configureMasterSlaveDsn(): void
