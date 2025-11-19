@@ -7,7 +7,7 @@ namespace Ray\AuraSqlModule\Annotation;
 use Attribute;
 use Ray\Di\Di\Qualifier;
 
-#[Attribute(Attribute::TARGET_METHOD), Qualifier]
+#[Attribute(Attribute::TARGET_PARAMETER), Qualifier]
 final class EnvAuth
 {
 }

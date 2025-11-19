@@ -9,7 +9,7 @@ use Ray\Di\Di\Named;
 use Ray\Di\Di\Qualifier;
 use Ray\Di\InjectorInterface;
 
-#[Attribute(Attribute::TARGET_METHOD), Qualifier]
+#[Attribute(Attribute::TARGET_METHOD | Attribute::TARGET_PARAMETER), Qualifier]
 final class FakeLogDbInject implements InjectInterface
 {
     public $optional = true;

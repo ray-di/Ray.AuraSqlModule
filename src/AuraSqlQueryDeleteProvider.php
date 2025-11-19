@@ -14,9 +14,10 @@ use Ray\Di\ProviderInterface;
 final readonly class AuraSqlQueryDeleteProvider implements ProviderInterface
 {
     /** @param string $db The database type */
-    #[AuraSqlQueryConfig]
-    public function __construct(private string $db)
-    {
+    public function __construct(
+        #[AuraSqlQueryConfig]
+        private string $db
+    ) {
     }
 
     /**

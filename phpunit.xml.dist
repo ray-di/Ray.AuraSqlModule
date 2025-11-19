@@ -9,13 +9,6 @@
     </include>
   </source>
 
-  <coverage>
-    <report>
-      <html outputDirectory="coverage-html"/>
-      <text outputFile="php://stdout"/>
-    </report>
-  </coverage>
-
   <testsuites>
     <testsuite name="all">
       <directory>tests</directory>

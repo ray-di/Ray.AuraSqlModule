@@ -6,6 +6,7 @@ namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdo;
 use Aura\Sql\ExtendedPdoInterface;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
 use ReflectionProperty;
@@ -19,6 +20,14 @@ class NamedPdoModuleTest extends TestCase
         $qualifer = 'log_db';
         $instance = new Injector(new NamedPdoModule($qualifer, 'sqlite::memory:'), __DIR__ . '/tmp')->getInstance(ExtendedPdoInterface::class, $qualifer);
         $this->assertInstanceOf(ExtendedPdo::class, $instance);
+    }
+
+    public function testEmptyQualifierThrowsException(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('NamedPdoModule requires a non-empty qualifier. Use AuraSqlModule instead for unqualified bindings.');
+
+        new NamedPdoModule('', 'sqlite::memory:');
     }
 
     public function testFakeName()

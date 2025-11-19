@@ -47,6 +47,15 @@ final class NamedPdoEnvModule extends AbstractModule
 
     private function configureSingleDsn(): void
     {
+        if ($this->qualifer === '') {
+            $this->configureSingleDsnWithoutQualifier();
+        } else {
+            $this->configureSingleDsnWithQualifier();
+        }
+    }
+
+    private function configureSingleDsnWithoutQualifier(): void
+    {
         $connection = new EnvConnection(
             $this->dsn,
             null,
@@ -55,11 +64,34 @@ final class NamedPdoEnvModule extends AbstractModule
             $this->options,
             $this->queries,
         );
-        $this->bind(EnvConnection::class)->annotatedWith($this->qualifer)->toInstance($connection);
-        $this->bind(ExtendedPdoInterface::class)->annotatedWith($this->qualifer)->toProvider(
+        $this->bind(EnvConnection::class)->toInstance($connection);
+        $this->bind(ExtendedPdoInterface::class)->toProvider(
             NamedExtendedPdoProvider::class,
-            $this->qualifer,
+            '',
         );
+    }
+
+    private function configureSingleDsnWithQualifier(): void
+    {
+        $connection = new EnvConnection(
+            $this->dsn,
+            null,
+            $this->username,
+            $this->password,
+            $this->options,
+            $this->queries,
+        );
+        $this->bind(EnvConnection::class)
+            /** @phpstan-ignore argument.type */
+            ->annotatedWith($this->qualifer)
+            ->toInstance($connection);
+        $this->bind(ExtendedPdoInterface::class)
+            /** @phpstan-ignore argument.type */
+            ->annotatedWith($this->qualifer)
+            ->toProvider(
+                NamedExtendedPdoProvider::class,
+                $this->qualifer,
+            );
     }
 
     private function configureMasterSlaveDsn(): void

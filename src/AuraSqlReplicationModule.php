@@ -28,18 +28,40 @@ final class AuraSqlReplicationModule extends AbstractModule
     #[Override]
     protected function configure(): void
     {
+        if ($this->qualifer === '') {
+            $this->configureWithoutQualifier();
+        } else {
+            $this->configureWithQualifier();
+        }
+
+        // @ReadOnlyConnection @WriteConnection
+        $this->installReadWriteConnection();
+    }
+
+    private function configureWithoutQualifier(): void
+    {
         $this->bind(ConnectionLocatorInterface::class)
+            ->toInstance($this->connectionLocator);
+
+        // ReadOnlyConnection when GET, otherwise WriteConnection
+        $this->bind(ExtendedPdoInterface::class)
+            ->toProvider(AuraSqlReplicationDbProvider::class, '')
+            ->in(Scope::SINGLETON);
+    }
+
+    private function configureWithQualifier(): void
+    {
+        $this->bind(ConnectionLocatorInterface::class)
+            /** @phpstan-ignore argument.type */
             ->annotatedWith($this->qualifer)
             ->toInstance($this->connectionLocator);
 
         // ReadOnlyConnection when GET, otherwise WriteConnection
         $this->bind(ExtendedPdoInterface::class)
+            /** @phpstan-ignore argument.type */
             ->annotatedWith($this->qualifer)
             ->toProvider(AuraSqlReplicationDbProvider::class, $this->qualifer)
             ->in(Scope::SINGLETON);
-
-        // @ReadOnlyConnection @WriteConnection
-        $this->installReadWriteConnection();
     }
 
     protected function installReadWriteConnection(): void
