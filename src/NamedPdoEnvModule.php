@@ -55,8 +55,19 @@ final class NamedPdoEnvModule extends AbstractModule
             $this->options,
             $this->queries,
         );
-        $this->bind(EnvConnection::class)->annotatedWith($this->qualifer)->toInstance($connection);
-        $this->bind(ExtendedPdoInterface::class)->annotatedWith($this->qualifer)->toProvider(
+        $connectionBinding = $this->bind(EnvConnection::class);
+        if ($this->qualifer !== '') {
+            $connectionBinding = $connectionBinding->annotatedWith($this->qualifer);
+        }
+
+        $connectionBinding->toInstance($connection);
+
+        $pdoBinding = $this->bind(ExtendedPdoInterface::class);
+        if ($this->qualifer !== '') {
+            $pdoBinding = $pdoBinding->annotatedWith($this->qualifer);
+        }
+
+        $pdoBinding->toProvider(
             NamedExtendedPdoProvider::class,
             $this->qualifer,
         );
