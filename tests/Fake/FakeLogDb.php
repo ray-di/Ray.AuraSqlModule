@@ -7,7 +7,7 @@ use Aura\Sql\ExtendedPdoInterface;
 use Ray\Di\Di\Named;
 use Ray\Di\Di\Qualifier;
 
-#[Attribute(Attribute::TARGET_METHOD), Qualifier]
+#[Attribute(Attribute::TARGET_PARAMETER), Qualifier]
 final class FakeLogDb
 {
 }

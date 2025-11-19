@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Aura\Sql\ExtendedPdoInterface;
-use Pagerfanta\Adapter\AdapterInterface;
+use Override;
 use Pagerfanta\Exception\LogicException;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\ViewInterface;
@@ -18,13 +18,9 @@ use function assert;
 use function class_exists;
 
 /** @template T */
-class AuraSqlPager implements AuraSqlPagerInterface
+final class AuraSqlPager implements AuraSqlPagerInterface
 {
-    private ViewInterface $view;
     private ?RouteGeneratorInterface $routeGenerator = null;
-
-    /** @var array<array<string>> */
-    private array $viewOptions;
     private ExtendedPdoInterface $pdo;
     private string $sql;
     private ?string $entity = null;
@@ -35,12 +31,12 @@ class AuraSqlPager implements AuraSqlPagerInterface
     /** @phpstan-var positive-int */
     private int $paging;
 
-    /** @param array<array<string>> $viewOptions */
-    #[PagerViewOption('viewOptions')]
-    public function __construct(ViewInterface $view, array $viewOptions)
-    {
-        $this->view = $view;
-        $this->viewOptions = $viewOptions;
+    /** @param array<string, mixed> $viewOptions */
+    public function __construct(
+        private readonly ViewInterface $view,
+        #[PagerViewOption]
+        private readonly array $viewOptions
+    ) {
     }
 
     /**
@@ -48,6 +44,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
      *
      * @phpstan-param positive-int $paging
      */
+    #[Override]
     public function init(ExtendedPdoInterface $pdo, $sql, array $params, $paging, RouteGeneratorInterface $routeGenerator, ?string $entity = null): void
     {
         $this->pdo = $pdo;
@@ -61,6 +58,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     #[ReturnTypeWillChange]
     public function offsetExists($offset): bool
     {
@@ -72,6 +70,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
      *
      * @phpstan-param positive-int $currentPage
      */
+    #[Override]
     public function offsetGet($currentPage): Page
     {
         if (! $this->routeGenerator instanceof RouteGeneratorInterface) {
@@ -97,6 +96,7 @@ class AuraSqlPager implements AuraSqlPagerInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function offsetSet($offset, $value): void
     {
         throw new LogicException('read only');
@@ -105,17 +105,21 @@ class AuraSqlPager implements AuraSqlPagerInterface
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function offsetUnset($offset): void
     {
         throw new LogicException('read only');
     }
 
-    /** @return AdapterInterface<T> */
-    private function getPdoAdapter(): AdapterInterface
+    /** @return ExtendedPdoAdapter<T> */
+    private function getPdoAdapter(): ExtendedPdoAdapter
     {
         assert($this->entity === null || class_exists($this->entity));
         $fetcher = $this->entity ? new FetchEntity($this->pdo, $this->entity) : new FetchAssoc($this->pdo);
 
-        return new ExtendedPdoAdapter($this->pdo, $this->sql, $this->params, $fetcher);
+        /** @var ExtendedPdoAdapter<T> $adapter */
+        $adapter = new ExtendedPdoAdapter($this->pdo, $this->sql, $this->params, $fetcher);
+
+        return $adapter;
     }
 }

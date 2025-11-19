@@ -7,49 +7,42 @@ namespace Ray\AuraSqlModule;
 use Aura\Sql\ConnectionLocator;
 use Aura\Sql\ExtendedPdo;
 use Aura\Sql\ExtendedPdoInterface;
+use InvalidArgumentException;
+use Override;
 use Ray\Di\AbstractModule;
+use SensitiveParameter;
 
-class NamedPdoModule extends AbstractModule
+final class NamedPdoModule extends AbstractModule
 {
-    public const PARSE_PDO_DSN_REGEX = '/(.*?)\:(host|server)=.*?;(.*)/i';
-
-    private string $qualifer;
-    private string $dsn;
-    private string $username;
-    private string $password;
-    private string $slave;
-
-    /** @var array<string> */
-    private array $options;
-
-    /** @var array<string> */
-    private array $queries;
+    public const string PARSE_PDO_DSN_REGEX = '/(.*?)\:(host|server)=.*?;(.*)/i';
 
     /**
-     * @param string        $qualifer Qualifer for ExtendedPdoInterface
-     * @param string        $dsn      Data Source Name (DSN)
-     * @param string        $username User name for the DSN string
-     * @param string        $password Password for the DSN string
-     * @param string        $slave    Comma separated slave host list
-     * @param array<string> $options  A key=>value array of driver-specific connection options
-     * @param array<string> $queries  Queries to execute after the connection.
+     * @param string              $qualifer Qualifer for ExtendedPdoInterface
+     * @param string              $dsn      Data Source Name (DSN)
+     * @param string              $username User name for the DSN string
+     * @param string              $password Password for the DSN string
+     * @param string              $slave    Comma separated slave host list
+     * @param array<string,mixed> $options  A key=>value array of driver-specific connection options
+     * @param array<string>       $queries  Queries to execute after the connection.
      */
     public function __construct(
-        string $qualifer,
-        string $dsn,
-        string $username = '',
-        string $password = '',
-        string $slave = '',
-        array $options = [],
-        array $queries = []
+        private readonly string $qualifer,
+        private readonly string $dsn,
+        private readonly string $username = '',
+        #[SensitiveParameter]
+        private readonly string $password = '',
+        private readonly string $slave = '',
+        /** @var array<string, mixed> */
+        private readonly array $options = [],
+        /** @var array<string> */
+        private readonly array $queries = []
     ) {
-        $this->qualifer = $qualifer;
-        $this->dsn = $dsn;
-        $this->username = $username;
-        $this->password = $password;
-        $this->slave = $slave;
-        $this->options = $options;
-        $this->queries = $queries;
+        if ($this->qualifer === '') {
+            throw new InvalidArgumentException(
+                'NamedPdoModule requires a non-empty qualifier. ' .
+                'Use AuraSqlModule instead for unqualified bindings.',
+            );
+        }
 
         parent::__construct();
     }
@@ -57,6 +50,7 @@ class NamedPdoModule extends AbstractModule
     /**
      * {@inheritDoc}
      */
+    #[Override]
     protected function configure(): void
     {
         $this->slave ? $this->configureMasterSlaveDsn()
@@ -69,11 +63,19 @@ class NamedPdoModule extends AbstractModule
             ->annotatedWith($this->qualifer)
             ->toConstructor(
                 ExtendedPdo::class,
-                "dsn={$this->qualifer}_dsn,username={$this->qualifer}_username,password={$this->qualifer}_password",
+                [
+                    'dsn' => "{$this->qualifer}_dsn",
+                    'username' => "{$this->qualifer}_username",
+                    'password' => "{$this->qualifer}_password",
+                    'driver_options' => "{$this->qualifer}_options",
+                    'after_connect' => "{$this->qualifer}_queries",
+                ],
             );
         $this->bind()->annotatedWith("{$this->qualifer}_dsn")->toInstance($this->dsn);
         $this->bind()->annotatedWith("{$this->qualifer}_username")->toInstance($this->username);
         $this->bind()->annotatedWith("{$this->qualifer}_password")->toInstance($this->password);
+        $this->bind()->annotatedWith("{$this->qualifer}_options")->toInstance($this->options);
+        $this->bind()->annotatedWith("{$this->qualifer}_queries")->toInstance($this->queries);
     }
 
     private function configureMasterSlaveDsn(): void

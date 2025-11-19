@@ -6,20 +6,28 @@ namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ExtendedPdo;
 use Aura\Sql\ExtendedPdoInterface;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Ray\Di\Injector;
 use ReflectionProperty;
 
 use function assert;
-use function get_class;
 
 class NamedPdoModuleTest extends TestCase
 {
     public function testModule()
     {
         $qualifer = 'log_db';
-        $instance = (new Injector(new NamedPdoModule($qualifer, 'sqlite::memory:'), __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class, $qualifer);
+        $instance = new Injector(new NamedPdoModule($qualifer, 'sqlite::memory:'), __DIR__ . '/tmp')->getInstance(ExtendedPdoInterface::class, $qualifer);
         $this->assertInstanceOf(ExtendedPdo::class, $instance);
+    }
+
+    public function testEmptyQualifierThrowsException(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('NamedPdoModule requires a non-empty qualifier. Use AuraSqlModule instead for unqualified bindings.');
+
+        new NamedPdoModule('', 'sqlite::memory:');
     }
 
     public function testFakeName()
@@ -35,7 +43,7 @@ class NamedPdoModuleTest extends TestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $qualifer = 'log_db';
-        $instance = (new Injector(new FakeNamedReplicationModule(), __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class, $qualifer);
+        $instance = new Injector(new FakeNamedReplicationModule(), __DIR__ . '/tmp')->getInstance(ExtendedPdoInterface::class, $qualifer);
         assert($instance instanceof ExtendedPdo);
         $this->assertInstanceOf(ExtendedPdo::class, $instance);
 //        $this->assertSame('mysql:host=localhost;dbname=db', $instance->getDsn());
@@ -45,7 +53,7 @@ class NamedPdoModuleTest extends TestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
         $qualifer = 'log_db';
-        $instance = (new Injector(new FakeNamedReplicationModule(), __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class, $qualifer);
+        $instance = new Injector(new FakeNamedReplicationModule(), __DIR__ . '/tmp')->getInstance(ExtendedPdoInterface::class, $qualifer);
         $this->assertInstanceOf(ExtendedPdo::class, $instance);
         $this->assertStringContainsString('mysql:host=slave', $this->getDsn($instance));
     }
@@ -53,15 +61,14 @@ class NamedPdoModuleTest extends TestCase
     public function testNoHost()
     {
         $qualifer = 'log_db';
-        $instance = (new Injector(new FakeNamedQualifierModule(), __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class, $qualifer);
+        $instance = new Injector(new FakeNamedQualifierModule(), __DIR__ . '/tmp')->getInstance(ExtendedPdoInterface::class, $qualifer);
         /** @var ExtendedPdo $instance */
         $this->assertSame('mysql:host=slave1;dbname=master', $this->getDsn($instance));
     }
 
     private function getDsn(ExtendedPdo $pdo): string
     {
-        $prop = new ReflectionProperty(get_class($pdo), 'args');
-        $prop->setAccessible(true);
+        $prop = new ReflectionProperty($pdo::class, 'args');
         $args = $prop->getValue($pdo);
 
         return $args[0]; // dsn
