@@ -10,8 +10,6 @@ use Aura\Sql\ExtendedPdoInterface;
 use PHPUnit\Framework\TestCase;
 use Ray\Compiler\CompiledInjector;
 use Ray\Compiler\Compiler;
-use Ray\Compiler\DiCompiler;
-use Ray\Compiler\ScriptInjector;
 use Ray\Di\Injector;
 use Ray\Di\Instance;
 use ReflectionProperty;

@@ -12,29 +12,19 @@ class FakeName
     public $pdoAnno;
     public $pdoSetterInject;
 
-    /**
-     * @Named("log_db")
-     */
     public function __construct(#[Named('log_db')] ExtendedPdoInterface $pdo)
     {
         $this->pdo = $pdo;
     }
 
-    /**
-     * @Inject
-     * @FakeLogDb
-     */
     #[Inject]
     public function setFakeDb(#[FakeLogDb] ExtendedPdoInterface $pdo)
     {
         $this->pdoAnno = $pdo;
     }
 
-    /**
-     * @FakeLogDbInject
-     */
     #[FakeLogDbInject]
-    public function setFakeDbWithInjectAnnotation(ExtendedPdoInterface $pdo)
+    public function setFakeDbWithInjectAnnotation(#[FakeLogDbInject] ExtendedPdoInterface $pdo)
     {
         $this->pdoSetterInject = $pdo;
     }
