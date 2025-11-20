@@ -10,7 +10,7 @@ use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 use ReflectionProperty;
 
-final readonly class AuraSqlSlaveDbInterceptor implements MethodInterceptor
+final class AuraSqlSlaveDbInterceptor implements MethodInterceptor
 {
     /**
      * DB property name

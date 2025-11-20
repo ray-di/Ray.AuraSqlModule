@@ -14,7 +14,7 @@ use Ray\AuraSqlModule\Exception\RollbackException;
 
 use function count;
 
-final readonly class TransactionalInterceptor implements MethodInterceptor
+final class TransactionalInterceptor implements MethodInterceptor
 {
     public function __construct(private ?ExtendedPdoInterface $pdo = null)
     {

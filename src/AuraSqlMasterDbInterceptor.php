@@ -10,7 +10,7 @@ use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 use ReflectionProperty;
 
-final readonly class AuraSqlMasterDbInterceptor implements MethodInterceptor
+final class AuraSqlMasterDbInterceptor implements MethodInterceptor
 {
     public const PROP = 'pdo';
 

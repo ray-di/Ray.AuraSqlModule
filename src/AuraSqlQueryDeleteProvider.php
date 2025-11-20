@@ -11,7 +11,7 @@ use Ray\AuraSqlModule\Annotation\AuraSqlQueryConfig;
 use Ray\Di\ProviderInterface;
 
 /** @implements ProviderInterface<DeleteInterface> */
-final readonly class AuraSqlQueryDeleteProvider implements ProviderInterface
+final class AuraSqlQueryDeleteProvider implements ProviderInterface
 {
     /** @param string $db The database type */
     public function __construct(
