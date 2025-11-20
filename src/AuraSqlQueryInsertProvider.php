@@ -26,6 +26,6 @@ final readonly class AuraSqlQueryInsertProvider implements ProviderInterface
     #[Override]
     public function get(): InsertInterface
     {
-        return new QueryFactory($this->db)->newInsert();
+        return (new QueryFactory($this->db))->newInsert();
     }
 }

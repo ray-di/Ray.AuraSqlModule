@@ -47,7 +47,7 @@ class AuraSqlProfileModuleTest extends TestCase
                 );
             }
         };
-        $instance = new Injector($module, __DIR__ . '/tmp')->getInstance(ExtendedPdoInterface::class);
+        $instance = (new Injector($module, __DIR__ . '/tmp'))->getInstance(ExtendedPdoInterface::class);
         $this->assertInstanceOf(ExtendedPdoInterface::class, $instance);
 
         return $instance;

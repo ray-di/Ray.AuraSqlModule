@@ -16,7 +16,7 @@ use function in_array;
 
 final readonly class AuraSqlConnectionInterceptor implements MethodInterceptor
 {
-    public const string PROP = 'pdo';
+    public const PROP = 'pdo';
 
     /** @phpstan-param array<string> $readsMethods */
     public function __construct(

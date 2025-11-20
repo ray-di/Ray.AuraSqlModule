@@ -26,6 +26,6 @@ final readonly class AuraSqlQueryDeleteProvider implements ProviderInterface
     #[Override]
     public function get(): DeleteInterface
     {
-        return new QueryFactory($this->db)->newDelete();
+        return (new QueryFactory($this->db))->newDelete();
     }
 }

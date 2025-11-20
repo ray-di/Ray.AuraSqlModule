@@ -14,7 +14,7 @@ class AuraSqlQueryPagerModuleTest extends AuraSqlQueryTestCase
 {
     public function testNewInstance(): AuraSqlQueryPager
     {
-        $factory = new Injector(new AuraSqlPagerModule())->getInstance(AuraSqlQueryPagerFactoryInterface::class);
+        $factory = (new Injector(new AuraSqlPagerModule()))->getInstance(AuraSqlQueryPagerFactoryInterface::class);
         /** @var AuraSqlQueryPagerFactoryInterface $factory */
         $this->assertInstanceOf(AuraSqlQueryPagerFactory::class, $factory);
         $pager = $factory->newInstance($this->pdo, $this->select, 1, '/?page={page}&category=sports');
@@ -26,7 +26,7 @@ class AuraSqlQueryPagerModuleTest extends AuraSqlQueryTestCase
     public function testNewInstanceWithBinding(): AuraSqlQueryPager
     {
         $this->select->where('id = :id')->bindValue('id', 1);
-        $factory = new Injector(new AuraSqlPagerModule())->getInstance(AuraSqlQueryPagerFactoryInterface::class);
+        $factory = (new Injector(new AuraSqlPagerModule()))->getInstance(AuraSqlQueryPagerFactoryInterface::class);
         /** @var AuraSqlQueryPagerFactoryInterface $factory */
         $this->assertInstanceOf(AuraSqlQueryPagerFactory::class, $factory);
         $pager = $factory->newInstance($this->pdo, $this->select, 1, '/?page={page}&category=sports');

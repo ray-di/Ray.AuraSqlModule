@@ -26,6 +26,6 @@ final readonly class AuraSqlQueryUpdateProvider implements ProviderInterface
     #[Override]
     public function get(): UpdateInterface
     {
-        return new QueryFactory($this->db)->newUpdate();
+        return (new QueryFactory($this->db))->newUpdate();
     }
 }

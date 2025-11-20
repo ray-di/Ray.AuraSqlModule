@@ -12,7 +12,7 @@ use ReflectionProperty;
 
 final readonly class AuraSqlMasterDbInterceptor implements MethodInterceptor
 {
-    public const string PROP = 'pdo';
+    public const PROP = 'pdo';
 
     public function __construct(private ConnectionLocatorInterface $connectionLocator)
     {

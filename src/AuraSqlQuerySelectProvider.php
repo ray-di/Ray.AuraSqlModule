@@ -26,6 +26,6 @@ final readonly class AuraSqlQuerySelectProvider implements ProviderInterface
     #[Override]
     public function get(): SelectInterface
     {
-        return new QueryFactory($this->db)->newSelect();
+        return (new QueryFactory($this->db))->newSelect();
     }
 }
