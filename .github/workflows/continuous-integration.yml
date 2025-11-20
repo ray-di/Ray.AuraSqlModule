@@ -11,6 +11,7 @@ jobs:
   phpunit:
     name: PHPUnit - PHP ${{ matrix.php-version }} (${{ matrix.os }}, ${{ matrix.dependencies }})
     runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental || false }}
     strategy:
       fail-fast: false
       matrix:
@@ -43,6 +44,11 @@ jobs:
           - php-version: "8.4"
             os: windows-latest
             dependencies: highest
+          # PHP 8.5 - highest only (lowest would install aura/sql 5.x which doesn't work)
+          - php-version: "8.5"
+            os: ubuntu-latest
+            dependencies: highest
+            experimental: true
 
     steps:
       - name: Disable autocrlf on Windows
