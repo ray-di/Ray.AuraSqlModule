@@ -15,6 +15,13 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          # PHP 8.1 - highest and lowest
+          - php-version: "8.1"
+            os: ubuntu-latest
+            dependencies: highest
+          - php-version: "8.1"
+            os: ubuntu-latest
+            dependencies: lowest
           # PHP 8.2 - highest and lowest
           - php-version: "8.2"
             os: ubuntu-latest
