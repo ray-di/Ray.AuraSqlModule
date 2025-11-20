@@ -10,7 +10,7 @@ use Ray\Di\AbstractModule;
 
 final class NamedPdoEnvModule extends AbstractModule
 {
-    public const string PARSE_PDO_DSN_REGEX = '/(.*?)\:(host|server)=.*?;(.*)/i';
+    public const PARSE_PDO_DSN_REGEX = '/(.*?)\:(host|server)=.*?;(.*)/i';
 
     /**
      * @param string              $qualifer Qualifer for ExtendedPdoInterface

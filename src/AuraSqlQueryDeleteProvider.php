@@ -11,7 +11,7 @@ use Ray\AuraSqlModule\Annotation\AuraSqlQueryConfig;
 use Ray\Di\ProviderInterface;
 
 /** @implements ProviderInterface<DeleteInterface> */
-final readonly class AuraSqlQueryDeleteProvider implements ProviderInterface
+final class AuraSqlQueryDeleteProvider implements ProviderInterface
 {
     /** @param string $db The database type */
     public function __construct(
@@ -26,6 +26,6 @@ final readonly class AuraSqlQueryDeleteProvider implements ProviderInterface
     #[Override]
     public function get(): DeleteInterface
     {
-        return new QueryFactory($this->db)->newDelete();
+        return (new QueryFactory($this->db))->newDelete();
     }
 }

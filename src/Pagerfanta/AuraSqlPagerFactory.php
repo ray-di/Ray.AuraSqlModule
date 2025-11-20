@@ -7,7 +7,7 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 use Aura\Sql\ExtendedPdoInterface;
 use Override;
 
-final readonly class AuraSqlPagerFactory implements AuraSqlPagerFactoryInterface
+final class AuraSqlPagerFactory implements AuraSqlPagerFactoryInterface
 {
     public function __construct(private AuraSqlPagerInterface $auraSqlPager)
     {

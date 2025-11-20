@@ -25,7 +25,7 @@ use const PHP_EOL;
  * @template T
  * @implements AdapterInterface<T>
  */
-final readonly class ExtendedPdoAdapter implements AdapterInterface
+final class ExtendedPdoAdapter implements AdapterInterface
 {
     private readonly FetcherInterface $fetcher;
 

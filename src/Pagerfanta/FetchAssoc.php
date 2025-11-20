@@ -8,7 +8,7 @@ use Aura\Sql\ExtendedPdoInterface;
 use Override;
 use PDO;
 
-final readonly class FetchAssoc implements FetcherInterface
+final class FetchAssoc implements FetcherInterface
 {
     public function __construct(private ExtendedPdoInterface $pdo)
     {

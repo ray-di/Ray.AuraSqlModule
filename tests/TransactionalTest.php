@@ -13,7 +13,7 @@ class TransactionalTest extends TestCase
 {
     public function testMutipleTransaction()
     {
-        $ro = new Injector(new FakeMultiDbModule())->getInstance(FakeMultiDb::class);
+        $ro = (new Injector(new FakeMultiDbModule()))->getInstance(FakeMultiDb::class);
         /** @var FakeMultiDb $ro */
         $ro->write();
         $users = $ro->read();
@@ -49,7 +49,7 @@ class TransactionalTest extends TestCase
                 $this->bind(ExtendedPdoInterface::class)->toInstance(null);
             }
         });
-        $ro = new Injector($module)->getInstance(FakeMultiDb::class);
+        $ro = (new Injector($module))->getInstance(FakeMultiDb::class);
         $ro->write();
         $users = $ro->read();
         $expected = [
@@ -84,7 +84,7 @@ class TransactionalTest extends TestCase
                 $this->bind(ExtendedPdoInterface::class)->toInstance(null);
             }
         });
-        $ro = new Injector($module)->getInstance(FakeMultiDb::class);
+        $ro = (new Injector($module))->getInstance(FakeMultiDb::class);
         $ro->writeNoValueTransactional();
         $users = $ro->read();
         $expected = [

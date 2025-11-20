@@ -10,12 +10,12 @@ use Ray\Aop\MethodInterceptor;
 use Ray\Aop\MethodInvocation;
 use ReflectionProperty;
 
-final readonly class AuraSqlSlaveDbInterceptor implements MethodInterceptor
+final class AuraSqlSlaveDbInterceptor implements MethodInterceptor
 {
     /**
      * DB property name
      */
-    public const string PROP = 'pdo';
+    public const PROP = 'pdo';
 
     public function __construct(private ConnectionLocatorInterface $connectionLocator)
     {
