@@ -15,6 +15,7 @@ final class AuraSqlPagerFactory implements AuraSqlPagerFactoryInterface
 
     /**
      * {@inheritDoc}
+     * @psalm-taint-sink sql $sql
      */
     #[Override]
     public function newInstance(ExtendedPdoInterface $pdo, string $sql, array $params, int $paging, string $uriTemplate, ?string $entity = null): AuraSqlPagerInterface
