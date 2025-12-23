@@ -24,6 +24,7 @@ final class FetchEntity implements FetcherInterface
 
     /**
      * {@inheritDoc}
+     *
      * @psalm-taint-sink sql $sql
      * @psalm-taint-escape sql
      */

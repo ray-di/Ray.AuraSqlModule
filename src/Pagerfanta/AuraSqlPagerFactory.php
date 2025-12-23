@@ -15,6 +15,7 @@ final class AuraSqlPagerFactory implements AuraSqlPagerFactoryInterface
 
     /**
      * {@inheritDoc}
+     *
      * @psalm-taint-sink sql $sql
      */
     #[Override]

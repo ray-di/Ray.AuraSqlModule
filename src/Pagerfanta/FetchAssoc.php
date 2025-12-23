@@ -16,6 +16,7 @@ final class FetchAssoc implements FetcherInterface
 
     /**
      * {@inheritDoc}
+     *
      * @psalm-taint-sink sql $sql
      * @psalm-taint-escape sql
      */
