@@ -31,6 +31,7 @@ final class ExtendedPdoAdapter implements AdapterInterface
 
     /**
      * @param array<mixed> $params
+     *
      * @psalm-taint-sink sql $sql
      */
     public function __construct(
