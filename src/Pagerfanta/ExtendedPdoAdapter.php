@@ -77,9 +77,6 @@ final class ExtendedPdoAdapter implements AdapterInterface
     /**
      * {@inheritDoc}
      *
-     * @param int $offset
-     * @param int $length
-     *
      * @return array<mixed>
      */
     #[Override]
