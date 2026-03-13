@@ -1,3 +1,8 @@
+## [1.17.1] - 2026-03-13
+
+### Added
+- Psalm taint annotations (`@psalm-taint-sink sql`) for SQL injection analysis (PR #89)
+
 ## [1.15.3] - 2025-11-10
 
 ### Fixed
