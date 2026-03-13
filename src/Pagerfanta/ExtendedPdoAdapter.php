@@ -29,7 +29,11 @@ final class ExtendedPdoAdapter implements AdapterInterface
 {
     private readonly FetcherInterface $fetcher;
 
-    /** @param array<mixed> $params */
+    /**
+     * @param array<mixed> $params
+     *
+     * @psalm-taint-sink sql $sql
+     */
     public function __construct(
         private readonly ExtendedPdoInterface $pdo,
         private readonly string $sql,
@@ -72,9 +76,6 @@ final class ExtendedPdoAdapter implements AdapterInterface
 
     /**
      * {@inheritDoc}
-     *
-     * @param int $offset
-     * @param int $length
      *
      * @return array<mixed>
      */
