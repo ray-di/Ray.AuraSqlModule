@@ -26,7 +26,6 @@ final class FetchEntity implements FetcherInterface
      * {@inheritDoc}
      *
      * @psalm-taint-sink sql $sql
-     * @psalm-taint-escape sql
      */
     #[Override]
     public function __invoke(string $sql, array $params): array
