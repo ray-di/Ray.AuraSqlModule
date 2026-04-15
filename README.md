@@ -6,6 +6,25 @@
 
 An [Aura.Sql](https://github.com/auraphp/Aura.Sql) Module for [Ray.Di](https://github.com/koriym/Ray.Di)
 
+## Versions
+
+Two lines are maintained. **Pick by how your application declares metadata** — the required PHP version follows from the Aura.Sql major you depend on, not from this package directly.
+
+- **1.13.x** — use this if your application still relies on **Doctrine annotations** (`@Transactional`, `@Named` in docblocks). Depends on `ray/di` ^2.13, which ships `doctrine/annotations`. Supports Aura.Sql 4 and 5.
+- **1.x** (current) — **PHP attributes only** (`#[Transactional]`). Depends on `ray/di` ^2.16+, which dropped `doctrine/annotations`. Supports Aura.Sql 5 and 6.
+
+Effective PHP requirement comes from Aura.Sql: 4.x → PHP 7.2+, 5.x → PHP 8.1+, 6.x → PHP 8.4+.
+
+To pin to the maintenance line, use a tilde or wildcard constraint — `^1.13` would also match 1.14+ and pull you onto the 1.x line:
+
+```json
+{
+    "require": {
+        "ray/aura-sql-module": "~1.13.1"
+    }
+}
+```
+
 ## Installation
 
 ```bash
