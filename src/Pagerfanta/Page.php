@@ -23,6 +23,9 @@ final class Page implements IteratorAggregate, Stringable
     /** @var int */
     public $total;
 
+    /** @var int */
+    public $nbPages;
+
     /** @var bool */
     public $hasNext;
 

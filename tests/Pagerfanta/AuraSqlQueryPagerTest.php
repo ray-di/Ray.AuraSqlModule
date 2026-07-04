@@ -61,6 +61,7 @@ class AuraSqlQueryPagerTest extends AuraSqlQueryTestCase
         $this->assertSame(1, $post->maxPerPage);
         $this->assertSame(2, $post->current);
         $this->assertSame(50, $post->total);
+        $this->assertSame(50, $post->nbPages);
         $expected = [['username' => 'Jon Doe']];
         $this->assertSame($expected, $post->data);
     }

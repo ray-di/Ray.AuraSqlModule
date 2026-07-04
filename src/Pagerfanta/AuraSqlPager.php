@@ -89,6 +89,7 @@ final class AuraSqlPager implements AuraSqlPagerInterface
         $page->hasPrevious = $pagerfanta->hasPreviousPage();
         $page->data = $pagerfanta->getCurrentPageResults();
         $page->total = $pagerfanta->getNbResults();
+        $page->nbPages = $pagerfanta->getNbPages();
 
         return $page;
     }
