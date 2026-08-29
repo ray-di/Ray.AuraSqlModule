@@ -66,6 +66,17 @@ class AuraSqlQueryPagerTest extends AuraSqlQueryTestCase
         $this->assertSame($expected, $post->data);
     }
 
+    public function testOffsetGetNbPages()
+    {
+        $this->select = $this->qf->newSelect();
+        $this->select->cols(['p.username'])->from('posts as p')->orderBy(['p.username']);
+        $pager = $this->pager;
+        $pager->init($this->pdo, $this->select, 7, new DefaultRouteGenerator('/?page=1'));
+        $post = $pager[1];
+        $this->assertSame(50, $post->total);
+        $this->assertSame(8, $post->nbPages);
+    }
+
     public function estOffsetGetWithoutInit()
     {
         $this->select = $this->qf->newSelect();

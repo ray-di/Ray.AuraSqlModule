@@ -35,6 +35,15 @@ class AuraSqlPagerFactoryTest extends AbstractPdoTestCase
         $this->assertInstanceOf(Page::class, $page);
     }
 
+    public function testNbPages(): void
+    {
+        $pager = $this->factory->newInstance($this->pdo, 'SELECT * FROM posts', [], 7, '/{?page}');
+        $page = $pager[1];
+        $this->assertInstanceOf(Page::class, $page);
+        $this->assertSame(50, $page->total);
+        $this->assertSame(8, $page->nbPages);
+    }
+
     public function testEntityPager(): void
     {
         $pager = $this->factory->newInstance($this->pdo, 'SELECT * FROM posts', [], 1, '/{?page}', FakeEntity::class);

@@ -319,6 +319,7 @@ An array access with page number returns `Page` value object.
 // $page->data // sliced data
 // $page->current;
 // $page->total
+// $page->nbPages
 // $page->hasNext
 // $page->hasPrevious
 // $page->maxPerPage;
