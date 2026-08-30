@@ -1,3 +1,11 @@
+## [1.18.0] - 2026-08-30
+
+### Added
+- `Page::$nbPages`, the total number of pages, set from `Pagerfanta::getNbPages()` in `AuraSqlPager` and `AuraSqlQueryPager` (PR #92)
+
+### Changed
+- README documents the 1.13.x and 1.x maintenance lines and the Aura.Sql 5/6 split (PR #91)
+
 ## [1.17.1] - 2026-03-13
 
 ### Added
