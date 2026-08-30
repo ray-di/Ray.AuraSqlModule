@@ -11,6 +11,23 @@
 ### Added
 - Psalm taint annotations (`@psalm-taint-sink sql`) for SQL injection analysis (PR #89)
 
+## [1.17.0] - 2025-11-20
+
+### Changed
+- Supports PHP 8.1-8.4 (8.5 experimental) and Aura.Sql 5.x/6.x again; Ray.Di ^2.16.1 and Ray.Aop ^2.16.2 accepted (PR #88)
+- `readonly class` declarations removed, `symfony/polyfill-php83` added to require-dev, for PHP 8.1 (PR #88)
+
+## [1.16.0] - 2025-11-19
+
+### Added
+- `NamedPdoModule` rejects an empty qualifier with `InvalidArgumentException` (PR #86)
+
+### Changed
+- Parameter-level attributes replace constructor-level ones; requires Ray.Di ^2.19.1 and Ray.Aop ^2.19 (PR #86)
+
+### Fixed
+- `NamedPdoModule` passes `$options` and `$queries` to `ExtendedPdo` on the single DSN path (PR #86)
+
 ## [1.15.3] - 2025-11-10
 
 ### Fixed
