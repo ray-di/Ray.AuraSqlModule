@@ -73,7 +73,7 @@ $this->install(
 );
 ```
 
-> **Note:** If you compile the DI container with [`ray/compiler`](https://github.com/ray-di/Ray.Compiler), the compiled scripts written to `$scriptDir` contain the DSN, username, and password **in plaintext** (`#[SensitiveParameter]` only redacts values from uncaught-exception stack traces, not compiled output, `var_dump()`, or `serialize()`). `AuraSqlEnvModule` avoids this because it stores only the environment variable *name*, not the secret value. If you must compile with `AuraSqlModule`/`NamedPdoModule`/`AuraSqlMasterModule`, treat `$scriptDir` as containing secrets: restrict its file permissions and exclude it from version control.
+> **Note:** If you compile the DI container with [`ray/compiler`](https://github.com/ray-di/Ray.Compiler), the compiled scripts written to `$scriptDir` contain the DSN, username, and password **in plaintext** (`#[SensitiveParameter]` only redacts values from exception stack traces — `getTrace()`/`getTraceAsString()`, caught or not — not compiled output, `var_dump()`, or `serialize()`). `AuraSqlEnvModule` avoids this because it stores only the environment variable *name*, not the secret value. If you must compile with `AuraSqlModule`/`NamedPdoModule`/`AuraSqlMasterModule`, treat `$scriptDir` as containing secrets: restrict its file permissions and exclude it from version control.
 
 ## Replication
 
