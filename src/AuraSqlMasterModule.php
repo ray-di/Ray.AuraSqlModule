@@ -16,6 +16,10 @@ final class AuraSqlMasterModule extends AbstractModule
     /**
      * @phpstan-param array<string, mixed> $options
      * @phpstan-param array<string, mixed> $attributes
+     *
+     * @see https://github.com/ray-di/Ray.AuraSqlModule#module-install Compiling this module with ray/compiler
+     *      persists $dsn/$user/$password in plaintext under the compiled script directory; prefer an
+     *      env-based module when compiling, or restrict access to that directory.
      */
     public function __construct(
         private readonly string $dsn,

@@ -1,3 +1,9 @@
+## [Unreleased]
+
+### Changed
+- `ConnectionLocatorFactory::fromInstance()`'s `$password` parameter is `#[SensitiveParameter]`, matching the other constructors that accept a raw password
+- README and docblocks for `AuraSqlModule`, `NamedPdoModule`, and `AuraSqlMasterModule` document that compiling with `ray/compiler` persists `$dsn`/`$user`/`$password` in plaintext under the compiled script directory
+
 ## [1.18.0] - 2026-08-30
 
 ### Added

@@ -24,6 +24,10 @@ final class NamedPdoModule extends AbstractModule
      * @param string              $slave    Comma separated slave host list
      * @param array<string,mixed> $options  A key=>value array of driver-specific connection options
      * @param array<string>       $queries  Queries to execute after the connection.
+     *
+     * @see https://github.com/ray-di/Ray.AuraSqlModule#module-install Compiling this module with ray/compiler
+     *      persists $dsn/$username/$password in plaintext under the compiled script directory; prefer
+     *      NamedPdoEnvModule when compiling, or restrict access to that directory.
      */
     public function __construct(
         private readonly string $qualifer,
