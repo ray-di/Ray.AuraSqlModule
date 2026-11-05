@@ -69,4 +69,13 @@ class SerializablePageTest extends AbstractPdoTestCase
         $this->expectException(AdapterDetached::class);
         $fetcher('SELECT * FROM posts', []);
     }
+
+    public function testARestoredEntityFetcherRefusesToQuery(): void
+    {
+        $fetcher = unserialize(serialize(new FetchEntity($this->pdo, FakeEntity::class)));
+        assert($fetcher instanceof FetchEntity);
+
+        $this->expectException(AdapterDetached::class);
+        $fetcher('SELECT * FROM posts', []);
+    }
 }
