@@ -108,6 +108,7 @@ final class ExtendedPdoAdapter implements AdapterInterface
     #[Override]
     public function getSlice(int $offset, int $length): iterable
     {
+        $this->pdo();
         $sql = $this->sql . $this->getLimitClause($offset, $length);
         $result = ($this->fetcher)($sql, $this->params);
 

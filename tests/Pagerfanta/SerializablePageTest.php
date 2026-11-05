@@ -6,6 +6,7 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 
 use Ray\AuraSqlModule\Exception\AdapterDetached;
 use Ray\AuraSqlModule\FakeEntity;
+use Ray\AuraSqlModule\FakeRowsFetcher;
 use Ray\Di\Injector;
 
 use function assert;
@@ -59,6 +60,15 @@ class SerializablePageTest extends AbstractPdoTestCase
 
         $this->expectException(AdapterDetached::class);
         $adapter->getNbResults();
+    }
+
+    public function testARestoredAdapterRefusesToFetchASliceThroughACustomFetcher(): void
+    {
+        $adapter = unserialize(serialize(new ExtendedPdoAdapter($this->pdo, 'SELECT * FROM posts', [], new FakeRowsFetcher())));
+        assert($adapter instanceof ExtendedPdoAdapter);
+
+        $this->expectException(AdapterDetached::class);
+        $adapter->getSlice(0, 5);
     }
 
     public function testARestoredFetcherRefusesToQuery(): void
