@@ -40,7 +40,11 @@ final class FetchAssoc implements FetcherInterface
         return [];
     }
 
-    /** @param array<never> $data */
+    /**
+     * @param array<never> $data
+     *
+     * @psalm-suppress UnusedParam required by the __unserialize() signature
+     */
     public function __unserialize(array $data): void
     {
         $this->pdo = null;
