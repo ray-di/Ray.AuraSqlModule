@@ -31,7 +31,7 @@ final class ExtendedPdoAdapter implements AdapterInterface
     private readonly FetcherInterface $fetcher;
 
     /** Null once restored by unserialize() */
-    private readonly ExtendedPdoInterface|null $pdo;
+    private ExtendedPdoInterface|null $pdo;
 
     /**
      * @param array<mixed> $params
@@ -59,13 +59,10 @@ final class ExtendedPdoAdapter implements AdapterInterface
         return [];
     }
 
-    /**
-     * @param array<never> $data
-     *
-     * @psalm-suppress UnusedParam required by the __unserialize() signature
-     */
+    /** @param array<never> $data */
     public function __unserialize(array $data): void
     {
+        assert($data === []);
         $this->pdo = null;
     }
 

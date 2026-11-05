@@ -9,6 +9,8 @@ use Override;
 use PDO;
 use Ray\AuraSqlModule\Exception\ConnectionDetached;
 
+use function assert;
+
 final class FetchAssoc implements FetcherInterface
 {
     /** Null once restored by unserialize() */
@@ -40,13 +42,10 @@ final class FetchAssoc implements FetcherInterface
         return [];
     }
 
-    /**
-     * @param array<never> $data
-     *
-     * @psalm-suppress UnusedParam required by the __unserialize() signature
-     */
+    /** @param array<never> $data */
     public function __unserialize(array $data): void
     {
+        assert($data === []);
         $this->pdo = null;
     }
 

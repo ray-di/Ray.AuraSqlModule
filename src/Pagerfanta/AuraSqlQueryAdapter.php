@@ -24,7 +24,7 @@ final class AuraSqlQueryAdapter implements AdapterInterface
     private readonly SelectInterface $select;
 
     /** Null once restored by unserialize() */
-    private readonly ExtendedPdoInterface|null $pdo;
+    private ExtendedPdoInterface|null $pdo;
 
     /** @var callable */
     private $countQueryBuilderModifier;
@@ -48,13 +48,10 @@ final class AuraSqlQueryAdapter implements AdapterInterface
         return [];
     }
 
-    /**
-     * @param array<never> $data
-     *
-     * @psalm-suppress UnusedParam required by the __unserialize() signature
-     */
+    /** @param array<never> $data */
     public function __unserialize(array $data): void
     {
+        assert($data === []);
         $this->pdo = null;
     }
 
