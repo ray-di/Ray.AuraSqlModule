@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Ray\AuraSqlModule\Pagerfanta;
 
-use Ray\AuraSqlModule\Exception\AdapterDetached;
+use Ray\AuraSqlModule\Exception\ConnectionDetached;
 use Ray\Di\Injector;
 
 use function assert;
@@ -34,7 +34,7 @@ class SerializableQueryPageTest extends AuraSqlQueryTestCase
         $adapter = unserialize(serialize(new AuraSqlQueryAdapter($this->pdo, $this->select, static fn ($select) => $select)));
         assert($adapter instanceof AuraSqlQueryAdapter);
 
-        $this->expectException(AdapterDetached::class);
+        $this->expectException(ConnectionDetached::class);
         $adapter->getSlice(0, 1);
     }
 
@@ -43,7 +43,7 @@ class SerializableQueryPageTest extends AuraSqlQueryTestCase
         $adapter = unserialize(serialize(new AuraSqlQueryAdapter($this->pdo, $this->select, static fn ($select) => $select)));
         assert($adapter instanceof AuraSqlQueryAdapter);
 
-        $this->expectException(AdapterDetached::class);
+        $this->expectException(ConnectionDetached::class);
         $adapter->getNbResults();
     }
 }

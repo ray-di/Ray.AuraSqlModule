@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Ray\AuraSqlModule\Pagerfanta;
 
-use Ray\AuraSqlModule\Exception\AdapterDetached;
+use Ray\AuraSqlModule\Exception\ConnectionDetached;
 use Ray\AuraSqlModule\FakeEntity;
 use Ray\AuraSqlModule\FakeRowsFetcher;
 use Ray\Di\Injector;
@@ -58,7 +58,7 @@ class SerializablePageTest extends AbstractPdoTestCase
         $adapter = unserialize(serialize(new ExtendedPdoAdapter($this->pdo, 'SELECT * FROM posts', [])));
         assert($adapter instanceof ExtendedPdoAdapter);
 
-        $this->expectException(AdapterDetached::class);
+        $this->expectException(ConnectionDetached::class);
         $adapter->getNbResults();
     }
 
@@ -67,7 +67,7 @@ class SerializablePageTest extends AbstractPdoTestCase
         $adapter = unserialize(serialize(new ExtendedPdoAdapter($this->pdo, 'SELECT * FROM posts', [], new FakeRowsFetcher())));
         assert($adapter instanceof ExtendedPdoAdapter);
 
-        $this->expectException(AdapterDetached::class);
+        $this->expectException(ConnectionDetached::class);
         $adapter->getSlice(0, 5);
     }
 
@@ -84,7 +84,7 @@ class SerializablePageTest extends AbstractPdoTestCase
         $fetcher = unserialize(serialize(new FetchAssoc($this->pdo)));
         assert($fetcher instanceof FetchAssoc);
 
-        $this->expectException(AdapterDetached::class);
+        $this->expectException(ConnectionDetached::class);
         $fetcher('SELECT * FROM posts', []);
     }
 
@@ -93,7 +93,7 @@ class SerializablePageTest extends AbstractPdoTestCase
         $fetcher = unserialize(serialize(new FetchEntity($this->pdo, FakeEntity::class)));
         assert($fetcher instanceof FetchEntity);
 
-        $this->expectException(AdapterDetached::class);
+        $this->expectException(ConnectionDetached::class);
         $fetcher('SELECT * FROM posts', []);
     }
 }

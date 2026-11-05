@@ -7,7 +7,7 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 use Aura\Sql\ExtendedPdoInterface;
 use Override;
 use Pagerfanta\Adapter\AdapterInterface;
-use Ray\AuraSqlModule\Exception\AdapterDetached;
+use Ray\AuraSqlModule\Exception\ConnectionDetached;
 
 use function assert;
 use function count;
@@ -62,7 +62,6 @@ final class ExtendedPdoAdapter implements AdapterInterface
     /** @param array<never> $data */
     public function __unserialize(array $data): void
     {
-        assert($data === []);
         $this->pdo = null;
     }
 
@@ -179,7 +178,7 @@ final class ExtendedPdoAdapter implements AdapterInterface
     private function pdo(): ExtendedPdoInterface
     {
         if ($this->pdo === null) {
-            throw new AdapterDetached();
+            throw new ConnectionDetached();
         }
 
         return $this->pdo;

@@ -7,6 +7,6 @@ namespace Ray\AuraSqlModule\Exception;
 use LogicException;
 
 /** An adapter or fetcher restored by unserialize() has no connection and cannot query. */
-final class AdapterDetached extends LogicException
+final class ConnectionDetached extends LogicException
 {
 }

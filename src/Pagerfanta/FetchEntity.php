@@ -7,7 +7,7 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 use Aura\Sql\ExtendedPdoInterface;
 use Override;
 use PDO;
-use Ray\AuraSqlModule\Exception\AdapterDetached;
+use Ray\AuraSqlModule\Exception\ConnectionDetached;
 
 use function assert;
 use function class_exists;
@@ -61,7 +61,7 @@ final class FetchEntity implements FetcherInterface
     private function pdo(): ExtendedPdoInterface
     {
         if ($this->pdo === null) {
-            throw new AdapterDetached();
+            throw new ConnectionDetached();
         }
 
         return $this->pdo;

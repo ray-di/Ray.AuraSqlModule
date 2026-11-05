@@ -7,9 +7,7 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 use Aura\Sql\ExtendedPdoInterface;
 use Override;
 use PDO;
-use Ray\AuraSqlModule\Exception\AdapterDetached;
-
-use function assert;
+use Ray\AuraSqlModule\Exception\ConnectionDetached;
 
 final class FetchAssoc implements FetcherInterface
 {
@@ -45,14 +43,13 @@ final class FetchAssoc implements FetcherInterface
     /** @param array<never> $data */
     public function __unserialize(array $data): void
     {
-        assert($data === []);
         $this->pdo = null;
     }
 
     private function pdo(): ExtendedPdoInterface
     {
         if ($this->pdo === null) {
-            throw new AdapterDetached();
+            throw new ConnectionDetached();
         }
 
         return $this->pdo;
