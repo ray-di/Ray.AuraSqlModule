@@ -7,11 +7,18 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 use Aura\Sql\ExtendedPdoInterface;
 use Override;
 use PDO;
+use Ray\AuraSqlModule\Exception\AdapterDetached;
+
+use function assert;
 
 final class FetchAssoc implements FetcherInterface
 {
-    public function __construct(private ExtendedPdoInterface $pdo)
+    /** Null once restored by unserialize() */
+    private ExtendedPdoInterface|null $pdo;
+
+    public function __construct(ExtendedPdoInterface $pdo)
     {
+        $this->pdo = $pdo;
     }
 
     /**
@@ -22,6 +29,32 @@ final class FetchAssoc implements FetcherInterface
     #[Override]
     public function __invoke(string $sql, array $params): array
     {
-        return $this->pdo->perform($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
+        return $this->pdo()->perform($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * The connection is left out: a restored fetcher cannot query.
+     *
+     * @return array<never>
+     */
+    public function __serialize(): array
+    {
+        return [];
+    }
+
+    /** @param array<never> $data */
+    public function __unserialize(array $data): void
+    {
+        assert($data === []);
+        $this->pdo = null;
+    }
+
+    private function pdo(): ExtendedPdoInterface
+    {
+        if ($this->pdo === null) {
+            throw new AdapterDetached();
+        }
+
+        return $this->pdo;
     }
 }
