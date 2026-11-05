@@ -37,4 +37,13 @@ class SerializableQueryPageTest extends AuraSqlQueryTestCase
         $this->expectException(AdapterDetached::class);
         $adapter->getSlice(0, 1);
     }
+
+    public function testARestoredAdapterRefusesToCount(): void
+    {
+        $adapter = unserialize(serialize(new AuraSqlQueryAdapter($this->pdo, $this->select, static fn ($select) => $select)));
+        assert($adapter instanceof AuraSqlQueryAdapter);
+
+        $this->expectException(AdapterDetached::class);
+        $adapter->getNbResults();
+    }
 }
