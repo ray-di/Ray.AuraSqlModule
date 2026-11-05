@@ -1,7 +1,7 @@
 ## [Unreleased]
 
 ### Fixed
-- A `Page` can be serialized, so a resource body that holds one can be cached: `ExtendedPdoAdapter`, `AuraSqlQueryAdapter`, `FetchAssoc` and `FetchEntity` leave the connection (and `AuraSqlQueryAdapter` its count modifier) out of their serialized form. A restored `Page` renders and iterates from the results Pagerfanta already fetched; a restored adapter or fetcher throws `Exception\AdapterDetached` if asked to query.
+- A `Page` can be serialized, so a resource body that holds one can be cached: `ExtendedPdoAdapter`, `AuraSqlQueryAdapter`, `FetchAssoc` and `FetchEntity` leave the connection (and `AuraSqlQueryAdapter` its count modifier) out of their serialized form. A restored `Page` renders and iterates from the results Pagerfanta already fetched; a restored adapter or fetcher throws `Exception\AdapterDetached` if asked to query (PR #96)
 
 ## [1.18.0] - 2026-08-30
 
