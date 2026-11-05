@@ -71,6 +71,14 @@ class SerializablePageTest extends AbstractPdoTestCase
         $adapter->getSlice(0, 5);
     }
 
+    public function testASerializedAdapterCarriesNoQuery(): void
+    {
+        $serialized = serialize(new ExtendedPdoAdapter($this->pdo, 'SELECT * FROM posts WHERE title = :title', ['title' => 'bound-value']));
+
+        $this->assertStringNotContainsString('posts', $serialized);
+        $this->assertStringNotContainsString('bound-value', $serialized);
+    }
+
     public function testARestoredFetcherRefusesToQuery(): void
     {
         $fetcher = unserialize(serialize(new FetchAssoc($this->pdo)));

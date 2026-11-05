@@ -49,23 +49,21 @@ final class ExtendedPdoAdapter implements AdapterInterface
     }
 
     /**
-     * The connection is left out: a restored adapter cannot query, and Pagerfanta answers
-     * from the results it already fetched.
+     * Nothing is kept: a restored adapter cannot query, and Pagerfanta answers from the results it
+     * already fetched.
      *
-     * @return array{sql: string, params: array<mixed>, fetcher: FetcherInterface}
+     * @return array<never>
      */
     public function __serialize(): array
     {
-        return ['sql' => $this->sql, 'params' => $this->params, 'fetcher' => $this->fetcher];
+        return [];
     }
 
-    /** @param array{sql: string, params: array<mixed>, fetcher: FetcherInterface} $data */
+    /** @param array<never> $data */
     public function __unserialize(array $data): void
     {
+        assert($data === []);
         $this->pdo = null;
-        $this->sql = $data['sql'];
-        $this->params = $data['params'];
-        $this->fetcher = $data['fetcher'];
     }
 
     /**

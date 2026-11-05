@@ -38,21 +38,21 @@ final class AuraSqlQueryAdapter implements AdapterInterface
     }
 
     /**
-     * The connection and the count modifier (usually a closure) are left out: a restored adapter
-     * cannot query, and Pagerfanta answers from the results it already fetched.
+     * Nothing is kept: a restored adapter cannot query, and Pagerfanta answers from the results it
+     * already fetched.
      *
-     * @return array{select: SelectInterface}
+     * @return array<never>
      */
     public function __serialize(): array
     {
-        return ['select' => $this->select];
+        return [];
     }
 
-    /** @param array{select: SelectInterface} $data */
+    /** @param array<never> $data */
     public function __unserialize(array $data): void
     {
+        assert($data === []);
         $this->pdo = null;
-        $this->select = $data['select'];
     }
 
     /**
@@ -82,12 +82,13 @@ final class AuraSqlQueryAdapter implements AdapterInterface
     #[Override]
     public function getSlice(int $offset, int $length): iterable
     {
+        $pdo = $this->pdo();
         $select = clone $this->select;
         $sql = $select
             ->offset($offset)
             ->limit($length)
             ->getStatement();
-        $sth = $this->pdo()->prepare($sql);
+        $sth = $pdo->prepare($sql);
         assert($sth instanceof PDOStatement);
         $sth->execute($this->select->getBindValues());
 
