@@ -7,6 +7,7 @@ namespace Ray\AuraSqlModule\Pagerfanta;
 use Aura\Sql\ExtendedPdoInterface;
 use Override;
 use Pagerfanta\Adapter\AdapterInterface;
+use Ray\AuraSqlModule\Exception\ConnectionDetached;
 
 use function assert;
 use function count;
@@ -29,18 +30,40 @@ final class ExtendedPdoAdapter implements AdapterInterface
 {
     private readonly FetcherInterface $fetcher;
 
+    /** Null once restored by unserialize() */
+    private ExtendedPdoInterface|null $pdo;
+
     /**
      * @param array<mixed> $params
      *
      * @psalm-taint-sink sql $sql
      */
     public function __construct(
-        private readonly ExtendedPdoInterface $pdo,
+        ExtendedPdoInterface $pdo,
         private readonly string $sql,
         private readonly array $params,
         ?FetcherInterface $fetcher = null
     ) {
-        $this->fetcher = $fetcher ?? new FetchAssoc($this->pdo);
+        $this->pdo = $pdo;
+        $this->fetcher = $fetcher ?? new FetchAssoc($pdo);
+    }
+
+    /**
+     * Nothing is kept: a restored adapter cannot query, and Pagerfanta answers from the results it
+     * already fetched.
+     *
+     * @return array<never>
+     */
+    public function __serialize(): array
+    {
+        return [];
+    }
+
+    /** @param array<never> $data */
+    public function __unserialize(array $data): void
+    {
+        assert($data === []);
+        $this->pdo = null;
     }
 
     /**
@@ -51,21 +74,22 @@ final class ExtendedPdoAdapter implements AdapterInterface
     #[Override]
     public function getNbResults(): int
     {
+        $pdo = $this->pdo();
         // be smart and try to guess the total number of records
         $countQuery = $this->rewriteCountQuery($this->sql);
         if (! $countQuery) {
             // GROUP BY => fetch the whole result set and count the rows returned
-            $result = $this->pdo->perform($this->sql, $this->params)->fetchAll();
+            $result = $pdo->perform($this->sql, $this->params)->fetchAll();
             $count = ! $result ? 0 : count($result);
             goto ret;
         }
 
         if ($this->params) {
-            $count = $this->pdo->fetchValue($countQuery, $this->params);
+            $count = $pdo->fetchValue($countQuery, $this->params);
             goto ret;
         }
 
-        $count = $this->pdo->fetchValue($countQuery);
+        $count = $pdo->fetchValue($countQuery);
         ret:
         /** @var string $count */
         $nbResult = ! $count ? 0 : (int) $count;
@@ -82,6 +106,7 @@ final class ExtendedPdoAdapter implements AdapterInterface
     #[Override]
     public function getSlice(int $offset, int $length): iterable
     {
+        $this->pdo();
         $sql = $this->sql . $this->getLimitClause($offset, $length);
         $result = ($this->fetcher)($sql, $this->params);
 
@@ -149,5 +174,14 @@ final class ExtendedPdoAdapter implements AdapterInterface
         [$queryCount2] = $split2;
 
         return trim((string) $queryCount2);
+    }
+
+    private function pdo(): ExtendedPdoInterface
+    {
+        if ($this->pdo === null) {
+            throw new ConnectionDetached();
+        }
+
+        return $this->pdo;
     }
 }
