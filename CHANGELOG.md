@@ -1,4 +1,7 @@
-## [Unreleased]
+## [1.19.0] - 2026-11-06
+
+### Changed
+- The dist archive no longer ships `.github/` and the development `rector.php`; `rector-migrate.php` stays (PR #96)
 
 ### Fixed
 - A `Page` can be serialized, so an object that holds one can be cached: `ExtendedPdoAdapter`, `AuraSqlQueryAdapter`, `FetchAssoc` and `FetchEntity` leave the connection out of their serialized form, and the adapters also leave out the query, its bound values, the fetcher and the count modifier. A restored `Page` renders and iterates from the results Pagerfanta already fetched; a restored adapter or fetcher throws `Exception\ConnectionDetached` if asked to query (PR #96)
