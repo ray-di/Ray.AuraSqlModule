@@ -7,7 +7,8 @@ namespace Ray\AuraSqlModule\Annotation;
 use Attribute;
 
 /**
- * Sets the `pdo` property to the read or write connection by the name of the called method
+ * Sets the `pdo` property to the read or write connection for the methods
+ * listed in the read and write method lists of AuraSqlLocatorModule
  *
  * @see \Ray\AuraSqlModule\AuraSqlConnectionInterceptor
  */
