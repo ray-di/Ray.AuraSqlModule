@@ -1,7 +1,7 @@
 ## [Unreleased]
 
 ### Changed
-- `ConnectionLocatorFactory::fromInstance()` marks `$password` as `#[SensitiveParameter]`, like the other constructors that take a password.
+- `ConnectionLocatorFactory::fromInstance()` hides the password in stack traces.
 
 ## [1.19.0] - 2026-11-06
 
