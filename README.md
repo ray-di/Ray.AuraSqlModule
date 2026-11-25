@@ -79,9 +79,9 @@ Installing `AuraSqlReplicationModule` using a `connection locator` for master/sl
 
 ```php
 use Ray\Di\AbstractModule;
-use Ray\AuraSqlModule\AuraSqlModule;
+use Ray\AuraSqlModule\AuraSqlReplicationModule;
+use Ray\AuraSqlModule\Connection;
 use Aura\Sql\ConnectionLocator;
-use Aura\Sql\Connection;
 
 class AppModule extends AbstractModule
 {
@@ -100,7 +100,7 @@ You will now have a slave db connection when using HTTP GET, or a master db conn
 
 The connection is chosen once per injector from `$_SERVER['REQUEST_METHOD']`, so this assumes one request per process, as in PHP-FPM.
 In a long-running server such as Swoole, the first request's choice is kept for every later request, and `$_SERVER['REQUEST_METHOD']` may not be set at all.
-There, mark the methods with `#[ReadOnlyConnection]` or `#[WriteConnection]`. They set the `pdo` property to the slave or master connection on each call.
+There, mark every method that uses the connection with `#[ReadOnlyConnection]` or `#[WriteConnection]`. They set the public or protected `pdo` property to the slave or master connection on each call; a method without the attribute uses the connection set by the previous call.
 
 ```php
 use Ray\AuraSqlModule\Annotation\ReadOnlyConnection;
