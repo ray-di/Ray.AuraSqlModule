@@ -1,3 +1,8 @@
+## [Unreleased]
+
+### Changed
+- Add `#[SensitiveParameter]` where it was missing.
+
 ## [1.19.0] - 2026-11-06
 
 ### Changed

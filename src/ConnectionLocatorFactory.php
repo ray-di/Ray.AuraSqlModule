@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ray\AuraSqlModule;
 
 use Aura\Sql\ConnectionLocator;
+use SensitiveParameter;
 
 use function explode;
 use function preg_match;
@@ -24,6 +25,7 @@ final class ConnectionLocatorFactory
     public static function fromInstance(
         string $dsn,
         string $user,
+        #[SensitiveParameter]
         string $password,
         string $slave,
         array $options,
