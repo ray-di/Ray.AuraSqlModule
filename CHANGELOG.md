@@ -1,7 +1,7 @@
 ## [Unreleased]
 
 ### Changed
-- `ConnectionLocatorFactory::fromInstance()` hides the password in stack traces.
+- Add `#[SensitiveParameter]` where it was missing.
 
 ## [1.19.0] - 2026-11-06
 
