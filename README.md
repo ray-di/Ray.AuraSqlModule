@@ -98,6 +98,26 @@ class AppModule extends AbstractModule
 
 You will now have a slave db connection when using HTTP GET, or a master db connection in other HTTP methods.
 
+The connection is chosen once per injector from `$_SERVER['REQUEST_METHOD']`, so this assumes one request per process, as in PHP-FPM.
+In a long-running server such as Swoole, the first request's choice is kept for every later request, and `$_SERVER['REQUEST_METHOD']` may not be set at all.
+There, mark the methods with `#[ReadOnlyConnection]` or `#[WriteConnection]`. They set the `pdo` property to the slave or master connection on each call.
+
+```php
+use Ray\AuraSqlModule\Annotation\ReadOnlyConnection;
+use Ray\AuraSqlModule\Annotation\WriteConnection;
+
+class User
+{
+    public $pdo;
+
+    #[ReadOnlyConnection]
+    public function find(int $id) { /* slave */ }
+
+    #[WriteConnection]
+    public function save(array $user) { /* master */ }
+}
+```
+
 ## Multiple DB
 
 You may want to inject different connection destinations on the same DB interface with `#[Named($qualifier)]` attribute.
