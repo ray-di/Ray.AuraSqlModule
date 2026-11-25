@@ -49,6 +49,10 @@ jobs:
             os: ubuntu-latest
             dependencies: highest
             experimental: true
+          # PHP 8.6 - highest only (lowest would install aura/sql 5.x which doesn't work)
+          - php-version: "8.6"
+            os: ubuntu-latest
+            dependencies: highest
 
     steps:
       - name: Disable autocrlf on Windows
