@@ -73,6 +73,11 @@ $this->install(
 );
 ```
 
+### Swoole
+
+These modules do not give each coroutine its own connection, and concurrent coroutines cannot share one PDO connection.
+Under Swoole, use `PdoPoolModule` from [BEAR.Async](https://github.com/bearsunday/BEAR.Async), which lends each coroutine a pooled connection.
+
 ## Replication
 
 Installing `AuraSqlReplicationModule` using a `connection locator` for master/slave connections.
